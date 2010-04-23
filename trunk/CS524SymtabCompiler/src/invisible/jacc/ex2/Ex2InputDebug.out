@@ -1,0 +1,370 @@
+
+Compiling invisible\jacc\ex2\Ex2Input.txt ...
+invisible\jacc\ex2\Ex2Input.txt(1,1): whiteSpace {} #0 '// Copyright 1997 Invisible Software, Inc.'
+invisible\jacc\ex2\Ex2Input.txt(1,43): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(2,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(3,1): whiteSpace {} #0 '// File Ex2Input.txt.'
+invisible\jacc\ex2\Ex2Input.txt(3,22): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(4,1): whiteSpace {} #0 '//'
+invisible\jacc\ex2\Ex2Input.txt(4,3): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(5,1): whiteSpace {} #0 '// This is a sample input file to use in testing Example #2.'
+invisible\jacc\ex2\Ex2Input.txt(5,61): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(6,1): whiteSpace {} #0 '//'
+invisible\jacc\ex2\Ex2Input.txt(6,3): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(7,1): whiteSpace {} #0 '// To compile this sample, execute the class invisible.jacc.ex2.Ex2Compiler'
+invisible\jacc\ex2\Ex2Input.txt(7,76): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(8,1): whiteSpace {} #0 '// with the following command line:'
+invisible\jacc\ex2\Ex2Input.txt(8,36): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(9,1): whiteSpace {} #0 '//'
+invisible\jacc\ex2\Ex2Input.txt(9,3): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(10,1): whiteSpace {} #0 '//		invisible\jacc\ex2\Ex2Input.txt'
+invisible\jacc\ex2\Ex2Input.txt(10,36): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(11,1): whiteSpace {} #0 '//'
+invisible\jacc\ex2\Ex2Input.txt(11,3): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(12,1): whiteSpace {} #0 '// File Ex2Input.out contains the result of running the above command.'
+invisible\jacc\ex2\Ex2Input.txt(12,71): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(13,1): whiteSpace {} #0 '//'
+invisible\jacc\ex2\Ex2Input.txt(13,3): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(14,1): whiteSpace {} #0 '// (Note:  You may need to adjust the directory name on the command line,'
+invisible\jacc\ex2\Ex2Input.txt(14,74): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(15,1): whiteSpace {} #0 '// depending on how your system is set up.)'
+invisible\jacc\ex2\Ex2Input.txt(15,44): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(16,1): whiteSpace {} #0 '//'
+invisible\jacc\ex2\Ex2Input.txt(16,3): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(17,1): whiteSpace {} #0 '// Notice that the grammar for this example only allows '//' style comments, it'
+invisible\jacc\ex2\Ex2Input.txt(17,80): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(18,1): whiteSpace {} #0 '// does not allow the C-style '/*' comments.'
+invisible\jacc\ex2\Ex2Input.txt(18,45): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(19,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(20,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(21,1): whiteSpace {} #0 '// Try some expressions to show that parentheses work, and that addition and'
+invisible\jacc\ex2\Ex2Input.txt(21,77): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(22,1): whiteSpace {} #0 '// subtraction group from left to right.'
+invisible\jacc\ex2\Ex2Input.txt(22,41): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(23,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(24,1): number {} #6 '7'
+invisible\jacc\ex2\Ex2Input.txt(24,2): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(24,2): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(24,2): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(24,2): + {} #4 '+'
+invisible\jacc\ex2\Ex2Input.txt(24,3): number {} #6 '11'
+invisible\jacc\ex2\Ex2Input.txt(24,5): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(24,5): Expression {add} #0
+invisible\jacc\ex2\Ex2Input.txt(24,5): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(24,6): Statement {} #0
+18
+invisible\jacc\ex2\Ex2Input.txt(24,6): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(24,6): whiteSpace {} #0 '					// should be 18'
+invisible\jacc\ex2\Ex2Input.txt(24,26): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(25,1): number {} #6 '7'
+invisible\jacc\ex2\Ex2Input.txt(25,2): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(25,2): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(25,2): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(25,3): number {} #6 '11'
+invisible\jacc\ex2\Ex2Input.txt(25,5): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(25,5): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(25,5): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(25,6): Statement {} #0
+-4
+invisible\jacc\ex2\Ex2Input.txt(25,6): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(25,6): whiteSpace {} #0 '					// should be -4'
+invisible\jacc\ex2\Ex2Input.txt(25,26): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(26,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(27,1): number {} #6 '4'
+invisible\jacc\ex2\Ex2Input.txt(27,2): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(27,2): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(27,2): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(27,3): number {} #6 '5'
+invisible\jacc\ex2\Ex2Input.txt(27,4): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(27,4): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(27,4): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(27,5): number {} #6 '6'
+invisible\jacc\ex2\Ex2Input.txt(27,6): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(27,6): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(27,6): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(27,7): Statement {} #0
+-7
+invisible\jacc\ex2\Ex2Input.txt(27,7): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(27,7): whiteSpace {} #0 '					// should be (4-5)-6 = -7'
+invisible\jacc\ex2\Ex2Input.txt(27,37): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(28,1): ( {} #2 '('
+invisible\jacc\ex2\Ex2Input.txt(28,2): number {} #6 '4'
+invisible\jacc\ex2\Ex2Input.txt(28,3): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(28,3): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(28,3): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(28,4): number {} #6 '5'
+invisible\jacc\ex2\Ex2Input.txt(28,5): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(28,5): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(28,5): ) {} #3 ')'
+invisible\jacc\ex2\Ex2Input.txt(28,6): Primary {paren} #0
+invisible\jacc\ex2\Ex2Input.txt(28,6): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(28,6): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(28,7): number {} #6 '6'
+invisible\jacc\ex2\Ex2Input.txt(28,8): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(28,8): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(28,8): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(28,9): Statement {} #0
+-7
+invisible\jacc\ex2\Ex2Input.txt(28,9): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(28,9): whiteSpace {} #0 '				// should be -7'
+invisible\jacc\ex2\Ex2Input.txt(28,28): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(29,1): number {} #6 '4'
+invisible\jacc\ex2\Ex2Input.txt(29,2): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(29,2): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(29,2): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(29,3): ( {} #2 '('
+invisible\jacc\ex2\Ex2Input.txt(29,4): number {} #6 '5'
+invisible\jacc\ex2\Ex2Input.txt(29,5): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(29,5): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(29,5): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(29,6): number {} #6 '6'
+invisible\jacc\ex2\Ex2Input.txt(29,7): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(29,7): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(29,7): ) {} #3 ')'
+invisible\jacc\ex2\Ex2Input.txt(29,8): Primary {paren} #0
+invisible\jacc\ex2\Ex2Input.txt(29,8): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(29,8): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(29,9): Statement {} #0
+5
+invisible\jacc\ex2\Ex2Input.txt(29,9): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(29,9): whiteSpace {} #0 '				// should be 5'
+invisible\jacc\ex2\Ex2Input.txt(29,27): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(30,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(31,1): number {} #6 '100'
+invisible\jacc\ex2\Ex2Input.txt(31,4): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(31,4): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(31,4): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(31,5): ( {} #2 '('
+invisible\jacc\ex2\Ex2Input.txt(31,6): number {} #6 '45'
+invisible\jacc\ex2\Ex2Input.txt(31,8): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(31,8): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(31,8): + {} #4 '+'
+invisible\jacc\ex2\Ex2Input.txt(31,9): number {} #6 '12'
+invisible\jacc\ex2\Ex2Input.txt(31,11): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(31,11): Expression {add} #0
+invisible\jacc\ex2\Ex2Input.txt(31,11): ) {} #3 ')'
+invisible\jacc\ex2\Ex2Input.txt(31,12): Primary {paren} #0
+invisible\jacc\ex2\Ex2Input.txt(31,12): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(31,12): + {} #4 '+'
+invisible\jacc\ex2\Ex2Input.txt(31,13): number {} #6 '123'
+invisible\jacc\ex2\Ex2Input.txt(31,16): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(31,16): Expression {add} #0
+invisible\jacc\ex2\Ex2Input.txt(31,16): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(31,17): Statement {} #0
+166
+invisible\jacc\ex2\Ex2Input.txt(31,17): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(31,17): whiteSpace {} #0 '		// should be 166'
+invisible\jacc\ex2\Ex2Input.txt(31,35): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(32,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(33,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(34,1): whiteSpace {} #0 '// Try an invalid number.  9876543210 is too big to be an int, so the compiler'
+invisible\jacc\ex2\Ex2Input.txt(34,79): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(35,1): whiteSpace {} #0 '// should issue an error message.  (Note that early versions of Microsoft's'
+invisible\jacc\ex2\Ex2Input.txt(35,76): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(36,1): whiteSpace {} #0 '// Java VM don't produce an error;  they just reduce the number modulo 2^32,'
+invisible\jacc\ex2\Ex2Input.txt(36,77): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(37,1): whiteSpace {} #0 '// yielding the value 1286608618.)'
+invisible\jacc\ex2\Ex2Input.txt(37,35): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(38,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(39,1): number {} #6 '9876543210'
+invisible\jacc\ex2\Ex2Input.txt(39,1): error: Invalid number '9876543210'.
+invisible\jacc\ex2\Ex2Input.txt(39,11): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(39,11): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(39,11): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(39,12): Statement {} #0
+invisible\jacc\ex2\Ex2Input.txt(39,12): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(39,12): whiteSpace {} #0 '				// should be error'
+invisible\jacc\ex2\Ex2Input.txt(39,34): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(40,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(41,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(42,1): whiteSpace {} #0 '// Demonstrate how error repair works.  We'll intentionally leave off the'
+invisible\jacc\ex2\Ex2Input.txt(42,74): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(43,1): whiteSpace {} #0 '// semicolon at the end of a statement.  The compiler should automatically'
+invisible\jacc\ex2\Ex2Input.txt(43,75): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(44,1): whiteSpace {} #0 '// insert the semicolon and process the statement.'
+invisible\jacc\ex2\Ex2Input.txt(44,51): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(45,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(46,1): number {} #6 '10'
+invisible\jacc\ex2\Ex2Input.txt(46,3): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(46,3): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(46,3): + {} #4 '+'
+invisible\jacc\ex2\Ex2Input.txt(46,4): number {} #6 '12'
+invisible\jacc\ex2\Ex2Input.txt(46,6): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(46,6): Expression {add} #0
+invisible\jacc\ex2\Ex2Input.txt(46,6): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(46,7): number {} #6 '6'
+invisible\jacc\ex2\Ex2Input.txt(46,8): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(46,8): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(46,8): whiteSpace {} #0 '					// missing semicolon, should be 16'
+invisible\jacc\ex2\Ex2Input.txt(46,47): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(47,1): number {} #6 '18'
+invisible\jacc\ex2\Ex2Input.txt(47,3): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(47,4): number {} #6 '3'
+invisible\jacc\ex2\Ex2Input.txt(47,5): + {} #4 '+'
+invisible\jacc\ex2\Ex2Input.txt(47,6): number {} #6 '44'
+invisible\jacc\ex2\Ex2Input.txt(47,3): error: Expected ';'.
+invisible\jacc\ex2\Ex2Input.txt(47,3): Statement {} #0
+16
+invisible\jacc\ex2\Ex2Input.txt(47,3): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(47,3): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(47,3): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(47,5): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(47,5): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(47,8): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(47,8): Expression {add} #0
+invisible\jacc\ex2\Ex2Input.txt(47,8): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(47,9): Statement {} #0
+59
+invisible\jacc\ex2\Ex2Input.txt(47,9): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(47,9): whiteSpace {} #0 '				// should be 59'
+invisible\jacc\ex2\Ex2Input.txt(47,28): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(48,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(49,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(50,1): whiteSpace {} #0 '// This time we'll leave off a right parenthesis.  The compiler should'
+invisible\jacc\ex2\Ex2Input.txt(50,71): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(51,1): whiteSpace {} #0 '// automatically insert the parenthesis.'
+invisible\jacc\ex2\Ex2Input.txt(51,41): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(52,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(53,1): number {} #6 '23'
+invisible\jacc\ex2\Ex2Input.txt(53,3): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(53,3): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(53,3): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(53,4): ( {} #2 '('
+invisible\jacc\ex2\Ex2Input.txt(53,5): number {} #6 '9'
+invisible\jacc\ex2\Ex2Input.txt(53,6): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(53,6): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(53,6): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(53,7): number {} #6 '5'
+invisible\jacc\ex2\Ex2Input.txt(53,8): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(53,8): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(53,8): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(53,9): whiteSpace {} #0 '				// missing right parenthesis, should be 19'
+invisible\jacc\ex2\Ex2Input.txt(53,55): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(54,1): number {} #6 '345'
+invisible\jacc\ex2\Ex2Input.txt(54,4): + {} #4 '+'
+invisible\jacc\ex2\Ex2Input.txt(54,5): number {} #6 '11'
+invisible\jacc\ex2\Ex2Input.txt(54,7): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(53,9): error: Expected ')'.
+invisible\jacc\ex2\Ex2Input.txt(53,9): Primary {paren} #0
+invisible\jacc\ex2\Ex2Input.txt(53,9): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(53,9): Statement {} #0
+19
+invisible\jacc\ex2\Ex2Input.txt(53,9): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(54,4): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(54,4): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(54,7): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(54,7): Expression {add} #0
+invisible\jacc\ex2\Ex2Input.txt(54,8): number {} #6 '46'
+invisible\jacc\ex2\Ex2Input.txt(54,10): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(54,10): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(54,10): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(54,11): Statement {} #0
+310
+invisible\jacc\ex2\Ex2Input.txt(54,11): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(54,11): whiteSpace {} #0 '				// should be 310'
+invisible\jacc\ex2\Ex2Input.txt(54,31): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(55,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(56,1): whiteSpace {} #0 '// This time we'll put in an extra right parenthesis.  The compiler should'
+invisible\jacc\ex2\Ex2Input.txt(56,75): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(57,1): whiteSpace {} #0 '// simply remove it.'
+invisible\jacc\ex2\Ex2Input.txt(57,21): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(58,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(59,1): number {} #6 '82'
+invisible\jacc\ex2\Ex2Input.txt(59,3): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(59,3): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(59,3): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(59,4): number {} #6 '12'
+invisible\jacc\ex2\Ex2Input.txt(59,6): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(59,6): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(59,6): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(59,7): number {} #6 '7'
+invisible\jacc\ex2\Ex2Input.txt(59,8): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(59,8): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(59,8): ) {} #3 ')'
+invisible\jacc\ex2\Ex2Input.txt(59,9): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(59,10): whiteSpace {} #0 '				// extra right parenthesis, should be 63'
+invisible\jacc\ex2\Ex2Input.txt(59,54): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(60,1): number {} #6 '364'
+invisible\jacc\ex2\Ex2Input.txt(60,4): + {} #4 '+'
+invisible\jacc\ex2\Ex2Input.txt(60,5): number {} #6 '89'
+invisible\jacc\ex2\Ex2Input.txt(60,7): - {} #5 '-'
+invisible\jacc\ex2\Ex2Input.txt(59,9): error: Unexpected ')'.
+invisible\jacc\ex2\Ex2Input.txt(59,10): Statement {} #0
+63
+invisible\jacc\ex2\Ex2Input.txt(59,10): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(60,4): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(60,4): Expression {primary} #0
+invisible\jacc\ex2\Ex2Input.txt(60,7): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(60,7): Expression {add} #0
+invisible\jacc\ex2\Ex2Input.txt(60,8): number {} #6 '1023'
+invisible\jacc\ex2\Ex2Input.txt(60,12): Primary {number} #0
+invisible\jacc\ex2\Ex2Input.txt(60,12): Expression {subtract} #0
+invisible\jacc\ex2\Ex2Input.txt(60,12): ; {} #1 ';'
+invisible\jacc\ex2\Ex2Input.txt(60,13): Statement {} #0
+-570
+invisible\jacc\ex2\Ex2Input.txt(60,13): StatementList {} #0
+invisible\jacc\ex2\Ex2Input.txt(60,13): whiteSpace {} #0 '			// should be -570'
+invisible\jacc\ex2\Ex2Input.txt(60,33): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(61,1): lineEnd {} #0 '
+'
+invisible\jacc\ex2\Ex2Input.txt(62,1): Goal {} #0
