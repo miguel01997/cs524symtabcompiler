@@ -1,0 +1,33 @@
+
+Compiling invisible\jacc\ex1\Ex1Input.txt ...
+Ex1Input.txt - Sample input test for Invisible Jacc example #1
+
+sqrt  2 = 1.4142135623730951
+sqrt  3 = 1.7320508075688772
+sqrt 13.3 = 3.646916505762094
+
+exponentiation right, left, default (default should equal right) = 
+2.4178516392292583E24, 4096.0, 2.4178516392292583E24
+
+subtraction right, left, default (default should equal left) = 
+3.0, -5.0, -5.0
+
+add/multiply right, left, default (default should equal right) = 
+47.0, 77.0, 47.0
+
+multiply/add right, left, default (default should equal left) = 
+65.0, 37.0, 37.0
+
+Now processing include file Ex1Include.txt
+pi = 3.141592653589793, e = 2.718281828459045
+
+pi-3.14159 = 2.6535897932333796E-6, e-2.71828 = 1.828459045061237E-6
+
+invisible\jacc\ex1\Ex1Input.txt(106,6): error: Undefined variable 'x'.
+Result of undefined variable (should be "--error--") is --error--
+
+invisible\jacc\ex1\Ex1Input.txt(117,5): error: Expected '='.
+Result of error repair (should be 89) is 89.0
+
+Fibonacci: 1.0 1.0 2.0 3.0 5.0 8.0 13.0 21.0 34.0 55.0
+

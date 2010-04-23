@@ -1,0 +1,71 @@
+/********************************************************************
+*                                                                   *
+* SDSU CS 524 Compiler Construction                                 *
+* Nano Parser Submission Test File for                              *
+* Compiler Project Part A                                           *
+* Spring 2010                                                       *
+*                                                                   *
+********************************************************************/
+
+  //Global Variables and Constants
+
+  const upperFilterBoundary = 50;
+  const lowerFilterBoundary = -50;
+  const arraySize = 10;  //Note the awkwardness of disallowing constant expressions in the array declaration!
+
+  var arrayToSort[10] : integer; //Wish we could say "arraySize" in the [] eh? Extra credit....
+  var i, outerIndex, innerIndex, diminishingUpperLimit : integer;
+  var swapped : boolean;
+
+  //Procedures
+  procedure inputValue(slot:integer);
+  begin
+    read("Enter a number: %d",slot);
+    if (slot > upperFilterBoundary)
+     then slot := upperFilterBoundary;
+     else
+       if (slot < lowerFilterBoundary)
+       then slot := lowerFilterBoundary;
+    return;
+  end;
+
+  procedure swapValues(slot1,slot2:integer);
+  begin
+    var temp : integer;
+    temp := slot2;
+    slot2 :=  slot1;
+    slot1 := temp;
+    return;
+  end;
+
+  procedure printValue(index,slot:integer);
+  begin
+    print("Value of array at index %d is %d\n",index,slot);
+    return;
+  end;
+ 
+  //Main program
+  begin
+
+    //Read in values
+    for i := 1 to arraySize do call inputValue(arrayToSort[i]);
+
+    //Perform bubble sort
+    diminishingUpperLimit := arraySize - 1;
+    for outerIndex := 1 to arraySize do
+      begin
+        swapped := false;
+        for innerIndex := 1 to diminishingUpperLimit do
+            if (arrayToSort[innerIndex]>arrayToSort[innerIndex+1]) then
+              begin
+                call swapValues(arrayToSort[innerIndex],arrayToSort[innerIndex+1]);
+                swapped := true;
+              end;
+        diminishingUpperLimit := diminishingUpperLimit - 1;
+        if  not swapped  then outerIndex := arraySize + 1;
+      end;
+
+    //Print values
+    for i := 1 to arraySize do call printValue(arrayToSort[i]);
+
+  end;

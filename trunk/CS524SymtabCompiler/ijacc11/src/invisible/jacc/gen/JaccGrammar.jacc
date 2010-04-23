@@ -1,0 +1,414 @@
+// Copyright 1997 Invisible Software, Inc.
+
+%options:
+
+%java invisible.jacc.gen.JaccGrammar;
+%charsetsize 0x100;
+%lalr1;
+
+%terminals:
+
+'-';
+'~';
+'&';
+'@';
+'*';
+'+';
+'?';
+'/';
+':';
+';';
+'=';
+'(';
+')';
+'{';
+'}';
+'|';
+'#';
+'.';
+'->';
+'..';
+
+'%tokens';
+'%categories';
+'%conditions';
+'%terminals';
+'%productions';
+'%shift';
+'%reduce';
+'%options';
+'%repair';
+'%lr1';
+'%plr1';
+'%lalr1';
+'%any';
+'%none';
+'%unicode';
+'%uppercase';
+'%lowercase';
+'%titlecase';
+'%letter';
+'%digit';
+'%charsetsize';
+'%goal';
+'%java';
+
+identifier 10 20;
+number 10 20;
+
+%productions:
+
+Goal -> SectionList;
+
+SectionList -> Section;
+
+SectionList -> SectionList Section;
+
+Section -> OptionHeader OptionDefList;
+
+Section -> TerminalHeader TerminalDefList;
+
+Section -> ProductionHeader ProductionDefList;
+
+Section -> CategoryHeader CategoryDefList;
+
+Section -> ConditionHeader ConditionDefList;
+
+Section -> TokenHeader TokenDefList;
+
+OptionHeader -> '%options' ':';
+
+OptionDefList ->;
+
+OptionDefList -> OptionDefList OptionDefinition;
+
+OptionDefinition {LR1} -> '%lr1' ';';
+
+OptionDefinition {PLR1} -> '%plr1' ';';
+
+OptionDefinition {LALR1} -> '%lalr1' ';';
+
+OptionDefinition {repair} -> '%repair' MaxInsertions MaxDeletions ValidationLength ';';
+
+OptionDefinition {charsetsize} -> '%charsetsize' CharSetSize ';';
+
+OptionDefinition {goal} -> '%goal' Symbol ';';
+
+OptionDefinition {java} -> '%java' JavaName ';';
+
+MaxInsertions -> number;
+
+MaxDeletions -> number;
+
+ValidationLength -> number;
+
+CharSetSize -> number;
+
+Symbol -> identifier;
+
+JavaName {simple} -> JavaIdentifier;
+
+JavaName {qualified} -> JavaName '.' JavaIdentifier;
+
+JavaIdentifier -> identifier;
+
+TerminalHeader -> '%terminals' ':';
+
+TerminalDefList ->;
+
+TerminalDefList -> TerminalDefList TerminalDefinition;
+
+TerminalDefinition {defaultCost} -> Symbol ';';
+
+TerminalDefinition {withCost} -> Symbol InsertionCost DeletionCost ';';
+
+InsertionCost -> number;
+
+DeletionCost -> number;
+
+ProductionHeader -> '%productions' ':';
+
+ProductionDefList ->;
+
+ProductionDefList -> ProductionDefList ProductionDefinition;
+
+ProductionDefinition -> Symbol LinkName Parameter '->' SymbolList ProductionPrec ';';
+
+LinkName {empty} ->;
+
+LinkName {identifier} -> '{' identifier '}';
+
+Parameter {empty} ->;
+
+Parameter {number} -> '#' number;
+
+SymbolList {empty} ->;
+
+SymbolList {append} -> SymbolList Symbol;
+
+ProductionPrec {empty} ->;
+
+ProductionPrec {appendShift} -> ProductionPrec '%shift' SymbolSet;
+
+ProductionPrec {appendReduce} -> ProductionPrec '%reduce' SymbolSet;
+
+SymbolSet {empty} ->;
+
+SymbolSet {append} -> SymbolSet Symbol;
+
+CategoryHeader -> '%categories' ':';
+
+CategoryDefList ->;
+
+CategoryDefList -> CategoryDefList CategoryDefinition;
+
+CategoryDefinition -> Category '=' CatExp ';';
+
+Category -> identifier;
+
+CatExp {number} -> number;
+
+CatExp {identifier} -> identifier;
+
+CatExp {numberRange} -> number '..' number;
+
+CatExp {identifierRange} -> identifier '..' identifier;
+
+CatExp {any} -> '%any';
+
+CatExp {none} -> '%none';
+
+CatExp {unicode} -> '%unicode';
+
+CatExp {uppercase} -> '%uppercase';
+
+CatExp {lowercase} -> '%lowercase';
+
+CatExp {titlecase} -> '%titlecase';
+
+CatExp {letter} -> '%letter';
+
+CatExp {digit} -> '%digit';
+
+CatExp {paren} -> '(' CatExp ')';
+
+CatExp {difference} -> CatExp '-' CatExp
+	%shift %reduce '-' '&' '|';
+
+CatExp {intersection} -> CatExp '&' CatExp
+	%shift %reduce '-' '&' '|';
+
+CatExp {union} -> CatExp '|' CatExp
+	%shift '-' '&' %reduce '|';
+
+ConditionHeader -> '%conditions' ':';
+
+ConditionDefList ->;
+
+ConditionDefList -> ConditionDefList ConditionDefinition;
+
+ConditionDefinition -> Condition ';';
+
+Condition -> identifier;
+
+TokenHeader -> '%tokens' ConditionSet ':';
+
+ConditionSet {empty} ->;
+
+ConditionSet {append} -> ConditionSet Condition;
+
+TokenDefList ->;
+
+TokenDefList -> TokenDefList TokenDefinition;
+
+TokenDefinition {noContext} -> Token LinkName Parameter '=' RegExp ';';
+
+TokenDefinition {rightContext} -> Token LinkName Parameter '=' RegExp '/' RegExp ';';
+
+Token -> identifier;
+
+RegExp {oneChar} -> Category;
+
+RegExp {paren} -> '(' RegExp ')';
+
+RegExp {KleeneClosure} -> RegExp '*';
+
+RegExp {positiveClosure} -> RegExp '+';
+
+RegExp {optionalClosure} -> RegExp '?';
+
+RegExp {catenation} -> RegExp RegExp
+	%shift '*' '+' '?' %reduce RegExp '-' '&' '~' '@' '|';
+
+RegExp {difference} -> RegExp '-' RegExp
+	%shift '*' '+' '?' RegExp %reduce '-' '&' '~' '@' '|';
+
+RegExp {intersection} -> RegExp '&' RegExp
+	%shift '*' '+' '?' RegExp %reduce '-' '&' '~' '@' '|';
+
+RegExp {excluding} -> RegExp '~' RegExp
+	%shift '*' '+' '?' RegExp %reduce '-' '&' '~' '@' '|';
+
+RegExp {including} -> RegExp '@' RegExp
+	%shift '*' '+' '?' RegExp %reduce '-' '&' '~' '@' '|';
+
+RegExp {alternation} -> RegExp '|' RegExp
+	%shift '*' '+' '?' RegExp '-' '&' '~' '@' %reduce '|';
+
+%categories:
+
+a = 'a';
+b = 'b';
+c = 'c';
+d = 'd';
+e = 'e';
+f = 'f';
+g = 'g';
+h = 'h';
+i = 'i';
+j = 'j';
+k = 'k';
+l = 'l';
+m = 'm';
+n = 'n';
+o = 'o';
+p = 'p';
+q = 'q';
+r = 'r';
+s = 's';
+t = 't';
+u = 'u';
+v = 'v';
+w = 'w';
+x = 'x';
+y = 'y';
+z = 'z';
+'%' = '%';
+':' = ':';
+';' = ';';
+'*' = '*';
+'+' = '+';
+'?' = '?';
+'-' = '-';
+'>' = '>';
+'~' = '~';
+'&' = '&';
+'@' = '@';
+'(' = '(';
+')' = ')';
+'{' = '{';
+'}' = '}';
+''' = ''';
+'/' = '/';
+'=' = '=';
+'|' = '|';
+'#' = '#';
+'.' = '.';
+'0' = '0';
+'1' = '1';
+letter = %letter | '_$';
+digit = %digit;
+letterOrDigit = %letter | '_$' | %digit;
+space = 9 | 12 | 32;
+white = 9 | 10 | 12 | 13 | 32;
+decDigit = '0'..'9';
+hexDigit = '0'..'9' | 'A'..'F' | 'a'..'f';
+xX = 'xX';
+notQuote = %any - ''' - 9 - 10 - 12 - 13 - 32;
+cr = 13;
+lf = 10;
+sub = 26;
+notEol = %any - 10 - 13;
+any = %any;
+
+%conditions:
+
+notInComment;
+inComment;
+
+%tokens notInComment:
+
+'-' = '-';
+'~' = '~';
+'&' = '&';
+'@' = '@';
+'*' = '*';
+'+' = '+';
+'?' = '?';
+'/' = '/';
+':' = ':';
+';' = ';';
+'=' = '=';
+'(' = '(';
+')' = ')';
+'{' = '{';
+'}' = '}';
+'|' = '|';
+'#' = '#';
+'.' = '.';
+'->' = '-' '>';
+'..' = '.' '.';
+
+'%tokens' = '%' t o k e n s;
+'%categories' = '%' c a t e g o r i e s;
+'%conditions' = '%' c o n d i t i o n s;
+'%terminals' = '%' t e r m i n a l s;
+'%productions' = '%' p r o d u c t i o n s;
+'%shift' = '%' s h i f t;
+'%reduce' = '%' r e d u c e;
+'%options' = '%' o p t i o n s;
+'%repair' = '%' r e p a i r;
+'%lr1' = '%' l r '1';
+'%plr1' = '%' p l r '1';
+'%lalr1' = '%' l a l r '1';
+'%any' = '%' a n y;
+'%none' = '%' n o n e;
+'%unicode' = '%' u n i c o d e;
+'%uppercase' = '%' u p p e r c a s e;
+'%lowercase' = '%' l o w e r c a s e;
+'%titlecase' = '%' t i t l e c a s e;
+'%letter' = '%' l e t t e r;
+'%digit' = '%' d i g i t;
+'%charsetsize' = '%' c h a r s e t s i z e;
+'%goal' = '%' g o a l;
+'%java' = '%' j a v a;
+
+unknownKeyword = '%' letterOrDigit*;
+
+number {decimal} = decDigit+;
+
+number {hex} = '0' xX hexDigit+;
+
+number {illegal} = decDigit+ letter letterOrDigit*;
+
+identifier {unquoted} = letter letterOrDigit*;
+
+identifier {quoted} = ''' '''? notQuote* '''? ''';
+
+whiteSpace = (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+             ('/' '/' notEol*)?;
+
+beginComment = (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+               '/' '*' (notEol* ~ '*' '/');
+
+illegalChar = sub / any;
+
+whiteSpace = sub;
+
+%tokens inComment:
+
+endComment = (notEol* ~ '*' '/') '*' '/'
+             (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+             ('/' '/' notEol*)?;
+
+whiteSpace = ((notEol* ~ '*' '/') '*' '/'
+		       (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+		       '/' '*'
+		     )?
+		     (notEol* ~ '*' '/');
+
+%tokens:
+
+lineEnd = cr | lf | cr lf;
+
+illegalChar = any;

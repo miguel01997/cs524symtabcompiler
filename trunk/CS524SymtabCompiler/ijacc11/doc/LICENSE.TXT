@@ -1,0 +1,32 @@
+Invisible Jacc License Agreement
+
+Invisible Jacc is copyrighted software. By using the software, you agree to
+the following terms and conditions.
+
+1. License for personal non-commercial use. You may use the software only for
+   your personal, noncommercial use.
+
+2. No redistribution. You may not distribute copies of the software to others.
+   You may not place the software on any web site, Internet server, electronic
+   bulletin board, or other information retrieval system.
+
+3. No warranty. THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY
+   KIND. TO THE MAXIMUM EXTENT PERMITTED BY LAW, INVISIBLE SOFTWARE DISCLAIMS
+   ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY
+   AND FITNESS FOR A PARTICULAR PURPOSE.
+
+4. Disclaimer. IN NO EVENT WILL INVISIBLE SOFTWARE BE LIABLE TO YOU FOR ANY
+   DAMAGES, INCLUDING ANY LOST PROFITS, LOST SAVINGS, OR OTHER INCIDENTAL OR
+   CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+   SOFTWARE, EVEN IF INVISIBLE SOFTWARE OR AN AUTHORIZED REPRESENTATIVE HAS
+   BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, OR FOR ANY CLAIM BY ANY
+   OTHER PARTY.
+
+5. Notice of incomplete testing. THIS SOFTWARE CONTAINS PROGRAMS THAT HAVE NOT
+   BEEN FULLY TESTED. YOU AGREE TO ASSUME ALL RISKS INVOLVED IN THE USE OF
+   UNTESTED OR PARTIALLY-TESTED SOFTWARE.
+
+6. Governing law and venue. This agreement is the entire agreement regarding
+   the software. This agreement is governed by the laws of the State of
+   California. The proper venue for any dispute relating to this agreement is
+   the County of Santa Clara, California.

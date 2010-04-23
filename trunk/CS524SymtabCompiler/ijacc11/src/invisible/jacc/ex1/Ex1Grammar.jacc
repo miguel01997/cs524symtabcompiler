@@ -1,0 +1,524 @@
+// Copyright 1997 Invisible Software, Inc.
+
+/*->
+
+  Grammar specification for Example #1.
+  
+  This grammar defines a scientific calculator language.  It supports floating
+  point arithmetic with addition, subtraction, multiplication, division,
+  exponentiation, square root, parentheses, and named variables.
+
+
+  CREATING THE SCANNER AND PARSER TABLES
+  
+  There are two ways to create the scanner and parser tables:  you can use
+  the graphical interface, or you can use the command line.
+  
+  To use the graphical interface, execute class invisible.jacc.gen.GenGUI.
+  When the window appears, enter invisible\jacc\ex1\Ex1Grammar.jacc as the
+  file name.  Check the boxes to "generate scanner table", "generate parser
+  table", "create Java source files", "write output messages to file", and
+  "write verbose output".  Then, click on "Generate".
+  
+  To use the command line, execute class invisible.jacc.gen.GenMain with the
+  following command line:
+
+        -v -o -j invisible\jacc\ex1\Ex1Grammar.jacc
+  
+  In either case, Invisible Jacc creates Ex1GrammarScannerTable.java and
+  Ex1GrammarParserTable.java.
+  
+  Note:  On Microsoft Windows, the filename is not case-sensitive.  On other
+  operating systems, the filename may or may not be case-sensitive depending
+  on the operating system.  (If you're using another operating system,
+  substitute the appropriate path separator character in place of backslash.)
+  
+  Note:  If you omit the ".jacc" extension from the filename, Invisible Jacc
+  supplies the ".jacc" extension automatically.
+  
+  
+  RUNNING THE SAMPLE INPUT
+  
+  To run the sample input, execute class invisible.jacc.ex1.Ex1Main with the
+  following command line:
+  
+ 		invisible\jacc\ex1\Ex1Input.txt
+  
+  File Ex1Input.out contains the result of running the above command.
+
+->*/
+
+
+// ----- Generator options -----
+
+%options:
+
+%java invisible.jacc.ex1.Ex1Grammar;	// Java package and class
+%charsetsize 0x10000;	// Character set size = 65536
+                        // We need 65536 because Ex1Compiler uses FileReader
+                        // to open the source files, and FileReader can return
+                        // any Unicode characters.  If you change Ex1Compiler
+                        // to use FileInputStream instead of FileReader, then
+                        // you can change the character set size to 256.
+%lalr1;					// LALR(1) grammar
+%goal Goal;				// Goal symbol
+
+
+// ----- Terminal symbols for the grammar -----
+
+%terminals:
+
+// Operators and punctuators
+
+';';
+',';
+'=';
+'(';
+')';
+'+';
+'-';
+'*';
+'/';
+'^';
+
+// Keywords
+
+'print' 5 10;
+'sqrt' 5 10;
+
+// Terminals that carry values
+
+identifier 10 20;
+number 10 20;
+string 10 20;
+
+
+// ----- Productions for the grammar -----
+
+%productions:
+
+// The goal is a list of statements.
+
+Goal -> StatementList;
+
+// A StatementList is a list of zero or more Statements.
+
+StatementList -> /* empty */ ;
+
+StatementList -> StatementList Statement;
+
+// A Statement can be an empty statement, an assignment statement, or a print
+// statement.  Each statement is terminated by a semicolon.  In this example,
+// we give each production a different link name, so that each production has
+// a different nonterminal factory.
+
+Statement {empty} -> ';';
+
+Statement {assign} -> identifier '=' Expr ';';
+
+Statement {print} -> 'print' OptionalPrintItemList ';';
+
+// An OptionalPrintItemList can be empty, or it can be a PrintItemList.
+
+OptionalPrintItemList -> /* empty */ ;
+
+OptionalPrintItemList -> PrintItemList;
+
+// A PrintItemList is a list of one or more PrintItems, separated by commas.
+
+PrintItemList -> PrintItem;
+
+PrintItemList -> PrintItemList ',' PrintItem;
+
+// A PrintItem can be an expression or a string.  In this example, we use the
+// same nonterminal factory for both productions, and we use an integer
+// parameter to distinguish the two cases.
+
+PrintItem #0 -> Expr;
+
+PrintItem #1 -> string;
+
+// An Expr can be a number, an identifier, or a combination of expressions
+// formed with the following operators:
+//
+//		+  -  *  /  (  )  ^  sqrt
+//
+// Note that '^' denotes exponentiation and 'sqrt' denotes square root.
+//
+// We assign precedence to the operators as follows:
+//		highest:	sqrt
+//		second:		^
+//		third:		*  /
+//		lowest:		+  -
+//
+// We treat unary + and - as having the same precedence as binary + and -.
+// This rule follows mathematical convention, but is different than most
+// programming languages (which tend to give high precedence to unary
+// operators).
+//
+// Operators group from left-to-right, except exponentiation which groups
+// from right-to-left.
+//
+// Notice that only binary operators need to be listed in the %shift and
+// %reduce clauses.  The %shift clause includes operators of higher precedence,
+// plus operators of the same precedence that group right-to-left.  The %reduce
+// clause includes operators of lower precedence, plus operators of the same
+// precedence that group left-to-right.
+//
+// In this example, we use the same nonterminal factory for all eleven
+// productions, and we use an integer parameter to distinguish between them.
+
+Expr #0 -> number;
+
+Expr #1 -> identifier;
+
+Expr #2 -> '(' Expr ')';
+
+Expr #3 -> 'sqrt' Expr
+	%shift %reduce '^' '*' '/' '+' '-';
+
+Expr #4 -> Expr '^' Expr
+	%shift '^' %reduce '*' '/' '+' '-';
+
+Expr #5 -> Expr '*' Expr
+	%shift '^' %reduce '*' '/' '+' '-';
+
+Expr #6 -> Expr '/' Expr
+	%shift '^' %reduce '*' '/' '+' '-';
+
+Expr #7 -> '+' Expr
+	%shift '^' '*' '/' %reduce '+' '-';
+
+Expr #8 -> '-' Expr
+	%shift '^' '*' '/' %reduce '+' '-';
+
+Expr #9 -> Expr '+' Expr
+	%shift '^' '*' '/' %reduce '+' '-';
+
+Expr #10 -> Expr '-' Expr
+	%shift '^' '*' '/' %reduce '+' '-';
+
+
+// ----- Character categories -----
+
+%categories:
+
+// Letters of the alphabet, used for keywords.
+
+a = 'a';
+b = 'b';
+c = 'c';
+d = 'd';
+e = 'e';
+f = 'f';
+g = 'g';
+h = 'h';
+i = 'i';
+j = 'j';
+k = 'k';
+l = 'l';
+m = 'm';
+n = 'n';
+o = 'o';
+p = 'p';
+q = 'q';
+r = 'r';
+s = 's';
+t = 't';
+u = 'u';
+v = 'v';
+w = 'w';
+x = 'x';
+y = 'y';
+z = 'z';
+
+// Characters used for operators and punctuators.
+
+';' = ';';
+',' = ',';
+'=' = '=';
+'(' = '(';
+')' = ')';
+'+' = '+';
+'-' = '-';
+'*' = '*';
+'/' = '/';
+'^' = '^';
+
+// Characters used in identifiers.
+
+letter = %letter;
+digit = %digit;
+letterOrDigit = %letter | %digit;
+
+// Characters used in numbers.
+
+decDigit = '0'..'9';
+eE = 'eE';
+'.' = '.';
+sign = '+-';
+
+// Characters used in strings.
+
+'"' = '"';
+'\' = '\';
+stringChar = %any - '"' - '\' - 10 - 13;
+
+// Characters used in filenames.
+
+'<' = '<';
+'>' = '>';
+filenameChar = 0x0020..0xFFFF - '<>';
+filenameCharNotBlank = 0x0021..0xFFFF - '<>';
+
+// Characters used for line ends and white space.
+
+space = 9 | 12 | 32;		// tab, form feed, and space
+sub = 26;					// ASCII sub
+cr = 13;					// carriage return
+lf = 10;					// line feed
+notEol = %any - 10 - 13;	// any character that isn't a line end
+any = %any;					// any character
+
+
+// ----- Start conditions -----
+
+%conditions:
+
+notInComment;				// Normal condition
+inComment;					// Inside a multi-line comment
+
+
+// ----- Tokens recognized when not inside a multi-line comment -----
+
+%tokens notInComment:
+
+// Operators and punctuators.
+
+';' = ';';
+',' = ',';
+'=' = '=';
+'(' = '(';
+')' = ')';
+'+' = '+';
+'-' = '-';
+'*' = '*';
+'/' = '/';
+'^' = '^';
+
+// Keywords.
+
+'print' = p r i n t;
+'sqrt' = s q r t;
+
+// An identifier is a string of letters and digits, in which the first
+// character is a letter.
+
+identifier = letter letterOrDigit*;
+
+// This token matches a number written as an integer, with no decimal point and
+// no exponent.  An integer is a string of one or more decimal digits.  The
+// right context operator is used to prevent an integer from being considered
+// fixed-point when it is followed by two or more consecutive periods.
+
+number = decDigit+ / ('.' '.')?;
+
+// These tokens match a number written as fixed-point, with a decimal point but
+// no exponent.  The first token matches numbers with no digits after the
+// decimal point, and the second token matches numbers with at least one digit
+// after the decimal point.  The right context on the second token prevents a
+// fixed-point number from being considered illegal when it is followed by two
+// or more consecutive periods.  This example illustrates how it is sometimes
+// necessary to use two or more regular expressions working together to match
+// a single language element.
+
+number = decDigit+ '.';
+
+number = decDigit* '.' decDigit+ / ('.' '.')?;
+
+// This token matches a number written as floating-point, with an exponent and
+// an optional decimal point.  Notice the use of the '@' operator to ensure
+// there is at least one decimal digit, either before or after the decimal 
+// point.  The right context operator is used to prevent a floating-point
+// number from being considered illegal when it is followed by two or more
+// consecutive periods.
+
+number = (decDigit* '.'? decDigit* @ decDigit) eE sign? decDigit+ / ('.' '.')?;
+
+// This token catches any badly-formatted numbers.  The token factory must
+// generate an error message.  The token name is 'number' so that the token
+// factory can produce an error-insertion 'number' terminal.  We have
+// specified the link name 'illegal' so that this regular expression has a
+// different token factory than the other 'number' tokens listed above.
+//
+// The regular expression is complicated;  it is written as the alternation of
+// six terms.
+//
+// The first term handles strings that begin like an identifier, but then have
+// a decimal point followed by a digit.
+//
+// The second term handles strings that begin with an optional leading decimal
+// point, followed by a Unicode digit that is not a decimal digit.
+//
+// The third term handles strings that begin like an integer or fixed-point
+// number, but then have a Unicode letter or digit that is neither a decimal
+// digit nor the letter 'e' or 'E'.
+//
+// The fourth term handles strings that begin like a floating-point number,
+// but than have a Unicode letter or digit that is not a decimal digit.
+//
+// The fifth term handles strings that begin like a fixed-point number with at
+// least one digit after the decimal point, but then have a second decimal
+// point.
+//
+// The sixth term handles strings that being like a floating-point number, but
+// then have a decimal point in the exponent.
+//
+// Each of the six terms ends with an expression intended to suck up trailing
+// characters that appear to be part of the same illegal number.  They suck up
+// any Unicode letter or digit, and any decimal point that is followed by a
+// Unicode digit.
+//
+// This token is necessary to prevent an incorrectly-formatted number from
+// being split up into legal tokens.  For example, "32x" should draw an error,
+// and not be split up into "32" (a number) followed by "x" (an identifier).
+// Likewise, "12.34.5" should draw an error, and not be split up into "12.34"
+// followed by ".5".  Similarly, "12e+.3y" should draw an error, and not be
+// split up into "12" followed by "e" followed by "+" followed by ".3" followed
+// by "y".
+//
+// This example illustrates a possible style for formatting complicated regular
+// expressions that have multiple alternatives.
+
+number {illegal} = letter letterOrDigit* '.' digit
+                   (letterOrDigit | '.' digit)*
+
+                 | '.'? (digit - decDigit)
+                   (letterOrDigit | '.' digit)*
+
+                 | (decDigit* '.'? decDigit* @ decDigit)
+                   (letterOrDigit - decDigit - eE)
+                   (letterOrDigit | '.' digit)*
+
+                 | (decDigit* '.'? decDigit* @ decDigit) eE sign? decDigit*
+                   (letterOrDigit - decDigit)
+                   (letterOrDigit | '.' digit)*
+
+                 | decDigit* '.' decDigit+ '.'
+                   (letterOrDigit (letterOrDigit | '.' digit)*)?
+
+                 | (decDigit* '.'? decDigit* @ decDigit) eE sign? decDigit* '.'
+                   (letterOrDigit (letterOrDigit | '.' digit)*)?
+
+                 ;
+
+// A string is a sequence of characters introduced and terminated with '"'.
+// The characters inside a string may include any characters except line-ends,
+// and may include escape sequences introduced with '\'.  Notice that we could
+// have made the scanner check the validity of each escape sequence, but we
+// haven't done so because it's easy to check in the token factory.
+
+string = '"' (stringChar | '\' '\' | '\' '"' | '\' stringChar)* '"';
+
+// This token defines a string that is not terminated before the end of a line.
+// The token factory needs to generate an error message.  Notice the optional
+// backslash at the end, to catch the case where line-end occurs in the middle
+// of an escape sequence.
+//
+// We use the token name 'string' so that the token factory can generate an
+// error-insertion 'string' terminal symbol.  We use the link name 'runOn' so
+// that this token has a different token factory than the other 'string' token
+// listed above.
+
+string {runOn} = '"' (stringChar | '\' '\' | '\' '"' | '\' stringChar)* '\'?;
+
+// This token is the command to include another source file.  The token factory
+// must generate the include file escape token.  The entire token must appear
+// on one line.  The word "include" and the filename may be separated by zero
+// or more space characters or complete comments.  The filename is enclosed
+// between < and >.  The filename may be surrounded by space characters.
+
+include = i n c l u d e (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+          '<' space* filenameCharNotBlank filenameChar* space* '>';
+
+// This token catches an "include" that is not followed by a filename.  The
+// token factory must generate an error.  Notice that 'illegalInclude' must
+// appear after 'include', since the regular expression also matches legal
+// include tokens;  when text matches two different tokens, the scanner picks
+// the token that appears earliest in the file.
+
+illegalInclude = i n c l u d e (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+                 ('<'? space* filenameCharNotBlank* | (notEol* ~ '>') '>');
+
+// White space includes any number of space characters or comments, all on a
+// single line.  Since there is no 'whiteSpace' terminal symbol, the integer
+// parameter defaults to 0.  This causes the default token factory to discard
+// the token.
+//
+// Although the regular expression appears to match a zero-length string, in
+// fact the scanner never matches a token to a zero-length string.
+
+whiteSpace = (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+             ('/' '/' notEol*)?;
+
+// This token recognizes the start of a multi-line comment.  The token factory
+// needs to change the start condition to inComment.
+
+beginComment = (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+               '/' '*' (notEol* ~ '*' '/');
+
+// An ASCII sub character is illegal if it does not occur at the end of the
+// file.  Notice the use of the right context operator to specify that the sub
+// is not at the end of the file.
+
+illegalChar = sub / any;
+
+// An ASCII sub character occurring at the end of a file is white space.
+// Notice that this token does not match a sub occurring in the middle of a
+// file because the scanner looks for the longest match (including context),
+// and the previous token is longer.
+
+whiteSpace = sub;
+
+
+// ----- Tokens recognized when inside a multi-line comment -----
+
+%tokens inComment:
+
+// This token recognizes the end of a multi-line comment, including any
+// trailing white space.  The token factory needs to change the start condition
+// to notInComment.
+
+endComment = (notEol* ~ '*' '/') '*' '/'
+             (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+             ('/' '/' notEol*)?;
+
+// Everything inside a multi-line comment is white space.  This token matches
+// if we reach the end of the line and either (a) the multi-line comment was
+// not terminated, or (b) the multi-line comment was terminated and a new
+// multi-line comment was started.  Notice that although the regular expression
+// appears to match a zero-length string, in fact the scanner never matches a
+// token to a zero-length string.
+
+whiteSpace = ((notEol* ~ '*' '/') '*' '/'
+              (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+              '/' '*'
+             )?
+             (notEol* ~ '*' '/');
+
+
+// ----- Tokens that are always recognized -----
+
+%tokens:
+
+// A line-end can be either a carriage return, a line feed, or a carriage
+// return and line feed pair.  The token factory needs to count the line.
+// Maintaining the line count allows error messages to pinpoint the location
+// of errors.
+
+lineEnd = cr | lf | cr lf;
+
+// This token matches if no other token matches.  Therefore, it must be the
+// last token in the file.
+
+illegalChar = any;

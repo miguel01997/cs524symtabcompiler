@@ -1,0 +1,3494 @@
+Generating character category table ...
+
+Character category table:
+
+  0x0 - 0x8
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0x9 - 0x9
+    Category number: 52
+    User categories: space white notEol any
+
+  0xA - 0xA
+    Category number: 53
+    User categories: white lf any
+
+  0xB - 0xB
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0xC - 0xC
+    Category number: 52
+    User categories: space white notEol any
+
+  0xD - 0xD
+    Category number: 56
+    User categories: white cr any
+
+  0xE - 0x19
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0x1A - 0x1A
+    Category number: 57
+    User categories: notQuote sub notEol any
+
+  0x1B - 0x1F
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0x20 - 0x20
+    Category number: 52
+    User categories: space white notEol any
+
+  0x21 - 0x22
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0x23 - 0x23
+    Category number: 46
+    User categories: # notQuote notEol any
+
+  0x24 - 0x24
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+  0x25 - 0x25
+    Category number: 27
+    User categories: % notQuote notEol any
+
+  0x26 - 0x26
+    Category number: 36
+    User categories: & notQuote notEol any
+
+  0x27 - 0x27
+    Category number: 42
+    User categories: ' notEol any
+
+  0x28 - 0x28
+    Category number: 38
+    User categories: ( notQuote notEol any
+
+  0x29 - 0x29
+    Category number: 39
+    User categories: ) notQuote notEol any
+
+  0x2A - 0x2A
+    Category number: 30
+    User categories: * notQuote notEol any
+
+  0x2B - 0x2B
+    Category number: 31
+    User categories: + notQuote notEol any
+
+  0x2C - 0x2C
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0x2D - 0x2D
+    Category number: 33
+    User categories: - notQuote notEol any
+
+  0x2E - 0x2E
+    Category number: 47
+    User categories: . notQuote notEol any
+
+  0x2F - 0x2F
+    Category number: 43
+    User categories: / notQuote notEol any
+
+  0x30 - 0x30
+    Category number: 48
+    User categories: 0 digit letterOrDigit decDigit hexDigit notQuote notEol any
+
+  0x31 - 0x31
+    Category number: 49
+    User categories: 1 digit letterOrDigit decDigit hexDigit notQuote notEol any
+
+  0x32 - 0x39
+    Category number: 51
+    User categories: digit letterOrDigit decDigit hexDigit notQuote notEol any
+
+  0x3A - 0x3A
+    Category number: 28
+    User categories: : notQuote notEol any
+
+  0x3B - 0x3B
+    Category number: 29
+    User categories: ; notQuote notEol any
+
+  0x3C - 0x3C
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0x3D - 0x3D
+    Category number: 44
+    User categories: = notQuote notEol any
+
+  0x3E - 0x3E
+    Category number: 34
+    User categories: > notQuote notEol any
+
+  0x3F - 0x3F
+    Category number: 32
+    User categories: ? notQuote notEol any
+
+  0x40 - 0x40
+    Category number: 37
+    User categories: @ notQuote notEol any
+
+  0x41 - 0x46
+    Category number: 54
+    User categories: letter letterOrDigit hexDigit notQuote notEol any
+
+  0x47 - 0x57
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+  0x58 - 0x58
+    Category number: 55
+    User categories: letter letterOrDigit xX notQuote notEol any
+
+  0x59 - 0x5A
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+  0x5B - 0x5E
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0x5F - 0x5F
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+  0x60 - 0x60
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0x61 - 0x61
+    Category number: 1
+    User categories: a letter letterOrDigit hexDigit notQuote notEol any
+
+  0x62 - 0x62
+    Category number: 2
+    User categories: b letter letterOrDigit hexDigit notQuote notEol any
+
+  0x63 - 0x63
+    Category number: 3
+    User categories: c letter letterOrDigit hexDigit notQuote notEol any
+
+  0x64 - 0x64
+    Category number: 4
+    User categories: d letter letterOrDigit hexDigit notQuote notEol any
+
+  0x65 - 0x65
+    Category number: 5
+    User categories: e letter letterOrDigit hexDigit notQuote notEol any
+
+  0x66 - 0x66
+    Category number: 6
+    User categories: f letter letterOrDigit hexDigit notQuote notEol any
+
+  0x67 - 0x67
+    Category number: 7
+    User categories: g letter letterOrDigit notQuote notEol any
+
+  0x68 - 0x68
+    Category number: 8
+    User categories: h letter letterOrDigit notQuote notEol any
+
+  0x69 - 0x69
+    Category number: 9
+    User categories: i letter letterOrDigit notQuote notEol any
+
+  0x6A - 0x6A
+    Category number: 10
+    User categories: j letter letterOrDigit notQuote notEol any
+
+  0x6B - 0x6B
+    Category number: 11
+    User categories: k letter letterOrDigit notQuote notEol any
+
+  0x6C - 0x6C
+    Category number: 12
+    User categories: l letter letterOrDigit notQuote notEol any
+
+  0x6D - 0x6D
+    Category number: 13
+    User categories: m letter letterOrDigit notQuote notEol any
+
+  0x6E - 0x6E
+    Category number: 14
+    User categories: n letter letterOrDigit notQuote notEol any
+
+  0x6F - 0x6F
+    Category number: 15
+    User categories: o letter letterOrDigit notQuote notEol any
+
+  0x70 - 0x70
+    Category number: 16
+    User categories: p letter letterOrDigit notQuote notEol any
+
+  0x71 - 0x71
+    Category number: 17
+    User categories: q letter letterOrDigit notQuote notEol any
+
+  0x72 - 0x72
+    Category number: 18
+    User categories: r letter letterOrDigit notQuote notEol any
+
+  0x73 - 0x73
+    Category number: 19
+    User categories: s letter letterOrDigit notQuote notEol any
+
+  0x74 - 0x74
+    Category number: 20
+    User categories: t letter letterOrDigit notQuote notEol any
+
+  0x75 - 0x75
+    Category number: 21
+    User categories: u letter letterOrDigit notQuote notEol any
+
+  0x76 - 0x76
+    Category number: 22
+    User categories: v letter letterOrDigit notQuote notEol any
+
+  0x77 - 0x77
+    Category number: 23
+    User categories: w letter letterOrDigit notQuote notEol any
+
+  0x78 - 0x78
+    Category number: 24
+    User categories: x letter letterOrDigit xX notQuote notEol any
+
+  0x79 - 0x79
+    Category number: 25
+    User categories: y letter letterOrDigit notQuote notEol any
+
+  0x7A - 0x7A
+    Category number: 26
+    User categories: z letter letterOrDigit notQuote notEol any
+
+  0x7B - 0x7B
+    Category number: 40
+    User categories: { notQuote notEol any
+
+  0x7C - 0x7C
+    Category number: 45
+    User categories: | notQuote notEol any
+
+  0x7D - 0x7D
+    Category number: 41
+    User categories: } notQuote notEol any
+
+  0x7E - 0x7E
+    Category number: 35
+    User categories: ~ notQuote notEol any
+
+  0x7F - 0xA9
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0xAA - 0xAA
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+  0xAB - 0xB4
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0xB5 - 0xB5
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+  0xB6 - 0xB9
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0xBA - 0xBA
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+  0xBB - 0xBF
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0xC0 - 0xD6
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+  0xD7 - 0xD7
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0xD8 - 0xF6
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+  0xF7 - 0xF7
+    Category number: 0
+    User categories: notQuote notEol any
+
+  0xF8 - 0xFF
+    Category number: 50
+    User categories: letter letterOrDigit notQuote notEol any
+
+63 user-defined categories.
+58 calculated categories.
+
+Generating token deterministic finite automata ...
+
+Start conditions:
+
+  notInComment
+    Initial forward DFA state: 1
+
+  inComment
+    Initial forward DFA state: 1
+
+Tokens:
+
+  Token 0
+    - = '-'
+    Parameter: 1
+
+  Token 1
+    ~ = '~'
+    Parameter: 2
+
+  Token 2
+    & = '&'
+    Parameter: 3
+
+  Token 3
+    @ = '@'
+    Parameter: 4
+
+  Token 4
+    * = '*'
+    Parameter: 5
+
+  Token 5
+    + = '+'
+    Parameter: 6
+
+  Token 6
+    ? = '?'
+    Parameter: 7
+
+  Token 7
+    / = '/'
+    Parameter: 8
+
+  Token 8
+    : = ':'
+    Parameter: 9
+
+  Token 9
+    ; = ';'
+    Parameter: 10
+
+  Token 10
+    = = '='
+    Parameter: 11
+
+  Token 11
+    ( = '('
+    Parameter: 12
+
+  Token 12
+    ) = ')'
+    Parameter: 13
+
+  Token 13
+    { = '{'
+    Parameter: 14
+
+  Token 14
+    } = '}'
+    Parameter: 15
+
+  Token 15
+    | = '|'
+    Parameter: 16
+
+  Token 16
+    # = '#'
+    Parameter: 17
+
+  Token 17
+    . = '.'
+    Parameter: 18
+
+  Token 18
+    -> = '-' '>'
+    Parameter: 19
+
+  Token 19
+    .. = '.' '.'
+    Parameter: 20
+
+  Token 20
+    %tokens = '%' 't' 'o' 'k' 'e' 'n' 's'
+    Parameter: 21
+
+  Token 21
+    %categories = '%' 'c' 'a' 't' 'e' 'g' 'o' 'r' 'i' 'e' 's'
+    Parameter: 22
+
+  Token 22
+    %conditions = '%' 'c' 'o' 'n' 'd' 'i' 't' 'i' 'o' 'n' 's'
+    Parameter: 23
+
+  Token 23
+    %terminals = '%' 't' 'e' 'r' 'm' 'i' 'n' 'a' 'l' 's'
+    Parameter: 24
+
+  Token 24
+    %productions = '%' 'p' 'r' 'o' 'd' 'u' 'c' 't' 'i' 'o' 'n' 's'
+    Parameter: 25
+
+  Token 25
+    %shift = '%' 's' 'h' 'i' 'f' 't'
+    Parameter: 26
+
+  Token 26
+    %reduce = '%' 'r' 'e' 'd' 'u' 'c' 'e'
+    Parameter: 27
+
+  Token 27
+    %options = '%' 'o' 'p' 't' 'i' 'o' 'n' 's'
+    Parameter: 28
+
+  Token 28
+    %repair = '%' 'r' 'e' 'p' 'a' 'i' 'r'
+    Parameter: 29
+
+  Token 29
+    %lr1 = '%' 'l' 'r' '1'
+    Parameter: 30
+
+  Token 30
+    %plr1 = '%' 'p' 'l' 'r' '1'
+    Parameter: 31
+
+  Token 31
+    %lalr1 = '%' 'l' 'a' 'l' 'r' '1'
+    Parameter: 32
+
+  Token 32
+    %any = '%' 'a' 'n' 'y'
+    Parameter: 33
+
+  Token 33
+    %none = '%' 'n' 'o' 'n' 'e'
+    Parameter: 34
+
+  Token 34
+    %unicode = '%' 'u' 'n' 'i' 'c' 'o' 'd' 'e'
+    Parameter: 35
+
+  Token 35
+    %uppercase = '%' 'u' 'p' 'p' 'e' 'r' 'c' 'a' 's' 'e'
+    Parameter: 36
+
+  Token 36
+    %lowercase = '%' 'l' 'o' 'w' 'e' 'r' 'c' 'a' 's' 'e'
+    Parameter: 37
+
+  Token 37
+    %titlecase = '%' 't' 'i' 't' 'l' 'e' 'c' 'a' 's' 'e'
+    Parameter: 38
+
+  Token 38
+    %letter = '%' 'l' 'e' 't' 't' 'e' 'r'
+    Parameter: 39
+
+  Token 39
+    %digit = '%' 'd' 'i' 'g' 'i' 't'
+    Parameter: 40
+
+  Token 40
+    %charsetsize = '%' 'c' 'h' 'a' 'r' 's' 'e' 't' 's' 'i' 'z' 'e'
+    Parameter: 41
+
+  Token 41
+    %goal = '%' 'g' 'o' 'a' 'l'
+    Parameter: 42
+
+  Token 42
+    %java = '%' 'j' 'a' 'v' 'a'
+    Parameter: 43
+
+  Token 43
+    unknownKeyword = '%' 'letterOrDigit'*
+    Parameter: 0
+
+  Token 44
+    number = 'decDigit'+
+    Link name: 'decimal'
+    Parameter: 45
+
+  Token 45
+    number = '0' 'xX' 'hexDigit'+
+    Link name: 'hex'
+    Parameter: 45
+
+  Token 46
+    number = 'decDigit'+ 'letter' 'letterOrDigit'*
+    Link name: 'illegal'
+    Parameter: 45
+
+  Token 47
+    identifier = 'letter' 'letterOrDigit'*
+    Link name: 'unquoted'
+    Parameter: 44
+
+  Token 48
+    identifier = ''' '''? 'notQuote'* '''? '''
+    Link name: 'quoted'
+    Parameter: 44
+
+  Token 49
+    whiteSpace = 'space'*
+    Parameter: 0
+
+  Token 50
+    whiteSpace = 'space'* '/' '/' 'notEol'*
+    Parameter: 0
+
+  Token 51
+    lineEnd = 'cr'
+    Parameter: 0
+
+  Token 52
+    lineEnd = 'lf'
+    Parameter: 0
+
+  Token 53
+    lineEnd = 'cr' 'lf'
+    Parameter: 0
+
+  Token 54
+    whiteSpace = 'sub'
+    Parameter: 0
+
+  Token 55
+    illegalChar = 'any'
+    Parameter: 0
+
+  Token 56
+    beginComment = 'sub'
+    Parameter: 0
+
+  Token 57
+    endComment = 'sub'
+    Parameter: 0
+
+Forward DFA States:
+
+  State 0
+    Recognition code: 0
+
+  State 1
+    Goto 2: 33
+    Goto 3: 35
+    Goto 4: 36
+    Goto 5: 37
+    Goto 6: 30
+    Goto 7: 31
+    Goto 8: 32
+    Goto 9: 43
+    Goto 10: 28
+    Goto 11: 29
+    Goto 12: 44
+    Goto 13: 38
+    Goto 14: 39
+    Goto 15: 40
+    Goto 16: 41
+    Goto 17: 45
+    Goto 18: 46
+    Goto 19: 47
+    Goto 20: 0 34
+    Goto 21: 27
+    Goto 22: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 50 54 55
+    Goto 23: 49 51
+    Goto 24: 48
+    Goto 25: 42
+    Goto 26: 57
+    Goto 27: 52
+    Goto 28: 56
+    Goto 29: 53
+    Recognition code: 1
+
+  State 2
+    Goto 30: 34
+    Recognition code: 2
+
+  State 3
+    Recognition code: 3
+
+  State 4
+    Recognition code: 4
+
+  State 5
+    Recognition code: 5
+
+  State 6
+    Recognition code: 6
+
+  State 7
+    Recognition code: 7
+
+  State 8
+    Recognition code: 8
+
+  State 9
+    Goto 31: 43
+    Recognition code: 9
+
+  State 10
+    Recognition code: 10
+
+  State 11
+    Recognition code: 11
+
+  State 12
+    Recognition code: 12
+
+  State 13
+    Recognition code: 13
+
+  State 14
+    Recognition code: 14
+
+  State 15
+    Recognition code: 15
+
+  State 16
+    Recognition code: 16
+
+  State 17
+    Recognition code: 17
+
+  State 18
+    Recognition code: 18
+
+  State 19
+    Goto 32: 47
+    Recognition code: 19
+
+  State 20
+    Recognition code: 20
+
+  State 21
+    Goto 33: 20
+    Goto 34: 15
+    Goto 35: 2 5 6 8 9 11 13 17 22 23 24 25 26 48 49 50 51 54 55
+    Goto 36: 14
+    Goto 37: 19
+    Goto 38: 3
+    Goto 39: 1
+    Goto 40: 7
+    Goto 41: 18
+    Goto 42: 4
+    Goto 43: 12
+    Goto 44: 16
+    Goto 45: 21
+    Goto 46: 10
+    Recognition code: 21
+
+  State 22
+    Goto 47: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 22
+
+  State 23
+    Goto 48: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 50 54 55
+    Goto 49: 48 49 51
+    Recognition code: 23
+
+  State 24
+    Goto 48: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 25 26 50 54
+    Goto 49: 48 49 51
+    Goto 50: 24 55
+    Recognition code: 23
+
+  State 25
+    Goto 51: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 43 44 45 46 47 48 49 50 51 54 55 57
+    Goto 52: 42
+    Recognition code: 20
+
+  State 26
+    Recognition code: 24
+
+  State 27
+    Goto 53: 43
+    Goto 54: 52
+    Recognition code: 25
+
+  State 28
+    Goto 55: 53
+    Recognition code: 26
+
+  State 29
+    Recognition code: 27
+
+  State 30
+    Recognition code: 28
+
+  State 31
+    Goto 31: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 54 55 57
+    Recognition code: 29
+
+  State 32
+    Recognition code: 30
+
+  State 33
+    Goto 35: 1 2 3 4 6 7 8 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 56: 15
+    Goto 57: 5
+    Goto 58: 9
+    Recognition code: 31
+
+  State 34
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 59: 16
+    Recognition code: 31
+
+  State 35
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 31
+
+  State 36
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 60: 15
+    Recognition code: 31
+
+  State 37
+    Goto 35: 1 2 3 4 5 6 7 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 61: 8
+    Recognition code: 31
+
+  State 38
+    Goto 35: 2 3 4 5 6 7 9 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 62: 15
+    Goto 63: 1
+    Goto 64: 8
+    Recognition code: 31
+
+  State 39
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 65: 14
+    Recognition code: 31
+
+  State 40
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 66: 15
+    Recognition code: 31
+
+  State 41
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 67: 5
+    Recognition code: 31
+
+  State 42
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 68: 9
+    Recognition code: 31
+
+  State 43
+    Goto 35: 2 3 4 6 7 8 9 10 11 12 13 14 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 69: 15
+    Goto 70: 5
+    Goto 71: 1
+    Goto 72: 18
+    Recognition code: 31
+
+  State 44
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 73: 18
+    Goto 74: 12
+    Recognition code: 31
+
+  State 45
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 75: 14
+    Goto 76: 16
+    Recognition code: 31
+
+  State 46
+    Goto 35: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 77: 1
+    Recognition code: 31
+
+  State 47
+    Goto 47: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 32
+
+  State 48
+    Goto 48: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 33
+
+  State 49
+    Goto 48: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 50 54 55
+    Goto 49: 48 49 51
+    Recognition code: 34
+
+  State 50
+    Goto 48: 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 50 55
+    Goto 78: 1 2 3 4 5 6 48 49 51 54
+    Recognition code: 33
+
+  State 51
+    Goto 51: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 43 44 45 46 47 48 49 50 51 54 55 57
+    Goto 79: 42
+    Recognition code: 0
+
+  State 52
+    Goto 51: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 43 44 45 46 47 48 49 50 51 54 55 57
+    Goto 79: 42
+    Recognition code: 35
+
+  State 53
+    Goto 31: 43
+    Recognition code: 0
+
+  State 54
+    Goto 53: 43
+    Goto 54: 52
+    Recognition code: 1
+
+  State 55
+    Recognition code: 36
+
+  State 56
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 80: 11
+    Recognition code: 31
+
+  State 57
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 81: 18
+    Recognition code: 31
+
+  State 58
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 82: 20
+    Recognition code: 31
+
+  State 59
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 83: 20
+    Recognition code: 31
+
+  State 60
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 84: 14
+    Recognition code: 31
+
+  State 61
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 85: 9
+    Recognition code: 31
+
+  State 62
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 86: 14
+    Recognition code: 31
+
+  State 63
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 87: 20
+    Recognition code: 31
+
+  State 64
+    Goto 35: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 88: 1
+    Recognition code: 31
+
+  State 65
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 26 48 49 50 51 54 55
+    Goto 89: 25
+    Recognition code: 31
+
+  State 66
+    Goto 35: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 90: 1
+    Recognition code: 31
+
+  State 67
+    Goto 35: 1 2 3 5 6 7 8 9 10 11 12 13 14 15 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 91: 4
+    Goto 92: 16
+    Recognition code: 31
+
+  State 68
+    Goto 35: 1 2 3 4 5 6 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 93: 7
+    Recognition code: 31
+
+  State 69
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 48 49 50 51 54 55
+    Goto 94: 23
+    Recognition code: 31
+
+  State 70
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 95: 20
+    Recognition code: 31
+
+  State 71
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 96: 12
+    Recognition code: 31
+
+  State 72
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 50 51 54 55
+    Goto 97: 49
+    Recognition code: 31
+
+  State 73
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 98: 15
+    Recognition code: 31
+
+  State 74
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 99: 18
+    Recognition code: 31
+
+  State 75
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 100: 9
+    Recognition code: 31
+
+  State 76
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 101: 16
+    Recognition code: 31
+
+  State 77
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 23 24 25 26 48 49 50 51 54 55
+    Goto 102: 22
+    Recognition code: 31
+
+  State 78
+    Goto 48: 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 50 55
+    Goto 78: 1 2 3 4 5 6 48 49 51 54
+    Recognition code: 37
+
+  State 79
+    Goto 103: 42
+    Recognition code: 35
+
+  State 80
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 104: 5
+    Recognition code: 31
+
+  State 81
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 105: 13
+    Recognition code: 31
+
+  State 82
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 106: 12
+    Recognition code: 31
+
+  State 83
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 107: 9
+    Recognition code: 31
+
+  State 84
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 108: 5
+    Recognition code: 31
+
+  State 85
+    Goto 35: 1 2 3 4 5 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 109: 6
+    Recognition code: 31
+
+  State 86
+    Goto 35: 1 2 3 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 110: 4
+    Recognition code: 31
+
+  State 87
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 111: 5
+    Recognition code: 31
+
+  State 88
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 112: 18
+    Recognition code: 31
+
+  State 89
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 38
+
+  State 90
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 113: 12
+    Recognition code: 31
+
+  State 91
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 25 26 48 49 50 51 54 55
+    Goto 114: 21
+    Recognition code: 31
+
+  State 92
+    Goto 35: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 115: 1
+    Recognition code: 31
+
+  State 93
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 116: 9
+    Recognition code: 31
+
+  State 94
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 117: 5
+    Recognition code: 31
+
+  State 95
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 118: 20
+    Recognition code: 31
+
+  State 96
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 119: 18
+    Recognition code: 31
+
+  State 97
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 39
+
+  State 98
+    Goto 35: 1 2 3 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 120: 4
+    Recognition code: 31
+
+  State 99
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 50 51 54 55
+    Goto 121: 49
+    Recognition code: 31
+
+  State 100
+    Goto 35: 1 2 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 122: 3
+    Recognition code: 31
+
+  State 101
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 123: 5
+    Recognition code: 31
+
+  State 102
+    Goto 35: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 124: 1
+    Recognition code: 31
+
+  State 103
+    Recognition code: 35
+
+  State 104
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 125: 14
+    Recognition code: 31
+
+  State 105
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 126: 9
+    Recognition code: 31
+
+  State 106
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 127: 5
+    Recognition code: 31
+
+  State 107
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 128: 15
+    Recognition code: 31
+
+  State 108
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 40
+
+  State 109
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 129: 20
+    Recognition code: 31
+
+  State 110
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 130: 9
+    Recognition code: 31
+
+  State 111
+    Goto 35: 1 2 3 4 5 6 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 131: 7
+    Recognition code: 31
+
+  State 112
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 132: 19
+    Recognition code: 31
+
+  State 113
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 41
+
+  State 114
+    Goto 35: 1 2 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 133: 3
+    Recognition code: 31
+
+  State 115
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 134: 9
+    Recognition code: 31
+
+  State 116
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 135: 20
+    Recognition code: 31
+
+  State 117
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 136: 18
+    Recognition code: 31
+
+  State 118
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 137: 5
+    Recognition code: 31
+
+  State 119
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 50 51 54 55
+    Goto 138: 49
+    Recognition code: 31
+
+  State 120
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 25 26 48 49 50 51 54 55
+    Goto 139: 21
+    Recognition code: 31
+
+  State 121
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 42
+
+  State 122
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 140: 15
+    Recognition code: 31
+
+  State 123
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 141: 18
+    Recognition code: 31
+
+  State 124
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 43
+
+  State 125
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 142: 19
+    Recognition code: 31
+
+  State 126
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 143: 14
+    Recognition code: 31
+
+  State 127
+    Goto 35: 1 2 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 144: 3
+    Recognition code: 31
+
+  State 128
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 145: 14
+    Recognition code: 31
+
+  State 129
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 44
+
+  State 130
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 146: 20
+    Recognition code: 31
+
+  State 131
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 147: 15
+    Recognition code: 31
+
+  State 132
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 148: 5
+    Recognition code: 31
+
+  State 133
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 149: 5
+    Recognition code: 31
+
+  State 134
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 150: 18
+    Recognition code: 31
+
+  State 135
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 45
+
+  State 136
+    Goto 35: 1 2 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 151: 3
+    Recognition code: 31
+
+  State 137
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 152: 18
+    Recognition code: 31
+
+  State 138
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 46
+
+  State 139
+    Goto 35: 1 2 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 153: 3
+    Recognition code: 31
+
+  State 140
+    Goto 35: 1 2 3 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 154: 4
+    Recognition code: 31
+
+  State 141
+    Goto 35: 1 2 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 155: 3
+    Recognition code: 31
+
+  State 142
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 47
+
+  State 143
+    Goto 35: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 156: 1
+    Recognition code: 31
+
+  State 144
+    Goto 35: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 157: 1
+    Recognition code: 31
+
+  State 145
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 158: 19
+    Recognition code: 31
+
+  State 146
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 159: 9
+    Recognition code: 31
+
+  State 147
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 160: 18
+    Recognition code: 31
+
+  State 148
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 161: 20
+    Recognition code: 31
+
+  State 149
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 48
+
+  State 150
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 49
+
+  State 151
+    Goto 35: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 162: 1
+    Recognition code: 31
+
+  State 152
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 50
+
+  State 153
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 163: 20
+    Recognition code: 31
+
+  State 154
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 164: 5
+    Recognition code: 31
+
+  State 155
+    Goto 35: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 165: 1
+    Recognition code: 31
+
+  State 156
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 166: 12
+    Recognition code: 31
+
+  State 157
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 167: 19
+    Recognition code: 31
+
+  State 158
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 51
+
+  State 159
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 168: 15
+    Recognition code: 31
+
+  State 160
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 169: 9
+    Recognition code: 31
+
+  State 161
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 170: 19
+    Recognition code: 31
+
+  State 162
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 171: 19
+    Recognition code: 31
+
+  State 163
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 172: 9
+    Recognition code: 31
+
+  State 164
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 52
+
+  State 165
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 173: 19
+    Recognition code: 31
+
+  State 166
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 174: 19
+    Recognition code: 31
+
+  State 167
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 175: 5
+    Recognition code: 31
+
+  State 168
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 176: 14
+    Recognition code: 31
+
+  State 169
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 177: 5
+    Recognition code: 31
+
+  State 170
+    Goto 35: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 178: 9
+    Recognition code: 31
+
+  State 171
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 179: 5
+    Recognition code: 31
+
+  State 172
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 180: 15
+    Recognition code: 31
+
+  State 173
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 181: 5
+    Recognition code: 31
+
+  State 174
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 53
+
+  State 175
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 54
+
+  State 176
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 182: 19
+    Recognition code: 31
+
+  State 177
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 183: 19
+    Recognition code: 31
+
+  State 178
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 48 49 50 51 54 55
+    Goto 184: 26
+    Recognition code: 31
+
+  State 179
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 55
+
+  State 180
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 185: 14
+    Recognition code: 31
+
+  State 181
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 56
+
+  State 182
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 57
+
+  State 183
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 58
+
+  State 184
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 186: 5
+    Recognition code: 31
+
+  State 185
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Goto 187: 19
+    Recognition code: 31
+
+  State 186
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 59
+
+  State 187
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 48 49 50 51 54 55
+    Recognition code: 60
+
+Forward DFA Recognition Codes:
+
+  Recognition code 0
+
+  Recognition code 1
+    Tokens:  49
+
+  Recognition code 2
+    Tokens:  0 55
+
+  Recognition code 3
+    Tokens:  1 55
+
+  Recognition code 4
+    Tokens:  2 55
+
+  Recognition code 5
+    Tokens:  3 55
+
+  Recognition code 6
+    Tokens:  4 55
+
+  Recognition code 7
+    Tokens:  5 55
+
+  Recognition code 8
+    Tokens:  6 55
+
+  Recognition code 9
+    Tokens:  7 55
+
+  Recognition code 10
+    Tokens:  8 55
+
+  Recognition code 11
+    Tokens:  9 55
+
+  Recognition code 12
+    Tokens:  10 55
+
+  Recognition code 13
+    Tokens:  11 55
+
+  Recognition code 14
+    Tokens:  12 55
+
+  Recognition code 15
+    Tokens:  13 55
+
+  Recognition code 16
+    Tokens:  14 55
+
+  Recognition code 17
+    Tokens:  15 55
+
+  Recognition code 18
+    Tokens:  16 55
+
+  Recognition code 19
+    Tokens:  17 55
+
+  Recognition code 20
+    Tokens:  55
+
+  Recognition code 21
+    Tokens:  43 55
+
+  Recognition code 22
+    Tokens:  47 55
+
+  Recognition code 23
+    Tokens:  44 55
+
+  Recognition code 24
+    Tokens:  54 55 56 57
+
+  Recognition code 25
+    Tokens:  49 55
+
+  Recognition code 26
+    Tokens:  51 55
+
+  Recognition code 27
+    Tokens:  52 55
+
+  Recognition code 28
+    Tokens:  18
+
+  Recognition code 29
+    Tokens:  50
+
+  Recognition code 30
+    Tokens:  19
+
+  Recognition code 31
+    Tokens:  43
+
+  Recognition code 32
+    Tokens:  47
+
+  Recognition code 33
+    Tokens:  46
+
+  Recognition code 34
+    Tokens:  44
+
+  Recognition code 35
+    Tokens:  48
+
+  Recognition code 36
+    Tokens:  53
+
+  Recognition code 37
+    Tokens:  45 46
+
+  Recognition code 38
+    Tokens:  32 43
+
+  Recognition code 39
+    Tokens:  29 43
+
+  Recognition code 40
+    Tokens:  33 43
+
+  Recognition code 41
+    Tokens:  41 43
+
+  Recognition code 42
+    Tokens:  30 43
+
+  Recognition code 43
+    Tokens:  42 43
+
+  Recognition code 44
+    Tokens:  25 43
+
+  Recognition code 45
+    Tokens:  39 43
+
+  Recognition code 46
+    Tokens:  31 43
+
+  Recognition code 47
+    Tokens:  20 43
+
+  Recognition code 48
+    Tokens:  26 43
+
+  Recognition code 49
+    Tokens:  28 43
+
+  Recognition code 50
+    Tokens:  38 43
+
+  Recognition code 51
+    Tokens:  27 43
+
+  Recognition code 52
+    Tokens:  34 43
+
+  Recognition code 53
+    Tokens:  23 43
+
+  Recognition code 54
+    Tokens:  37 43
+
+  Recognition code 55
+    Tokens:  36 43
+
+  Recognition code 56
+    Tokens:  35 43
+
+  Recognition code 57
+    Tokens:  22 43
+
+  Recognition code 58
+    Tokens:  21 43
+
+  Recognition code 59
+    Tokens:  40 43
+
+  Recognition code 60
+    Tokens:  24 43
+
+Reverse DFA States:
+
+  State 0
+    Recognition code: 0
+
+Reverse DFA Recognition Codes:
+
+  Recognition code 0
+
+2 start conditions.
+58 tokens.
+188 states in the forward DFA.
+61 final state recognition codes in the forward DFA.
+1 states in the reverse DFA.
+1 final state recognition codes in the reverse DFA.
+
+Generating LALR(1) configuration finite state machine ...
+
+Terminal symbols:
+
+  %%EOF
+    Insertion cost: 1
+    Deletion cost: 1
+
+  -
+    Insertion cost: 1
+    Deletion cost: 1
+
+  ~
+    Insertion cost: 1
+    Deletion cost: 1
+
+  &
+    Insertion cost: 1
+    Deletion cost: 1
+
+  @
+    Insertion cost: 1
+    Deletion cost: 1
+
+  *
+    Insertion cost: 1
+    Deletion cost: 1
+
+  +
+    Insertion cost: 1
+    Deletion cost: 1
+
+  ?
+    Insertion cost: 1
+    Deletion cost: 1
+
+  /
+    Insertion cost: 1
+    Deletion cost: 1
+
+  :
+    Insertion cost: 1
+    Deletion cost: 1
+
+  ;
+    Insertion cost: 1
+    Deletion cost: 1
+
+  =
+    Insertion cost: 1
+    Deletion cost: 1
+
+  (
+    Insertion cost: 1
+    Deletion cost: 1
+
+  )
+    Insertion cost: 1
+    Deletion cost: 1
+
+  {
+    Insertion cost: 1
+    Deletion cost: 1
+
+  }
+    Insertion cost: 1
+    Deletion cost: 1
+
+  |
+    Insertion cost: 1
+    Deletion cost: 1
+
+  #
+    Insertion cost: 1
+    Deletion cost: 1
+
+  .
+    Insertion cost: 1
+    Deletion cost: 1
+
+  ->
+    Insertion cost: 1
+    Deletion cost: 1
+
+  ..
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %tokens
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %categories
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %conditions
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %terminals
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %productions
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %shift
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %reduce
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %options
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %repair
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %lr1
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %plr1
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %lalr1
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %any
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %none
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %unicode
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %uppercase
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %lowercase
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %titlecase
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %letter
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %digit
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %charsetsize
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %goal
+    Insertion cost: 1
+    Deletion cost: 1
+
+  %java
+    Insertion cost: 1
+    Deletion cost: 1
+
+  identifier
+    Insertion cost: 1
+    Deletion cost: 1
+
+  number
+    Insertion cost: 1
+    Deletion cost: 1
+
+Nonterminal symbols:
+
+  Goal
+
+  SectionList
+
+  Section
+
+  OptionHeader
+
+  OptionDefList
+
+  TerminalHeader
+
+  TerminalDefList
+
+  ProductionHeader
+
+  ProductionDefList
+
+  CategoryHeader
+
+  CategoryDefList
+
+  ConditionHeader
+
+  ConditionDefList
+
+  TokenHeader
+
+  TokenDefList
+
+  OptionDefinition
+
+  MaxInsertions
+
+  MaxDeletions
+
+  ValidationLength
+
+  CharSetSize
+
+  Symbol
+
+  JavaName
+
+  JavaIdentifier
+
+  TerminalDefinition
+
+  InsertionCost
+
+  DeletionCost
+
+  ProductionDefinition
+
+  LinkName
+
+  Parameter
+
+  SymbolList
+
+  ProductionPrec
+
+  SymbolSet
+
+  CategoryDefinition
+
+  Category
+
+  CatExp
+
+  ConditionDefinition
+
+  Condition
+
+  ConditionSet
+
+  TokenDefinition
+
+  Token
+
+  RegExp
+
+  %%Goal
+
+Productions:
+
+  Production 0
+    Goal -> SectionList
+    Parameter: 0
+    Cost: 6
+
+  Production 1
+    SectionList -> Section
+    Parameter: 0
+    Cost: 5
+
+  Production 2
+    SectionList -> SectionList Section
+    Parameter: 0
+    Cost: 11
+
+  Production 3
+    Section -> OptionHeader OptionDefList
+    Parameter: 0
+    Cost: 4
+
+  Production 4
+    Section -> TerminalHeader TerminalDefList
+    Parameter: 0
+    Cost: 4
+
+  Production 5
+    Section -> ProductionHeader ProductionDefList
+    Parameter: 0
+    Cost: 4
+
+  Production 6
+    Section -> CategoryHeader CategoryDefList
+    Parameter: 0
+    Cost: 4
+
+  Production 7
+    Section -> ConditionHeader ConditionDefList
+    Parameter: 0
+    Cost: 4
+
+  Production 8
+    Section -> TokenHeader TokenDefList
+    Parameter: 0
+    Cost: 5
+
+  Production 9
+    OptionHeader -> %options :
+    Parameter: 0
+    Cost: 2
+
+  Production 10
+    OptionDefList ->
+    Parameter: 0
+    Cost: 0
+
+  Production 11
+    OptionDefList -> OptionDefList OptionDefinition
+    Parameter: 0
+    Cost: 4
+
+  Production 12
+    OptionDefinition -> %lr1 ;
+    Link name: LR1
+    Parameter: 0
+    Cost: 2
+
+  Production 13
+    OptionDefinition -> %plr1 ;
+    Link name: PLR1
+    Parameter: 0
+    Cost: 2
+
+  Production 14
+    OptionDefinition -> %lalr1 ;
+    Link name: LALR1
+    Parameter: 0
+    Cost: 2
+
+  Production 15
+    OptionDefinition -> %repair MaxInsertions MaxDeletions ValidationLength ;
+    Link name: repair
+    Parameter: 0
+    Cost: 8
+
+  Production 16
+    OptionDefinition -> %charsetsize CharSetSize ;
+    Link name: charsetsize
+    Parameter: 0
+    Cost: 4
+
+  Production 17
+    OptionDefinition -> %goal Symbol ;
+    Link name: goal
+    Parameter: 0
+    Cost: 4
+
+  Production 18
+    OptionDefinition -> %java JavaName ;
+    Link name: java
+    Parameter: 0
+    Cost: 5
+
+  Production 19
+    MaxInsertions -> number
+    Parameter: 0
+    Cost: 1
+
+  Production 20
+    MaxDeletions -> number
+    Parameter: 0
+    Cost: 1
+
+  Production 21
+    ValidationLength -> number
+    Parameter: 0
+    Cost: 1
+
+  Production 22
+    CharSetSize -> number
+    Parameter: 0
+    Cost: 1
+
+  Production 23
+    Symbol -> identifier
+    Parameter: 0
+    Cost: 1
+
+  Production 24
+    JavaName -> JavaIdentifier
+    Link name: simple
+    Parameter: 0
+    Cost: 2
+
+  Production 25
+    JavaName -> JavaName . JavaIdentifier
+    Link name: qualified
+    Parameter: 0
+    Cost: 6
+
+  Production 26
+    JavaIdentifier -> identifier
+    Parameter: 0
+    Cost: 1
+
+  Production 27
+    TerminalHeader -> %terminals :
+    Parameter: 0
+    Cost: 2
+
+  Production 28
+    TerminalDefList ->
+    Parameter: 0
+    Cost: 0
+
+  Production 29
+    TerminalDefList -> TerminalDefList TerminalDefinition
+    Parameter: 0
+    Cost: 5
+
+  Production 30
+    TerminalDefinition -> Symbol ;
+    Link name: defaultCost
+    Parameter: 0
+    Cost: 3
+
+  Production 31
+    TerminalDefinition -> Symbol InsertionCost DeletionCost ;
+    Link name: withCost
+    Parameter: 0
+    Cost: 7
+
+  Production 32
+    InsertionCost -> number
+    Parameter: 0
+    Cost: 1
+
+  Production 33
+    DeletionCost -> number
+    Parameter: 0
+    Cost: 1
+
+  Production 34
+    ProductionHeader -> %productions :
+    Parameter: 0
+    Cost: 2
+
+  Production 35
+    ProductionDefList ->
+    Parameter: 0
+    Cost: 0
+
+  Production 36
+    ProductionDefList -> ProductionDefList ProductionDefinition
+    Parameter: 0
+    Cost: 10
+
+  Production 37
+    ProductionDefinition -> Symbol LinkName Parameter -> SymbolList ProductionPrec ;
+    Parameter: 0
+    Cost: 8
+
+  Production 38
+    LinkName ->
+    Link name: empty
+    Parameter: 0
+    Cost: 0
+
+  Production 39
+    LinkName -> { identifier }
+    Link name: identifier
+    Parameter: 0
+    Cost: 3
+
+  Production 40
+    Parameter ->
+    Link name: empty
+    Parameter: 0
+    Cost: 0
+
+  Production 41
+    Parameter -> # number
+    Link name: number
+    Parameter: 0
+    Cost: 2
+
+  Production 42
+    SymbolList ->
+    Link name: empty
+    Parameter: 0
+    Cost: 0
+
+  Production 43
+    SymbolList -> SymbolList Symbol
+    Link name: append
+    Parameter: 0
+    Cost: 3
+
+  Production 44
+    ProductionPrec ->
+    Link name: empty
+    Parameter: 0
+    Cost: 0
+
+  Production 45
+    ProductionPrec -> ProductionPrec %shift SymbolSet
+    Link name: appendShift
+    Parameter: 0
+    Cost: 3
+
+  Production 46
+    ProductionPrec -> ProductionPrec %reduce SymbolSet
+    Link name: appendReduce
+    Parameter: 0
+    Cost: 3
+
+  Production 47
+    SymbolSet ->
+    Link name: empty
+    Parameter: 0
+    Cost: 0
+
+  Production 48
+    SymbolSet -> SymbolSet Symbol
+    Link name: append
+    Parameter: 0
+    Cost: 3
+
+  Production 49
+    CategoryHeader -> %categories :
+    Parameter: 0
+    Cost: 2
+
+  Production 50
+    CategoryDefList ->
+    Parameter: 0
+    Cost: 0
+
+  Production 51
+    CategoryDefList -> CategoryDefList CategoryDefinition
+    Parameter: 0
+    Cost: 8
+
+  Production 52
+    CategoryDefinition -> Category = CatExp ;
+    Parameter: 0
+    Cost: 6
+
+  Production 53
+    Category -> identifier
+    Parameter: 0
+    Cost: 1
+
+  Production 54
+    CatExp -> number
+    Link name: number
+    Parameter: 0
+    Cost: 1
+
+  Production 55
+    CatExp -> identifier
+    Link name: identifier
+    Parameter: 0
+    Cost: 1
+
+  Production 56
+    CatExp -> number .. number
+    Link name: numberRange
+    Parameter: 0
+    Cost: 3
+
+  Production 57
+    CatExp -> identifier .. identifier
+    Link name: identifierRange
+    Parameter: 0
+    Cost: 3
+
+  Production 58
+    CatExp -> %any
+    Link name: any
+    Parameter: 0
+    Cost: 1
+
+  Production 59
+    CatExp -> %none
+    Link name: none
+    Parameter: 0
+    Cost: 1
+
+  Production 60
+    CatExp -> %unicode
+    Link name: unicode
+    Parameter: 0
+    Cost: 1
+
+  Production 61
+    CatExp -> %uppercase
+    Link name: uppercase
+    Parameter: 0
+    Cost: 1
+
+  Production 62
+    CatExp -> %lowercase
+    Link name: lowercase
+    Parameter: 0
+    Cost: 1
+
+  Production 63
+    CatExp -> %titlecase
+    Link name: titlecase
+    Parameter: 0
+    Cost: 1
+
+  Production 64
+    CatExp -> %letter
+    Link name: letter
+    Parameter: 0
+    Cost: 1
+
+  Production 65
+    CatExp -> %digit
+    Link name: digit
+    Parameter: 0
+    Cost: 1
+
+  Production 66
+    CatExp -> ( CatExp )
+    Link name: paren
+    Parameter: 0
+    Cost: 4
+
+  Production 67
+    CatExp -> CatExp - CatExp
+    Link name: difference
+    Parameter: 0
+    Reduce terminals: - & |
+    Cost: 5
+
+  Production 68
+    CatExp -> CatExp & CatExp
+    Link name: intersection
+    Parameter: 0
+    Reduce terminals: - & |
+    Cost: 5
+
+  Production 69
+    CatExp -> CatExp | CatExp
+    Link name: union
+    Parameter: 0
+    Shift terminals: - &
+    Reduce terminals: |
+    Cost: 5
+
+  Production 70
+    ConditionHeader -> %conditions :
+    Parameter: 0
+    Cost: 2
+
+  Production 71
+    ConditionDefList ->
+    Parameter: 0
+    Cost: 0
+
+  Production 72
+    ConditionDefList -> ConditionDefList ConditionDefinition
+    Parameter: 0
+    Cost: 5
+
+  Production 73
+    ConditionDefinition -> Condition ;
+    Parameter: 0
+    Cost: 3
+
+  Production 74
+    Condition -> identifier
+    Parameter: 0
+    Cost: 1
+
+  Production 75
+    TokenHeader -> %tokens ConditionSet :
+    Parameter: 0
+    Cost: 3
+
+  Production 76
+    ConditionSet ->
+    Link name: empty
+    Parameter: 0
+    Cost: 0
+
+  Production 77
+    ConditionSet -> ConditionSet Condition
+    Link name: append
+    Parameter: 0
+    Cost: 3
+
+  Production 78
+    TokenDefList ->
+    Parameter: 0
+    Cost: 0
+
+  Production 79
+    TokenDefList -> TokenDefList TokenDefinition
+    Parameter: 0
+    Cost: 11
+
+  Production 80
+    TokenDefinition -> Token LinkName Parameter = RegExp ;
+    Link name: noContext
+    Parameter: 0
+    Cost: 9
+
+  Production 81
+    TokenDefinition -> Token LinkName Parameter = RegExp / RegExp ;
+    Link name: rightContext
+    Parameter: 0
+    Cost: 13
+
+  Production 82
+    Token -> identifier
+    Parameter: 0
+    Cost: 1
+
+  Production 83
+    RegExp -> Category
+    Link name: oneChar
+    Parameter: 0
+    Cost: 2
+
+  Production 84
+    RegExp -> ( RegExp )
+    Link name: paren
+    Parameter: 0
+    Cost: 5
+
+  Production 85
+    RegExp -> RegExp *
+    Link name: KleeneClosure
+    Parameter: 0
+    Cost: 4
+
+  Production 86
+    RegExp -> RegExp +
+    Link name: positiveClosure
+    Parameter: 0
+    Cost: 4
+
+  Production 87
+    RegExp -> RegExp ?
+    Link name: optionalClosure
+    Parameter: 0
+    Cost: 4
+
+  Production 88
+    RegExp -> RegExp RegExp
+    Link name: catenation
+    Parameter: 0
+    Shift terminals: * + ?
+    Reduce terminals: identifier ( - & ~ @ |
+    Cost: 6
+
+  Production 89
+    RegExp -> RegExp - RegExp
+    Link name: difference
+    Parameter: 0
+    Shift terminals: * + ? identifier (
+    Reduce terminals: - & ~ @ |
+    Cost: 7
+
+  Production 90
+    RegExp -> RegExp & RegExp
+    Link name: intersection
+    Parameter: 0
+    Shift terminals: * + ? identifier (
+    Reduce terminals: - & ~ @ |
+    Cost: 7
+
+  Production 91
+    RegExp -> RegExp ~ RegExp
+    Link name: excluding
+    Parameter: 0
+    Shift terminals: * + ? identifier (
+    Reduce terminals: - & ~ @ |
+    Cost: 7
+
+  Production 92
+    RegExp -> RegExp @ RegExp
+    Link name: including
+    Parameter: 0
+    Shift terminals: * + ? identifier (
+    Reduce terminals: - & ~ @ |
+    Cost: 7
+
+  Production 93
+    RegExp -> RegExp | RegExp
+    Link name: alternation
+    Parameter: 0
+    Shift terminals: * + ? identifier ( - & ~ @
+    Reduce terminals: |
+    Cost: 7
+
+  Production 94
+    %%Goal -> Goal %%EOF
+    Parameter: 0
+    Cost: 8
+
+Error repair options:
+
+  Maximum insertions: 100
+
+  Maximum deletions: 200
+
+  Validation length: 5
+
+  Single-point insertion list:
+
+    -
+    ~
+    &
+    @
+    *
+    +
+    ?
+    /
+    :
+    ;
+    =
+    (
+    )
+    {
+    }
+    |
+    #
+    .
+    ->
+    ..
+    %tokens
+    %categories
+    %conditions
+    %terminals
+    %productions
+    %shift
+    %reduce
+    %options
+    %repair
+    %lr1
+    %plr1
+    %lalr1
+    %any
+    %none
+    %unicode
+    %uppercase
+    %lowercase
+    %titlecase
+    %letter
+    %digit
+    %charsetsize
+    %goal
+    %java
+    identifier
+    number
+
+Parser generator algorithm statistics:
+
+  Number of raw LR(0) states: 151
+
+  Number of raw LR(1) states: 151
+
+  Number of iterative passes to generate LR(1) states: 3
+
+  Number of reachable LR(1) states on each pass:
+    Pass 0: 1
+    Pass 1: 147
+    Pass 2: 151
+
+  Number of iterative passes to generate production costs: 5
+
+  Number of iterative passes to generate conflict avoidance tables: 3
+
+  Number of parsing conflicts successfully resolved: 69
+
+LALR(1) configuration finite state machine:
+
+  State 0:
+    %%Goal -> _ Goal %%EOF  {}
+
+    Shift-Reduce 1: Section
+    Shift-Goto 1: %tokens
+    Shift-Goto 2: %categories
+    Shift-Goto 3: %conditions
+    Shift-Goto 4: %terminals
+    Shift-Goto 5: %productions
+    Shift-Goto 6: %options
+    Shift-Goto 7: Goal
+    Shift-Goto 8: SectionList
+    Shift-Goto 9: OptionHeader
+    Shift-Goto 10: TerminalHeader
+    Shift-Goto 11: ProductionHeader
+    Shift-Goto 12: CategoryHeader
+    Shift-Goto 13: ConditionHeader
+    Shift-Goto 14: TokenHeader
+    Unwind: Shift %options Goto 6
+
+  State 1:
+    TokenHeader -> %tokens _ ConditionSet :  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 76: : identifier
+    Shift-Goto 15: ConditionSet
+    Unwind: Reduce 76
+
+  State 2:
+    CategoryHeader -> %categories _ :  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 49: :
+    Unwind: Shift : Reduce 49
+
+  State 3:
+    ConditionHeader -> %conditions _ :  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 70: :
+    Unwind: Shift : Reduce 70
+
+  State 4:
+    TerminalHeader -> %terminals _ :  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 27: :
+    Unwind: Shift : Reduce 27
+
+  State 5:
+    ProductionHeader -> %productions _ :  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 34: :
+    Unwind: Shift : Reduce 34
+
+  State 6:
+    OptionHeader -> %options _ :  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 9: :
+    Unwind: Shift : Reduce 9
+
+  State 7:
+    %%Goal -> Goal _ %%EOF  {}
+
+    Accept: %%EOF
+    Unwind: Accept
+
+  State 8:
+    Goal -> SectionList _  {%%EOF}
+    SectionList -> SectionList _ Section  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+
+    Reduce 0: %%EOF
+    Shift-Reduce 2: Section
+    Shift-Goto 1: %tokens
+    Shift-Goto 2: %categories
+    Shift-Goto 3: %conditions
+    Shift-Goto 4: %terminals
+    Shift-Goto 5: %productions
+    Shift-Goto 6: %options
+    Shift-Goto 9: OptionHeader
+    Shift-Goto 10: TerminalHeader
+    Shift-Goto 11: ProductionHeader
+    Shift-Goto 12: CategoryHeader
+    Shift-Goto 13: ConditionHeader
+    Shift-Goto 14: TokenHeader
+    Unwind: Reduce 0
+
+  State 9:
+    Section -> OptionHeader _ OptionDefList  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+
+    Reduce 10: %%EOF %tokens %categories %conditions %terminals %productions %options %repair %lr1 %plr1 %lalr1 %charsetsize %goal %java
+    Shift-Goto 17: OptionDefList
+    Unwind: Reduce 10
+
+  State 10:
+    Section -> TerminalHeader _ TerminalDefList  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+
+    Reduce 28: %%EOF %tokens %categories %conditions %terminals %productions %options identifier
+    Shift-Goto 18: TerminalDefList
+    Unwind: Reduce 28
+
+  State 11:
+    Section -> ProductionHeader _ ProductionDefList  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+
+    Reduce 35: %%EOF %tokens %categories %conditions %terminals %productions %options identifier
+    Shift-Goto 19: ProductionDefList
+    Unwind: Reduce 35
+
+  State 12:
+    Section -> CategoryHeader _ CategoryDefList  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+
+    Reduce 50: %%EOF %tokens %categories %conditions %terminals %productions %options identifier
+    Shift-Goto 20: CategoryDefList
+    Unwind: Reduce 50
+
+  State 13:
+    Section -> ConditionHeader _ ConditionDefList  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+
+    Reduce 71: %%EOF %tokens %categories %conditions %terminals %productions %options identifier
+    Shift-Goto 21: ConditionDefList
+    Unwind: Reduce 71
+
+  State 14:
+    Section -> TokenHeader _ TokenDefList  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+
+    Reduce 78: %%EOF %tokens %categories %conditions %terminals %productions %options identifier
+    Shift-Goto 22: TokenDefList
+    Unwind: Reduce 78
+
+  State 15:
+    TokenHeader -> %tokens ConditionSet _ :  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    ConditionSet -> ConditionSet _ Condition  {:, identifier}
+
+    Shift-Reduce 74: identifier
+    Shift-Reduce 75: :
+    Shift-Reduce 77: Condition
+    Unwind: Shift : Reduce 75
+
+  State 16:
+    %%Goal -> Goal %%EOF _  {}
+
+    Unwind: Reduce 94
+
+  State 17:
+    Section -> OptionHeader OptionDefList _  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+    OptionDefList -> OptionDefList _ OptionDefinition  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Reduce 3: %%EOF %tokens %categories %conditions %terminals %productions %options
+    Shift-Reduce 11: OptionDefinition
+    Shift-Goto 23: %repair
+    Shift-Goto 24: %lr1
+    Shift-Goto 25: %plr1
+    Shift-Goto 26: %lalr1
+    Shift-Goto 27: %charsetsize
+    Shift-Goto 28: %goal
+    Shift-Goto 29: %java
+    Unwind: Reduce 3
+
+  State 18:
+    Section -> TerminalHeader TerminalDefList _  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+    TerminalDefList -> TerminalDefList _ TerminalDefinition  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 4: %%EOF %tokens %categories %conditions %terminals %productions %options
+    Shift-Reduce 23: identifier
+    Shift-Reduce 29: TerminalDefinition
+    Shift-Goto 30: Symbol
+    Unwind: Reduce 4
+
+  State 19:
+    Section -> ProductionHeader ProductionDefList _  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+    ProductionDefList -> ProductionDefList _ ProductionDefinition  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 5: %%EOF %tokens %categories %conditions %terminals %productions %options
+    Shift-Reduce 23: identifier
+    Shift-Reduce 36: ProductionDefinition
+    Shift-Goto 31: Symbol
+    Unwind: Reduce 5
+
+  State 20:
+    Section -> CategoryHeader CategoryDefList _  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+    CategoryDefList -> CategoryDefList _ CategoryDefinition  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 6: %%EOF %tokens %categories %conditions %terminals %productions %options
+    Shift-Reduce 51: CategoryDefinition
+    Shift-Reduce 53: identifier
+    Shift-Goto 32: Category
+    Unwind: Reduce 6
+
+  State 21:
+    Section -> ConditionHeader ConditionDefList _  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+    ConditionDefList -> ConditionDefList _ ConditionDefinition  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 7: %%EOF %tokens %categories %conditions %terminals %productions %options
+    Shift-Reduce 72: ConditionDefinition
+    Shift-Reduce 74: identifier
+    Shift-Goto 33: Condition
+    Unwind: Reduce 7
+
+  State 22:
+    Section -> TokenHeader TokenDefList _  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options}
+    TokenDefList -> TokenDefList _ TokenDefinition  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 8: %%EOF %tokens %categories %conditions %terminals %productions %options
+    Shift-Reduce 79: TokenDefinition
+    Shift-Reduce 82: identifier
+    Shift-Goto 34: Token
+    Unwind: Reduce 8
+
+  State 23:
+    OptionDefinition -> %repair _ MaxInsertions MaxDeletions ValidationLength ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 19: number
+    Shift-Goto 35: MaxInsertions
+    Unwind: Shift number Reduce 19
+
+  State 24:
+    OptionDefinition -> %lr1 _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 12: ;
+    Unwind: Shift ; Reduce 12
+
+  State 25:
+    OptionDefinition -> %plr1 _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 13: ;
+    Unwind: Shift ; Reduce 13
+
+  State 26:
+    OptionDefinition -> %lalr1 _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 14: ;
+    Unwind: Shift ; Reduce 14
+
+  State 27:
+    OptionDefinition -> %charsetsize _ CharSetSize ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 22: number
+    Shift-Goto 36: CharSetSize
+    Unwind: Shift number Reduce 22
+
+  State 28:
+    OptionDefinition -> %goal _ Symbol ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 23: identifier
+    Shift-Goto 37: Symbol
+    Unwind: Shift identifier Reduce 23
+
+  State 29:
+    OptionDefinition -> %java _ JavaName ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 24: JavaIdentifier
+    Shift-Reduce 26: identifier
+    Shift-Goto 38: JavaName
+    Unwind: Shift identifier Reduce 26
+
+  State 30:
+    TerminalDefinition -> Symbol _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    TerminalDefinition -> Symbol _ InsertionCost DeletionCost ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 30: ;
+    Shift-Reduce 32: number
+    Shift-Goto 39: InsertionCost
+    Unwind: Shift ; Reduce 30
+
+  State 31:
+    ProductionDefinition -> Symbol _ LinkName Parameter -> SymbolList ProductionPrec ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 38: # ->
+    Shift-Goto 40: {
+    Shift-Goto 41: LinkName
+    Unwind: Reduce 38
+
+  State 32:
+    CategoryDefinition -> Category _ = CatExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Goto 42: =
+    Unwind: Shift = Goto 42
+
+  State 33:
+    ConditionDefinition -> Condition _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 73: ;
+    Unwind: Shift ; Reduce 73
+
+  State 34:
+    TokenDefinition -> Token _ LinkName Parameter = RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    TokenDefinition -> Token _ LinkName Parameter = RegExp / RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 38: = #
+    Shift-Goto 40: {
+    Shift-Goto 43: LinkName
+    Unwind: Reduce 38
+
+  State 35:
+    OptionDefinition -> %repair MaxInsertions _ MaxDeletions ValidationLength ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 20: number
+    Shift-Goto 44: MaxDeletions
+    Unwind: Shift number Reduce 20
+
+  State 36:
+    OptionDefinition -> %charsetsize CharSetSize _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 16: ;
+    Unwind: Shift ; Reduce 16
+
+  State 37:
+    OptionDefinition -> %goal Symbol _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 17: ;
+    Unwind: Shift ; Reduce 17
+
+  State 38:
+    OptionDefinition -> %java JavaName _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+    JavaName -> JavaName _ . JavaIdentifier  {;, .}
+
+    Shift-Reduce 18: ;
+    Shift-Goto 45: .
+    Unwind: Shift ; Reduce 18
+
+  State 39:
+    TerminalDefinition -> Symbol InsertionCost _ DeletionCost ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 33: number
+    Shift-Goto 46: DeletionCost
+    Unwind: Shift number Reduce 33
+
+  State 40:
+    LinkName -> { _ identifier }  {=, #, ->}
+
+    Shift-Goto 47: identifier
+    Unwind: Shift identifier Goto 47
+
+  State 41:
+    ProductionDefinition -> Symbol LinkName _ Parameter -> SymbolList ProductionPrec ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 40: ->
+    Shift-Goto 48: #
+    Shift-Goto 49: Parameter
+    Unwind: Reduce 40
+
+  State 42:
+    CategoryDefinition -> Category = _ CatExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 58: %any
+    Shift-Reduce 59: %none
+    Shift-Reduce 60: %unicode
+    Shift-Reduce 61: %uppercase
+    Shift-Reduce 62: %lowercase
+    Shift-Reduce 63: %titlecase
+    Shift-Reduce 64: %letter
+    Shift-Reduce 65: %digit
+    Shift-Goto 50: (
+    Shift-Goto 51: identifier
+    Shift-Goto 52: number
+    Shift-Goto 53: CatExp
+    Unwind: Shift number Goto 52
+
+  State 43:
+    TokenDefinition -> Token LinkName _ Parameter = RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    TokenDefinition -> Token LinkName _ Parameter = RegExp / RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 40: =
+    Shift-Goto 48: #
+    Shift-Goto 54: Parameter
+    Unwind: Reduce 40
+
+  State 44:
+    OptionDefinition -> %repair MaxInsertions MaxDeletions _ ValidationLength ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 21: number
+    Shift-Goto 55: ValidationLength
+    Unwind: Shift number Reduce 21
+
+  State 45:
+    JavaName -> JavaName . _ JavaIdentifier  {;, .}
+
+    Shift-Reduce 25: JavaIdentifier
+    Shift-Reduce 26: identifier
+    Unwind: Shift identifier Reduce 26
+
+  State 46:
+    TerminalDefinition -> Symbol InsertionCost DeletionCost _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 31: ;
+    Unwind: Shift ; Reduce 31
+
+  State 47:
+    LinkName -> { identifier _ }  {=, #, ->}
+
+    Shift-Reduce 39: }
+    Unwind: Shift } Reduce 39
+
+  State 48:
+    Parameter -> # _ number  {=, ->}
+
+    Shift-Reduce 41: number
+    Unwind: Shift number Reduce 41
+
+  State 49:
+    ProductionDefinition -> Symbol LinkName Parameter _ -> SymbolList ProductionPrec ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Goto 56: ->
+    Unwind: Shift -> Goto 56
+
+  State 50:
+    CatExp -> ( _ CatExp )  {-, &, ;, ), |}
+
+    Shift-Reduce 58: %any
+    Shift-Reduce 59: %none
+    Shift-Reduce 60: %unicode
+    Shift-Reduce 61: %uppercase
+    Shift-Reduce 62: %lowercase
+    Shift-Reduce 63: %titlecase
+    Shift-Reduce 64: %letter
+    Shift-Reduce 65: %digit
+    Shift-Goto 50: (
+    Shift-Goto 51: identifier
+    Shift-Goto 52: number
+    Shift-Goto 57: CatExp
+    Unwind: Shift number Goto 52
+
+  State 51:
+    CatExp -> identifier _  {-, &, ;, ), |}
+    CatExp -> identifier _ .. identifier  {-, &, ;, ), |}
+
+    Reduce 55: - & ; ) |
+    Shift-Goto 58: ..
+    Unwind: Reduce 55
+
+  State 52:
+    CatExp -> number _  {-, &, ;, ), |}
+    CatExp -> number _ .. number  {-, &, ;, ), |}
+
+    Reduce 54: - & ; ) |
+    Shift-Goto 59: ..
+    Unwind: Reduce 54
+
+  State 53:
+    CategoryDefinition -> Category = CatExp _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    CatExp -> CatExp _ - CatExp  {-, &, ;, |}
+    CatExp -> CatExp _ & CatExp  {-, &, ;, |}
+    CatExp -> CatExp _ | CatExp  {-, &, ;, |}
+
+    Shift-Reduce 52: ;
+    Shift-Goto 60: -
+    Shift-Goto 61: &
+    Shift-Goto 62: |
+    Unwind: Shift ; Reduce 52
+
+  State 54:
+    TokenDefinition -> Token LinkName Parameter _ = RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    TokenDefinition -> Token LinkName Parameter _ = RegExp / RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Goto 63: =
+    Unwind: Shift = Goto 63
+
+  State 55:
+    OptionDefinition -> %repair MaxInsertions MaxDeletions ValidationLength _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, %repair, %lr1, %plr1, %lalr1, %charsetsize, %goal, %java}
+
+    Shift-Reduce 15: ;
+    Unwind: Shift ; Reduce 15
+
+  State 56:
+    ProductionDefinition -> Symbol LinkName Parameter -> _ SymbolList ProductionPrec ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Reduce 42: ; %shift %reduce identifier
+    Shift-Goto 64: SymbolList
+    Unwind: Reduce 42
+
+  State 57:
+    CatExp -> ( CatExp _ )  {-, &, ;, ), |}
+    CatExp -> CatExp _ - CatExp  {-, &, ), |}
+    CatExp -> CatExp _ & CatExp  {-, &, ), |}
+    CatExp -> CatExp _ | CatExp  {-, &, ), |}
+
+    Shift-Reduce 66: )
+    Shift-Goto 60: -
+    Shift-Goto 61: &
+    Shift-Goto 62: |
+    Unwind: Shift ) Reduce 66
+
+  State 58:
+    CatExp -> identifier .. _ identifier  {-, &, ;, ), |}
+
+    Shift-Reduce 57: identifier
+    Unwind: Shift identifier Reduce 57
+
+  State 59:
+    CatExp -> number .. _ number  {-, &, ;, ), |}
+
+    Shift-Reduce 56: number
+    Unwind: Shift number Reduce 56
+
+  State 60:
+    CatExp -> CatExp - _ CatExp  {-, &, ;, ), |}
+
+    Shift-Reduce 58: %any
+    Shift-Reduce 59: %none
+    Shift-Reduce 60: %unicode
+    Shift-Reduce 61: %uppercase
+    Shift-Reduce 62: %lowercase
+    Shift-Reduce 63: %titlecase
+    Shift-Reduce 64: %letter
+    Shift-Reduce 65: %digit
+    Shift-Reduce 67: CatExp
+    Shift-Goto 50: (
+    Shift-Goto 51: identifier
+    Shift-Goto 52: number
+    Unwind: Shift number Goto 52
+
+  State 61:
+    CatExp -> CatExp & _ CatExp  {-, &, ;, ), |}
+
+    Shift-Reduce 58: %any
+    Shift-Reduce 59: %none
+    Shift-Reduce 60: %unicode
+    Shift-Reduce 61: %uppercase
+    Shift-Reduce 62: %lowercase
+    Shift-Reduce 63: %titlecase
+    Shift-Reduce 64: %letter
+    Shift-Reduce 65: %digit
+    Shift-Reduce 68: CatExp
+    Shift-Goto 50: (
+    Shift-Goto 51: identifier
+    Shift-Goto 52: number
+    Unwind: Shift number Goto 52
+
+  State 62:
+    CatExp -> CatExp | _ CatExp  {-, &, ;, ), |}
+
+    Shift-Reduce 58: %any
+    Shift-Reduce 59: %none
+    Shift-Reduce 60: %unicode
+    Shift-Reduce 61: %uppercase
+    Shift-Reduce 62: %lowercase
+    Shift-Reduce 63: %titlecase
+    Shift-Reduce 64: %letter
+    Shift-Reduce 65: %digit
+    Shift-Goto 50: (
+    Shift-Goto 51: identifier
+    Shift-Goto 52: number
+    Shift-Goto 65: CatExp
+    Unwind: Shift number Goto 52
+
+  State 63:
+    TokenDefinition -> Token LinkName Parameter = _ RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    TokenDefinition -> Token LinkName Parameter = _ RegExp / RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Goto 66: (
+    Shift-Goto 67: RegExp
+    Unwind: Shift identifier Reduce 53
+
+  State 64:
+    ProductionDefinition -> Symbol LinkName Parameter -> SymbolList _ ProductionPrec ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    SymbolList -> SymbolList _ Symbol  {;, %shift, %reduce, identifier}
+
+    Reduce 44: ; %shift %reduce
+    Shift-Reduce 23: identifier
+    Shift-Reduce 43: Symbol
+    Shift-Goto 68: ProductionPrec
+    Unwind: Reduce 44
+
+  State 65:
+    CatExp -> CatExp | CatExp _  {-, &, ;, ), |}
+    CatExp -> CatExp _ - CatExp  {-, &, ;, ), |}
+    CatExp -> CatExp _ & CatExp  {-, &, ;, ), |}
+    CatExp -> CatExp _ | CatExp  {-, &, ;, ), |}
+
+    Reduce 69: ; ) |
+    Shift-Goto 60: -
+    Shift-Goto 61: &
+    Unwind: Reduce 69
+
+  State 66:
+    RegExp -> ( _ RegExp )  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Goto 66: (
+    Shift-Goto 69: RegExp
+    Unwind: Shift identifier Reduce 53
+
+  State 67:
+    TokenDefinition -> Token LinkName Parameter = RegExp _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    RegExp -> RegExp _ *  {-, ~, &, @, *, +, ?, /, ;, (, |, identifier}
+    RegExp -> RegExp _ +  {-, ~, &, @, *, +, ?, /, ;, (, |, identifier}
+    RegExp -> RegExp _ ?  {-, ~, &, @, *, +, ?, /, ;, (, |, identifier}
+    RegExp -> RegExp _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, |, identifier}
+    RegExp -> RegExp _ - RegExp  {-, ~, &, @, *, +, ?, /, ;, (, |, identifier}
+    RegExp -> RegExp _ & RegExp  {-, ~, &, @, *, +, ?, /, ;, (, |, identifier}
+    RegExp -> RegExp _ ~ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, |, identifier}
+    RegExp -> RegExp _ @ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, |, identifier}
+    RegExp -> RegExp _ | RegExp  {-, ~, &, @, *, +, ?, /, ;, (, |, identifier}
+    TokenDefinition -> Token LinkName Parameter = RegExp _ / RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 80: ;
+    Shift-Reduce 83: Category
+    Shift-Reduce 85: *
+    Shift-Reduce 86: +
+    Shift-Reduce 87: ?
+    Shift-Goto 66: (
+    Shift-Goto 70: -
+    Shift-Goto 71: ~
+    Shift-Goto 72: &
+    Shift-Goto 73: @
+    Shift-Goto 74: /
+    Shift-Goto 75: |
+    Shift-Goto 76: RegExp
+    Unwind: Shift ; Reduce 80
+
+  State 68:
+    ProductionDefinition -> Symbol LinkName Parameter -> SymbolList ProductionPrec _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    ProductionPrec -> ProductionPrec _ %shift SymbolSet  {;, %shift, %reduce}
+    ProductionPrec -> ProductionPrec _ %reduce SymbolSet  {;, %shift, %reduce}
+
+    Shift-Reduce 37: ;
+    Shift-Goto 77: %shift
+    Shift-Goto 78: %reduce
+    Unwind: Shift ; Reduce 37
+
+  State 69:
+    RegExp -> ( RegExp _ )  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ *  {-, ~, &, @, *, +, ?, (, ), |, identifier}
+    RegExp -> RegExp _ +  {-, ~, &, @, *, +, ?, (, ), |, identifier}
+    RegExp -> RegExp _ ?  {-, ~, &, @, *, +, ?, (, ), |, identifier}
+    RegExp -> RegExp _ RegExp  {-, ~, &, @, *, +, ?, (, ), |, identifier}
+    RegExp -> RegExp _ - RegExp  {-, ~, &, @, *, +, ?, (, ), |, identifier}
+    RegExp -> RegExp _ & RegExp  {-, ~, &, @, *, +, ?, (, ), |, identifier}
+    RegExp -> RegExp _ ~ RegExp  {-, ~, &, @, *, +, ?, (, ), |, identifier}
+    RegExp -> RegExp _ @ RegExp  {-, ~, &, @, *, +, ?, (, ), |, identifier}
+    RegExp -> RegExp _ | RegExp  {-, ~, &, @, *, +, ?, (, ), |, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Reduce 84: )
+    Shift-Reduce 85: *
+    Shift-Reduce 86: +
+    Shift-Reduce 87: ?
+    Shift-Goto 66: (
+    Shift-Goto 70: -
+    Shift-Goto 71: ~
+    Shift-Goto 72: &
+    Shift-Goto 73: @
+    Shift-Goto 75: |
+    Shift-Goto 76: RegExp
+    Unwind: Shift ) Reduce 84
+
+  State 70:
+    RegExp -> RegExp - _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Goto 66: (
+    Shift-Goto 79: RegExp
+    Unwind: Shift identifier Reduce 53
+
+  State 71:
+    RegExp -> RegExp ~ _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Goto 66: (
+    Shift-Goto 80: RegExp
+    Unwind: Shift identifier Reduce 53
+
+  State 72:
+    RegExp -> RegExp & _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Goto 66: (
+    Shift-Goto 81: RegExp
+    Unwind: Shift identifier Reduce 53
+
+  State 73:
+    RegExp -> RegExp @ _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Goto 66: (
+    Shift-Goto 82: RegExp
+    Unwind: Shift identifier Reduce 53
+
+  State 74:
+    TokenDefinition -> Token LinkName Parameter = RegExp / _ RegExp ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Goto 66: (
+    Shift-Goto 83: RegExp
+    Unwind: Shift identifier Reduce 53
+
+  State 75:
+    RegExp -> RegExp | _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Goto 66: (
+    Shift-Goto 84: RegExp
+    Unwind: Shift identifier Reduce 53
+
+  State 76:
+    RegExp -> RegExp RegExp _  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ *  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ +  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ?  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ - RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ & RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ~ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ @ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ | RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Reduce 88: - ~ & @ / ; ( ) | identifier
+    Shift-Reduce 83: Category
+    Shift-Reduce 85: *
+    Shift-Reduce 86: +
+    Shift-Reduce 87: ?
+    Shift-Goto 76: RegExp
+    Unwind: Reduce 88
+
+  State 77:
+    ProductionPrec -> ProductionPrec %shift _ SymbolSet  {;, %shift, %reduce}
+
+    Reduce 47: ; %shift %reduce identifier
+    Shift-Goto 85: SymbolSet
+    Unwind: Reduce 47
+
+  State 78:
+    ProductionPrec -> ProductionPrec %reduce _ SymbolSet  {;, %shift, %reduce}
+
+    Reduce 47: ; %shift %reduce identifier
+    Shift-Goto 86: SymbolSet
+    Unwind: Reduce 47
+
+  State 79:
+    RegExp -> RegExp - RegExp _  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ *  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ +  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ?  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ - RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ & RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ~ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ @ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ | RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Reduce 89: - ~ & @ / ; ) |
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Reduce 85: *
+    Shift-Reduce 86: +
+    Shift-Reduce 87: ?
+    Shift-Goto 66: (
+    Shift-Goto 76: RegExp
+    Unwind: Reduce 89
+
+  State 80:
+    RegExp -> RegExp ~ RegExp _  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ *  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ +  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ?  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ - RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ & RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ~ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ @ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ | RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Reduce 91: - ~ & @ / ; ) |
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Reduce 85: *
+    Shift-Reduce 86: +
+    Shift-Reduce 87: ?
+    Shift-Goto 66: (
+    Shift-Goto 76: RegExp
+    Unwind: Reduce 91
+
+  State 81:
+    RegExp -> RegExp & RegExp _  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ *  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ +  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ?  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ - RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ & RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ~ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ @ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ | RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Reduce 90: - ~ & @ / ; ) |
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Reduce 85: *
+    Shift-Reduce 86: +
+    Shift-Reduce 87: ?
+    Shift-Goto 66: (
+    Shift-Goto 76: RegExp
+    Unwind: Reduce 90
+
+  State 82:
+    RegExp -> RegExp @ RegExp _  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ *  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ +  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ?  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ - RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ & RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ~ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ @ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ | RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Reduce 92: - ~ & @ / ; ) |
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Reduce 85: *
+    Shift-Reduce 86: +
+    Shift-Reduce 87: ?
+    Shift-Goto 66: (
+    Shift-Goto 76: RegExp
+    Unwind: Reduce 92
+
+  State 83:
+    TokenDefinition -> Token LinkName Parameter = RegExp / RegExp _ ;  {%%EOF, %tokens, %categories, %conditions, %terminals, %productions, %options, identifier}
+    RegExp -> RegExp _ *  {-, ~, &, @, *, +, ?, ;, (, |, identifier}
+    RegExp -> RegExp _ +  {-, ~, &, @, *, +, ?, ;, (, |, identifier}
+    RegExp -> RegExp _ ?  {-, ~, &, @, *, +, ?, ;, (, |, identifier}
+    RegExp -> RegExp _ RegExp  {-, ~, &, @, *, +, ?, ;, (, |, identifier}
+    RegExp -> RegExp _ - RegExp  {-, ~, &, @, *, +, ?, ;, (, |, identifier}
+    RegExp -> RegExp _ & RegExp  {-, ~, &, @, *, +, ?, ;, (, |, identifier}
+    RegExp -> RegExp _ ~ RegExp  {-, ~, &, @, *, +, ?, ;, (, |, identifier}
+    RegExp -> RegExp _ @ RegExp  {-, ~, &, @, *, +, ?, ;, (, |, identifier}
+    RegExp -> RegExp _ | RegExp  {-, ~, &, @, *, +, ?, ;, (, |, identifier}
+
+    Shift-Reduce 53: identifier
+    Shift-Reduce 81: ;
+    Shift-Reduce 83: Category
+    Shift-Reduce 85: *
+    Shift-Reduce 86: +
+    Shift-Reduce 87: ?
+    Shift-Goto 66: (
+    Shift-Goto 70: -
+    Shift-Goto 71: ~
+    Shift-Goto 72: &
+    Shift-Goto 73: @
+    Shift-Goto 75: |
+    Shift-Goto 76: RegExp
+    Unwind: Shift ; Reduce 81
+
+  State 84:
+    RegExp -> RegExp | RegExp _  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ *  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ +  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ?  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ - RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ & RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ ~ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ @ RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+    RegExp -> RegExp _ | RegExp  {-, ~, &, @, *, +, ?, /, ;, (, ), |, identifier}
+
+    Reduce 93: / ; ) |
+    Shift-Reduce 53: identifier
+    Shift-Reduce 83: Category
+    Shift-Reduce 85: *
+    Shift-Reduce 86: +
+    Shift-Reduce 87: ?
+    Shift-Goto 66: (
+    Shift-Goto 70: -
+    Shift-Goto 71: ~
+    Shift-Goto 72: &
+    Shift-Goto 73: @
+    Shift-Goto 76: RegExp
+    Unwind: Reduce 93
+
+  State 85:
+    ProductionPrec -> ProductionPrec %shift SymbolSet _  {;, %shift, %reduce}
+    SymbolSet -> SymbolSet _ Symbol  {;, %shift, %reduce, identifier}
+
+    Reduce 45: ; %shift %reduce
+    Shift-Reduce 23: identifier
+    Shift-Reduce 48: Symbol
+    Unwind: Reduce 45
+
+  State 86:
+    ProductionPrec -> ProductionPrec %reduce SymbolSet _  {;, %shift, %reduce}
+    SymbolSet -> SymbolSet _ Symbol  {;, %shift, %reduce, identifier}
+
+    Reduce 46: ; %shift %reduce
+    Shift-Reduce 23: identifier
+    Shift-Reduce 48: Symbol
+    Unwind: Reduce 46
+
+88 symbols.
+95 productions.
+87 LALR(1) machine states.
+

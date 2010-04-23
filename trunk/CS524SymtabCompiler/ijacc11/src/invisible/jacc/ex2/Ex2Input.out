@@ -1,0 +1,18 @@
+
+Compiling invisible\jacc\ex2\Ex2Input.txt ...
+18
+-4
+-7
+-7
+5
+166
+invisible\jacc\ex2\Ex2Input.txt(39,1): error: Invalid number '9876543210'.
+invisible\jacc\ex2\Ex2Input.txt(47,3): error: Expected ';'.
+16
+59
+invisible\jacc\ex2\Ex2Input.txt(53,9): error: Expected ')'.
+19
+310
+invisible\jacc\ex2\Ex2Input.txt(59,9): error: Unexpected ')'.
+63
+-570

@@ -1,0 +1,3515 @@
+Reading grammar specification ...
+
+Generating character category table ...
+
+Character category table:
+
+  0x0 - 0x8
+    Category number: 0
+    User categories: stringChar notEol any
+
+  0x9 - 0x9
+    Category number: 49
+    User categories: stringChar space notEol any
+
+  0xA - 0xA
+    Category number: 44
+    User categories: lf any
+
+  0xB - 0xB
+    Category number: 0
+    User categories: stringChar notEol any
+
+  0xC - 0xC
+    Category number: 49
+    User categories: stringChar space notEol any
+
+  0xD - 0xD
+    Category number: 51
+    User categories: cr any
+
+  0xE - 0x19
+    Category number: 0
+    User categories: stringChar notEol any
+
+  0x1A - 0x1A
+    Category number: 50
+    User categories: stringChar sub notEol any
+
+  0x1B - 0x1F
+    Category number: 0
+    User categories: stringChar notEol any
+
+  0x20 - 0x20
+    Category number: 47
+    User categories: stringChar filenameChar space notEol any
+
+  0x21 - 0x21
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x22 - 0x22
+    Category number: 42
+    User categories: " filenameChar filenameCharNotBlank notEol any
+
+  0x23 - 0x27
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x28 - 0x28
+    Category number: 30
+    User categories: ( stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x29 - 0x29
+    Category number: 31
+    User categories: ) stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2A - 0x2A
+    Category number: 34
+    User categories: * stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2B - 0x2B
+    Category number: 32
+    User categories: + sign stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2C - 0x2C
+    Category number: 28
+    User categories: , stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2D - 0x2D
+    Category number: 33
+    User categories: - sign stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2E - 0x2E
+    Category number: 41
+    User categories: . stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2F - 0x2F
+    Category number: 35
+    User categories: / stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x30 - 0x39
+    Category number: 38
+    User categories: digit letterOrDigit decDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3A - 0x3A
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3B - 0x3B
+    Category number: 27
+    User categories: ; stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3C - 0x3C
+    Category number: 45
+    User categories: stringChar < notEol any
+
+  0x3D - 0x3D
+    Category number: 29
+    User categories: = stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3E - 0x3E
+    Category number: 46
+    User categories: stringChar > notEol any
+
+  0x3F - 0x40
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x41 - 0x44
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x45 - 0x45
+    Category number: 40
+    User categories: letter letterOrDigit eE stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x46 - 0x5A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x5B - 0x5B
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x5C - 0x5C
+    Category number: 43
+    User categories: \ filenameChar filenameCharNotBlank notEol any
+
+  0x5D - 0x5D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x5E - 0x5E
+    Category number: 36
+    User categories: ^ stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x5F - 0x60
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x61 - 0x61
+    Category number: 1
+    User categories: a letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x62 - 0x62
+    Category number: 2
+    User categories: b letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x63 - 0x63
+    Category number: 3
+    User categories: c letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x64 - 0x64
+    Category number: 4
+    User categories: d letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x65 - 0x65
+    Category number: 5
+    User categories: e letter letterOrDigit eE stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x66 - 0x66
+    Category number: 6
+    User categories: f letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x67 - 0x67
+    Category number: 7
+    User categories: g letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x68 - 0x68
+    Category number: 8
+    User categories: h letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x69 - 0x69
+    Category number: 9
+    User categories: i letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6A - 0x6A
+    Category number: 10
+    User categories: j letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6B - 0x6B
+    Category number: 11
+    User categories: k letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6C - 0x6C
+    Category number: 12
+    User categories: l letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6D - 0x6D
+    Category number: 13
+    User categories: m letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6E - 0x6E
+    Category number: 14
+    User categories: n letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6F - 0x6F
+    Category number: 15
+    User categories: o letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x70 - 0x70
+    Category number: 16
+    User categories: p letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x71 - 0x71
+    Category number: 17
+    User categories: q letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x72 - 0x72
+    Category number: 18
+    User categories: r letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x73 - 0x73
+    Category number: 19
+    User categories: s letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x74 - 0x74
+    Category number: 20
+    User categories: t letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x75 - 0x75
+    Category number: 21
+    User categories: u letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x76 - 0x76
+    Category number: 22
+    User categories: v letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x77 - 0x77
+    Category number: 23
+    User categories: w letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x78 - 0x78
+    Category number: 24
+    User categories: x letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x79 - 0x79
+    Category number: 25
+    User categories: y letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x7A - 0x7A
+    Category number: 26
+    User categories: z letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x7B - 0xA9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAA - 0xAA
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAB - 0xB4
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB5 - 0xB5
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB6 - 0xB9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBA - 0xBA
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBB - 0xBF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC0 - 0xD6
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD7 - 0xD7
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD8 - 0xF6
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xF7 - 0xF7
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xF8 - 0x1F5
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F6 - 0x1F9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FA - 0x217
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x218 - 0x24F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x250 - 0x2A8
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2A9 - 0x2AF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2B0 - 0x2B8
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2B9 - 0x2BA
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2BB - 0x2C1
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2C2 - 0x2CF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2D0 - 0x2D1
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2D2 - 0x2DF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2E0 - 0x2E4
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2E5 - 0x379
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x37A - 0x37A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x37B - 0x385
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x386 - 0x386
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x387 - 0x387
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x388 - 0x38A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x38B - 0x38B
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x38C - 0x38C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x38D - 0x38D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x38E - 0x3A1
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3A2 - 0x3A2
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3A3 - 0x3CE
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3CF - 0x3CF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3D0 - 0x3D6
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3D7 - 0x3D9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3DA - 0x3DA
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3DB - 0x3DB
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3DC - 0x3DC
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3DD - 0x3DD
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3DE - 0x3DE
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3DF - 0x3DF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3E0 - 0x3E0
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3E1 - 0x3E1
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3E2 - 0x3F3
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3F4 - 0x400
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x401 - 0x40C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x40D - 0x40D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x40E - 0x44F
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x450 - 0x450
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x451 - 0x45C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x45D - 0x45D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x45E - 0x481
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x482 - 0x48F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x490 - 0x4C4
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4C5 - 0x4C6
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4C7 - 0x4C8
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4C9 - 0x4CA
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4CB - 0x4CC
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4CD - 0x4CF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4D0 - 0x4EB
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4EC - 0x4ED
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4EE - 0x4F5
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4F6 - 0x4F7
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4F8 - 0x4F9
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4FA - 0x530
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x531 - 0x556
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x557 - 0x558
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x559 - 0x559
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x55A - 0x560
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x561 - 0x587
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x588 - 0x5CF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x5D0 - 0x5EA
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x5EB - 0x5EF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x5F0 - 0x5F2
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x5F3 - 0x620
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x621 - 0x63A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x63B - 0x63F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x640 - 0x64A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x64B - 0x65F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x660 - 0x669
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x66A - 0x670
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x671 - 0x6B7
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6B8 - 0x6B9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6BA - 0x6BE
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6BF - 0x6BF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6C0 - 0x6CE
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6CF - 0x6CF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6D0 - 0x6D3
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6D4 - 0x6D4
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6D5 - 0x6D5
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6D6 - 0x6E4
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6E5 - 0x6E6
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6E7 - 0x6EF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6F0 - 0x6F9
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x6FA - 0x904
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x905 - 0x939
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x93A - 0x93C
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x93D - 0x93D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x93E - 0x957
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x958 - 0x961
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x962 - 0x965
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x966 - 0x96F
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x970 - 0x984
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x985 - 0x98C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x98D - 0x98E
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x98F - 0x990
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x991 - 0x992
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x993 - 0x9A8
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9A9 - 0x9A9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9AA - 0x9B0
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9B1 - 0x9B1
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9B2 - 0x9B2
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9B3 - 0x9B5
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9B6 - 0x9B9
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9BA - 0x9DB
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9DC - 0x9DD
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9DE - 0x9DE
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9DF - 0x9E1
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9E2 - 0x9E5
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9E6 - 0x9EF
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9F0 - 0x9F1
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9F2 - 0xA04
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA05 - 0xA0A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA0B - 0xA0E
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA0F - 0xA10
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA11 - 0xA12
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA13 - 0xA28
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA29 - 0xA29
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA2A - 0xA30
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA31 - 0xA31
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA32 - 0xA33
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA34 - 0xA34
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA35 - 0xA36
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA37 - 0xA37
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA38 - 0xA39
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA3A - 0xA58
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA59 - 0xA5C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA5D - 0xA5D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA5E - 0xA5E
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA5F - 0xA65
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA66 - 0xA6F
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA70 - 0xA71
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA72 - 0xA74
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA75 - 0xA84
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA85 - 0xA8B
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA8C - 0xA8C
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA8D - 0xA8D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA8E - 0xA8E
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA8F - 0xA91
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA92 - 0xA92
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xA93 - 0xAA8
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAA9 - 0xAA9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAAA - 0xAB0
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAB1 - 0xAB1
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAB2 - 0xAB3
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAB4 - 0xAB4
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAB5 - 0xAB9
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xABA - 0xABC
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xABD - 0xABD
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xABE - 0xADF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAE0 - 0xAE0
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAE1 - 0xAE5
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAE6 - 0xAEF
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAF0 - 0xB04
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB05 - 0xB0C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB0D - 0xB0E
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB0F - 0xB10
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB11 - 0xB12
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB13 - 0xB28
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB29 - 0xB29
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB2A - 0xB30
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB31 - 0xB31
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB32 - 0xB33
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB34 - 0xB35
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB36 - 0xB39
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB3A - 0xB3C
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB3D - 0xB3D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB3E - 0xB5B
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB5C - 0xB5D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB5E - 0xB5E
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB5F - 0xB61
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB62 - 0xB65
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB66 - 0xB6F
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB70 - 0xB84
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB85 - 0xB8A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB8B - 0xB8D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB8E - 0xB90
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB91 - 0xB91
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB92 - 0xB95
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB96 - 0xB98
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB99 - 0xB9A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB9B - 0xB9B
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB9C - 0xB9C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB9D - 0xB9D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xB9E - 0xB9F
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBA0 - 0xBA2
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBA3 - 0xBA4
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBA5 - 0xBA7
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBA8 - 0xBAA
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBAB - 0xBAD
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBAE - 0xBB5
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBB6 - 0xBB6
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBB7 - 0xBB9
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBBA - 0xBE6
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBE7 - 0xBEF
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xBF0 - 0xC04
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC05 - 0xC0C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC0D - 0xC0D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC0E - 0xC10
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC11 - 0xC11
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC12 - 0xC28
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC29 - 0xC29
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC2A - 0xC33
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC34 - 0xC34
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC35 - 0xC39
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC3A - 0xC5F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC60 - 0xC61
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC62 - 0xC65
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC66 - 0xC6F
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC70 - 0xC84
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC85 - 0xC8C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC8D - 0xC8D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC8E - 0xC90
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC91 - 0xC91
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xC92 - 0xCA8
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCA9 - 0xCA9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCAA - 0xCB3
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCB4 - 0xCB4
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCB5 - 0xCB9
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCBA - 0xCDD
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCDE - 0xCDE
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCDF - 0xCDF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCE0 - 0xCE1
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCE2 - 0xCE5
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCE6 - 0xCEF
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xCF0 - 0xD04
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD05 - 0xD0C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD0D - 0xD0D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD0E - 0xD10
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD11 - 0xD11
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD12 - 0xD28
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD29 - 0xD29
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD2A - 0xD39
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD3A - 0xD5F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD60 - 0xD61
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD62 - 0xD65
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD66 - 0xD6F
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD70 - 0xE00
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE01 - 0xE2E
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE2F - 0xE2F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE30 - 0xE30
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE31 - 0xE31
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE32 - 0xE33
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE34 - 0xE3F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE40 - 0xE46
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE47 - 0xE4F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE50 - 0xE59
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE5A - 0xE80
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE81 - 0xE82
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE83 - 0xE83
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE84 - 0xE84
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE85 - 0xE86
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE87 - 0xE88
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE89 - 0xE89
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE8A - 0xE8A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE8B - 0xE8C
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE8D - 0xE8D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE8E - 0xE93
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE94 - 0xE97
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE98 - 0xE98
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xE99 - 0xE9F
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEA0 - 0xEA0
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEA1 - 0xEA3
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEA4 - 0xEA4
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEA5 - 0xEA5
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEA6 - 0xEA6
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEA7 - 0xEA7
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEA8 - 0xEA9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEAA - 0xEAB
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEAC - 0xEAC
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEAD - 0xEAE
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEAF - 0xEAF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEB0 - 0xEB0
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEB1 - 0xEB1
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEB2 - 0xEB3
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEB4 - 0xEBC
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEBD - 0xEBD
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEBE - 0xEBF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEC0 - 0xEC4
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEC5 - 0xEC5
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEC6 - 0xEC6
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEC7 - 0xECF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xED0 - 0xED9
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEDA - 0xEDB
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEDC - 0xEDD
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xEDE - 0xF1F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xF20 - 0xF29
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xF2A - 0xF3F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xF40 - 0xF47
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xF48 - 0xF48
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xF49 - 0xF69
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xF6A - 0x109F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x10A0 - 0x10C5
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x10C6 - 0x10CF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x10D0 - 0x10F6
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x10F7 - 0x10FF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1100 - 0x1159
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x115A - 0x115E
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x115F - 0x11A2
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x11A3 - 0x11A7
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x11A8 - 0x11F9
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x11FA - 0x1DFF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1E00 - 0x1E9B
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1E9C - 0x1E9F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1EA0 - 0x1EF9
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1EFA - 0x1EFF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F00 - 0x1F15
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F16 - 0x1F17
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F18 - 0x1F1D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F1E - 0x1F1F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F20 - 0x1F45
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F46 - 0x1F47
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F48 - 0x1F4D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F4E - 0x1F4F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F50 - 0x1F57
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F58 - 0x1F58
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F59 - 0x1F59
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F5A - 0x1F5A
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F5B - 0x1F5B
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F5C - 0x1F5C
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F5D - 0x1F5D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F5E - 0x1F5E
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F5F - 0x1F7D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F7E - 0x1F7F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1F80 - 0x1FB4
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FB5 - 0x1FB5
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FB6 - 0x1FBC
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FBD - 0x1FBD
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FBE - 0x1FBE
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FBF - 0x1FC1
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FC2 - 0x1FC4
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FC5 - 0x1FC5
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FC6 - 0x1FCC
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FCD - 0x1FCF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FD0 - 0x1FD3
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FD4 - 0x1FD5
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FD6 - 0x1FDB
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FDC - 0x1FDF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FE0 - 0x1FEC
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FED - 0x1FF1
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FF2 - 0x1FF4
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FF5 - 0x1FF5
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FF6 - 0x1FFC
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x1FFD - 0x207E
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x207F - 0x207F
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2080 - 0x2101
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2102 - 0x2102
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2103 - 0x2106
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2107 - 0x2107
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2108 - 0x2109
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x210A - 0x2113
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2114 - 0x2114
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2115 - 0x2115
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2116 - 0x2117
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2118 - 0x211D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x211E - 0x2123
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2124 - 0x2124
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2125 - 0x2125
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2126 - 0x2126
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2127 - 0x2127
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2128 - 0x2128
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2129 - 0x2129
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x212A - 0x2131
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2132 - 0x2132
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2133 - 0x2138
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x2139 - 0x3004
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3005 - 0x3005
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3006 - 0x3030
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3031 - 0x3035
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3036 - 0x3040
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3041 - 0x3094
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3095 - 0x309A
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x309B - 0x309E
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x309F - 0x30A0
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x30A1 - 0x30FA
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x30FB - 0x30FB
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x30FC - 0x30FE
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x30FF - 0x3104
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3105 - 0x312C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x312D - 0x3130
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x3131 - 0x318E
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x318F - 0x4DFF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x4E00 - 0x9FA5
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0x9FA6 - 0xABFF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xAC00 - 0xD7A3
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xD7A4 - 0xF8FF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xF900 - 0xFA2D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFA2E - 0xFAFF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB00 - 0xFB06
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB07 - 0xFB12
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB13 - 0xFB17
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB18 - 0xFB1E
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB1F - 0xFB28
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB29 - 0xFB29
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB2A - 0xFB36
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB37 - 0xFB37
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB38 - 0xFB3C
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB3D - 0xFB3D
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB3E - 0xFB3E
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB3F - 0xFB3F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB40 - 0xFB41
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB42 - 0xFB42
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB43 - 0xFB44
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB45 - 0xFB45
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFB46 - 0xFBB1
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFBB2 - 0xFBD2
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFBD3 - 0xFD3D
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFD3E - 0xFD4F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFD50 - 0xFD8F
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFD90 - 0xFD91
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFD92 - 0xFDC7
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFDC8 - 0xFDEF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFDF0 - 0xFDFB
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFDFC - 0xFE6F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFE70 - 0xFE72
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFE73 - 0xFE73
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFE74 - 0xFE74
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFE75 - 0xFE75
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFE76 - 0xFEFC
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFEFD - 0xFF0F
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFF10 - 0xFF19
+    Category number: 39
+    User categories: digit letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFF1A - 0xFF20
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFF21 - 0xFF3A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFF3B - 0xFF40
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFF41 - 0xFF5A
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFF5B - 0xFF65
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFF66 - 0xFFBE
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFFBF - 0xFFC1
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFFC2 - 0xFFC7
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFFC8 - 0xFFC9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFFCA - 0xFFCF
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFFD0 - 0xFFD1
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFFD2 - 0xFFD7
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFFD8 - 0xFFD9
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFFDA - 0xFFDC
+    Category number: 37
+    User categories: letter letterOrDigit stringChar filenameChar filenameCharNotBlank notEol any
+
+  0xFFDD - 0xFFFF
+    Category number: 48
+    User categories: stringChar filenameChar filenameCharNotBlank notEol any
+
+56 user-defined categories.
+52 calculated categories.
+
+Generating token deterministic finite automata ...
+
+Start conditions:
+
+  notInComment
+    Initial forward DFA state: 1
+
+  inComment
+    Initial forward DFA state: 2
+
+Tokens:
+
+  Token 0
+    ; = ';'
+    Parameter: 2
+    Conditions: notInComment
+
+  Token 1
+    , = ','
+    Parameter: 3
+    Conditions: notInComment
+
+  Token 2
+    = = '='
+    Parameter: 4
+    Conditions: notInComment
+
+  Token 3
+    ( = '('
+    Parameter: 5
+    Conditions: notInComment
+
+  Token 4
+    ) = ')'
+    Parameter: 6
+    Conditions: notInComment
+
+  Token 5
+    + = '+'
+    Parameter: 7
+    Conditions: notInComment
+
+  Token 6
+    - = '-'
+    Parameter: 8
+    Conditions: notInComment
+
+  Token 7
+    * = '*'
+    Parameter: 9
+    Conditions: notInComment
+
+  Token 8
+    / = '/'
+    Parameter: 10
+    Conditions: notInComment
+
+  Token 9
+    ^ = '^'
+    Parameter: 11
+    Conditions: notInComment
+
+  Token 10
+    print = 'p' 'r' 'i' 'n' 't'
+    Parameter: 12
+    Conditions: notInComment
+
+  Token 11
+    sqrt = 's' 'q' 'r' 't'
+    Parameter: 13
+    Conditions: notInComment
+
+  Token 12
+    identifier = 'letter' 'letterOrDigit'*
+    Parameter: 14
+    Conditions: notInComment
+
+  Token 13
+    number = 'decDigit'+ / ('.' '.')?
+    Context number: 0
+    Parameter: 15
+    Conditions: notInComment
+
+  Token 14
+    number = 'decDigit'+ '.'
+    Parameter: 15
+    Conditions: notInComment
+
+  Token 15
+    number = 'decDigit'* '.' 'decDigit'+ / ('.' '.')?
+    Context number: 1
+    Parameter: 15
+    Conditions: notInComment
+
+  Token 16
+    number = ('decDigit'* '.'? 'decDigit'* @ 'decDigit') 'eE' 'sign'? 'decDigit'+ / ('.' '.')?
+    Context number: 2
+    Parameter: 15
+    Conditions: notInComment
+
+  Token 17
+    number = 'letter' 'letterOrDigit'* '.' 'digit' ('letterOrDigit' | '.' 'digit')* | '.'? ('digit' - 'decDigit') ('letterOrDigit' | '.' 'digit')* | ('decDigit'* '.'? 'decDigit'* @ 'decDigit') ('letterOrDigit' - 'decDigit' - 'eE') ('letterOrDigit' | '.' 'digit')* | ('decDigit'* '.'? 'decDigit'* @ 'decDigit') 'eE' 'sign'? 'decDigit'* ('letterOrDigit' - 'decDigit') ('letterOrDigit' | '.' 'digit')* | 'decDigit'* '.' 'decDigit'+ '.' ('letterOrDigit' ('letterOrDigit' | '.' 'digit')*)? | ('decDigit'* '.'? 'decDigit'* @ 'decDigit') 'eE' 'sign'? 'decDigit'* '.' ('letterOrDigit' ('letterOrDigit' | '.' 'digit')*)?
+    Link name: 'illegal'
+    Parameter: 15
+    Conditions: notInComment
+
+  Token 18
+    string = '"' ('stringChar' | '\' '\' | '\' '"' | '\' 'stringChar')* '"'
+    Parameter: 16
+    Conditions: notInComment
+
+  Token 19
+    string = '"' ('stringChar' | '\' '\' | '\' '"' | '\' 'stringChar')* '\'?
+    Link name: 'runOn'
+    Parameter: 16
+    Conditions: notInComment
+
+  Token 20
+    include = 'i' 'n' 'c' 'l' 'u' 'd' 'e' ('space' | '/' '*' ('notEol'* ~ '*' '/') '*' '/')* '<' 'space'* 'filenameCharNotBlank' 'filenameChar'* 'space'* '>'
+    Parameter: 0
+    Conditions: notInComment
+
+  Token 21
+    illegalInclude = 'i' 'n' 'c' 'l' 'u' 'd' 'e' ('space' | '/' '*' ('notEol'* ~ '*' '/') '*' '/')* ('<'? 'space'* 'filenameCharNotBlank'* | ('notEol'* ~ '>') '>')
+    Parameter: 0
+    Conditions: notInComment
+
+  Token 22
+    whiteSpace = ('space' | '/' '*' ('notEol'* ~ '*' '/') '*' '/')* ('/' '/' 'notEol'*)?
+    Parameter: 0
+    Conditions: notInComment
+
+  Token 23
+    beginComment = ('space' | '/' '*' ('notEol'* ~ '*' '/') '*' '/')* '/' '*' ('notEol'* ~ '*' '/')
+    Parameter: 0
+    Conditions: notInComment
+
+  Token 24
+    illegalChar = 'sub' / 'any'
+    Context number: 3
+    Parameter: 0
+    Conditions: notInComment
+
+  Token 25
+    whiteSpace = 'sub'
+    Parameter: 0
+    Conditions: notInComment
+
+  Token 26
+    endComment = ('notEol'* ~ '*' '/') '*' '/' ('space' | '/' '*' ('notEol'* ~ '*' '/') '*' '/')* ('/' '/' 'notEol'*)?
+    Parameter: 0
+    Conditions: inComment
+
+  Token 27
+    whiteSpace = (('notEol'* ~ '*' '/') '*' '/' ('space' | '/' '*' ('notEol'* ~ '*' '/') '*' '/')* '/' '*')? ('notEol'* ~ '*' '/')
+    Parameter: 0
+    Conditions: inComment
+
+  Token 28
+    lineEnd = 'cr' | 'lf' | 'cr' 'lf'
+    Parameter: 0
+
+  Token 29
+    illegalChar = 'any'
+    Parameter: 0
+
+Forward DFA States:
+
+  State 0
+    Recognition code: 0
+
+  State 1
+    Goto 3: 27
+    Goto 4: 28
+    Goto 5: 29
+    Goto 6: 30
+    Goto 7: 31
+    Goto 8: 32
+    Goto 9: 33
+    Goto 10: 34
+    Goto 11: 35
+    Goto 12: 36
+    Goto 13: 16
+    Goto 14: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 17 18 20 21 22 23 24 25 26 37 40
+    Goto 15: 9
+    Goto 16: 19
+    Goto 17: 38
+    Goto 18: 39
+    Goto 19: 41
+    Goto 20: 42
+    Goto 21: 0 43 45 46 48
+    Goto 22: 47 49
+    Goto 23: 50
+    Goto 24: 44
+    Goto 25: 51
+    Recognition code: 1
+
+  State 2
+    Goto 24: 44
+    Goto 25: 51
+    Goto 26: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 27: 34
+    Recognition code: 2
+
+  State 3
+    Recognition code: 3
+
+  State 4
+    Recognition code: 4
+
+  State 5
+    Recognition code: 5
+
+  State 6
+    Recognition code: 6
+
+  State 7
+    Recognition code: 7
+
+  State 8
+    Recognition code: 8
+
+  State 9
+    Recognition code: 9
+
+  State 10
+    Recognition code: 10
+
+  State 11
+    Goto 28: 34
+    Goto 29: 35
+    Recognition code: 11
+
+  State 12
+    Recognition code: 12
+
+  State 13
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 31: 18
+    Goto 32: 41
+    Recognition code: 13
+
+  State 14
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Recognition code: 13
+
+  State 15
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 33: 14
+    Recognition code: 13
+
+  State 16
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 34: 17
+    Recognition code: 13
+
+  State 17
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 39
+    Goto 36: 5 40
+    Goto 37: 38
+    Goto 38: 41
+    Recognition code: 14
+
+  State 18
+    Goto 32: 41
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Recognition code: 15
+
+  State 19
+    Goto 35: 39
+    Goto 39: 38
+    Recognition code: 16
+
+  State 20
+    Goto 40: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 45 46 47 48 49 50
+    Goto 41: 42
+    Goto 42: 43
+    Recognition code: 17
+
+  State 21
+    Recognition code: 16
+
+  State 22
+    Goto 43: 35
+    Goto 44: 47 49
+    Recognition code: 18
+
+  State 23
+    Goto 45: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51
+    Recognition code: 19
+
+  State 24
+    Recognition code: 20
+
+  State 25
+    Goto 46: 44
+    Recognition code: 20
+
+  State 26
+    Goto 47: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 48: 34
+    Recognition code: 21
+
+  State 27
+    Goto 47: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 48: 34
+    Goto 49: 35
+    Recognition code: 21
+
+  State 28
+    Goto 28: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 50: 34
+    Recognition code: 22
+
+  State 29
+    Goto 29: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Recognition code: 1
+
+  State 30
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Recognition code: 23
+
+  State 31
+    Goto 30: 1 2 3 4 5 6 7 8 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 51: 9
+    Recognition code: 23
+
+  State 32
+    Goto 35: 38 39
+    Recognition code: 0
+
+  State 33
+    Goto 30: 1 2 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 52: 3
+    Recognition code: 23
+
+  State 34
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 53: 18
+    Recognition code: 23
+
+  State 35
+    Goto 32: 41
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Recognition code: 24
+
+  State 36
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 39 40
+    Goto 54: 32 33
+    Goto 55: 38
+    Goto 56: 41
+    Recognition code: 0
+
+  State 37
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 39
+    Goto 36: 5 40
+    Goto 37: 38
+    Goto 38: 41
+    Recognition code: 25
+
+  State 38
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 39
+    Goto 36: 5 40
+    Goto 39: 38
+    Goto 57: 41
+    Recognition code: 26
+
+  State 39
+    Goto 35: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 39
+    Goto 36: 5 40
+    Goto 39: 38
+    Goto 58: 41
+    Recognition code: 27
+
+  State 40
+    Goto 40: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 45 46 47 48 49 50
+    Goto 41: 42
+    Goto 42: 43
+    Recognition code: 28
+
+  State 41
+    Recognition code: 29
+
+  State 42
+    Goto 40: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Recognition code: 28
+
+  State 43
+    Goto 28: 34
+    Goto 29: 35
+    Recognition code: 0
+
+  State 44
+    Goto 43: 35
+    Goto 44: 47 49
+    Recognition code: 1
+
+  State 45
+    Recognition code: 30
+
+  State 46
+    Recognition code: 31
+
+  State 47
+    Goto 47: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 48: 34
+    Recognition code: 2
+
+  State 48
+    Goto 47: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 48: 34
+    Goto 49: 35
+    Recognition code: 2
+
+  State 49
+    Goto 49: 47 49
+    Goto 59: 35
+    Recognition code: 32
+
+  State 50
+    Goto 28: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 44: 35
+    Goto 50: 34
+    Recognition code: 22
+
+  State 51
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 60: 14
+    Recognition code: 23
+
+  State 52
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 61: 12
+    Recognition code: 23
+
+  State 53
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 62: 20
+    Recognition code: 23
+
+  State 54
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 39 40
+    Goto 55: 38
+    Goto 56: 41
+    Recognition code: 0
+
+  State 55
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 39 40
+    Goto 55: 38
+    Goto 63: 41
+    Recognition code: 33
+
+  State 56
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Recognition code: 24
+
+  State 57
+    Recognition code: 34
+
+  State 58
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 64: 41
+    Recognition code: 24
+
+  State 59
+    Goto 47: 34
+    Goto 65: 35
+    Recognition code: 0
+
+  State 60
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 66: 20
+    Recognition code: 23
+
+  State 61
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 67: 21
+    Recognition code: 23
+
+  State 62
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Recognition code: 35
+
+  State 63
+    Goto 35: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 68: 41
+    Recognition code: 24
+
+  State 64
+    Recognition code: 36
+
+  State 65
+    Goto 65: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Recognition code: 32
+
+  State 66
+    Goto 30: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Recognition code: 37
+
+  State 67
+    Goto 30: 1 2 3 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 69: 4
+    Recognition code: 23
+
+  State 68
+    Recognition code: 38
+
+  State 69
+    Goto 30: 1 2 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 32: 41
+    Goto 70: 5
+    Recognition code: 23
+
+  State 70
+    Goto 71: 27 28 29 30 31 32 33 34 36 42 43 48
+    Goto 72: 35
+    Goto 73: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 74: 41
+    Goto 75: 0 50
+    Goto 76: 45
+    Goto 77: 46
+    Goto 78: 47 49
+    Recognition code: 39
+
+  State 71
+    Goto 71: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 48
+    Goto 75: 0 45 47 49 50
+    Goto 77: 46
+    Recognition code: 40
+
+  State 72
+    Goto 71: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 48
+    Goto 75: 0 45 47 49 50
+    Goto 77: 46
+    Goto 79: 34
+    Recognition code: 40
+
+  State 73
+    Goto 71: 27 28 29 30 31 32 33 34 35 36 42 43 48
+    Goto 73: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Goto 74: 41
+    Goto 75: 0 45 47 49 50
+    Goto 77: 46
+    Recognition code: 39
+
+  State 74
+    Goto 71: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 40 41 42 43 48
+    Goto 75: 0 45 47 49 50
+    Goto 77: 46
+    Goto 80: 38 39
+    Recognition code: 40
+
+  State 75
+    Goto 75: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 45 47 48 49 50
+    Goto 77: 46
+    Recognition code: 0
+
+  State 76
+    Goto 75: 0 45 50
+    Goto 76: 47 49
+    Goto 77: 46
+    Goto 81: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 48
+    Recognition code: 40
+
+  State 77
+    Recognition code: 40
+
+  State 78
+    Goto 71: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 36 37 38 39 40 41 42 43 48
+    Goto 72: 35
+    Goto 75: 0 50
+    Goto 76: 45
+    Goto 77: 46
+    Goto 78: 47 49
+    Recognition code: 40
+
+  State 79
+    Goto 79: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 48
+    Goto 82: 34
+    Goto 83: 0 45 47 49 50
+    Goto 84: 46
+    Recognition code: 40
+
+  State 80
+    Goto 71: 27 28 29 30 31 32 33 34 35 36 42 43 48
+    Goto 74: 41
+    Goto 75: 0 45 47 49 50
+    Goto 77: 46
+    Goto 80: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 37 38 39 40
+    Recognition code: 41
+
+  State 81
+    Goto 75: 0 45 50
+    Goto 81: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 48
+    Goto 85: 46
+    Goto 86: 47
+    Goto 87: 49
+    Recognition code: 40
+
+  State 82
+    Goto 78: 35
+    Goto 79: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 36 37 38 39 40 41 42 43 48
+    Goto 82: 34
+    Goto 83: 0 45 47 49 50
+    Goto 84: 46
+    Recognition code: 40
+
+  State 83
+    Goto 83: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 45 47 48 49 50
+    Goto 84: 46
+    Goto 88: 34
+    Recognition code: 0
+
+  State 84
+    Goto 89: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 90: 34
+    Recognition code: 40
+
+  State 85
+    Recognition code: 42
+
+  State 86
+    Goto 75: 0 45 50
+    Goto 85: 46
+    Goto 86: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 47 48
+    Goto 87: 49
+    Recognition code: 0
+
+  State 87
+    Goto 75: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 45 48 50
+    Goto 85: 46
+    Goto 87: 47 49
+    Recognition code: 0
+
+  State 88
+    Goto 78: 35
+    Goto 83: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 36 37 38 39 40 41 42 43 45 47 48 49 50
+    Goto 84: 46
+    Goto 88: 34
+    Recognition code: 0
+
+  State 89
+    Goto 89: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 35 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 90: 34
+    Recognition code: 0
+
+  State 90
+    Goto 78: 35
+    Goto 89: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 36 37 38 39 40 41 42 43 45 46 47 48 49 50
+    Goto 90: 34
+    Recognition code: 0
+
+Forward DFA Recognition Codes:
+
+  Recognition code 0
+
+  Recognition code 1
+    Tokens:  22
+
+  Recognition code 2
+    Tokens:  27
+
+  Recognition code 3
+    Tokens:  0 29
+
+  Recognition code 4
+    Tokens:  1 29
+
+  Recognition code 5
+    Tokens:  2 29
+
+  Recognition code 6
+    Tokens:  3 29
+
+  Recognition code 7
+    Tokens:  4 29
+
+  Recognition code 8
+    Tokens:  5 29
+
+  Recognition code 9
+    Tokens:  6 29
+
+  Recognition code 10
+    Tokens:  7 29
+
+  Recognition code 11
+    Tokens:  8 29
+
+  Recognition code 12
+    Tokens:  9 29
+
+  Recognition code 13
+    Tokens:  12 29
+
+  Recognition code 14
+    Tokens:  13 29
+    Context splits:  0
+
+  Recognition code 15
+    Tokens:  17 29
+
+  Recognition code 16
+    Tokens:  29
+
+  Recognition code 17
+    Tokens:  19 29
+
+  Recognition code 18
+    Tokens:  22 29
+
+  Recognition code 19
+    Tokens:  25 29
+    Context splits:  3
+
+  Recognition code 20
+    Tokens:  28 29
+
+  Recognition code 21
+    Tokens:  27 29
+
+  Recognition code 22
+    Tokens:  23
+
+  Recognition code 23
+    Tokens:  12
+
+  Recognition code 24
+    Tokens:  17
+
+  Recognition code 25
+    Tokens:  13
+    Context splits:  0
+
+  Recognition code 26
+    Tokens:  14
+
+  Recognition code 27
+    Tokens:  15
+    Context splits:  1
+
+  Recognition code 28
+    Tokens:  19
+
+  Recognition code 29
+    Tokens:  18
+
+  Recognition code 30
+    Tokens:  24
+
+  Recognition code 31
+    Tokens:  28
+
+  Recognition code 32
+    Tokens:  26
+
+  Recognition code 33
+    Tokens:  16
+    Context splits:  2
+
+  Recognition code 34
+    Tokens:  13
+
+  Recognition code 35
+    Tokens:  11 12
+
+  Recognition code 36
+    Tokens:  15
+
+  Recognition code 37
+    Tokens:  10 12
+
+  Recognition code 38
+    Tokens:  16
+
+  Recognition code 39
+    Tokens:  12 21
+
+  Recognition code 40
+    Tokens:  21
+
+  Recognition code 41
+    Tokens:  17 21
+
+  Recognition code 42
+    Tokens:  20 21
+
+Reverse DFA States:
+
+  State 0
+    Goto 1: 41
+    Goto 2: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 42 43 44 45 46 47 48 49 50 51
+    Recognition code: 1
+
+  State 1
+    Goto 3: 41
+    Recognition code: 2
+
+  State 2
+    Recognition code: 2
+
+  State 3
+    Recognition code: 1
+
+Reverse DFA Recognition Codes:
+
+  Recognition code 0
+
+  Recognition code 1
+    Context splits:  0 1 2
+
+  Recognition code 2
+    Context splits:  3
+
+2 start conditions.
+30 tokens.
+91 states in the forward DFA.
+43 final state recognition codes in the forward DFA.
+4 states in the reverse DFA.
+3 final state recognition codes in the reverse DFA.
+
+Generating LALR(1) configuration finite state machine ...
+
+Terminal symbols:
+
+  %%EOF
+    Insertion cost: 1
+    Deletion cost: 1
+
+  ;
+    Insertion cost: 1
+    Deletion cost: 1
+
+  ,
+    Insertion cost: 1
+    Deletion cost: 1
+
+  =
+    Insertion cost: 1
+    Deletion cost: 1
+
+  (
+    Insertion cost: 1
+    Deletion cost: 1
+
+  )
+    Insertion cost: 1
+    Deletion cost: 1
+
+  +
+    Insertion cost: 1
+    Deletion cost: 1
+
+  -
+    Insertion cost: 1
+    Deletion cost: 1
+
+  *
+    Insertion cost: 1
+    Deletion cost: 1
+
+  /
+    Insertion cost: 1
+    Deletion cost: 1
+
+  ^
+    Insertion cost: 1
+    Deletion cost: 1
+
+  print
+    Insertion cost: 5
+    Deletion cost: 10
+
+  sqrt
+    Insertion cost: 5
+    Deletion cost: 10
+
+  identifier
+    Insertion cost: 10
+    Deletion cost: 20
+
+  number
+    Insertion cost: 10
+    Deletion cost: 20
+
+  string
+    Insertion cost: 10
+    Deletion cost: 20
+
+Nonterminal symbols:
+
+  Goal
+
+  StatementList
+
+  Statement
+
+  Expr
+
+  OptionalPrintItemList
+
+  PrintItemList
+
+  PrintItem
+
+  %%Goal
+
+Productions:
+
+  Production 0
+    Goal -> StatementList
+    Parameter: 0
+    Cost: 1
+
+  Production 1
+    StatementList ->
+    Parameter: 0
+    Cost: 0
+
+  Production 2
+    StatementList -> StatementList Statement
+    Parameter: 0
+    Cost: 3
+
+  Production 3
+    Statement -> ;
+    Link name: empty
+    Parameter: 0
+    Cost: 1
+
+  Production 4
+    Statement -> identifier = Expr ;
+    Link name: assign
+    Parameter: 0
+    Cost: 23
+
+  Production 5
+    Statement -> print OptionalPrintItemList ;
+    Link name: print
+    Parameter: 0
+    Cost: 7
+
+  Production 6
+    OptionalPrintItemList ->
+    Parameter: 0
+    Cost: 0
+
+  Production 7
+    OptionalPrintItemList -> PrintItemList
+    Parameter: 0
+    Cost: 12
+
+  Production 8
+    PrintItemList -> PrintItem
+    Parameter: 0
+    Cost: 11
+
+  Production 9
+    PrintItemList -> PrintItemList , PrintItem
+    Parameter: 0
+    Cost: 24
+
+  Production 10
+    PrintItem -> Expr
+    Parameter: 0
+    Cost: 11
+
+  Production 11
+    PrintItem -> string
+    Parameter: 1
+    Cost: 10
+
+  Production 12
+    Expr -> number
+    Parameter: 0
+    Cost: 10
+
+  Production 13
+    Expr -> identifier
+    Parameter: 1
+    Cost: 10
+
+  Production 14
+    Expr -> ( Expr )
+    Parameter: 2
+    Cost: 13
+
+  Production 15
+    Expr -> sqrt Expr
+    Parameter: 3
+    Reduce terminals: ^ * / + -
+    Cost: 16
+
+  Production 16
+    Expr -> Expr ^ Expr
+    Parameter: 4
+    Shift terminals: ^
+    Reduce terminals: * / + -
+    Cost: 23
+
+  Production 17
+    Expr -> Expr * Expr
+    Parameter: 5
+    Shift terminals: ^
+    Reduce terminals: * / + -
+    Cost: 23
+
+  Production 18
+    Expr -> Expr / Expr
+    Parameter: 6
+    Shift terminals: ^
+    Reduce terminals: * / + -
+    Cost: 23
+
+  Production 19
+    Expr -> + Expr
+    Parameter: 7
+    Shift terminals: ^ * /
+    Reduce terminals: + -
+    Cost: 12
+
+  Production 20
+    Expr -> - Expr
+    Parameter: 8
+    Shift terminals: ^ * /
+    Reduce terminals: + -
+    Cost: 12
+
+  Production 21
+    Expr -> Expr + Expr
+    Parameter: 9
+    Shift terminals: ^ * /
+    Reduce terminals: + -
+    Cost: 23
+
+  Production 22
+    Expr -> Expr - Expr
+    Parameter: 10
+    Shift terminals: ^ * /
+    Reduce terminals: + -
+    Cost: 23
+
+  Production 23
+    %%Goal -> Goal %%EOF
+    Parameter: 0
+    Cost: 3
+
+Error repair options:
+
+  Maximum insertions: 100
+
+  Maximum deletions: 200
+
+  Validation length: 5
+
+  Single-point insertion list:
+
+    ;
+    ,
+    =
+    (
+    )
+    +
+    -
+    *
+    /
+    ^
+    print
+    sqrt
+    identifier
+    number
+    string
+
+Parser generator algorithm statistics:
+
+  Number of raw LR(0) states: 40
+
+  Number of raw LR(1) states: 40
+
+  Number of iterative passes to generate LR(1) states: 3
+
+  Number of reachable LR(1) states on each pass:
+    Pass 0: 1
+    Pass 1: 38
+    Pass 2: 40
+
+  Number of iterative passes to generate production costs: 3
+
+  Number of iterative passes to generate conflict avoidance tables: 3
+
+  Number of parsing conflicts successfully resolved: 40
+
+LALR(1) configuration finite state machine:
+
+  State 0:
+    %%Goal -> _ Goal %%EOF  {}
+
+    Reduce 1: %%EOF ; print identifier
+    Shift-Goto 1: Goal
+    Shift-Goto 2: StatementList
+    Unwind: Reduce 1
+
+  State 1:
+    %%Goal -> Goal _ %%EOF  {}
+
+    Accept: %%EOF
+    Unwind: Accept
+
+  State 2:
+    Goal -> StatementList _  {%%EOF}
+    StatementList -> StatementList _ Statement  {%%EOF, ;, print, identifier}
+
+    Reduce 0: %%EOF
+    Shift-Reduce 2: Statement
+    Shift-Reduce 3: ;
+    Shift-Goto 4: print
+    Shift-Goto 5: identifier
+    Unwind: Reduce 0
+
+  State 3:
+    %%Goal -> Goal %%EOF _  {}
+
+    Unwind: Reduce 23
+
+  State 4:
+    Statement -> print _ OptionalPrintItemList ;  {%%EOF, ;, print, identifier}
+
+    Reduce 6: ;
+    Shift-Reduce 8: PrintItem
+    Shift-Reduce 11: string
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 10: Expr
+    Shift-Goto 11: OptionalPrintItemList
+    Shift-Goto 12: PrintItemList
+    Unwind: Reduce 6
+
+  State 5:
+    Statement -> identifier _ = Expr ;  {%%EOF, ;, print, identifier}
+
+    Shift-Goto 13: =
+    Unwind: Shift = Goto 13
+
+  State 6:
+    Expr -> ( _ Expr )  {;, ,, ), +, -, *, /, ^}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 14: Expr
+    Unwind: Shift number Reduce 12
+
+  State 7:
+    Expr -> + _ Expr  {;, ,, ), +, -, *, /, ^}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 15: Expr
+    Unwind: Shift number Reduce 12
+
+  State 8:
+    Expr -> - _ Expr  {;, ,, ), +, -, *, /, ^}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 16: Expr
+    Unwind: Shift number Reduce 12
+
+  State 9:
+    Expr -> sqrt _ Expr  {;, ,, ), +, -, *, /, ^}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Reduce 15: Expr
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Unwind: Shift number Reduce 12
+
+  State 10:
+    PrintItem -> Expr _  {;, ,}
+    Expr -> Expr _ ^ Expr  {;, ,, +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {;, ,, +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {;, ,, +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {;, ,, +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {;, ,, +, -, *, /, ^}
+
+    Reduce 10: ; ,
+    Shift-Goto 17: +
+    Shift-Goto 18: -
+    Shift-Goto 19: *
+    Shift-Goto 20: /
+    Shift-Goto 21: ^
+    Unwind: Reduce 10
+
+  State 11:
+    Statement -> print OptionalPrintItemList _ ;  {%%EOF, ;, print, identifier}
+
+    Shift-Reduce 5: ;
+    Unwind: Shift ; Reduce 5
+
+  State 12:
+    OptionalPrintItemList -> PrintItemList _  {;}
+    PrintItemList -> PrintItemList _ , PrintItem  {;, ,}
+
+    Reduce 7: ;
+    Shift-Goto 22: ,
+    Unwind: Reduce 7
+
+  State 13:
+    Statement -> identifier = _ Expr ;  {%%EOF, ;, print, identifier}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 23: Expr
+    Unwind: Shift number Reduce 12
+
+  State 14:
+    Expr -> ( Expr _ )  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ ^ Expr  {), +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {), +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {), +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {), +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {), +, -, *, /, ^}
+
+    Shift-Reduce 14: )
+    Shift-Goto 17: +
+    Shift-Goto 18: -
+    Shift-Goto 19: *
+    Shift-Goto 20: /
+    Shift-Goto 21: ^
+    Unwind: Shift ) Reduce 14
+
+  State 15:
+    Expr -> + Expr _  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ ^ Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {;, ,, ), +, -, *, /, ^}
+
+    Reduce 19: ; , ) + -
+    Shift-Goto 19: *
+    Shift-Goto 20: /
+    Shift-Goto 21: ^
+    Unwind: Reduce 19
+
+  State 16:
+    Expr -> - Expr _  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ ^ Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {;, ,, ), +, -, *, /, ^}
+
+    Reduce 20: ; , ) + -
+    Shift-Goto 19: *
+    Shift-Goto 20: /
+    Shift-Goto 21: ^
+    Unwind: Reduce 20
+
+  State 17:
+    Expr -> Expr + _ Expr  {;, ,, ), +, -, *, /, ^}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 24: Expr
+    Unwind: Shift number Reduce 12
+
+  State 18:
+    Expr -> Expr - _ Expr  {;, ,, ), +, -, *, /, ^}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 25: Expr
+    Unwind: Shift number Reduce 12
+
+  State 19:
+    Expr -> Expr * _ Expr  {;, ,, ), +, -, *, /, ^}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 26: Expr
+    Unwind: Shift number Reduce 12
+
+  State 20:
+    Expr -> Expr / _ Expr  {;, ,, ), +, -, *, /, ^}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 27: Expr
+    Unwind: Shift number Reduce 12
+
+  State 21:
+    Expr -> Expr ^ _ Expr  {;, ,, ), +, -, *, /, ^}
+
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 28: Expr
+    Unwind: Shift number Reduce 12
+
+  State 22:
+    PrintItemList -> PrintItemList , _ PrintItem  {;, ,}
+
+    Shift-Reduce 9: PrintItem
+    Shift-Reduce 11: string
+    Shift-Reduce 12: number
+    Shift-Reduce 13: identifier
+    Shift-Goto 6: (
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Shift-Goto 9: sqrt
+    Shift-Goto 10: Expr
+    Unwind: Shift string Reduce 11
+
+  State 23:
+    Statement -> identifier = Expr _ ;  {%%EOF, ;, print, identifier}
+    Expr -> Expr _ ^ Expr  {;, +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {;, +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {;, +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {;, +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {;, +, -, *, /, ^}
+
+    Shift-Reduce 4: ;
+    Shift-Goto 17: +
+    Shift-Goto 18: -
+    Shift-Goto 19: *
+    Shift-Goto 20: /
+    Shift-Goto 21: ^
+    Unwind: Shift ; Reduce 4
+
+  State 24:
+    Expr -> Expr + Expr _  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ ^ Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {;, ,, ), +, -, *, /, ^}
+
+    Reduce 21: ; , ) + -
+    Shift-Goto 19: *
+    Shift-Goto 20: /
+    Shift-Goto 21: ^
+    Unwind: Reduce 21
+
+  State 25:
+    Expr -> Expr - Expr _  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ ^ Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {;, ,, ), +, -, *, /, ^}
+
+    Reduce 22: ; , ) + -
+    Shift-Goto 19: *
+    Shift-Goto 20: /
+    Shift-Goto 21: ^
+    Unwind: Reduce 22
+
+  State 26:
+    Expr -> Expr * Expr _  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ ^ Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {;, ,, ), +, -, *, /, ^}
+
+    Reduce 17: ; , ) + - * /
+    Shift-Goto 21: ^
+    Unwind: Reduce 17
+
+  State 27:
+    Expr -> Expr / Expr _  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ ^ Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {;, ,, ), +, -, *, /, ^}
+
+    Reduce 18: ; , ) + - * /
+    Shift-Goto 21: ^
+    Unwind: Reduce 18
+
+  State 28:
+    Expr -> Expr ^ Expr _  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ ^ Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ * Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ / Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ + Expr  {;, ,, ), +, -, *, /, ^}
+    Expr -> Expr _ - Expr  {;, ,, ), +, -, *, /, ^}
+
+    Reduce 16: ; , ) + - * /
+    Shift-Goto 21: ^
+    Unwind: Reduce 16
+
+24 symbols.
+24 productions.
+29 LALR(1) machine states.
+
+Writing scanner table Java source ...
+Writing parser table Java source ...
+
+All tables generated successfully.

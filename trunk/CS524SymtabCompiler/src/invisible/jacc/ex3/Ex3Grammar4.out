@@ -1,0 +1,76 @@
+Reading grammar specification ...
+
+Generating LALR(1) configuration finite state machine ...
+
+LALR(1) configuration finite state machine:
+
+  State 5:
+    Expression -> - Expression _  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ + Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ - Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ / Expression  {;, +, -, /, (, ), identifier}
+
+    Conflict (shift/reduce 8): + - / ( identifier
+    Reduce 8: ; )
+    Shift-Goto 11: Expression
+    Unwind: Reduce 8
+
+  State 11:
+    Expression -> Expression Expression _  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ + Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ - Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ / Expression  {;, +, -, /, (, ), identifier}
+
+    Conflict (shift/reduce 6): + - / ( identifier
+    Reduce 6: ; )
+    Shift-Goto 11: Expression
+    Unwind: Reduce 6
+
+  State 12:
+    Expression -> Expression + Expression _  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ + Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ - Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ / Expression  {;, +, -, /, (, ), identifier}
+
+    Conflict (shift/reduce 4): + - / ( identifier
+    Reduce 4: ; )
+    Shift-Goto 11: Expression
+    Unwind: Reduce 4
+
+  State 13:
+    Expression -> - Expression _  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ + Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ - Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ / Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression - Expression _  {;, +, -, /, (, ), identifier}
+
+    Conflict (shift/reduce 5 8): + - / ( identifier
+    Conflict (reduce/reduce 5 8): ; )
+    Shift-Goto 11: Expression
+    Unwind: Reduce 8
+
+  State 14:
+    Expression -> Expression / Expression _  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ + Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ - Expression  {;, +, -, /, (, ), identifier}
+    Expression -> Expression _ / Expression  {;, +, -, /, (, ), identifier}
+
+    Conflict (shift/reduce 7): + - / ( identifier
+    Reduce 7: ; )
+    Shift-Goto 11: Expression
+    Unwind: Reduce 7
+
+12 symbols.
+10 productions.
+15 LALR(1) machine states.
+
+error: 27 unresolved conflicts.
+
+***** Error generating parser table. *****
+
+There were 1 error and 0 warnings.

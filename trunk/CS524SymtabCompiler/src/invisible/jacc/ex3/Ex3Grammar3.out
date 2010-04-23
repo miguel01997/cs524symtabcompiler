@@ -1,0 +1,87 @@
+Reading grammar specification ...
+
+Generating LALR(1) configuration finite state machine ...
+
+LALR(1) configuration finite state machine:
+
+  State 6:
+    Expression -> - Expression _  {;, +, -, *, /, ), !}
+    Expression -> Expression _ !  {;, +, -, *, /, ), !}
+    Expression -> Expression _ + Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ - Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ * Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ / Expression  {;, +, -, *, /, ), !}
+
+    Conflict (shift/reduce 8): + - * / !
+    Reduce 8: ; )
+    Unwind: Reduce 8
+
+  State 8:
+    Expression -> abs Expression _  {;, +, -, *, /, ), !}
+    Expression -> Expression _ !  {;, +, -, *, /, ), !}
+    Expression -> Expression _ + Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ - Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ * Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ / Expression  {;, +, -, *, /, ), !}
+
+    Conflict (shift/reduce 9): + - * / !
+    Reduce 9: ; )
+    Unwind: Reduce 9
+
+  State 14:
+    Expression -> Expression + Expression _  {;, +, -, *, /, ), !}
+    Expression -> Expression _ !  {;, +, -, *, /, ), !}
+    Expression -> Expression _ + Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ - Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ * Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ / Expression  {;, +, -, *, /, ), !}
+
+    Conflict (shift/reduce 4): + - * / !
+    Reduce 4: ; )
+    Unwind: Reduce 4
+
+  State 15:
+    Expression -> Expression - Expression _  {;, +, -, *, /, ), !}
+    Expression -> Expression _ !  {;, +, -, *, /, ), !}
+    Expression -> Expression _ + Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ - Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ * Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ / Expression  {;, +, -, *, /, ), !}
+
+    Conflict (shift/reduce 5): + - * / !
+    Reduce 5: ; )
+    Unwind: Reduce 5
+
+  State 16:
+    Expression -> Expression * Expression _  {;, +, -, *, /, ), !}
+    Expression -> Expression _ !  {;, +, -, *, /, ), !}
+    Expression -> Expression _ + Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ - Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ * Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ / Expression  {;, +, -, *, /, ), !}
+
+    Conflict (shift/reduce 6): + - * / !
+    Reduce 6: ; )
+    Unwind: Reduce 6
+
+  State 17:
+    Expression -> Expression / Expression _  {;, +, -, *, /, ), !}
+    Expression -> Expression _ !  {;, +, -, *, /, ), !}
+    Expression -> Expression _ + Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ - Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ * Expression  {;, +, -, *, /, ), !}
+    Expression -> Expression _ / Expression  {;, +, -, *, /, ), !}
+
+    Conflict (shift/reduce 7): + - * / !
+    Reduce 7: ; )
+    Unwind: Reduce 7
+
+15 symbols.
+12 productions.
+18 LALR(1) machine states.
+
+error: 30 unresolved conflicts.
+
+***** Error generating parser table. *****
+
+There were 1 error and 0 warnings.

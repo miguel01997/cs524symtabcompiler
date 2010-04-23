@@ -1,0 +1,1295 @@
+// Copyright 1997-1998 Invisible Software, Inc.
+
+/*->
+
+  Grammar specification for Example #5.
+  
+  This file contains scanner and parser tables for the complete Java language,
+  including Java 1.1 extensions such as nested classes.  The grammar follows
+  very closely the grammar printed in the Java Language Specification.
+
+
+  CREATING THE SCANNER AND PARSER TABLES
+  
+  There are two ways to create the scanner and parser tables:  you can use
+  the graphical interface, or you can use the command line.
+  
+  To use the graphical interface, execute class invisible.jacc.gen.GenGUI.
+  When the window appears, enter invisible\jacc\ex5\Ex5Grammar.jacc as the
+  file name.  Check the boxes to "generate scanner table", "generate parser
+  table", "create generated file", and "write output messages to file".
+  Then, click on "Generate".
+  
+  To use the command line, execute class invisible.jacc.gen.GenMain with the
+  following command line:
+  
+        -o -g invisible\jacc\ex5\Ex5Grammar.jacc
+  
+  In either case, Invisible Jacc creates Ex5GrammarScannerTable.java and
+  Ex5GrammarParserTable.java.
+  
+  Note:  On Microsoft Windows, the filename is not case-sensitive.  On other
+  operating systems, the filename may or may not be case-sensitive depending
+  on the operating system.  (If you're using another operating system,
+  substitute the appropriate path separator character in place of backslash.)
+  
+  Note:  If you omit the ".jacc" extension from the filename, Invisible Jacc
+  supplies the ".jacc" extension automatically.
+  
+  
+  RUNNING THE SAMPLE INPUT
+  
+  To run the sample input, execute class invisible.jacc.ex5.Ex5Main with the
+  following command line:
+  
+        -4 invisible\jacc\ex5\Ex5Compiler.java
+  
+  This produces a summary of the file Ex5Compiler.java.  The -4 option tells
+  the summarizer to include private members in the summary.  Refer to class
+  Ex5Main for information on available options.
+  
+  File Ex5CompilerSummary.out contains the result of running the above command.
+
+->*/
+
+
+// ----- Generator options -----
+
+%options:
+
+%java invisible.jacc.ex5.Ex5Grammar;	// Java package and class
+%charsetsize 0x10000;		// Character set size = 65536 for Unicode
+
+
+// ----- Character categories -----
+
+%categories:
+
+// Letters of the alphabet, used for keywords and literals.
+
+a = 'a';
+b = 'b';
+c = 'c';
+d = 'd';
+e = 'e';
+f = 'f';
+g = 'g';
+h = 'h';
+i = 'i';
+j = 'j';
+k = 'k';
+l = 'l';
+m = 'm';
+n = 'n';
+o = 'o';
+p = 'p';
+q = 'q';
+r = 'r';
+s = 's';
+t = 't';
+u = 'u';
+v = 'v';
+w = 'w';
+x = 'x';
+y = 'y';
+z = 'z';
+
+// Punctuation characters
+
+'!' = '!';
+'"' = '"';
+'%' = '%';
+'&' = '&';
+''' = ''';
+'(' = '(';
+')' = ')';
+'*' = '*';
+'+' = '+';
+',' = ',';
+'-' = '-';
+'.' = '.';
+'/' = '/';
+':' = ':';
+';' = ';';
+'<' = '<';
+'=' = '=';
+'>' = '>';
+'?' = '?';
+'[' = '[';
+'\' = '\';
+']' = ']';
+'^' = '^';
+'{' = '{';
+'|' = '|';
+'}' = '}';
+'~' = '~';
+
+// Characters used in identifiers.
+
+letter = %letter | '_$';
+digit = %digit;
+letterOrDigit = %letter | %digit | '_$';
+
+// Characters used in literal numbers.
+
+decDigit = '0'..'9';
+hexDigit = '0'..'9' | 'A'..'F' | 'a'..'f';
+octalDigit = '0'..'7';
+nonZeroDigit = '1'..'9';
+zeroToThree = '0'..'3';
+'0' = '0';
+dD = 'dD';
+eE = 'eE';
+fF = 'fF';
+lL = 'lL';
+xX = 'xX';
+sign = '+-';
+
+// Characters used in literal characters and strings.
+
+singleChar = %any - ''' - '\' - 10 - 13;
+stringChar = %any - '"' - '\' - 10 - 13;
+
+// Characters used for line ends and white space.
+
+space = 9 | 12 | 32;		// tab, form feed, and space
+sub = 26;					// ASCII sub
+cr = 13;					// carriage return
+lf = 10;					// line feed
+notEol = %any - 10 - 13;	// any character that isn't a line end
+any = %any;					// any character
+
+
+// ----- Start conditions -----
+
+%conditions:
+
+notInComment;				// Normal condition
+inComment;					// Inside a multi-line comment
+
+
+// ----- Tokens recognized when not inside a multi-line comment -----
+
+%tokens notInComment:
+
+// Separators.  See Java Language Specification section 3.11.
+
+'(' = '(';
+')' = ')';
+'{' = '{';
+'}' = '}';
+'[' = '[';
+']' = ']';
+';' = ';';
+',' = ',';
+'.' = '.';
+
+// Operators.  See Java Language Specification section 3.12.
+
+'=' = '=';
+'>' = '>';
+'<' = '<';
+'!' = '!';
+'~' = '~';
+'?' = '?';
+':' = ':';
+'==' = '=' '=';
+'<=' = '<' '=';
+'>=' = '>' '=';
+'!=' = '!' '=';
+'&&' = '&' '&';
+'||' = '|' '|';
+'++' = '+' '+';
+'--' = '-' '-';
+'+' = '+';
+'-' = '-';
+'*' = '*';
+'/' = '/';
+'&' = '&';
+'|' = '|';
+'^' = '^';
+'%' = '%';
+'<<' = '<' '<';
+'>>' = '>' '>';
+'>>>' = '>' '>' '>';
+'+=' = '+' '=';
+'-=' = '-' '=';
+'*=' = '*' '=';
+'/=' = '/' '=';
+'&=' = '&' '=';
+'|=' = '|' '=';
+'^=' = '^' '=';
+'%=' = '%' '=';
+'<<=' = '<' '<' '=';
+'>>=' = '>' '>' '=';
+'>>>=' = '>' '>' '>' '=';
+
+// Keywords.  See Java Language Specification section 3.9.
+
+abstract = a b s t r a c t;
+boolean = b o o l e a n;
+break = b r e a k;
+byte = b y t e;
+case = c a s e;
+catch = c a t c h;
+char = c h a r;
+class = c l a s s;
+const = c o n s t;
+continue = c o n t i n u e;
+default = d e f a u l t;
+do = d o;
+double = d o u b l e;
+else = e l s e;
+extends = e x t e n d s;
+final = f i n a l;
+finally = f i n a l l y;
+float = f l o a t;
+for = f o r;
+goto = g o t o;
+if = i f;
+implements = i m p l e m e n t s;
+import = i m p o r t;
+instanceof = i n s t a n c e o f;
+int = i n t;
+interface = i n t e r f a c e;
+long = l o n g;
+native = n a t i v e;
+new = n e w;
+package = p a c k a g e;
+private = p r i v a t e;
+protected = p r o t e c t e d;
+public = p u b l i c;
+return = r e t u r n;
+short = s h o r t;
+static = s t a t i c;
+super = s u p e r;
+switch = s w i t c h;
+synchronized = s y n c h r o n i z e d;
+this = t h i s;
+throw = t h r o w;
+throws = t h r o w s;
+transient = t r a n s i e n t;
+try = t r y;
+void = v o i d;
+volatile = v o l a t i l e;
+while = w h i l e;
+
+// Boolean literals.  See Java Language Specification section 3.10.3.
+
+booleanLiteral {true} = t r u e;
+booleanLiteral {false} = f a l s e;
+
+// Null literal.  See Java Language Specification section 3.10.7.
+
+nullLiteral = n u l l;
+
+// Integer literals.  See Java Language Specification section 3.10.1.
+
+integerLiteral {decimal} = ('0' | nonZeroDigit decDigit*);
+
+integerLiteral {hex} = '0' xX hexDigit+;
+
+integerLiteral {octal} = '0' octalDigit+;
+
+integerLiteral {decimalLong} = ('0' | nonZeroDigit decDigit*) lL;
+
+integerLiteral {hexLong} = '0' xX hexDigit+ lL;
+
+integerLiteral {octalLong} = '0' octalDigit+ lL;
+
+// Floating point literals.  See Java Language Specification section 3.10.2.
+
+floatingPointLiteral {float} = decDigit+ '.' decDigit* (eE sign? decDigit+)? fF
+                             | '.' decDigit+ (eE sign? decDigit+)? fF
+                             | decDigit+ (eE sign? decDigit+) fF
+                             | decDigit+ (eE sign? decDigit+)? fF
+					         ;
+
+floatingPointLiteral {double} = decDigit+ '.' decDigit* (eE sign? decDigit+)? dD?
+                              | '.' decDigit+ (eE sign? decDigit+)? dD?
+                              | decDigit+ (eE sign? decDigit+) dD?
+                              | decDigit+ (eE sign? decDigit+)? dD
+		                      ;
+
+// Character literals.  See Java Language Specification section 3.10.4.
+
+characterLiteral = ''' ( singleChar
+                         | '\' b
+                         | '\' t
+                         | '\' n
+                         | '\' f
+                         | '\' r
+                         | '\' '"'
+                         | '\' '''
+                         | '\' '\'
+                         | '\' octalDigit
+                         | '\' octalDigit octalDigit
+                         | '\' zeroToThree octalDigit octalDigit
+					   ) ''';
+
+// String literals.  See Java Language Specification section 3.10.5.
+
+stringLiteral = '"' ( stringChar
+                      | '\' b
+                      | '\' t
+                      | '\' n
+                      | '\' f
+                      | '\' r
+                      | '\' '"'
+                      | '\' '''
+                      | '\' '\'
+                      | '\' octalDigit
+                      | '\' octalDigit octalDigit
+                      | '\' zeroToThree octalDigit octalDigit
+				    )* '"';
+
+// Identifiers.  See Java Language Specification section 3.8.
+
+identifier  = letter letterOrDigit*;
+
+// Error tokens.  These are designed to catch some illegal forms.  This is not
+// a comprehensive list; a production compiler would have more than these.
+
+integerLiteral {illegal} = digit letterOrDigit*;
+
+characterLiteral {illegal} = ''' '\'* singleChar? '''?;
+
+stringLiteral {illegal} = '"' (stringChar | '\' '\' | '\' '"' | '\' stringChar)* '"';
+
+stringLiteral {runOn} = '"' (stringChar | '\' '\' | '\' '"' | '\' stringChar)* '\'?;
+
+// White space includes any number of space characters or comments, all on a
+// single line.
+
+whiteSpace = (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+             ('/' '/' notEol*)?;
+
+// This token recognizes the start of a multi-line comment.  The token factory
+// needs to change the start condition to inComment.
+
+beginComment = (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+               '/' '*' (notEol* ~ '*' '/');
+
+// An ASCII sub character is illegal if it does not occur at the end of the
+// file.  Notice the use of the right context operator to specify that the sub
+// is not at the end of the file.
+
+illegalChar = sub / any;
+
+// An ASCII sub character occurring at the end of a file is white space.
+// Notice that this token does not match a sub occurring in the middle of a
+// file because the scanner looks for the longest match (including context),
+// and the previous token is longer.
+
+whiteSpace = sub;
+
+
+// ----- Tokens recognized when inside a multi-line comment -----
+
+%tokens inComment:
+
+// This token recognizes the end of a multi-line comment, including any
+// trailing white space.  The token factory needs to change the start condition
+// to notInComment.
+
+endComment = (notEol* ~ '*' '/') '*' '/'
+             (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+             ('/' '/' notEol*)?;
+
+// Everything inside a multi-line comment is white space.  This token matches
+// if we reach the end of the line and either (a) the multi-line comment was
+// not terminated, or (b) the multi-line comment was terminated and a new
+// multi-line comment was started.  Notice that although the regular expression
+// appears to match a zero-length string, in fact the scanner never matches a
+// token to a zero-length string.
+
+whiteSpace = ((notEol* ~ '*' '/') '*' '/'
+              (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+              '/' '*'
+             )?
+             (notEol* ~ '*' '/');
+
+
+// ----- Tokens that are always recognized -----
+
+%tokens:
+
+// A line-end can be either a carriage return, a line feed, or a carriage
+// return and line feed pair.  The token factory needs to count the line.
+// Maintaining the line count allows error messages to pinpoint the location
+// of errors.
+
+lineEnd = cr | lf | cr lf;
+
+// This token matches if no other token matches.  Therefore, it must be the
+// last token in the file.
+
+illegalChar = any;
+
+
+// ----- Terminals for the Java language -----
+
+%terminals:
+
+// Separators.  See Java Language Specification section 3.11.
+
+'(' 1 1;
+')' 1 1;
+'{' 1 1;
+'}' 1 1;
+'[' 1 1;
+']' 1 1;
+';' 1 1;
+',' 1 1;
+'.' 1 1;
+
+// Operators.  See Java Language Specification section 3.12.
+
+'=' 2 2;
+'>' 2 2;
+'<' 2 2;
+'!' 2 2;
+'~' 2 2;
+'?' 2 2;
+':' 2 2;
+'==' 2 2;
+'<=' 2 2;
+'>=' 2 2;
+'!=' 2 2;
+'&&' 2 2;
+'||' 2 2;
+'++' 2 2;
+'--' 2 2;
+'+' 2 2;
+'-' 2 2;
+'*' 2 2;
+'/' 2 2;
+'&' 2 2;
+'|' 2 2;
+'^' 2 2;
+'%' 2 2;
+'<<' 2 2;
+'>>' 2 2;
+'>>>' 2 2;
+'+=' 2 2;
+'-=' 2 2;
+'*=' 2 2;
+'/=' 2 2;
+'&=' 2 2;
+'|=' 2 2;
+'^=' 2 2;
+'%=' 2 2;
+'<<=' 2 2;
+'>>=' 2 2;
+'>>>=' 2 2;
+
+// Keywords.  See Java Language Specification section 3.9.
+
+abstract 5 10;
+boolean 5 10;
+break 5 10;
+byte 5 10;
+case 5 10;
+catch 5 10;
+char 5 10;
+class 5 10;
+// const 5 10; // Not used in the language
+continue 5 10;
+default 5 10;
+do 5 10;
+double 5 10;
+else 5 10;
+extends 5 10;
+final 5 10;
+finally 5 10;
+float 5 10;
+for 5 10;
+// goto 5 10; // Not used in the language
+if 5 10;
+implements 5 10;
+import 5 10;
+instanceof 5 10;
+int 5 10;
+interface 20 10; // 'interface' is expensive to insert, because 'class' is preferred
+long 5 10;
+native 5 10;
+new 5 10;
+package 5 10;
+private 5 10;
+protected 5 10;
+public 5 10;
+return 5 10;
+short 5 10;
+static 5 10;
+super 5 10;
+switch 5 10;
+synchronized 5 10;
+this 5 10;
+throw 5 10;
+throws 5 10;
+transient 5 10;
+try 5 10;
+void 5 10;
+volatile 5 10;
+while 5 10;
+
+// Literals.  See Java Language Specification section 3.10.
+
+integerLiteral 10 20;
+floatingPointLiteral 10 20;
+booleanLiteral 10 20;
+characterLiteral 10 20;
+stringLiteral 10 20;
+nullLiteral 10 20;
+
+// Identifiers.  See Java Language Specification section 3.8.
+
+identifier 10 20;
+
+
+// ----- Productions for the Java Language -----
+
+%productions:
+
+// Java Language Specification section 19.2
+
+Goal ->	CompilationUnit;
+
+// Java Language Specification section 19.3
+
+Literal {integer}   -> integerLiteral;
+Literal {floating}  -> floatingPointLiteral;
+Literal {boolean}   -> booleanLiteral;
+Literal {character} -> characterLiteral;
+Literal {string}    -> stringLiteral;
+Literal {null}      -> nullLiteral;
+
+// Java Language Specification section 19.4
+
+Type {primitive} -> PrimitiveType;
+Type {reference} -> ReferenceType;
+
+PrimitiveType {numeric}       -> NumericType;
+PrimitiveType {boolean} #0x5A -> boolean;
+
+NumericType {integral} -> IntegralType;
+NumericType {floating} -> FloatingPointType;
+
+IntegralType {byte}  #0x42 -> byte;
+IntegralType {short} #0x53 -> short;
+IntegralType {int}   #0x49 -> int;
+IntegralType {long}  #0x4A -> long;
+IntegralType {char}  #0x43 -> char;
+
+FloatingPointType {float}  #0x46 -> float;
+FloatingPointType {double} #0x44 -> double;
+
+ReferenceType {class} -> ClassOrInterfaceType;
+ReferenceType {array} -> ArrayType;
+
+ClassOrInterfaceType #0x4C -> Name;
+
+ClassType -> ClassOrInterfaceType;
+
+InterfaceType -> ClassOrInterfaceType;
+
+ArrayType {primitive} -> PrimitiveType Dims;
+ArrayType {reference} -> Name Dims;
+
+    // The Java 1.0 spec defines ArrayType as:
+    //
+    //     ArrayType -> PrimitiveType '[' ']';
+    //     ArrayType -> Name '[' ']';
+    //     ArrayType -> ArrayType '[' ']';
+    //
+    // This cannot be LALR(1) when the Java 1.1 class literals are added.
+    // Consider the inputs "x[][].class" and "x[][] y".  When the parser has
+    // seen "x[]" and the next input token is "[", the parser cannot know if
+    // it should reduce "x[]" to "Name Dims" (as required for "x[][].class"), or
+    // if it should reduce "x[]" to "ArrayType" (as is required for "x[][] y").
+    //
+    // Also note that our definition is more consistent with the notations for
+    // array types used elsewhere in the grammar, as in CastExpression.
+    //
+    // It would be even more consistent to use "ClassOrInterfaceType Dims" in
+    // place of "Name Dims", but that would make the grammar non-LALR(1).
+
+VoidType #0x56 -> void;
+
+    // The Java 1.0 spec does not define VoidType.  In Java 1.0, void is not
+    // really a type, and the "void" terminal is simply inserted directly into
+    // the only place it can appear, as the return type of a method.  But in
+    // Java 1.1, void is a full-fledged type as indicated by the existence of
+    // the class object "void.class".  Therefore it makes sense to introduce a
+    // nonterminal to represent void as a type.
+    
+    // The integer parameters appearing in this section are the type codes from
+    // the Java VM Spec.  For example, 0x42 is the ASCII code for 'B' which is
+    // the Java VM code for "byte".
+
+// Java Language Specification section 19.5
+
+Name {simple}    -> SimpleName;
+Name {qualified} -> QualifiedName;
+
+SimpleName -> identifier;
+
+QualifiedName -> Name '.' identifier;
+
+// Java Language Specification section 19.6
+
+CompilationUnit -> PackageDeclarationOpt ImportDeclarationsOpt TypeDeclarationsOpt;
+
+PackageDeclarationOpt        -> PackageDeclaration;
+PackageDeclarationOpt {none} -> ;
+
+ImportDeclarationsOpt        -> ImportDeclarations;
+ImportDeclarationsOpt {none} -> ;
+
+TypeDeclarationsOpt        -> TypeDeclarations;
+TypeDeclarationsOpt {none} -> ;
+
+ImportDeclarations {first} -> ImportDeclaration;
+ImportDeclarations {next}  -> ImportDeclarations ImportDeclaration;
+
+TypeDeclarations {first} -> TypeDeclaration;
+TypeDeclarations {next}  -> TypeDeclarations TypeDeclaration;
+
+PackageDeclaration -> package Name ';';
+
+ImportDeclaration {single} -> SingleTypeImportDeclaration;
+ImportDeclaration {demand} -> TypeImportOnDemandDeclaration;
+
+SingleTypeImportDeclaration -> import Name ';';
+
+TypeImportOnDemandDeclaration -> import Name '.' '*' ';';
+
+TypeDeclaration {class}     -> ClassDeclaration;
+TypeDeclaration {interface} -> InterfaceDeclaration;
+TypeDeclaration {empty}     -> ';';
+
+// Java Language Specification section 19.7
+
+Modifiers {first} -> Modifier;
+Modifiers {next}  -> Modifiers Modifier;
+
+Modifier {public}       #0x0001 -> public;
+Modifier {protected}    #0x0004 -> protected;
+Modifier {private}      #0x0002 -> private;
+Modifier {static}       #0x0008 -> static;
+Modifier {abstract}     #0x0400 -> abstract;
+Modifier {final}        #0x0010 -> final;
+Modifier {native}       #0x0100 -> native;
+Modifier {synchronized} #0x0020 -> synchronized;
+Modifier {transient}    #0x0080 -> transient;
+Modifier {volatile}     #0x0040 -> volatile;
+
+    // The integer parameters are the modifier flags from the Java VM Spec.
+    // The "missing" value 0x0200 is set to indicate that a class-or-interface
+    // name is an interface (as opposed to a class), and does not correspond
+    // to any modifier in the language.
+
+// Java Language Specification section 19.8.1
+
+ClassDeclaration -> ModifiersOpt class identifier SuperOpt InterfacesOpt ClassBody;
+
+ModifiersOpt                -> Modifiers;
+ModifiersOpt {none} #0x0000 -> ;
+
+    // The integer parameter is the modifier flag value for no modifiers, from
+    // the Java VM Spec.
+
+SuperOpt        -> Super;
+SuperOpt {none} -> ;
+
+InterfacesOpt        -> Interfaces;
+InterfacesOpt {none} -> ;
+
+Super -> extends ClassType;
+
+Interfaces -> implements InterfaceTypeList;
+
+InterfaceTypeList {first} -> InterfaceType;
+InterfaceTypeList {next}  -> InterfaceTypeList ',' InterfaceType;
+
+ClassBody -> '{' ClassBodyDeclarationsOpt '}';
+
+ClassBodyDeclarationsOpt        -> ClassBodyDeclarations;
+ClassBodyDeclarationsOpt {none} -> ;
+
+ClassBodyDeclarations {first} -> ClassBodyDeclaration;
+ClassBodyDeclarations {next}  -> ClassBodyDeclarations ClassBodyDeclaration;
+
+ClassBodyDeclaration {member}      -> ClassMemberDeclaration;
+ClassBodyDeclaration {static}      -> StaticInitializer;
+ClassBodyDeclaration {constructor} -> ConstructorDeclaration;
+
+ClassMemberDeclaration {field}  -> FieldDeclaration;
+ClassMemberDeclaration {method} -> MethodDeclaration;
+
+// Java Language Specification section 19.8.2
+
+FieldDeclaration -> ModifiersOpt Type VariableDeclarators ';';
+
+VariableDeclarators {first} -> VariableDeclarator;
+VariableDeclarators {next} -> VariableDeclarators ',' VariableDeclarator;
+
+VariableDeclarator {noInit} -> VariableDeclaratorId;
+VariableDeclarator {init}   -> VariableDeclaratorId '=' VariableInitializer;
+
+VariableDeclaratorId -> identifier DimsOpt;
+
+    // In the Java 1.0 spec, VariableDeclaratorId is defined as:
+    //
+    //     VariableDeclaratorId -> identifier;
+    //     VariableDeclaratorId -> VariableDeclaratorId '[' ']';
+    //
+    // This definition works, but we have changed it to be similar to the new
+    // definition of ArrayType.  In our grammar, all sequences of bracket pairs
+    // are captured by DimsOpt and Dims.
+
+VariableInitializer {expression}  -> Expression;
+VariableInitializer {array}       -> ArrayInitializer;
+
+// Java Language Specification section 19.8.3
+
+MethodDeclaration -> MethodHeader MethodBody;
+
+MethodHeader {notVoid} -> ModifiersOpt Type MethodDeclarator ThrowsOpt;
+MethodHeader {void}    -> ModifiersOpt VoidType MethodDeclarator ThrowsOpt;
+
+ThrowsOpt        -> Throws;
+ThrowsOpt {none} -> ;
+
+MethodDeclarator -> identifier '(' FormalParameterListOpt ')' DimsOpt;
+
+    // In the Java 1.0 spec, MethodDeclarator is defined as:
+    //
+    //     MethodDeclarator -> identifier '(' FormalParameterListOpt ')';
+    //     MethodDeclarator -> MethodDeclarator '[' ']';
+    //
+    // This definition works, but we have changed it to be similar to the new
+    // definition of ArrayType.  In our grammar, all sequences of bracket pairs
+    // are captured by DimsOpt and Dims.
+
+FormalParameterListOpt        -> FormalParameterList;
+FormalParameterListOpt {none} -> ;
+
+FormalParameterList {first} -> FormalParameter;
+FormalParameterList {next}  -> FormalParameterList ',' FormalParameter;
+
+FormalParameter -> Type VariableDeclaratorId;
+
+Throws -> throws ClassTypeList;
+
+ClassTypeList {first} -> ClassType;
+ClassTypeList {next}  -> ClassTypeList ',' ClassType;
+
+MethodBody {block} -> Block;
+MethodBody {empty} -> ';';
+
+// Java Language Specification section 19.8.4
+
+StaticInitializer -> static Block;
+
+// Java Language Specification section 19.8.5
+
+ConstructorDeclaration -> ModifiersOpt ConstructorDeclarator ThrowsOpt ConstructorBody;
+
+ConstructorDeclarator -> SimpleName '(' FormalParameterListOpt ')';
+
+ConstructorBody {explicit} -> '{' ExplicitConstructorInvocation BlockStatementsOpt '}';
+ConstructorBody {implicit} -> '{' BlockStatementsOpt '}';
+
+ExplicitConstructorInvocation {this}  -> this '(' ArgumentListOpt ')' ';';
+ExplicitConstructorInvocation {super} -> super '(' ArgumentListOpt ')' ';';
+
+// Java Language Specification section 19.9.1
+
+InterfaceDeclaration -> ModifiersOpt interface identifier ExtendsInterfacesOpt InterfaceBody;
+
+ExtendsInterfacesOpt        -> ExtendsInterfaces;
+ExtendsInterfacesOpt {none} -> ;
+
+ExtendsInterfaces {first} -> extends InterfaceType;
+ExtendsInterfaces {next}  -> ExtendsInterfaces ',' InterfaceType;
+
+InterfaceBody -> '{' InterfaceMemberDeclarationsOpt '}';
+
+InterfaceMemberDeclarationsOpt        -> InterfaceMemberDeclarations;
+InterfaceMemberDeclarationsOpt {none} -> ;
+
+InterfaceMemberDeclarations {first} -> InterfaceMemberDeclaration;
+InterfaceMemberDeclarations {next}  -> InterfaceMemberDeclarations InterfaceMemberDeclaration;
+
+InterfaceMemberDeclaration {field}  -> ConstantDeclaration;
+InterfaceMemberDeclaration {method} -> AbstractMethodDeclaration;
+
+ConstantDeclaration -> FieldDeclaration;
+
+AbstractMethodDeclaration -> MethodHeader ';';
+
+// Java Language Specification section 19.10
+
+ArrayInitializer {notEmpty} -> '{' VariableInitializers CommaOpt '}';
+ArrayInitializer {empty}    -> '{' CommaOpt '}';
+
+    // Note: We cannot combine the two forms of ArrayInitializer by defining
+    // VariableInitializersOpt.  This is because the possibility of a trailing
+    // comma makes it impossible to preserve LALR(1)-ness.  Consider the inputs
+    // "{1,}" and "{1,2}", when the parser has seen "{1" and the next input
+    // token is ",".  The parser cannot know if it should reduce "1" to
+    // VariableInitializersOpt (as required for "{1,}") or to
+    // VariableInitializers (as required for "{1,2}").
+	
+CommaOpt        -> ',';
+CommaOpt {none} -> ;
+
+VariableInitializers {first} -> VariableInitializer;
+VariableInitializers {next}  -> VariableInitializers ',' VariableInitializer;
+
+// Java Language Specification section 19.11
+
+Block -> '{' BlockStatementsOpt '}';
+
+BlockStatementsOpt        -> BlockStatements;
+BlockStatementsOpt {none} -> ;
+
+BlockStatements {first} -> BlockStatement;
+BlockStatements {next}  -> BlockStatements BlockStatement;
+
+BlockStatement {declaration} -> LocalVariableDeclarationStatement;
+BlockStatement {statement}   -> Statement;
+
+LocalVariableDeclarationStatement -> LocalVariableDeclaration ';';
+
+LocalVariableDeclaration -> Type VariableDeclarators;
+
+Statement              -> StatementWithoutTrailingSubstatement;
+Statement {labeled}    -> LabeledStatement;
+Statement {ifThen}     -> IfThenStatement;
+Statement {ifThenElse} -> IfThenElseStatement;
+Statement {while}      -> WhileStatement;
+Statement {for}        -> ForStatement;
+
+StatementNoShortIf              -> StatementWithoutTrailingSubstatement;
+StatementNoShortIf {labeled}    -> LabeledStatementNoShortIf;
+StatementNoShortIf {ifThenElse} -> IfThenElseStatementNoShortIf;
+StatementNoShortIf {while}      -> WhileStatementNoShortIf;
+StatementNoShortIf {for}        -> ForStatementNoShortIf;
+
+StatementWithoutTrailingSubstatement {block}        -> Block;
+StatementWithoutTrailingSubstatement {empty}        -> EmptyStatement;
+StatementWithoutTrailingSubstatement {expression}   -> ExpressionStatement;
+StatementWithoutTrailingSubstatement {switch}       -> SwitchStatement;
+StatementWithoutTrailingSubstatement {do}           -> DoStatement;
+StatementWithoutTrailingSubstatement {break}        -> BreakStatement;
+StatementWithoutTrailingSubstatement {continue}     -> ContinueStatement;
+StatementWithoutTrailingSubstatement {return}       -> ReturnStatement;
+StatementWithoutTrailingSubstatement {synchronized} -> SynchronizedStatement;
+StatementWithoutTrailingSubstatement {throw}        -> ThrowStatement;
+StatementWithoutTrailingSubstatement {try}          -> TryStatement;
+
+EmptyStatement -> ';';
+
+LabeledStatement -> identifier ':' Statement;
+
+LabeledStatementNoShortIf -> identifier ':' StatementNoShortIf;
+
+ExpressionStatement -> StatementExpression ';';
+
+StatementExpression {assign}       -> Assignment;
+StatementExpression {preInc}       -> PreIncrementExpression;
+StatementExpression {preDec}       -> PreDecrementExpression;
+StatementExpression {postInc}      -> PostIncrementExpression;
+StatementExpression {postDec}      -> PostDecrementExpression;
+StatementExpression {methodInvoke} -> MethodInvocation;
+StatementExpression {classCreate}  -> ClassInstanceCreationExpression;
+
+IfThenStatement -> if '(' Expression ')' Statement;
+
+IfThenElseStatement -> if '(' Expression ')' StatementNoShortIf else Statement;
+
+IfThenElseStatementNoShortIf -> if '(' Expression ')' StatementNoShortIf else StatementNoShortIf;
+
+SwitchStatement -> switch '(' Expression ')' SwitchBlock;
+
+SwitchBlock {groups}   -> '{' SwitchBlockStatementGroups SwitchLabelsOpt '}';
+SwitchBlock {noGroups} -> '{' SwitchLabelsOpt '}';
+
+     // Note that we can't combine the two definitions of SwitchBlock by
+     // creating SwitchBlockStatementGroupsOpt.  Consider the inputs
+     // "{case 1:}" and "{case 1: return;}".  When the parser has seen "{" and
+     // the next input token is "case", it cannot know if it should reduce
+     // SwitchBlockStatementGroupsOpt via its epsilon production (as required
+     // for "{case 1:}") or not (as required for "{case 1: return;}").
+
+SwitchLabelsOpt        -> SwitchLabels;
+SwitchLabelsOpt {none} -> ;
+
+SwitchBlockStatementGroups {first} -> SwitchBlockStatementGroup;
+SwitchBlockStatementGroups {next}  -> SwitchBlockStatementGroups SwitchBlockStatementGroup;
+
+SwitchBlockStatementGroup -> SwitchLabels BlockStatements;
+
+SwitchLabels {first} -> SwitchLabel;
+SwitchLabels {next}  -> SwitchLabels SwitchLabel;
+
+SwitchLabel {case}    -> case ConstantExpression ':';
+SwitchLabel {default} -> default ':';
+
+WhileStatement -> while '(' Expression ')' Statement;
+
+WhileStatementNoShortIf -> while '(' Expression ')' StatementNoShortIf;
+
+DoStatement -> do Statement while '(' Expression ')' ';';
+
+ForStatement -> for '(' ForInitOpt ';' ExpressionOpt ';' ForUpdateOpt ')' Statement;
+
+ForStatementNoShortIf -> for '(' ForInitOpt ';' ExpressionOpt ';' ForUpdateOpt ')' StatementNoShortIf;
+
+ForInitOpt        -> ForInit;
+ForInitOpt {none} -> ;
+
+ExpressionOpt        -> Expression;
+ExpressionOpt {none} -> ;
+
+ForUpdateOpt        -> ForUpdate;
+ForUpdateOpt {none} -> ;
+
+ForInit {statement}   -> StatementExpressionList;
+ForInit {declaration} -> LocalVariableDeclaration;
+
+ForUpdate -> StatementExpressionList;
+
+StatementExpressionList {first} -> StatementExpression;
+StatementExpressionList {next}  -> StatementExpressionList ',' StatementExpression;
+
+BreakStatement -> break IdentifierOpt ';';
+
+ContinueStatement -> continue IdentifierOpt ';';
+
+IdentifierOpt        -> identifier;
+IdentifierOpt {none} -> ;
+
+ReturnStatement -> return ExpressionOpt ';';
+
+ThrowStatement -> throw Expression ';';
+
+SynchronizedStatement -> synchronized '(' Expression ')' Block;
+
+TryStatement {catch}        -> try Block Catches;
+TryStatement {finally}      -> try Block Finally;
+TryStatement {catchFinally} -> try Block Catches Finally;
+
+Catches {first} -> CatchClause;
+Catches {next}  -> Catches CatchClause;
+
+CatchClause -> catch '(' FormalParameter ')' Block;
+
+Finally -> finally Block;
+
+// Java Language Specification section 19.12
+
+Primary               -> PrimaryNoNewArray;
+Primary {arrayCreate} -> ArrayCreationExpression;
+
+PrimaryNoNewArray {literal}      -> Literal;
+PrimaryNoNewArray {this}         -> this;
+PrimaryNoNewArray {expression}   -> '(' Expression ')';
+PrimaryNoNewArray {classCreate}  -> ClassInstanceCreationExpression;
+PrimaryNoNewArray {fieldAccess}  -> FieldAccess;
+PrimaryNoNewArray {methodInvoke} -> MethodInvocation;
+PrimaryNoNewArray {arrayAccess}  -> ArrayAccess;
+
+ClassInstanceCreationExpression -> new ClassOrInterfaceType '(' ArgumentListOpt ')';
+
+    // The Java 1.0 spec defines ClassInstanceCreationExpression as:
+    //
+    //     ClassInstanceCreationExpression -> new ClassType '(' ArgumentListOpt ')';
+    //
+    // We had to change this to accomodate the Java 1.1 version of
+    // ClassInstanceCreationExpression that accepts an anonymous class.  This
+    // is because an anonymous class creation expression can have an interface
+    // name appearing after the keyword new.  To preserve LALR(1)-ness, we must
+    // change ClassType to ClassOrInterfaceType, and later compiler stages
+    // must filter out interface names.
+
+ArgumentListOpt        -> ArgumentList;
+ArgumentListOpt {none} -> ;
+
+ArgumentList {first} -> Expression;
+ArgumentList {next}  -> ArgumentList ',' Expression;
+
+ArrayCreationExpression {primitive} -> new PrimitiveType DimExprs DimsOpt;
+ArrayCreationExpression {reference} -> new ClassOrInterfaceType DimExprs DimsOpt;
+
+DimsOpt        -> Dims;
+DimsOpt {none} -> ;
+
+DimExprs {first} -> DimExpr;
+DimExprs {next}  -> DimExprs DimExpr;
+
+DimExpr -> '[' Expression ']';
+
+Dims {first} -> '[' ']';
+Dims {next}  -> Dims '[' ']';
+
+FieldAccess {primary} -> Primary '.' identifier;
+FieldAccess {super}   -> super '.' identifier;
+
+MethodInvocation {name}    -> Name '(' ArgumentListOpt ')';
+MethodInvocation {primary} -> Primary '.' identifier '(' ArgumentListOpt ')';
+MethodInvocation {super}   -> super '.' identifier '(' ArgumentListOpt ')';
+
+ArrayAccess {name}    -> Name '[' Expression ']';
+ArrayAccess {primary} -> PrimaryNoNewArray '[' Expression ']';
+
+PostfixExpression {primary} -> Primary;
+PostfixExpression {name}    -> Name;
+PostfixExpression {postInc} -> PostIncrementExpression;
+PostfixExpression {postDec} -> PostDecrementExpression;
+
+PostIncrementExpression -> PostfixExpression '++';
+
+PostDecrementExpression -> PostfixExpression '--';
+
+UnaryExpression {preInc}       -> PreIncrementExpression;
+UnaryExpression {preDec}       -> PreDecrementExpression;
+UnaryExpression {plus}         -> '+' UnaryExpression;
+UnaryExpression {minus}        -> '-' UnaryExpression;
+UnaryExpression {notPlusMinus} -> UnaryExpressionNotPlusMinus;
+
+PreIncrementExpression -> '++' UnaryExpression;
+
+PreDecrementExpression -> '--' UnaryExpression;
+
+UnaryExpressionNotPlusMinus              -> PostfixExpression;
+UnaryExpressionNotPlusMinus {complement} -> '~' UnaryExpression;
+UnaryExpressionNotPlusMinus {not}        -> '!' UnaryExpression;
+UnaryExpressionNotPlusMinus {cast}       -> CastExpression;
+
+CastExpression {primitive}  -> '(' PrimitiveType ')' UnaryExpression;
+CastExpression {expression} -> '(' Expression ')' UnaryExpressionNotPlusMinus;
+CastExpression {array}      -> '(' ArrayType ')' UnaryExpressionNotPlusMinus;
+
+    // The Java 1.0 spec defines CastExpression as:
+    //
+    //     CastExpression -> '(' PrimitiveType DimsOpt ')' UnaryExpression;
+    //     CastExpression -> '(' Expression ')' UnaryExpressionNotPlusMinus;
+    //     CastExpression -> '(' Name Dims ')' UnaryExpressionNotPlusMinus;
+    //
+    // Our revised defintion of ArrayType lets us write this in a more concise
+    // form.  Notice that we have slightly changed the language accepted by
+    // the grammar, by excluding constructions such as "(int[])+x" which are
+    // not valid Java anyway (because +x must be numeric, not of array type).
+    // Our definition is closer to Java Language Spec section 15.14.  The
+    // constructions that we exclude were only added to the grammar to make it
+    // LALR(1), as described in section 19.1.5.
+
+MultiplicativeExpression             -> UnaryExpression;
+MultiplicativeExpression {multiply}  -> MultiplicativeExpression '*' UnaryExpression;
+MultiplicativeExpression {divide}    -> MultiplicativeExpression '/' UnaryExpression;
+MultiplicativeExpression {remainder} -> MultiplicativeExpression '%' UnaryExpression;
+
+AdditiveExpression            -> MultiplicativeExpression;
+AdditiveExpression {add}      -> AdditiveExpression '+' MultiplicativeExpression;
+AdditiveExpression {subtract} -> AdditiveExpression '-' MultiplicativeExpression;
+
+ShiftExpression                 -> AdditiveExpression;
+ShiftExpression {left}          -> ShiftExpression '<<' AdditiveExpression;
+ShiftExpression {signedRight}   -> ShiftExpression '>>' AdditiveExpression;
+ShiftExpression {unsignedRight} -> ShiftExpression '>>>' AdditiveExpression;
+
+RelationalExpression                -> ShiftExpression;
+RelationalExpression {less}         -> RelationalExpression '<' ShiftExpression;
+RelationalExpression {greater}      -> RelationalExpression '>' ShiftExpression;
+RelationalExpression {lessEqual}    -> RelationalExpression '<=' ShiftExpression;
+RelationalExpression {greaterEqual} -> RelationalExpression '>=' ShiftExpression;
+RelationalExpression {instanceof}   -> RelationalExpression instanceof ReferenceType;
+
+EqualityExpression            -> RelationalExpression;
+EqualityExpression {equal}    -> EqualityExpression '==' RelationalExpression;
+EqualityExpression {notEqual} -> EqualityExpression '!=' RelationalExpression;
+
+AndExpression       -> EqualityExpression;
+AndExpression {and} -> AndExpression '&' EqualityExpression;
+
+ExclusiveOrExpression               -> AndExpression;
+ExclusiveOrExpression {exclusiveOr} -> ExclusiveOrExpression '^' AndExpression;
+
+InclusiveOrExpression               -> ExclusiveOrExpression;
+InclusiveOrExpression {inclusiveOr} -> InclusiveOrExpression '|' ExclusiveOrExpression;
+
+ConditionalAndExpression                  -> InclusiveOrExpression;
+ConditionalAndExpression {conditionalAnd} -> ConditionalAndExpression '&&' InclusiveOrExpression;
+
+ConditionalOrExpression                 -> ConditionalAndExpression;
+ConditionalOrExpression {conditionalOr} -> ConditionalOrExpression '||' ConditionalAndExpression;
+
+ConditionalExpression               -> ConditionalOrExpression;
+ConditionalExpression {conditional} -> ConditionalOrExpression '?' Expression ':' ConditionalExpression;
+
+AssignmentExpression {conditional} -> ConditionalExpression;
+AssignmentExpression {assignment}  -> Assignment;
+
+Assignment {assign}        -> LeftHandSide '=' AssignmentExpression;
+Assignment {multiply}      -> LeftHandSide '*=' AssignmentExpression;
+Assignment {divide}        -> LeftHandSide '/=' AssignmentExpression;
+Assignment {remainder}     -> LeftHandSide '%=' AssignmentExpression;
+Assignment {add}           -> LeftHandSide '+=' AssignmentExpression;
+Assignment {subtract}      -> LeftHandSide '-=' AssignmentExpression;
+Assignment {left}          -> LeftHandSide '<<=' AssignmentExpression;
+Assignment {signedRight}   -> LeftHandSide '>>=' AssignmentExpression;
+Assignment {unsignedRight} -> LeftHandSide '>>>=' AssignmentExpression;
+Assignment {and}           -> LeftHandSide '&=' AssignmentExpression;
+Assignment {exclusiveOr}   -> LeftHandSide '^=' AssignmentExpression;
+Assignment {inclusiveOr}   -> LeftHandSide '|=' AssignmentExpression;
+
+    // The Java 1.0 spec defines Assignment as:
+    //
+    //     Assignment:
+    //         LeftHandSide AssignmentOperator AssignmentExpression
+    //
+    //     AssignmentOperator: one of
+    //         = *= /= %= += -= <<= >>= >>>= &= ^= |=
+    //
+    // We have eliminted AssignmentOperator and folded it into Assignment to
+    // make this consistent with the way other operators are handled.
+
+LeftHandSide {name}        -> Name;
+LeftHandSide {fieldAccess} -> FieldAccess;
+LeftHandSide {arrayAccess} -> ArrayAccess;
+
+Expression -> AssignmentExpression;
+
+ConstantExpression -> Expression;
+
+// Java 1.1 extensions for inner classes
+
+ClassMemberDeclaration {class}     -> ClassDeclaration;
+ClassMemberDeclaration {interface} -> InterfaceDeclaration;
+
+InterfaceMemberDeclaration {class}     -> ClassDeclaration;
+InterfaceMemberDeclaration {interface} -> InterfaceDeclaration;
+
+    // Productions for InterfaceMemberDeclaration, which allow classes to be
+    // nested inside interfaces, were added in the 2/10/97 release of the spec.
+
+BlockStatement {class} -> ClassDeclaration;
+
+PrimaryNoNewArray {instance} -> Name '.' this;
+
+    // It is unclear from the Java 1.1 spec if this production should be:
+    //
+    //     PrimaryNoNewArray -> SimpleName '.' this;
+    //
+    // A simple name is always adequate to name an enclosing instance, since a
+    // nested class cannot have the same name as any enclosing class.  But there
+    // seems to be no reason not to allow a qualified name that resolves to an
+    // enclosing class.
+    //
+    // If it is desired to change the production from Name to SimpleName, then
+    // some other changes in the grammar are required to preserve LALR(1)-ness.
+    // Consider the inputs "x.this" and "x.y".  When the parser has seen "x"
+    // and the next input token is ".", the parser cannot know if it should
+    // reduce x to SimpleName or Name.  To correct this, the definition of
+    // QualifiedName must be changed to:
+    //
+    //     QualifiedName -> SimpleName '.' identifier;
+    //     QualifiedName -> QualifiedName '.' identifier;
+    //
+    // Then, each production that has the sequence "Name '.'" on the right
+    // hand side must be rewritten as two productions, one with SimpleName and
+    // one with QualifiedName.  The affected productions are:
+    //
+    //     TypeImportOnDemandDeclaration -> import SimpleName '.' '*' ';';
+    //     TypeImportOnDemandDeclaration -> import QualifiedName '.' '*' ';';
+    //     ClassInstanceCreationExpression -> SimpleName '.' new identifier '(' ArgumentListOpt ')' ClassBody;
+    //     ClassInstanceCreationExpression -> SimpleName '.' new identifier '(' ArgumentListOpt ')';
+    //     ClassInstanceCreationExpression -> QualifiedName '.' new identifier '(' ArgumentListOpt ')' ClassBody;
+    //     ClassInstanceCreationExpression -> QualifiedName '.' new identifier '(' ArgumentListOpt ')';
+    //     ExplicitConstructorInvocation -> SimpleName '.' super '(' ArgumentListOpt ')' ';';
+    //     ExplicitConstructorInvocation -> QualifiedName '.' super '(' ArgumentListOpt ')' ';';
+    //     PrimaryNoNewArray -> SimpleName '.' class;
+    //     PrimaryNoNewArray -> QualifiedName '.' class;
+    //
+    // With these changes, a SimpleName followed by '.' does not have to be
+    // reduced to anything else until the parser has seen the token after the '.'.
+
+ClassInstanceCreationExpression {anonymous}        -> new ClassOrInterfaceType '(' ArgumentListOpt ')' ClassBody;
+ClassInstanceCreationExpression {primaryAnonymous} -> Primary '.' new identifier '(' ArgumentListOpt ')' ClassBody;
+ClassInstanceCreationExpression {primary}          -> Primary '.' new identifier '(' ArgumentListOpt ')';
+ClassInstanceCreationExpression {nameAnonymous}    -> Name '.' new identifier '(' ArgumentListOpt ')' ClassBody;
+ClassInstanceCreationExpression {name}             -> Name '.' new identifier '(' ArgumentListOpt ')';
+
+    // The Java 1.1 spec does not have the two productions with Name on the
+    // right hand side.  This is obviously an error in the spec.
+
+ExplicitConstructorInvocation {primary} -> Primary '.' super '(' ArgumentListOpt ')' ';';
+ExplicitConstructorInvocation {name}    -> Name '.' super '(' ArgumentListOpt ')' ';';
+
+    // The Java 1.1 spec does not have the production with Name on the right
+    // hand side.  This is obviously an error in the spec.
+
+// Java 1.1 extensions for instance initializers
+
+ClassBodyDeclaration {block} -> Block;
+
+// Java 1.1 extensions for anonymous array expressions
+
+ArrayCreationExpression {primitiveInit} -> new PrimitiveType Dims ArrayInitializer;
+ArrayCreationExpression {referenceInit} -> new ClassOrInterfaceType Dims ArrayInitializer;
+
+// Java 1.1 extensions for class literals
+
+PrimaryNoNewArray {primitiveClass}       -> PrimitiveType '.' class;
+PrimaryNoNewArray {classClass}     #0x4C -> Name '.' class;
+PrimaryNoNewArray {arrayClass}           -> ArrayType '.' class;
+PrimaryNoNewArray {voidClass}            -> VoidType '.' class;
+
+    // The Java 1.1 spec writes these productions as follows:
+    //
+    //     PrimaryNoNewArray -> Type '.' class;
+    //     PrimaryNoNewArray -> void '.' class;
+    //
+    // These productions cannot be LALR(1).  Consider the inputs "x.class" and
+    // "x.y".  When the parser has seen "x" and the next input token is ".",
+    // the parser cannot know if it should reduce x to Type (as requred for
+    // "x.class") or to Name (as required for "x.y").
+    //
+    // It would be more consistent to use "ClassOrInterfaceType '.' class" in
+    // place of "Name '.' class", but that would make the grammar non-LALR(1).
+    //
+    // The integer parameter 0x4C, which is the ASCII code for 'L', is the code
+    // for class type (as opposed to primitive, void, or array type) from the
+    // Java VM Spec.
+
+// Java 1.1 extensions for blank finals and final local variables
+
+LocalVariableDeclaration {modified} -> Modifiers Type VariableDeclarators;
+
+    // Note that we cannot combine this production with the Java 1.0 production
+    // for LocalVariableDeclaration like this:
+    //
+    //     LocalVariableDeclaration -> ModifiersOpt Type VariableDeclarators;
+    //
+    // Consider the inputs "{x y;}" (a block declaring a local variable y of
+    // type x) and "{x = y;}" (a block which assigns variable y to variable x).
+    // Suppose the parser has seen "{" and the next input token is "x".  The
+    // parser cannot know if it should reduce ModifiersOpt via its epsilon
+    // production (as required for the declaration "{x y;}") or not (as required
+    // for the assignement "{x = y;}").
+    //
+    // This is the only place in the grammar where we need two productions
+    // rather than using ModifersOpt.
+
+FormalParameter {modified} -> Modifiers Type VariableDeclaratorId;
+
+    // This production could be combined with the Java 1.0 production
+    // for FormalParameter like this:
+    //
+    //     FormalParameter -> ModifiersOpt Type VariableDeclaratorId;
+    //
+    // We have chosen not to combine them in order to maintain separation
+    // between Java 1.0 and Java 1.1.

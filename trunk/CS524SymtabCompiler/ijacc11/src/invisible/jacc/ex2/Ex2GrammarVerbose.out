@@ -1,0 +1,460 @@
+Reading grammar specification ...
+
+Generating character category table ...
+
+Character category table:
+
+  0x0 - 0x8
+    Category number: 0
+    User categories: notEol
+
+  0x9 - 0x9
+    Category number: 7
+    User categories: space notEol
+
+  0xA - 0xA
+    Category number: 10
+    User categories: lf
+
+  0xB - 0xB
+    Category number: 0
+    User categories: notEol
+
+  0xC - 0xC
+    Category number: 7
+    User categories: space notEol
+
+  0xD - 0xD
+    Category number: 9
+    User categories: cr
+
+  0xE - 0x1F
+    Category number: 0
+    User categories: notEol
+
+  0x20 - 0x20
+    Category number: 7
+    User categories: space notEol
+
+  0x21 - 0x27
+    Category number: 0
+    User categories: notEol
+
+  0x28 - 0x28
+    Category number: 2
+    User categories: ( notEol
+
+  0x29 - 0x29
+    Category number: 3
+    User categories: ) notEol
+
+  0x2A - 0x2A
+    Category number: 0
+    User categories: notEol
+
+  0x2B - 0x2B
+    Category number: 4
+    User categories: + notEol
+
+  0x2C - 0x2C
+    Category number: 0
+    User categories: notEol
+
+  0x2D - 0x2D
+    Category number: 5
+    User categories: - notEol
+
+  0x2E - 0x2E
+    Category number: 0
+    User categories: notEol
+
+  0x2F - 0x2F
+    Category number: 8
+    User categories: / notEol
+
+  0x30 - 0x39
+    Category number: 6
+    User categories: decDigit notEol
+
+  0x3A - 0x3A
+    Category number: 0
+    User categories: notEol
+
+  0x3B - 0x3B
+    Category number: 1
+    User categories: ; notEol
+
+  0x3C - 0xFF
+    Category number: 0
+    User categories: notEol
+
+11 user-defined categories.
+11 calculated categories.
+
+Generating token deterministic finite automata ...
+
+Start conditions:
+
+  %%normal
+    Initial forward DFA state: 1
+
+Tokens:
+
+  Token 0
+    ; = ';'
+    Parameter: 1
+
+  Token 1
+    ( = '('
+    Parameter: 2
+
+  Token 2
+    ) = ')'
+    Parameter: 3
+
+  Token 3
+    + = '+'
+    Parameter: 4
+
+  Token 4
+    - = '-'
+    Parameter: 5
+
+  Token 5
+    number = 'decDigit'+
+    Parameter: 6
+
+  Token 6
+    whiteSpace = 'space'* ('/' '/' 'notEol'*)?
+    Parameter: 0
+
+  Token 7
+    lineEnd = 'cr' | 'lf' | 'cr' 'lf'
+    Parameter: 0
+
+Forward DFA States:
+
+  State 0
+    Recognition code: 0
+
+  State 1
+    Goto 2: 1
+    Goto 3: 2
+    Goto 4: 3
+    Goto 5: 4
+    Goto 6: 5
+    Goto 7: 6
+    Goto 8: 7
+    Goto 9: 8
+    Goto 10: 9
+    Goto 11: 10
+    Recognition code: 1
+
+  State 2
+    Recognition code: 2
+
+  State 3
+    Recognition code: 3
+
+  State 4
+    Recognition code: 4
+
+  State 5
+    Recognition code: 5
+
+  State 6
+    Recognition code: 6
+
+  State 7
+    Goto 7: 6
+    Recognition code: 7
+
+  State 8
+    Goto 8: 7
+    Goto 9: 8
+    Recognition code: 1
+
+  State 9
+    Goto 12: 8
+    Recognition code: 0
+
+  State 10
+    Goto 11: 10
+    Recognition code: 8
+
+  State 11
+    Recognition code: 8
+
+  State 12
+    Goto 12: 0 1 2 3 4 5 6 7 8
+    Recognition code: 1
+
+Forward DFA Recognition Codes:
+
+  Recognition code 0
+
+  Recognition code 1
+    Tokens:  6
+
+  Recognition code 2
+    Tokens:  0
+
+  Recognition code 3
+    Tokens:  1
+
+  Recognition code 4
+    Tokens:  2
+
+  Recognition code 5
+    Tokens:  3
+
+  Recognition code 6
+    Tokens:  4
+
+  Recognition code 7
+    Tokens:  5
+
+  Recognition code 8
+    Tokens:  7
+
+Reverse DFA States:
+
+  State 0
+    Recognition code: 0
+
+Reverse DFA Recognition Codes:
+
+  Recognition code 0
+
+1 start conditions.
+8 tokens.
+13 states in the forward DFA.
+9 final state recognition codes in the forward DFA.
+1 states in the reverse DFA.
+1 final state recognition codes in the reverse DFA.
+
+Generating LALR(1) configuration finite state machine ...
+
+Terminal symbols:
+
+  %%EOF
+    Insertion cost: 1
+    Deletion cost: 1
+
+  ;
+    Insertion cost: 1
+    Deletion cost: 1
+
+  (
+    Insertion cost: 1
+    Deletion cost: 1
+
+  )
+    Insertion cost: 1
+    Deletion cost: 1
+
+  +
+    Insertion cost: 1
+    Deletion cost: 1
+
+  -
+    Insertion cost: 1
+    Deletion cost: 1
+
+  number
+    Insertion cost: 1
+    Deletion cost: 1
+
+Nonterminal symbols:
+
+  StatementList
+
+  Goal
+
+  Statement
+
+  Expression
+
+  Primary
+
+  %%Goal
+
+Productions:
+
+  Production 0
+    Goal -> StatementList
+    Parameter: 0
+    Cost: 1
+
+  Production 1
+    StatementList ->
+    Parameter: 0
+    Cost: 0
+
+  Production 2
+    StatementList -> StatementList Statement
+    Parameter: 0
+    Cost: 6
+
+  Production 3
+    Statement -> Expression ;
+    Parameter: 0
+    Cost: 4
+
+  Production 4
+    Expression -> Primary
+    Link name: primary
+    Parameter: 0
+    Cost: 2
+
+  Production 5
+    Expression -> Expression + Primary
+    Link name: add
+    Parameter: 0
+    Cost: 6
+
+  Production 6
+    Expression -> Expression - Primary
+    Link name: subtract
+    Parameter: 0
+    Cost: 6
+
+  Production 7
+    Primary -> number
+    Link name: number
+    Parameter: 0
+    Cost: 1
+
+  Production 8
+    Primary -> ( Expression )
+    Link name: paren
+    Parameter: 0
+    Cost: 5
+
+  Production 9
+    %%Goal -> Goal %%EOF
+    Parameter: 0
+    Cost: 3
+
+Error repair options:
+
+  Maximum insertions: 100
+
+  Maximum deletions: 200
+
+  Validation length: 5
+
+  Single-point insertion list:
+
+    ;
+    (
+    )
+    +
+    -
+    number
+
+Parser generator algorithm statistics:
+
+  Number of raw LR(0) states: 16
+
+  Number of raw LR(1) states: 16
+
+  Number of iterative passes to generate LR(1) states: 3
+
+  Number of reachable LR(1) states on each pass:
+    Pass 0: 1
+    Pass 1: 14
+    Pass 2: 16
+
+  Number of iterative passes to generate production costs: 4
+
+  Number of iterative passes to generate conflict avoidance tables: 1
+
+  Number of parsing conflicts successfully resolved: 0
+
+LALR(1) configuration finite state machine:
+
+  State 0:
+    %%Goal -> _ Goal %%EOF  {}
+
+    Reduce 1: %%EOF ( number
+    Shift-Goto 1: StatementList
+    Shift-Goto 2: Goal
+    Unwind: Reduce 1
+
+  State 1:
+    Goal -> StatementList _  {%%EOF}
+    StatementList -> StatementList _ Statement  {%%EOF, (, number}
+
+    Reduce 0: %%EOF
+    Shift-Reduce 2: Statement
+    Shift-Reduce 4: Primary
+    Shift-Reduce 7: number
+    Shift-Goto 3: (
+    Shift-Goto 4: Expression
+    Unwind: Reduce 0
+
+  State 2:
+    %%Goal -> Goal _ %%EOF  {}
+
+    Accept: %%EOF
+    Unwind: Accept
+
+  State 3:
+    Primary -> ( _ Expression )  {;, ), +, -}
+
+    Shift-Reduce 4: Primary
+    Shift-Reduce 7: number
+    Shift-Goto 3: (
+    Shift-Goto 6: Expression
+    Unwind: Shift number Reduce 7
+
+  State 4:
+    Statement -> Expression _ ;  {%%EOF, (, number}
+    Expression -> Expression _ + Primary  {;, +, -}
+    Expression -> Expression _ - Primary  {;, +, -}
+
+    Shift-Reduce 3: ;
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Unwind: Shift ; Reduce 3
+
+  State 5:
+    %%Goal -> Goal %%EOF _  {}
+
+    Unwind: Reduce 9
+
+  State 6:
+    Primary -> ( Expression _ )  {;, ), +, -}
+    Expression -> Expression _ + Primary  {), +, -}
+    Expression -> Expression _ - Primary  {), +, -}
+
+    Shift-Reduce 8: )
+    Shift-Goto 7: +
+    Shift-Goto 8: -
+    Unwind: Shift ) Reduce 8
+
+  State 7:
+    Expression -> Expression + _ Primary  {;, ), +, -}
+
+    Shift-Reduce 5: Primary
+    Shift-Reduce 7: number
+    Shift-Goto 3: (
+    Unwind: Shift number Reduce 7
+
+  State 8:
+    Expression -> Expression - _ Primary  {;, ), +, -}
+
+    Shift-Reduce 6: Primary
+    Shift-Reduce 7: number
+    Shift-Goto 3: (
+    Unwind: Shift number Reduce 7
+
+13 symbols.
+10 productions.
+9 LALR(1) machine states.
+
+Writing scanner table Java source ...
+Writing parser table Java source ...
+
+All tables generated successfully.
