@@ -17,9 +17,15 @@ public class NanoSymtabCompiler extends CompilerModel
 
 	static final boolean _debug = false;
 	
+	private boolean symbolTableVerbose = false;
+	private boolean showReductions = false;
+	private boolean showSymbolTable = true;
+	
 	int _conditionNotInComment;
 	int _conditionInLineComment;
 	int _conditionInBracketedComment;
+	
+	private NanoSymbolTable symtab;
 
 	// Constructor must create the scanner and parser tables.
 
@@ -27,6 +33,9 @@ public class NanoSymtabCompiler extends CompilerModel
 	{
 		super();
 
+		//Instantiate the NanoSymbolTable
+		symtab = new NanoSymbolTable(symbolTableVerbose);
+		
 		// Get our scanner table
 		_scannerTable = new NanoGrammarScannerTable ();
 
@@ -108,6 +117,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("startNewBlock", 	"", 			new startNewBlockNT());
 		
 		_parserTable.linkFactory("endCurrentBlock", "", 			new endCurrentBlockNT());
+		
+		_parserTable.linkFactory("showSymbolTable", "",				new showSymbolTableNT());
 		
 		_parserTable.linkFactory("printStmnt", 		"", 			new printStmntNT());
 
@@ -195,26 +206,13 @@ public class NanoSymtabCompiler extends CompilerModel
 	{
 
 		// Create the compiler object
+		NanoSymtabCompiler compiler = new NanoSymtabCompiler();
 
-		System.out.println("Creating NanoCompiler...");
-		NanoSymtabCompiler compiler = new NanoSymtabCompiler ();
-
-		// For each filename listed on the command line ...
-
-		for (int i = 0; i < args.length; ++i)
-		{
-
-			// Print the filename
-
-			System.out.println ();
-			System.out.println ("Compiling " + args[i] + " ...");
-
-			// Compile the file
-
-			compiler.compile (args[i]);
-		}
-
-		return;
+		System.out.println ("IJACC Nano Compiler for Testing Symbol Table-----------------");
+		System.out.println ("Compiling " + args[0] + " ...\n");
+		compiler.compile (args[0]);
+		System.out.println ("\n\nIJACC Nano Compiler complete.");
+		
 	}
 
 	/**************************************************************************
@@ -491,27 +489,31 @@ public class NanoSymtabCompiler extends CompilerModel
 	//startMainBlock
 	final class startMainBlockNT extends NonterminalFactory
 	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("startMainBlock -> /* empty */\n");
-			
+		public Object makeNonterminal (Parser parser, int param)
+		throws IOException, SyntaxException
+		{
+			if (showReductions) 									
+				System.out.println("\nReduced by rule: StartMainBlock -> /* empty */\n");
+			symtab.startNewBlock();
+		
+			//Return null value
 			return null;
-			}
+		}
 	}
 	
 	//endMainBlock
 	final class endMainBlockNT extends NonterminalFactory
 	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("endMainBlock -> /* empty */\n");
-			
+		public Object makeNonterminal (Parser parser, int param)
+		throws IOException, SyntaxException
+		{
+			if (showReductions) 									
+				System.out.println("\nReduced by rule: EndMainBlock -> /* empty */\n");
+			symtab.endCurrentBlock();
+		
+			//Return null value
 			return null;
-			}
+		}
 	}
 	
 	//constDec (idList)
@@ -545,16 +547,22 @@ public class NanoSymtabCompiler extends CompilerModel
 	}
 	final class idListSingleNT extends NonterminalFactory
 	{
-		public Object makeNonterminal (Parser parser, int param) 
+		public Object makeNonterminal (Parser parser, int param)
 			throws IOException, SyntaxException
-			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("idList {single} -> id");
-			String idString = (String) parser.rhsValue (0);
-			System.out.println("identifier lexeme: " + idString + "\n");
+		{
+			String idLexeme = (String) parser.rhsValue(0);
+			if (showReductions) 									
+				System.out.println("\nReduced by rule: IdList {single} -> identifier");
+			if (idLexeme==null) 
+				return null; //discard error insertions
+			if (showReductions) 									
+				System.out.println("identifier lexeme: "+idLexeme+"\n");
+				symtab.tempIdListClear();
+				symtab.tempIdListAdd(idLexeme);
 
+			// Return null value
 			return null;
-			}
+	}
 	}
 	
 	
@@ -835,6 +843,21 @@ public class NanoSymtabCompiler extends CompilerModel
 			
 			return null;
 			}
+	}
+	
+	final class showSymbolTableNT extends NonterminalFactory
+	{
+		public Object makeNonterminal (Parser parser, int param)
+		throws IOException, SyntaxException
+		{
+			if (showReductions)
+				System.out.println("\nReduced by rule: ShowSymbolTable -> /* empty */\n");
+			if (showSymbolTable) 
+				symtab.showContents();
+		
+			//Return null value
+			return null;
+		}
 	}
 	
 	//printStmnt

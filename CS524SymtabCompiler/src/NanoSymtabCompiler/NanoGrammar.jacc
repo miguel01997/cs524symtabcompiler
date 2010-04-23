@@ -5,7 +5,7 @@
 
 // ----- Generator options -----
 %options:
-%java NanoCompiler.NanoGrammar;	// Java package and class
+%java NanoSymtabCompiler.NanoGrammar;	// Java package and class
 
 // ----- Terminal symbols for the grammar -----
 %terminals:
@@ -71,11 +71,13 @@ program -> startMainBlock
 		   constDecList
 		   varDecList
 		   procDecList
+		   showSymbolTable
 		   begin
 		   statement  //Must have one statement in a program
 		   statementList
 		   end
 		   endMainBlock
+		   showSymbolTable
 		   semicolon;
 
 constDecList {nonempty} -> constDecList constDec;
@@ -90,9 +92,11 @@ procDecList {empty} -> /* empty */;
 statementList {nonempty} -> statementList statement;
 statementList {empty} -> /* empty */;	
 		   
-startMainBlock -> 	/* empty */;
+startMainBlock -> %reduce /* empty */;
 
-endMainBlock -> 	/* empty */;
+endMainBlock -> %reduce /* empty */;
+
+showSymbolTable -> %reduce /* empty */;
 
 constDec {idList} -> const idList equals factor semicolon; 
 
@@ -129,14 +133,16 @@ blockStmnt  -> 	begin
 				startNewBlock 
 		   		constDecList
 		   		varDecList
+		   		showSymbolTable
 				statementList
 				end 
 				endCurrentBlock
+				showSymbolTable
 				semicolon;
 				
-startNewBlock -> 	/* empty */;
+startNewBlock -> %reduce /* empty */;
 
-endCurrentBlock -> 	/* empty */;
+endCurrentBlock -> %reduce /* empty */;
 
 printStmnt -> print lparen stringConst printExprList rparen semicolon;
 
