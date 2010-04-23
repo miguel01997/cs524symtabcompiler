@@ -1,0 +1,26 @@
+Reading grammar specification ...
+
+Generating character category table ...
+
+11 user-defined categories.
+11 calculated categories.
+
+Generating token deterministic finite automata ...
+
+1 start conditions.
+8 tokens.
+13 states in the forward DFA.
+9 final state recognition codes in the forward DFA.
+1 states in the reverse DFA.
+1 final state recognition codes in the reverse DFA.
+
+Generating LALR(1) configuration finite state machine ...
+
+13 symbols.
+10 productions.
+9 LALR(1) machine states.
+
+Writing scanner table Java source ...
+Writing parser table Java source ...
+
+All tables generated successfully.
