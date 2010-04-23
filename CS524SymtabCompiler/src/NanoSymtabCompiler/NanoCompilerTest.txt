@@ -1,0 +1,33 @@
+/********************************************************************
+*                                                                   *
+* SDSU CS 524 Compiler Construction                                 *
+* Nano Parser Development Test File for Compiler Project Part A     *
+* Spring 2010                                                       *
+* Simple Input                                                      *
+*                                                                   *
+********************************************************************/
+
+    var v1, v2, ph1, ph2 : integer;
+    var  b1[2] : boolean;
+
+	//Definition of procedure "comp"
+	procedure comp(a, c: integer; b: boolean);
+	begin
+	  var n : integer;
+      for n := 10 to 1 do   //hmm, no special "downto" keyword...some extra work here
+			begin
+                read("%d",a);
+                c := v1+a;
+                b := (c>v1);   
+			end;
+	  if b then c := v2+2;
+		   else b := false;
+	end;
+
+    //Main Program
+	begin
+	  v1 := 4;
+	  v2 := 11;
+	  call comp(ph1,ph2,b1[1]);
+	  b1[2] := not b1[1];
+	end;

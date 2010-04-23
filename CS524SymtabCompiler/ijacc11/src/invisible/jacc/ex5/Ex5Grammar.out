@@ -1,0 +1,25 @@
+Reading grammar specification ...
+
+Generating character category table ...
+
+76 user-defined categories.
+70 calculated categories.
+
+Generating token deterministic finite automata ...
+
+2 start conditions.
+119 tokens.
+341 states in the forward DFA.
+131 final state recognition codes in the forward DFA.
+2 states in the reverse DFA.
+2 final state recognition codes in the reverse DFA.
+
+Generating LALR(1) configuration finite state machine ...
+
+255 symbols.
+346 productions.
+343 LALR(1) machine states.
+
+Writing generated file ...
+
+All tables generated successfully.

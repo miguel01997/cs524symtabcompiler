@@ -1,0 +1,61 @@
+/********************************************************************
+*                                                                   *
+* SDSU CS 524 Compiler Construction                                 *
+* Nano Parser Development Test File for Compiler Project Part A     *
+* Spring 2010                                                       *
+* Complex Input                                                     *
+* --is every feature tested?                                        *
+********************************************************************/
+
+	const con1, con2 = 2;
+        const   con3 = 8;
+        var v1, v2, v3 : integer;
+            var  b1[3] : boolean;
+
+/**/
+/**  A forest of comments    
+
+                                  */
+/***/
+/**   /*/   //end of line comment
+/*    //not really an end of line comment       */ 
+/**
+              */
+// Starts out nice but then /* what now?..maybe just okay... */
+
+/* What if this line began with no /* ?  */
+
+
+	procedure comp(a, c: integer; b: boolean);
+	begin
+		const w=1;
+		var x,y,n : integer;
+                for n := 10 to 1 do
+			begin
+				var x, z : integer;
+                                read("%d",x);
+                                z := y+x;   
+			end;
+		if (a<con3) then x := w+2;
+			else if (c <= v1) and (a <> c) then
+					begin
+						var y,x: integer;
+						print("y=%d",y); 
+						x := w*y+5/2;
+                                                b := x+1;     //Hmmmm, can this parse? Needs type checking...
+                                                c := con3/c;
+                                                a := a*4;    
+					end;
+	end;
+
+        //MAIN PROGRAM
+	begin
+		for v1:= con1 - 2 to v3 do
+		begin
+			read("%d          " /* If the second quote were missing, bad quote; think about recovery */
+                                 ,v2);
+			b1[1] := not (v2 > (7+ v3)) and true;
+                        call comp(v3,v2,b1[1]);
+		end;
+	end;
+/* How would you deal with a bad comment that didn't end like this one */

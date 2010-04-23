@@ -1,0 +1,239 @@
+/*->
+  
+
+->*/
+
+
+// ----- Generator options -----
+
+%options:
+
+%java NanoCompiler.NanoGrammar;	// Java package and class
+
+
+// ----- Terminal symbols for the grammar -----
+
+%terminals:
+
+/* --REMOVE COMMENT LATER
+//Keywords
+const;
+var;
+begin;
+end;
+integer;
+boolean;
+procedure;
+print;
+read;
+if;
+then;
+else;
+for;
+to;
+do;
+return;
+call;
+not;
+and;
+or;
+
+//Operators and Punctuators
+comma;
+semicolon;
+colon;
+lparen;
+rparen;
+plus;
+minus;
+star;
+slash;
+assign;
+equals;
+notEquals;
+lessThan;
+lessThanEquals;
+greaterThan;
+greaterThanEquals;
+
+//Terminals with Values
+identifier;
+intConst;
+stringConst;
+--REMOVE COMMENT LATER */
+
+semicolon;
+plus;
+minus;
+lparen;
+rparen;
+intConst;
+
+
+// ----- Productions for the grammar -----
+
+%productions:
+
+// The goal is a list of statements.
+
+Goal -> StatementList;
+
+// A StatementList is a list of zero or more Statements.
+
+StatementList -> /* empty */ ;
+
+StatementList -> StatementList Statement;
+
+// A Statement is an Expression followed by a semicolon.
+
+Statement -> Expression semicolon;
+
+// An Expression can be a Primary, an Expression plus a Primary, or an
+// Expression minus a Primary.
+
+Expression {primary} -> Primary;
+
+Expression {add} -> Expression plus Primary;
+
+Expression {subtract} -> Expression minus Primary;
+
+// A Primary can be a number, or an Expression enclosed in parentheses.
+
+Primary {number} -> intConst;
+
+Primary {paren} -> lparen Expression rparen;
+
+
+// ----- Character categories -----
+
+%categories:
+
+// Characters used for operators and punctuators
+
+a = 'a';
+b = 'b';
+c = 'c';
+d = 'd';
+e = 'e';
+f = 'f';
+g = 'g';
+h = 'h';
+i = 'i';
+j = 'j';
+k = 'k';
+l = 'l';
+m = 'm';
+n = 'n';
+o = 'o';
+p = 'p';
+q = 'q';
+r = 'r';
+s = 's';
+t = 't';
+u = 'u';
+v = 'v';
+w = 'w';
+x = 'x';
+y = 'y';
+z = 'z';
+
+starCtg = '*';
+slashCtg = '/';
+underCtg = '_';
+quoteCtg = '"'; //single or double quotes?
+commaCtg = ',';
+semicolonCtg = ';';
+colonCtg = ':';
+lparenCtg = '(';
+rparenCtg = ')';
+plusCtg = '+';
+minusCtg = '-';
+equalsCtg = '=';
+lessThanCtg = '<';
+greaterThanCtg = '>';
+anyCtg = %any;
+letterCtg = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+digitCtg = '0'..'9';
+
+//Whitespace categories
+crCtg = 13;
+lfCtg = 10;
+spaceCtg = 9 | 12 | 32;
+
+notEol = %any - 10 - 13;	// copied from example 2
+
+//Conditions
+%conditions:
+
+notInComment;
+inBracketComment;
+inLineComment;
+
+/////////////////////////////////////////////////////////////////////////
+//CONDITIONS GO HERE/////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+// ----- Tokens -----
+
+%tokens:
+/* -- REMOVE COMMENT LATER
+//Keywords
+const = c o n s t;
+var = v a r;
+begin = b e g i n;
+end = e n d;
+integer = i n t e g e r;
+boolean = b o o l e a n;
+procedure = p r o c e d u r e;
+print = p r i n t;
+read = r e a d;
+if = i f;
+then = t h e n;
+else = e l s e;
+for = f o r;
+to = t o;
+do = d o;
+return = r e t u r n;
+call = c a l l;
+not = n o t;
+and = a n d;
+or = o r;
+
+//Operators and Punctuators
+comma = commaCtg;
+semicolon = semicolonCtg;
+colon = colonCtg;
+lparen = lparenCtg;
+rparen = rparenCtg;
+plus = plusCtg;
+minus = minusCtg;
+star = starCtg;
+slash = slashCtg;
+assign = colonCtg equalsCtg;
+equals = equalsCtg;
+notEquals = lessThanCtg greaterThanCtg;
+lessThan = lessThanCtg;
+lessThanEquals = lessThanCtg equalsCtg;
+greaterThan = greaterThanCtg;
+greaterThanEquals = greaterThanCtg equalsCtg;
+
+//Terminals with Values
+identifier = letterCtg+ (letterCtg|digitCtg|underCtg)*;
+intConst = digitCtg+;
+// NEED FROM EMAIL: stringConst = ;
+
+//Tokens
+whiteSpace = spaceCtg *;
+beginLineComment = slashCtg slashCtg;
+beginBracketComment = slashCtg starCtg anyCtg* starCtg slashCtg;
+--REMOVE COMMENT LATER */
+
+plus = plusCtg;
+minus = minusCtg;
+lparen = lparenCtg;
+rparen = rparenCtg;
+intConst = digitCtg+;
+semicolon = semicolonCtg;
+
+whiteSpace = spaceCtg* (slashCtg slashCtg notEol*)?;
+lineEnd = crCtg | lfCtg | crCtg lfCtg;

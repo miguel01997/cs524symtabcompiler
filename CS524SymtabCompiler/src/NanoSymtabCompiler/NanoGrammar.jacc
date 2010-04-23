@@ -1,0 +1,349 @@
+/*->
+ IJACC Grammar specification for Nano language for CS524 Spring 2010
+ Richard Rabago and Michael Lee
+->*/
+
+// ----- Generator options -----
+%options:
+%java NanoCompiler.NanoGrammar;	// Java package and class
+
+// ----- Terminal symbols for the grammar -----
+%terminals:
+
+//Keywords
+const;
+var;
+begin;
+end;
+integer;
+boolean;
+procedure;
+print;
+read;
+if;
+then;
+else;
+for;
+to;
+do;
+return;
+call;
+not;
+and;
+or;
+
+//Operators and Punctuators
+comma;
+semicolon;
+colon;
+lparen;
+rparen;
+lbracket;
+rbracket;
+plus;
+minus;
+star;
+slash;
+assign;
+equals;
+notEquals;
+lessThan;
+lessThanEquals;
+greaterThan;
+greaterThanEquals;
+
+//Terminals with Values
+id;
+intConst;
+boolConst;
+stringConst;
+
+
+// ----- Productions for the grammar -----
+
+%productions:
+
+Goal -> program;
+
+// A StatementList is a list of zero or more Statements.
+
+program -> startMainBlock
+		   constDecList
+		   varDecList
+		   procDecList
+		   begin
+		   statement  //Must have one statement in a program
+		   statementList
+		   end
+		   endMainBlock
+		   semicolon;
+
+constDecList {nonempty} -> constDecList constDec;
+constDecList {empty} -> /* empty */;
+
+varDecList {nonempty} -> varDecList varDec;
+varDecList {empty} -> /* empty */;
+
+procDecList {nonempty} -> procDecList procDec;
+procDecList {empty} -> /* empty */;
+		   	   
+statementList {nonempty} -> statementList statement;
+statementList {empty} -> /* empty */;	
+		   
+startMainBlock -> 	/* empty */;
+
+endMainBlock -> 	/* empty */;
+
+constDec {idList} -> const idList equals factor semicolon; 
+
+idList {list} -> id comma idList;
+idList {single} -> id;
+
+varDec {idList} -> var idList colon scalarType semicolon;
+varDec {arrayIdList} -> var arrayIdList colon scalarType semicolon;
+
+arrayIdList {list} -> id lbracket intConst rbracket comma arrayIdList;
+arrayIdList {single} -> id lbracket intConst rbracket;
+
+procDec ->  procedure id lparen formalList rparen semicolon blockStmnt;
+ 
+formalList {list} -> formal semicolon formalList;
+formalList {single} -> formal;
+formalList {empty} -> 	/* empty */; 
+
+formal -> idList colon scalarType;
+
+scalarType {integer} -> integer;
+scalarType {boolean} -> boolean;
+ 
+statement {blockStmnt} -> blockStmnt;
+statement {printStmnt} -> printStmnt;
+statement {readStmnt} -> readStmnt;
+statement {asgnStmnt} -> asgnStmnt;
+statement {condStmnt} -> condStmnt;
+statement {forStmnt} -> forStmnt;
+statement {returnStmnt} -> returnStmnt;
+statement {callStmnt} -> callStmnt;
+
+blockStmnt  -> 	begin
+				startNewBlock 
+		   		constDecList
+		   		varDecList
+				statementList
+				end 
+				endCurrentBlock
+				semicolon;
+				
+startNewBlock -> 	/* empty */;
+
+endCurrentBlock -> 	/* empty */;
+
+printStmnt -> print lparen stringConst printExprList rparen semicolon;
+
+printExprList {empty} -> /* empty */;
+printExprList {nonempty} -> printExprList comma expr;
+
+readStmnt -> read lparen stringConst inputTargetList rparen semicolon;
+
+inputTargetList {empty} -> /* empty */;
+inputTargetList {nonempty} -> inputTargetList comma inputTarget;
+
+inputTarget {id} -> id;
+inputTarget {idArray} -> id lbracket expr rbracket;
+
+asgnStmnt {int} -> id assign expr semicolon;
+asgnStmnt {intArray} -> id lbracket expr rbracket assign expr semicolon;
+
+condStmnt {ifThen} -> if expr then statement %shift else;  //attach the “dangling else” to the nearest enclosing ‘if’, as in Java
+condStmnt {ifThenElse} -> if expr then statement else statement;  
+
+forStmnt -> for id assign expr to expr do statement;
+
+returnStmnt -> return semicolon;
+
+callStmnt {nothing} -> call id lparen rparen semicolon;
+callStmnt {exprList} -> call id lparen exprList rparen semicolon;
+
+exprList {list} -> expr comma exprList;
+exprList {single} -> expr;
+
+expr {plus} -> expr plus term;  //left-associative
+expr {minus} -> expr minus term; //left-associative
+expr {or} -> expr or term;
+expr {term} -> term;
+
+term {star} -> term star factor; //left-associative
+term {slash} -> term slash factor; //left-associative
+term {and} -> term and factor;
+term {factor} -> factor;
+
+factor {positive} -> prim;
+factor {negative} -> minus prim;
+factor {not} -> not prim;
+
+prim {const} -> intConst;
+prim {boolConst} -> boolConst;
+prim {value} -> value;
+prim {expr} -> lparen expr rparen;
+prim {relop} -> lparen expr relop expr rparen;
+
+value {id} -> id;
+value {expr} -> id lbracket expr rbracket;
+
+relop{equals} -> equals;
+relop{lessThan} -> lessThan;
+relop{greaterThan} -> greaterThan;
+relop{lessThanEquals} -> lessThanEquals;
+relop{greaterThanEquals} -> greaterThanEquals;
+relop{notEquals} -> notEquals;
+
+
+// ----- Character categories -----
+
+%categories:
+
+// Characters used to spell keywords
+
+a = 'a';
+b = 'b';
+c = 'c';
+d = 'd';
+e = 'e';
+f = 'f';
+g = 'g';
+h = 'h';
+i = 'i';
+j = 'j';
+k = 'k';
+l = 'l';
+m = 'm';
+n = 'n';
+o = 'o';
+p = 'p';
+q = 'q';
+r = 'r';
+s = 's';
+t = 't';
+u = 'u';
+v = 'v';
+w = 'w';
+x = 'x';
+y = 'y';
+z = 'z';
+
+// Characters used for operators and punctuators
+
+starCtg = '*';
+slashCtg = '/';
+underCtg = '_';
+quoteCtg = '"'; //single or double quotes?
+commaCtg = ',';
+semicolonCtg = ';';
+colonCtg = ':';
+lparenCtg = '(';
+rparenCtg = ')';
+lbracketCtg = '[';
+rbracketCtg = ']';
+plusCtg = '+';
+minusCtg = '-';
+equalsCtg = '=';
+lessThanCtg = '<';
+greaterThanCtg = '>';
+anyCtg = %any;
+letterCtg = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+digitCtg = '0'..'9';
+trueCtg = 'true';  
+falseCtg = 'false'; 
+
+//Whitespace categories
+crCtg = 13;
+lfCtg = 10;
+spaceCtg = 9 | 12 | 32;
+
+//Conditions
+%conditions:
+notInComment;				//Normal condition
+inBracketedComment;			//Inside a bracketed multi-line comment
+inLineComment;				//Inside a line comment (lasts until eol)
+
+
+// ----- Tokens -----
+//Main tokens----------------------
+%tokens notInComment:
+
+//Tokens for consuming comments and whitespace----------------------
+whiteSpace = spaceCtg*; 				//Discard
+beginLineComment = slashCtg slashCtg;			//Trigger line comment
+beginBracketedComment = slashCtg starCtg;		//Trigger bracketed comment
+
+//Regular tokens----------------------
+//Tokens for keywords----------------------
+const = c o n s t;
+var = v a r;
+begin = b e g i n;
+end = e n d;
+integer = i n t e g e r;
+boolean = b o o l e a n;
+procedure = p r o c e d u r e;
+print = p r i n t;
+read = r e a d;
+if = i f;
+then = t h e n;
+else = e l s e;
+for = f o r;
+to = t o;
+do = d o;
+return = r e t u r n;
+call = c a l l;
+not = n o t;
+and = a n d;
+or = o r;
+
+//Operators and Punctuators
+comma = commaCtg;
+semicolon = semicolonCtg;
+colon = colonCtg;
+lparen = lparenCtg;
+rparen = rparenCtg;
+lbracket = lbracketCtg;
+rbracket = rbracketCtg;
+plus = plusCtg;
+minus = minusCtg;
+star = starCtg;
+slash = slashCtg;
+assign = colonCtg equalsCtg;
+equals = equalsCtg;
+notEquals = lessThanCtg greaterThanCtg;
+lessThan = lessThanCtg;
+lessThanEquals = lessThanCtg equalsCtg;
+greaterThan = greaterThanCtg;
+greaterThanEquals = greaterThanCtg equalsCtg;
+
+//Tokens with Values
+id = letterCtg+ (letterCtg|digitCtg|underCtg)*;
+intConst = digitCtg+;
+boolConst {true} = t r u e;  
+boolConst {false} = f a l s e; 
+
+//  Below is special handling for stringConst (see associated TokenFactory subclass)
+//  You'll have to figure out what to do in the associated TokenFactory subclasses that are linked into the scanner
+//  but I would otherwise recommend using this unless you think you've already handled the situation and have well-tested it
+stringConst = quoteCtg ( (anyCtg ~ crCtg ~ quoteCtg)* | (quoteCtg quoteCtg) )* quoteCtg;
+stringConstRunOn = quoteCtg (anyCtg ~ quoteCtg)* /  crCtg lfCtg;
+
+//Line comment tokens----------------------
+%tokens inLineComment:
+lineCommentContents = (anyCtg  ~ crCtg)*;		//Match anything but the beginning of a newline (assumed to be cr lf)
+endLineComment = crCtg lfCtg;					//Match newline, count it, go back to normal condition
+
+//Bracketed comment tokens----------------------
+%tokens inBracketedComment:
+bracketedCommentContents = (anyCtg ~ starCtg  ~crCtg)*;	//Match anything but end-comment or newline (same assumption)
+bracketedCommentLineEnd = crCtg lfCtg;		 			//Match newline and count it, stay in condition
+embeddedStar = starCtg / (anyCtg ~ slashCtg);			//Must catch a star followed by non-/ and continue
+embeddedSlash = slashCtg / anyCtg;						//Must catch a slash (disallowed above) and continue
+endBracketedComment = starCtg slashCtg;					//Match end-comment, go back to normal condition
+
+//Always active tokens regardless of condition----------------------
+%tokens:												
+lineEnd = crCtg lfCtg;					//always active for line counting

@@ -1,0 +1,20 @@
+// Copyright 1997 Invisible Software, Inc.
+
+/* ->
+
+File Ex1Include.txt.
+
+This is a sample include file to use in testing Example #1.
+
+-> */
+
+
+// Tell user that we're reading the include file.
+
+print "Now processing include file Ex1Include.txt";
+
+
+// Define mathematical constants
+
+PI = 3.14159265358979323846;
+E = 2.7182818284590452354;

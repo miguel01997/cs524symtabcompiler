@@ -1,0 +1,175 @@
+// Copyright 1997 Invisible Software, Inc.
+
+/*->
+
+  Grammar specification for Example #2.
+  
+  This is a grammar for a very simple calculator language.  It supports integer
+  arithmetic, with addition, subtraction, and parentheses.
+
+
+  CREATING THE SCANNER AND PARSER TABLES
+  
+  There are two ways to create the scanner and parser tables:  you can use
+  the graphical interface, or you can use the command line.
+  
+  To use the graphical interface, execute class invisible.jacc.gen.GenGUI.
+  When the window appears, enter invisible\jacc\ex2\Ex2Grammar.jacc as the
+  file name.  Check the boxes to "generate scanner table", "generate parser
+  table", "create Java source files", and "write output messages to file".
+  Then, click on "Generate".
+  
+  If you want to create verbose output, also check the box to "write verbose
+  output".
+  
+  To use the command line, execute class invisible.jacc.gen.GenMain with the
+  following command line:
+  
+        -o -j invisible\jacc\ex2\Ex2Grammar.jacc
+
+  If you want to create verbose output, add the -v switch to the command line,
+  like this:
+
+        -v -o -j invisible\jacc\ex2\Ex2Grammar.jacc
+  
+  In either case, Invisible Jacc creates Ex2GrammarScannerTable.java and
+  Ex2GrammarParserTable.java.
+  
+  Note:  On Microsoft Windows, the filename is not case-sensitive.  On other
+  operating systems, the filename may or may not be case-sensitive depending
+  on the operating system.  (If you're using another operating system,
+  substitute the appropriate path separator character in place of backslash.)
+  
+  Note:  If you omit the ".jacc" extension from the filename, Invisible Jacc
+  supplies the ".jacc" extension automatically.
+  
+  
+  RUNNING THE SAMPLE INPUT
+
+  Ex2Compiler includes a main() function with a simple command-line interface.
+  To compile one or more files, execute class invisible.jacc.ex2.Ex2Compiler
+  with the source file name(s) listed on the command line.  For example, to
+  compile the sample file Ex2Input.txt, execute invisible.jacc.ex2.Ex2Compiler
+  with the following command line:
+
+        invisible\jacc\ex2\Ex2Input.txt
+  
+  File Ex2Input.out contains the result of running the above command.
+
+->*/
+
+
+// ----- Generator options -----
+
+%options:
+
+%java invisible.jacc.ex2.Ex2Grammar;	// Java package and class
+
+
+// ----- Terminal symbols for the grammar -----
+
+%terminals:
+
+// Operators and punctuators
+
+';';
+'(';
+')';
+'+';
+'-';
+
+// Terminals that carry values
+
+number;
+
+
+// ----- Productions for the grammar -----
+
+%productions:
+
+// The goal is a list of statements.
+
+Goal -> StatementList;
+
+// A StatementList is a list of zero or more Statements.
+
+StatementList -> /* empty */ ;
+
+StatementList -> StatementList Statement;
+
+// A Statement is an Expression followed by a semicolon.
+
+Statement -> Expression ';';
+
+// An Expression can be a Primary, an Expression plus a Primary, or an
+// Expression minus a Primary.
+
+Expression {primary} -> Primary;
+
+Expression {add} -> Expression '+' Primary;
+
+Expression {subtract} -> Expression '-' Primary;
+
+// A Primary can be a number, or an Expression enclosed in parentheses.
+
+Primary {number} -> number;
+
+Primary {paren} -> '(' Expression ')';
+
+
+// ----- Character categories -----
+
+%categories:
+
+// Characters used for operators and punctuators.
+
+';' = ';';
+'(' = '(';
+')' = ')';
+'+' = '+';
+'-' = '-';
+
+// Characters used in numbers.
+
+decDigit = '0'..'9';		// decimal digits 0 thru 9
+
+// Characters used for line ends and white space.
+
+space = 9 | 12 | 32;		// tab, form feed, and space
+'/' = '/';					// slash character for comments
+cr = 13;					// carriage return
+lf = 10;					// line feed
+notEol = %any - 10 - 13;	// any character that isn't a line end
+
+
+// ----- Tokens -----
+
+%tokens:
+
+// Operators and punctuators.
+
+';' = ';';
+'(' = '(';
+')' = ')';
+'+' = '+';
+'-' = '-';
+
+// A number is a sequence of one or more decimal digits.
+
+number = decDigit+;
+
+// White space includes any number of space characters, optionally followed by
+// a comment.  A comment is introduced by the characters '/' '/' and includes
+// all characters up to the end of the line.
+//
+// Although the regular expression appears to match a zero-length string, in
+// fact the scanner never matches a token to a zero-length string.
+
+whiteSpace = space* ('/' '/' notEol*)?;
+
+// A line-end can be either a carriage return, a line feed, or a carriage
+// return and line feed pair.  The token factory needs to count the line.
+// Maintaining the line count allows error messages to pinpoint the location
+// of errors.
+
+lineEnd = cr | lf | cr lf;

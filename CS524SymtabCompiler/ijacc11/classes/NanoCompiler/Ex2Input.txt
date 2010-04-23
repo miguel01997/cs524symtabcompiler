@@ -1,0 +1,61 @@
+// Copyright 1997 Invisible Software, Inc.
+
+// File Ex2Input.txt.
+//
+// This is a sample input file to use in testing Example #2.
+//
+// To compile this sample, execute the class invisible.jacc.ex2.Ex2Compiler
+// with the following command line:
+//
+//		invisible\jacc\ex2\Ex2Input.txt
+//
+// File Ex2Input.out contains the result of running the above command.
+//
+// (Note:  You may need to adjust the directory name on the command line,
+// depending on how your system is set up.)
+//
+// Notice that the grammar for this example only allows '//' style comments, it
+// does not allow the C-style '/*' comments.
+
+
+// Try some expressions to show that parentheses work, and that addition and
+// subtraction group from left to right.
+
+7+11;					// should be 18
+7-11;					// should be -4
+
+4-5-6;					// should be (4-5)-6 = -7
+(4-5)-6;				// should be -7
+4-(5-6);				// should be 5
+
+100-(45+12)+123;		// should be 166
+
+
+// Try an invalid number.  9876543210 is too big to be an int, so the compiler
+// should issue an error message.  (Note that early versions of Microsoft's
+// Java VM don't produce an error;  they just reduce the number modulo 2^32,
+// yielding the value 1286608618.)
+
+9876543210;				// should be error
+
+
+// Demonstrate how error repair works.  We'll intentionally leave off the
+// semicolon at the end of a statement.  The compiler should automatically
+// insert the semicolon and process the statement.
+
+10+12-6					// missing semicolon, should be 16
+18-3+44;				// should be 59
+
+
+// This time we'll leave off a right parenthesis.  The compiler should
+// automatically insert the parenthesis.
+
+23-(9-5;				// missing right parenthesis, should be 19
+345+11-46;				// should be 310
+
+// This time we'll put in an extra right parenthesis.  The compiler should
+// simply remove it.
+
+82-12-7);				// extra right parenthesis, should be 63
+364+89-1023;			// should be -570
+

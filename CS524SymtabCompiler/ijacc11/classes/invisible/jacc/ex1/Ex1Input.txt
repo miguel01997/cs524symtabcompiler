@@ -1,0 +1,141 @@
+// Copyright 1997 Invisible Software, Inc.
+
+/* ->
+
+File Ex1Input.txt.
+
+This is a sample input file to use in testing Example #1.
+  
+  
+RUNNING THIS SAMPLE INPUT
+  
+To run this sample input, execute class invisible.jacc.ex1.Ex1Main with the
+following command line:
+  
+ 		invisible\jacc\ex1\Ex1Input.txt
+  
+File Ex1Input.out contains the result of running the above command.
+
+You may need to adjust the directory name on the command line, depending on
+how your system is set up.
+
+-> */
+
+
+// Say hello
+
+print "Ex1Input.txt - Sample input test for Invisible Jacc example #1";
+print;
+
+
+// Some square roots
+
+print "sqrt  2 = ", sqrt 2;
+print "sqrt  3 = ", sqrt 3;
+print "sqrt 13.3 = ", sqrt 13.3;
+print;
+
+
+// Show that exponentiation is right-associative.  This shows that the parser
+// correctly handles right associativity.
+
+right = 2^(3^4);
+left = (2^3)^4;
+default = 2^3^4;
+
+print "exponentiation right, left, default (default should equal right) = ";
+print right, ", ", left, ", ", default;
+print;
+
+
+// Show that subtraction is left-associative.  This shows that the parser
+// correctly handles left associativity.
+
+right = 2-(3-4);
+left = (2-3)-4;
+default = 2-3-4;
+
+print "subtraction right, left, default (default should equal left) = ";
+print right, ", ", left, ", ", default;
+print;
+
+
+// Show that multiplication has higher precedence than addition.  This shows
+// that the parser handles precedence correctly.
+
+right = 5+(6*7);
+left = (5+6)*7;
+default = 5+6*7;
+
+print "add/multiply right, left, default (default should equal right) = ";
+print right, ", ", left, ", ", default;
+print;
+
+right = 5*(6+7);
+left = (5*6)+7;
+default = 5*6+7;
+
+print "multiply/add right, left, default (default should equal left) = ";
+print right, ", ", left, ", ", default;
+print;
+
+
+// Try an include file.  The file Ex1Include.txt contains definitions for
+// the mathematical constants PI and E.  You may need to change the directory
+// in the include statement.
+
+include <invisible\jacc\ex1\Ex1Include.txt>
+
+print "pi = ", PI, ", e = ", E;
+print;
+
+
+// Check precision.  This shows that the calculations are being performed in
+// double precision.
+
+print "pi-3.14159 = ", PI-3.14159, ", e-2.71828 = ", E-2.71828;
+print;
+
+
+// Show what happens if we try to use an undefined variable.  We'll set y equal
+// to an undefined variable x.  The compiler should print an error message, and
+// then set y equal to a special error value called "NaN" (Not-A-Number).  The
+// print statement prints NaN as the character string "--error--".  Notice the
+// use of the escape code \" in the string.
+
+y = x;
+
+print "Result of undefined variable (should be \"--error--\") is ", y;
+print;
+
+
+// Test of parser error repair.  We'll make an intentional error by omitting
+// the equal sign from the assignment statement x = 89.  The compiler should
+// print an error message, then insert the equal sign and perform the
+// assignment.  As a result, y should end up with the value 89.
+
+x 89;
+y = x;
+
+print "Result of error repair (should be 89) is ", y;
+print;
+
+
+// Calculate some Fibonacci numbers.  This also shows how variables can be used
+// in expressions.
+
+fib1 = 1;
+fib2 = 1;
+fib3 = fib2 + fib1;
+fib4 = fib3 + fib2;
+fib5 = fib4 + fib3;
+fib6 = fib5 + fib4;
+fib7 = fib6 + fib5;
+fib8 = fib7 + fib6;
+fib9 = fib8 + fib7;
+fib10 = fib9 + fib8;
+
+print "Fibonacci: ", fib1, " ", fib2, " ", fib3, " ", fib4, " ", fib5, " ",
+       fib6, " ", fib7, " ", fib8, " ", fib9, " ", fib10;
+print;
+

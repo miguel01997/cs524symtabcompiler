@@ -1,0 +1,23 @@
+Reading grammar specification ...
+
+Generating LALR(1) configuration finite state machine ...
+
+LALR(1) configuration finite state machine:
+
+  State 15:
+    Statement -> if ( Expression ) then Statement _  {%%EOF, else}
+    Statement -> if ( Expression ) then Statement _ else Statement  {%%EOF, else}
+
+    Conflict (shift/reduce 2): else
+    Reduce 2: %%EOF
+    Unwind: Reduce 2
+
+12 symbols.
+6 productions.
+18 LALR(1) machine states.
+
+error: 1 unresolved conflicts.
+
+***** Error generating parser table. *****
+
+There were 1 error and 0 warnings.

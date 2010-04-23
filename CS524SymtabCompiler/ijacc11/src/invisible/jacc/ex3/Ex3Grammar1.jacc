@@ -1,0 +1,89 @@
+// Copyright 1997 Invisible Software, Inc.
+
+/*->
+
+  First grammar specification for Example #3.
+
+  This illustrates a shift-reduce conflict induced by a "dangling else".
+
+
+  COMPILING THIS GRAMMAR SPECIFICATION
+  
+  There are two ways to compile this file:  you can use the graphical
+  interface, or you can use the command line.
+  
+  To use the graphical interface, execute class invisible.jacc.gen.GenGUI.
+  When the window appears, enter invisible\jacc\ex3\Ex3Grammar1.jacc as the
+  file name.  Check the boxes to "generate parser table" and "write output
+  messages to file".  Then, click on "Generate".
+  
+  If you want to create verbose output, also check the box to "write verbose
+  output".
+  
+  To use the command line, execute class invisible.jacc.gen.GenMain with the
+  following command line:
+  
+        -o -p invisible\jacc\ex3\Ex3Grammar1.jacc
+  
+  The -p option instructs the generator to create only the parser tables.
+
+  If you want to create verbose output, add the -v switch to the command line,
+  like this:
+
+        -v -o -p invisible\jacc\ex3\Ex3Grammar1.jacc
+  
+  Note:  On Microsoft Windows, the filename is not case-sensitive.  On other
+  operating systems, the filename may or may not be case-sensitive depending
+  on the operating system.  (If you're using another operating system,
+  substitute the appropriate path separator character in place of backslash.)
+  
+  Note:  If you omit the ".jacc" extension from the filename, Invisible Jacc
+  supplies the ".jacc" extension automatically.
+
+->*/
+
+
+// ----- Terminal symbols for the grammar -----
+
+%terminals:
+
+// Punctuators
+
+';';
+'(';
+')';
+
+// Keywords
+
+if;
+then;
+else;
+
+// Terminals that carry values
+
+identifier;
+
+
+// ----- Productions for the grammar -----
+
+%productions:
+
+// The goal is a statement.
+
+Goal -> Statement;
+
+// A Statement can be:
+//    (1) an Expression followed by a semicolon.
+//    (2) an if-then construction.
+//    (3) an if-then-else construction.
+
+Statement -> Expression ';';
+
+Statement -> if '(' Expression ')' then Statement;
+
+Statement -> if '(' Expression ')' then Statement else Statement;
+
+// An Expression is an identifier.
+
+Expression -> identifier;
+

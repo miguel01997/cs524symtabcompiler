@@ -1,0 +1,23 @@
+Reading grammar specification ...
+
+Generating LALR(1) configuration finite state machine ...
+
+LALR(1) configuration finite state machine:
+
+  State 7:
+    Expression -> Expression - Expression _  {;, -, )}
+    Expression -> Expression _ - Expression  {;, -, )}
+
+    Conflict (shift/reduce 4): -
+    Reduce 4: ; )
+    Unwind: Reduce 4
+
+10 symbols.
+6 productions.
+8 LALR(1) machine states.
+
+error: 1 unresolved conflicts.
+
+***** Error generating parser table. *****
+
+There were 1 error and 0 warnings.

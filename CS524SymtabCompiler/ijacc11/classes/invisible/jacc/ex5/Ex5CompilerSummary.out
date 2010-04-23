@@ -1,0 +1,258 @@
+
+Summary for invisible\jacc\ex5\Ex5Compiler.java ...
+public class Ex5Compiler extends CompilerModel implements PrescannerJavaSourceClient
+{
+    public int access;
+    public String indent;
+    static final boolean _debug;
+    PrintStream _stdOut;
+    int _conditionNotInComment;
+    int _conditionInComment;
+    public void javaSourceInvalidEscape (Token token);
+    public Scanner makeScanner (String filename);
+    public void scannerEOF (Scanner scanner, Token token);
+    public Ex5Compiler (PrintStream stdOut, ErrorOutput errOut);
+    final class Ex5Identifier extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    final class Ex5ReservedKeyword extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    final class Ex5NumberIllegal extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    final class Ex5CharacterIllegal extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    final class Ex5StringIllegal extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    final class Ex5StringRunOn extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    final class Ex5LineEnd extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    final class Ex5BeginComment extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    final class Ex5EndComment extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    final class Ex5IllegalChar extends TokenFactory
+    {
+        public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException;
+    };
+    static class PDim
+    {
+        public int dim;
+        public PDim (int dim);
+    };
+    static class PType
+    {
+        public String base;
+        public int dim;
+        public PType (String base, int dim);
+        public void append (StringBuffer buf, int extraDim);
+    };
+    static class PVarDec
+    {
+        public String var;
+        public int dim;
+        public PVarDec (String var, int dim);
+    };
+    static class PMethDec
+    {
+        public String meth;
+        public int dim;
+        public PMethDec (String meth, int dim);
+    };
+    static class PMod
+    {
+        public static final int ACC_PUBLIC;
+        public static final int ACC_PRIVATE;
+        public static final int ACC_PROTECTED;
+        public static final int ACC_STATIC;
+        public static final int ACC_FINAL;
+        public static final int ACC_SYNCHRONIZED;
+        public static final int ACC_VOLATILE;
+        public static final int ACC_TRANSIENT;
+        public static final int ACC_NATIVE;
+        public static final int ACC_INTERFACE;
+        public static final int ACC_ABSTRACT;
+        public int mod;
+        public PMod (int mod);
+        public void append (StringBuffer buf);
+        public boolean isVisible (int access);
+    };
+    static abstract class PSig
+    {
+        private PMod modifiers;
+        public PSig (PMod modifiers);
+        public boolean isVisible (int access);
+        protected StringBuffer startIndent (String indent, int level);
+        public void appendModifiers (StringBuffer buf);
+        public abstract void print (PrintStream out, int access, String indent, int level);
+    };
+    static abstract class PSigContainer extends PSig
+    {
+        private Vector children;
+        public PSigContainer (PMod modifiers, Vector children);
+        protected void printChildren (PrintStream out, int access, String indent, int level);
+    };
+    static class PSigClass extends PSigContainer
+    {
+        private String sig;
+        public PSigClass (PMod modifiers, String sig, Vector children);
+        public void print (PrintStream out, int access, String indent, int level);
+    };
+    static class PSigMethod extends PSig
+    {
+        private String sig;
+        public PSigMethod (PMod modifiers, String sig);
+        public void print (PrintStream out, int access, String indent, int level);
+    };
+    static class PSigField extends PSig
+    {
+        private Vector sigs;
+        public PSigField (PMod modifiers, Vector sigs);
+        public void print (PrintStream out, int access, String indent, int level);
+    };
+    final class Ex5TypeDeclaration extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5SimpleName extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5QualifiedName extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5DimsOptNone extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5DimsFirst extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5DimsNext extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5PrimitiveOrVoid extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ClassOrInterfaceType extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ArrayTypePrimitive extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ArrayTypeReference extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5VariableDeclaratorId extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5VariableDeclaratorsFirst extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5VariableDeclaratorsNext extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5MethodDeclarator extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ConstructorDeclarator extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5FormalParameter extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5FormalParameterModified extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5FormalParameterListNext extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ModifierOrNone extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ModifiersNext extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ClassOrInterfaceTypeListFirst extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ClassOrInterfaceTypeListNext extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5SuperOrExtendsInterfacesFirst extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5InterfacesOrThrows extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5MethodHeader extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ConstructorDeclaration extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5FieldDeclaration extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5BodyDeclarationsFirst extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5BodyDeclarationsNext extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ClassOrInterfaceBody extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5ClassDeclaration extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+    final class Ex5InterfaceDeclaration extends NonterminalFactory
+    {
+        public Object makeNonterminal (Parser parser, int param) throws IOException, SyntaxException;
+    };
+};

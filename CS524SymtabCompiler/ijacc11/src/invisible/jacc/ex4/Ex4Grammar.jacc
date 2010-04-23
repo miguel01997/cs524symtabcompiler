@@ -1,0 +1,421 @@
+// Copyright 1997 Invisible Software, Inc.
+
+/*->
+
+  Grammar specification for Example #4.
+
+  This file defines scanner tables for the Java language.  Note that this
+  file contains only scanner tables, not parser tables.
+
+  The purpose of this example is to demonstrate how to use the scanner alone.
+  The scanner by itself is powerful enough for many different tasks.  Here, we
+  define a scanner that scans a Java source file and prints out a list of all
+  the identifiers used in the file, along with the number of times they are
+  used.
+
+
+  CREATING THE SCANNER TABLE
+  
+  There are two ways to create the scanner table:  you can use the graphical
+  interface, or you can use the command line.
+  
+  To use the graphical interface, execute class invisible.jacc.gen.GenGUI.
+  When the window appears, enter invisible\jacc\ex4\Ex4Grammar.jacc as the
+  file name.  Check the boxes to "generate scanner table", "create Java source
+  files", and "write output messages to file".  Then, click on "Generate".
+  
+  To use the command line, execute class invisible.jacc.gen.GenMain with the
+  following command line:
+  
+        -o -s -j invisible\jacc\ex4\Ex4Grammar.jacc
+  
+  In either case, Invisible Jacc creates Ex4GrammarScannerTable.java.
+  
+  Note:  On Microsoft Windows, the filename is not case-sensitive.  On other
+  operating systems, the filename may or may not be case-sensitive depending
+  on the operating system.  (If you're using another operating system,
+  substitute the appropriate path separator character in place of backslash.)
+  
+  Note:  If you omit the ".jacc" extension from the filename, Invisible Jacc
+  supplies the ".jacc" extension automatically.
+  
+  
+  RUNNING THE SAMPLE INPUT
+  
+  To run the sample input, execute class invisible.jacc.ex4.Ex4Main with the
+  following command line:
+  
+ 		invisible\jacc\ex4\Ex4Input.txt
+  
+  File Ex4Input.out contains the result of running the above command.
+
+->*/
+
+
+// ----- Generator options -----
+
+%options:
+
+%java invisible.jacc.ex4.Ex4Grammar;	// Java package and class
+%charsetsize 0x10000;	// Character set size = 65536 for Unicode
+
+
+// ----- Character categories -----
+
+%categories:
+
+// Letters of the alphabet, used for keywords and literals.
+
+a = 'a';
+b = 'b';
+c = 'c';
+d = 'd';
+e = 'e';
+f = 'f';
+g = 'g';
+h = 'h';
+i = 'i';
+j = 'j';
+k = 'k';
+l = 'l';
+m = 'm';
+n = 'n';
+o = 'o';
+p = 'p';
+q = 'q';
+r = 'r';
+s = 's';
+t = 't';
+u = 'u';
+v = 'v';
+w = 'w';
+x = 'x';
+y = 'y';
+z = 'z';
+
+// Punctuation characters
+
+'!' = '!';
+'"' = '"';
+'%' = '%';
+'&' = '&';
+''' = ''';
+'(' = '(';
+')' = ')';
+'*' = '*';
+'+' = '+';
+',' = ',';
+'-' = '-';
+'.' = '.';
+'/' = '/';
+':' = ':';
+';' = ';';
+'<' = '<';
+'=' = '=';
+'>' = '>';
+'?' = '?';
+'[' = '[';
+'\' = '\';
+']' = ']';
+'^' = '^';
+'{' = '{';
+'|' = '|';
+'}' = '}';
+'~' = '~';
+
+// Characters used in identifiers.
+
+letter = %letter | '_$';
+digit = %digit;
+letterOrDigit = %letter | %digit | '_$';
+
+// Characters used in literal numbers.
+
+decDigit = '0'..'9';
+hexDigit = '0'..'9' | 'A'..'F' | 'a'..'f';
+octalDigit = '0'..'7';
+nonZeroDigit = '1'..'9';
+zeroToThree = '0'..'3';
+'0' = '0';
+dD = 'dD';
+eE = 'eE';
+fF = 'fF';
+lL = 'lL';
+xX = 'xX';
+sign = '+-';
+
+// Characters used in literal characters and strings.
+
+singleChar = %any - ''' - '\' - 10 - 13;
+stringChar = %any - '"' - '\' - 10 - 13;
+
+// Characters used for line ends and white space.
+
+space = 9 | 12 | 32;		// tab, form feed, and space
+sub = 26;					// ASCII sub
+cr = 13;					// carriage return
+lf = 10;					// line feed
+notEol = %any - 10 - 13;	// any character that isn't a line end
+any = %any;					// any character
+
+
+// ----- Start conditions -----
+
+%conditions:
+
+notInComment;				// Normal condition
+inComment;					// Inside a multi-line comment
+
+
+// ----- Tokens recognized when not inside a multi-line comment -----
+
+%tokens notInComment:
+
+// Separators.  See Java Language Specification section 3.11.
+
+separator = '('
+          | ')'
+		  | '{'
+		  | '}'
+		  | '['
+		  | ']'
+		  | ';'
+		  | ','
+		  | '.'
+		  ;
+
+// Operators.  See Java Language Specification section 3.12.
+
+operator = '='
+         | '>'
+		 | '<'
+		 | '!'
+		 | '~'
+		 | '?'
+		 | ':'
+		 | '=' '='
+		 | '<' '='
+		 | '>' '='
+		 | '!' '='
+		 | '&' '&'
+		 | '|' '|'
+		 | '+' '+'
+		 | '-' '-'
+		 | '+'
+		 | '-'
+		 | '*'
+		 | '/'
+		 | '&'
+		 | '|'
+		 | '^'
+		 | '%'
+		 | '<' '<'
+		 | '>' '>'
+		 | '>' '>' '>'
+		 | '+' '='
+		 | '-' '='
+		 | '*' '='
+		 | '/' '='
+		 | '&' '='
+		 | '|' '='
+		 | '^' '='
+		 | '%' '='
+		 | '<' '<' '='
+		 | '>' '>' '='
+		 | '>' '>' '>' '='
+		 ;
+
+// Keywords.  See Java Language Specification section 3.9.
+
+keyword = a b s t r a c t
+        | b o o l e a n
+		| b r e a k
+		| b y t e
+		| c a s e
+		| c a t c h
+		| c h a r
+		| c l a s s
+		| c o n s t
+		| c o n t i n u e
+		| d e f a u l t
+		| d o
+		| d o u b l e
+		| e l s e
+		| e x t e n d s
+		| f i n a l
+		| f i n a l l y
+		| f l o a t
+		| f o r
+		| g o t o
+		| i f
+		| i m p l e m e n t s
+		| i m p o r t
+		| i n s t a n c e o f
+		| i n t
+		| i n t e r f a c e
+		| l o n g
+		| n a t i v e
+		| n e w
+		| p a c k a g e
+		| p r i v a t e
+		| p r o t e c t e d
+		| p u b l i c
+		| r e t u r n
+		| s h o r t
+		| s t a t i c
+		| s u p e r
+		| s w i t c h
+		| s y n c h r o n i z e d
+		| t h i s
+		| t h r o w
+		| t h r o w s
+		| t r a n s i e n t
+		| t r y
+		| v o i d
+		| v o l a t i l e
+		| w h i l e
+		;
+
+// Boolean literals.  See Java Language Specification section 3.10.3.
+
+booleanLiteral = t r u e
+               | f a l s e
+			   ;
+
+// Null literal.  See Java Language Specification section 3.10.7.
+
+nullLiteral = n u l l;
+
+// Integer literals.  See Java Language Specification section 3.10.1.
+
+decimalIntegerLiteral = ('0' | nonZeroDigit decDigit*) lL?;
+
+hexIntegerLiteral = '0' xX hexDigit+ lL?;
+
+octalIntegerLiteral = '0' octalDigit+ lL?;
+
+// Floating point literals.  See Java Language Specification section 3.10.2.
+
+floatingPointLiteral = decDigit+ '.' decDigit* (eE sign? decDigit+)? (fF | dD)?
+                     | '.' decDigit+ (eE sign? decDigit+)? (fF | dD)?
+                     | decDigit+ (eE sign? decDigit+) (fF | dD)?
+                     | decDigit+ (eE sign? decDigit+)? (fF | dD)
+					 ;
+
+// Character literals.  See Java Language Specification section 3.10.4.
+
+characterLiteral = ''' ( singleChar
+                         | '\' b
+                         | '\' t
+                         | '\' n
+                         | '\' f
+                         | '\' r
+                         | '\' '"'
+                         | '\' '''
+                         | '\' '\'
+                         | '\' octalDigit
+                         | '\' octalDigit octalDigit
+                         | '\' zeroToThree octalDigit octalDigit
+					   ) ''';
+
+// String literals.  See Java Language Specification section 3.10.5.
+
+stringLiteral = '"' ( stringChar
+                      | '\' b
+                      | '\' t
+                      | '\' n
+                      | '\' f
+                      | '\' r
+                      | '\' '"'
+                      | '\' '''
+                      | '\' '\'
+                      | '\' octalDigit
+                      | '\' octalDigit octalDigit
+                      | '\' zeroToThree octalDigit octalDigit
+				    )* '"';
+
+// Identifiers.  See Java Language Specification section 3.8.
+//
+// Notice the use of a token parameter (#1) to define the token number that
+// is assembled when this token is recognized.
+
+identifier #1 = letter letterOrDigit*;
+
+// Error tokens.  These are designed to catch some illegal forms.  This is not
+// a comprehensive list; a production compiler would have more than these.
+
+illegalNumberLiteral = digit letterOrDigit*;
+
+illegalCharacterLiteral = ''' '\'* singleChar? '''?;
+
+illegalStringLiteral = '"' (stringChar | '\' '\' | '\' '"' | '\' stringChar)* '"';
+
+runOnStringLiteral = '"' (stringChar | '\' '\' | '\' '"' | '\' stringChar)* '\'?;
+
+// White space includes any number of space characters or comments, all on a
+// single line.
+
+whiteSpace = (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+             ('/' '/' notEol*)?;
+
+// This token recognizes the start of a multi-line comment.  The token factory
+// needs to change the start condition to inComment.
+
+beginComment = (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+               '/' '*' (notEol* ~ '*' '/');
+
+// An ASCII sub character is illegal if it does not occur at the end of the
+// file.  Notice the use of the right context operator to specify that the sub
+// is not at the end of the file.
+
+illegalChar = sub / any;
+
+// An ASCII sub character occurring at the end of a file is white space.
+// Notice that this token does not match a sub occurring in the middle of a
+// file because the scanner looks for the longest match (including context),
+// and the previous token is longer.
+
+whiteSpace = sub;
+
+
+// ----- Tokens recognized when inside a multi-line comment -----
+
+%tokens inComment:
+
+// This token recognizes the end of a multi-line comment, including any
+// trailing white space.  The token factory needs to change the start condition
+// to notInComment.
+
+endComment = (notEol* ~ '*' '/') '*' '/'
+             (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+             ('/' '/' notEol*)?;
+
+// Everything inside a multi-line comment is white space.  This token matches
+// if we reach the end of the line and either (a) the multi-line comment was
+// not terminated, or (b) the multi-line comment was terminated and a new
+// multi-line comment was started.  Notice that although the regular expression
+// appears to match a zero-length string, in fact the scanner never matches a
+// token to a zero-length string.
+
+whiteSpace = ((notEol* ~ '*' '/') '*' '/'
+              (space | '/' '*' (notEol* ~ '*' '/') '*' '/')*
+              '/' '*'
+             )?
+             (notEol* ~ '*' '/');
+
+
+// ----- Tokens that are always recognized -----
+
+%tokens:
+
+// A line-end can be either a carriage return, a line feed, or a carriage
+// return and line feed pair.  The token factory needs to count the line.
+// Maintaining the line count allows error messages to pinpoint the location
+// of errors.
+
+lineEnd = cr | lf | cr lf;
+
+// This token matches if no other token matches.  Therefore, it must be the
+// last token in the file.
+
+illegalChar = any;
