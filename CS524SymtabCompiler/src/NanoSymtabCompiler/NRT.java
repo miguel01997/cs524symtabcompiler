@@ -1,7 +1,7 @@
-package nano;
+package NanoSymtabCompiler;
 
 import java.util.ArrayList;
-import nano.NST;
+import NanoSymtabCompiler.NanoSymbolTable;
 
 
 
