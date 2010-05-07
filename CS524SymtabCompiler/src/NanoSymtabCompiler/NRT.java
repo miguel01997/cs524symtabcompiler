@@ -9,10 +9,10 @@ public class NRT
 {
 	public abstract class NanoMemoryCell
 	{
-		protected int type = NST.UNK_TYPE;
+		protected int type = NanoSymbolTable.UNK_TYPE;
 		public NanoMemoryCell() {}
-		public boolean isInteger() { return (type == NST.INT_TYPE); }
-		public boolean isBoolean() { return (type == NST.BOOL_TYPE); }
+		public boolean isInteger() { return (type == NanoSymbolTable.INT_TYPE); }
+		public boolean isBoolean() { return (type == NanoSymbolTable.BOOL_TYPE); }
 	}
 	
 	public final class NanoIntegerMemoryCell extends NanoMemoryCell
@@ -20,7 +20,7 @@ public class NRT
 		private int integerValue;
 		public NanoIntegerMemoryCell(int value)
 		{	
-			type = NST.INT_TYPE;
+			type = NanoSymbolTable.INT_TYPE;
 			integerValue = value;
 		}
 		public int getValue() { return integerValue; }
@@ -32,7 +32,7 @@ public class NRT
 		private boolean booleanValue;
 		public NanoBooleanMemoryCell(boolean value)
 		{	
-			type = NST.BOOL_TYPE;
+			type = NanoSymbolTable.BOOL_TYPE;
 			booleanValue = value;
 		}
 		public boolean getValue() { return booleanValue; }
