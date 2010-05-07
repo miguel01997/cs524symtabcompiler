@@ -1,0 +1,8 @@
+    var v1: integer;
+    var b1[2] : boolean;
+
+	begin
+	  v1 := 4;
+	  b1[1] := false;
+	  b1[2] := not b1[1];
+	end;
