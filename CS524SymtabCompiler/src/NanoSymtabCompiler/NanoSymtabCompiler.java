@@ -1,6 +1,7 @@
 package NanoSymtabCompiler;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import invisible.jacc.parse.CompilerModel;
 import invisible.jacc.parse.NonterminalFactory;
@@ -18,7 +19,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	static final boolean _debug = false;
 	
 	private boolean symbolTableVerbose = false;
-	private boolean showReductions = false;
+	private boolean showReductions = true;
 	private boolean showSymbolTable = true;
 	
 	int _conditionNotInComment;
@@ -522,13 +523,45 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("ConstDec {idList} -> const idList equals factor semicolon");
-			String intString = (String) parser.rhsValue (3);
-			System.out.println("intConst lexeme: " + intString + "\n");
+			Integer value = (Integer) parser.rhsValue(3);
+			if (showReductions) 	System.out.println("\nReduced by rule: ConstantDeclaration -> const IdList equals intConst semicolon");
+			if (value==null) return null; //discard error insertions
+			if (showReductions) System.out.println("intConst value: "+value+"\n");
+
+	/*
+	 *	Eventually…
+	 * 	int constValue = 
+	 * 	 ((Integer)parser.rhsValue(3)).intValue();
+	 *  addQuad(store,@some_index,const_value)
+	 * 
+	 */
+	//This value cannot be stored in the symbol table without 
+	//requiring that structure to be memory resident during 
+	//execution of Nano programs.
+	//While that may actually be the case we don't want to be 
+	//restricted to this.
+	//So we store the constant in memory like any other 
+	//variable (later we will add this quad).
+	//So the fact that it is const during compilation prevents 
+	//the issuance of 
+	//any instructions that can change that memory location's 
+	//value.  Here we just print out what the symbol table saw 
+	//but did not store (keeping with the idea that the symbol //table stores meta-data from compile-time
+	//not data from execution time.
+
+	// HERE IS THE CORE CODE::
 			
-			return null;
+		Iterator tempIdListIterator = symtab.getTempIdListIterator();
+			while (tempIdListIterator.hasNext())
+			{			
+		symtab.addConstIntToCurrentBlock
+				(((String)tempIdListIterator.next()));
 			}
+			symtab.tempIdListClear();
+
+			// Return null value
+			return null;
+		}
 	}
 	
 	//idList (list, single)
@@ -537,12 +570,19 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("idList {list} -> id comma idList");
-			String idString = (String) parser.rhsValue (0);
-			System.out.println("identifier lexeme: " + idString + "\n");
+			String idLexeme = (String) parser.rhsValue(2);
+			if (showReductions) 									
+				System.out.println("\nReduced by rule: IdList {recurring} -> IdList comma identifier");
+			if (idLexeme==null) 
+				return null; //discard error insertions
+			if (showReductions) 									
+				System.out.println("identifier lexeme: "+idLexeme+"\n");
+
+			symtab.tempIdListAdd(idLexeme);
 			
+			// Return null value
 			return null;
+
 			}
 	}
 	final class idListSingleNT extends NonterminalFactory
@@ -562,7 +602,7 @@ public class NanoSymtabCompiler extends CompilerModel
 
 			// Return null value
 			return null;
-	}
+		}
 	}
 	
 	
@@ -572,10 +612,29 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("VarDec {idList} -> var idList colon scalarType semicolon\n");
+			int NanoSymbolTableTypeFlag = ((Integer) parser.rhsValue(3)).intValue();
+			Iterator tempIdListIterator = symtab.getTempIdListIterator();
+			boolean notAlreadyDefined = true;
+			String nameToDefine = "";
+			while (tempIdListIterator.hasNext())
+			{			
+				nameToDefine = (String)tempIdListIterator.next();
+				if (symtab.addScalarToCurrentBlock(nameToDefine,NanoSymbolTableTypeFlag) == null)
+					notAlreadyDefined = false;
+				else
+					notAlreadyDefined = true;
+				if (!notAlreadyDefined)
+				{
+				reportError("",
+				"Duplicate declaration in this block of"
+				+nameToDefine);
+				}
+			}
+			symtab.tempIdListClear();
 			
+			// Return null value
 			return null;
+
 			}
 	}
 	final class varDecArrayIdListNT extends NonterminalFactory
@@ -691,10 +750,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("scalarType {integer} -> integer\n");
-			
-			return null;
+			if (showReductions) 
+				System.out.println("\nReduced by rule: ScalarType {integer} -> integer\n");
+
+			//Return this as an object then up above pass it to symbol table as an Object
+			return new Integer(NanoSymbolTable.INT_TYPE);
 			}
 	}
 	final class scalarTypeBooleanNT extends NonterminalFactory
@@ -702,10 +762,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("scalarType {boolean} -> boolean\n");
-			
-			return null;
+			if (showReductions) 
+				System.out.println("\nReduced by rule: ScalarType {boolean} -> boolean\n");
+
+			//Return this as an object then up above pass it to symbol table as an Object
+			return new Integer(NanoSymbolTable.BOOL_TYPE);
 			}
 	}
 	
