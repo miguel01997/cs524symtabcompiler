@@ -130,6 +130,7 @@ public class NanoSymbolTable
 	/*
 	 * Method to add a declared scalar to the curent block; applicable for integers and booleans
 	 */
+	
 	public NSTIndScalarEntry
 	addScalarToCurrentBlock(String name, int type)
 	{
