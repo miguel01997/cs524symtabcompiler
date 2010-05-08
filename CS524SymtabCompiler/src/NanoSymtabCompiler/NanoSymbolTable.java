@@ -158,7 +158,7 @@ public class NanoSymbolTable
 
 
 	/*
-	 * Method to add a declared constant variable (no arrays or booleans) to the curent block
+	 * Method to add a declared constant variable (no arrays or booleans) to the current block
 	 * Recall that constants get runtime memory assignments just like variables but have
 	 * a special flag set so that the compiler can ensure that no instructions modify those values
 	 */
