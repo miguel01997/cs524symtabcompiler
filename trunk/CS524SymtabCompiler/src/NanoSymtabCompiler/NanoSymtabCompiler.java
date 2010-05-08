@@ -648,8 +648,8 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			int NanoSymbolTableTypeFlag = ((Integer) parser.rhsValue(3)).intValue();
-			//int ArraySize = ((Integer) parser.rhsValue(2)).intValue();
-			System.out.println("This is the bool value: " + NanoSymbolTableTypeFlag);
+			int ArraySize = Integer.parseInt((String) parser.rhsValue(1));
+			
 			Iterator tempArrayIdListIterator = symtab.getTempIdListIterator();
 			boolean notAlreadyDefined = true;
 			String nameToDefine = "";
@@ -657,7 +657,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			{			
 				nameToDefine = (String)tempArrayIdListIterator.next();
 				
-				if (symtab.addArrayToCurrentBlock(nameToDefine,NanoSymbolTableTypeFlag,7) == null)
+				if (symtab.addArrayToCurrentBlock(nameToDefine,NanoSymbolTableTypeFlag,ArraySize) == null)
 					notAlreadyDefined = false;
 				else
 					notAlreadyDefined = true;
@@ -703,6 +703,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 				String idLexeme = (String) parser.rhsValue(0);
+				String intConstLexeme = (String)parser.rhsValue(2);
 			if (showReductions) 									
 				System.out.println("\nReduced by rule: ArrayIdList {single} -> id lbracket intConst rbracket");
 			if (idLexeme==null) 
@@ -713,7 +714,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				symtab.tempIdListAdd(idLexeme);
 	
 			// Return null value
-			return null;
+			return intConstLexeme;
 			}
 	}
 	
