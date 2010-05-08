@@ -650,12 +650,13 @@ public class NanoSymtabCompiler extends CompilerModel
 			int NanoSymbolTableTypeFlag = ((Integer) parser.rhsValue(3)).intValue();
 			//int ArraySize = ((Integer) parser.rhsValue(2)).intValue();
 			System.out.println("This is the bool value: " + NanoSymbolTableTypeFlag);
-			Iterator tempIdListIterator = symtab.getTempIdListIterator();
+			Iterator tempArrayIdListIterator = symtab.getTempIdListIterator();
 			boolean notAlreadyDefined = true;
 			String nameToDefine = "";
-			while (tempIdListIterator.hasNext())
+			while (tempArrayIdListIterator.hasNext())
 			{			
-				nameToDefine = (String)tempIdListIterator.next();
+				nameToDefine = (String)tempArrayIdListIterator.next();
+				
 				if (symtab.addArrayToCurrentBlock(nameToDefine,NanoSymbolTableTypeFlag,7) == null)
 					notAlreadyDefined = false;
 				else
@@ -681,29 +682,38 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("arrayIdList {list} -> id lbracket intConst rbracket comma arrayIdList");
-			String idString = (String) parser.rhsValue(0);
-			String intString = (String) parser.rhsValue(2);
-			System.out.println("identifier lexeme: " + idString);
-			System.out.println("intConst lexeme: " + intString + "\n");
-			
-			return null;
-			}
+				String idLexeme = (String) parser.rhsValue(2);
+				if (showReductions) 									
+					System.out.println("\nReduced by rule: ArrayIdList {recurring} -> id lbracket intConst rbracket comma ArrayIdList");
+				if (idLexeme==null) 
+					return null; //discard error insertions
+				if (showReductions) 									
+					System.out.println("identifier lexeme: "+idLexeme+"\n");
+
+				symtab.tempIdListAdd(idLexeme);
+				
+				// Return null value
+				return null;
+
+				}
 	}
 	final class arrayIdListSingleNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("arrayIdList {single} -> id lbracket intConst rbracket");
-			String idString = (String) parser.rhsValue (0);
-			String intString = (String) parser.rhsValue(2);
-			System.out.println("identifier lexeme: " + idString);
-			System.out.println("intConst lexeme: " + intString + "\n");
-			
-			return new Integer(NanoSymbolTable.BOOL_ARRAY_TYPE);
+				String idLexeme = (String) parser.rhsValue(0);
+			if (showReductions) 									
+				System.out.println("\nReduced by rule: ArrayIdList {single} -> id lbracket intConst rbracket");
+			if (idLexeme==null) 
+				return null; //discard error insertions
+			if (showReductions) 									
+				System.out.println("identifier lexeme: "+idLexeme+"\n");
+				symtab.tempIdListClear();
+				symtab.tempIdListAdd(idLexeme);
+	
+			// Return null value
+			return null;
 			}
 	}
 	
