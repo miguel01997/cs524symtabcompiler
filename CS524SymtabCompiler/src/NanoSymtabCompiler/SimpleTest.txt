@@ -1,8 +1,12 @@
+    const con1 = 5;
+    
     var v1: integer;
     var b1[2] : boolean;
+    var c : boolean;
 
 	begin
 	  v1 := 4;
+	  c := true;
 	  b1[1] := false;
 	  b1[2] := not b1[1];
 	end;

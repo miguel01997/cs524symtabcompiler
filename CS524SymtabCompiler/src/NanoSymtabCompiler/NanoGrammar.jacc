@@ -104,7 +104,7 @@ idList {list} -> id comma idList;
 idList {single} -> id;
 
 varDec {idList} -> var idList colon scalarType semicolon;
-varDec {arrayIdList} -> var arrayIdList colon scalarType semicolon;
+varDec {arrayIdList} -> var arrayIdList colon arrayType semicolon;
 
 arrayIdList {list} -> id lbracket intConst rbracket comma arrayIdList;
 arrayIdList {single} -> id lbracket intConst rbracket;
@@ -119,6 +119,9 @@ formal -> idList colon scalarType;
 
 scalarType {integer} -> integer;
 scalarType {boolean} -> boolean;
+
+arrayType {integer} -> integer;
+arrayType {boolean} -> boolean;
  
 statement {blockStmnt} -> blockStmnt;
 statement {printStmnt} -> printStmnt;
