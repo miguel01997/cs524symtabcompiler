@@ -104,6 +104,9 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("scalarType",		"integer", 		new scalarTypeIntegerNT());
 		_parserTable.linkFactory("scalarType", 		"boolean", 		new scalarTypeBooleanNT());
 		
+		_parserTable.linkFactory("arrayType", 		"integer", 		new arrayTypeIntegerNT());
+		_parserTable.linkFactory("arrayType", 		"boolean", 		new arrayTypeBooleanNT());
+		
 		_parserTable.linkFactory("statement", 		"blockStmnt", 	new statementBlockStmntNT());
 		_parserTable.linkFactory("statement", 		"printStmnt", 	new statementPrintStmntNT());
 		_parserTable.linkFactory("statement", 		"readStmnt", 	new statementReadStmntNT());
@@ -524,9 +527,12 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			Integer value = (Integer) parser.rhsValue(3);
-			if (showReductions) 	System.out.println("\nReduced by rule: ConstantDeclaration -> const IdList equals intConst semicolon");
-			if (value==null) return null; //discard error insertions
-			if (showReductions) System.out.println("intConst value: "+value+"\n");
+			if (showReductions) 	
+				System.out.println("\nReduced by rule: ConstantDeclaration -> const IdList equals intConst semicolon");
+			if (value==null) 
+				return null; //discard error insertions
+			if (showReductions) 
+				System.out.println("intConst value: "+value+"\n");
 
 	/*
 	 *	Eventually…
@@ -554,8 +560,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		Iterator tempIdListIterator = symtab.getTempIdListIterator();
 			while (tempIdListIterator.hasNext())
 			{			
-		symtab.addConstIntToCurrentBlock
-				(((String)tempIdListIterator.next()));
+				symtab.addConstIntToCurrentBlock(((String)tempIdListIterator.next()));
 			}
 			symtab.tempIdListClear();
 
@@ -642,9 +647,29 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("VarDec {arrayIdList} -> var arrayIdList colon scalarType semicolon\n");
+			int NanoSymbolTableTypeFlag = ((Integer) parser.rhsValue(3)).intValue();
+			//int ArraySize = ((Integer) parser.rhsValue(2)).intValue();
+			System.out.println("This is the bool value: " + NanoSymbolTableTypeFlag);
+			Iterator tempIdListIterator = symtab.getTempIdListIterator();
+			boolean notAlreadyDefined = true;
+			String nameToDefine = "";
+			while (tempIdListIterator.hasNext())
+			{			
+				nameToDefine = (String)tempIdListIterator.next();
+				if (symtab.addArrayToCurrentBlock(nameToDefine,NanoSymbolTableTypeFlag,7) == null)
+					notAlreadyDefined = false;
+				else
+					notAlreadyDefined = true;
+				if (!notAlreadyDefined)
+				{
+				reportError("",
+				"Duplicate declaration in this block of"
+				+nameToDefine);
+				}
+			}
+			symtab.tempIdListClear();
 			
+			// Return null value
 			return null;
 			}
 	}
@@ -658,7 +683,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			{
 			System.out.print(parser.token().line + ": ");
 			System.out.println("arrayIdList {list} -> id lbracket intConst rbracket comma arrayIdList");
-			String idString = (String) parser.rhsValue (0);
+			String idString = (String) parser.rhsValue(0);
 			String intString = (String) parser.rhsValue(2);
 			System.out.println("identifier lexeme: " + idString);
 			System.out.println("intConst lexeme: " + intString + "\n");
@@ -678,7 +703,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			System.out.println("identifier lexeme: " + idString);
 			System.out.println("intConst lexeme: " + intString + "\n");
 			
-			return null;
+			return new Integer(NanoSymbolTable.BOOL_ARRAY_TYPE);
 			}
 	}
 	
@@ -767,6 +792,32 @@ public class NanoSymtabCompiler extends CompilerModel
 
 			//Return this as an object then up above pass it to symbol table as an Object
 			return new Integer(NanoSymbolTable.BOOL_TYPE);
+			}
+	}
+	
+	final class arrayTypeIntegerNT extends NonterminalFactory
+	{
+		public Object makeNonterminal (Parser parser, int param) 
+			throws IOException, SyntaxException
+			{
+			if (showReductions) 
+				System.out.println("\nReduced by rule: ArrayType {integer} -> integer\n");
+
+			//Return this as an object then up above pass it to symbol table as an Object
+			return new Integer(NanoSymbolTable.INT_ARRAY_TYPE);
+			}
+	}
+	
+	final class arrayTypeBooleanNT extends NonterminalFactory
+	{
+		public Object makeNonterminal (Parser parser, int param) 
+			throws IOException, SyntaxException
+			{
+			if (showReductions) 
+				System.out.println("\nReduced by rule: ArrayType {boolean} -> boolean\n");
+
+			//Return this as an object then up above pass it to symbol table as an Object
+			return new Integer(NanoSymbolTable.BOOL_ARRAY_TYPE);
 			}
 	}
 	
