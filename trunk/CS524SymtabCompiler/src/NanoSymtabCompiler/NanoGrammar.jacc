@@ -261,8 +261,6 @@ greaterThanCtg = '>';
 anyCtg = %any;
 letterCtg = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 digitCtg = '0'..'9';
-trueCtg = 'true';  
-falseCtg = 'false'; 
 
 //Whitespace categories
 crCtg = 13;
@@ -307,6 +305,8 @@ call = c a l l;
 not = n o t;
 and = a n d;
 or = o r;
+true = t r u e;
+false = f a l s e;
 
 //Operators and Punctuators
 comma = commaCtg;
@@ -329,10 +329,10 @@ greaterThan = greaterThanCtg;
 greaterThanEquals = greaterThanCtg equalsCtg;
 
 //Tokens with Values
-id = letterCtg+ (letterCtg|digitCtg|underCtg)*;
 intConst = digitCtg+;
-boolConst {true} = t r u e;  
-boolConst {false} = f a l s e; 
+boolConst = (t r u e|f a l s e);  
+//boolConst {false} = falseCtg; 
+id = letterCtg+ (letterCtg|digitCtg|underCtg)*;
 
 //  Below is special handling for stringConst (see associated TokenFactory subclass)
 //  You'll have to figure out what to do in the associated TokenFactory subclasses that are linked into the scanner

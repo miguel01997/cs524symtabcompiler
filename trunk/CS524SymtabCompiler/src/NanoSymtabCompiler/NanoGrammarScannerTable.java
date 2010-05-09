@@ -28,14 +28,14 @@ public class NanoGrammarScannerTable extends ScannerTable
 
     // The number of tokens.
 
-    private static final int gen_tokenCount = 55;
+    private static final int gen_tokenCount = 56;
 
     // The token parameters.
 
     private static final int[] gen_tokenParam = 
     {0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-    18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
-    38, 39, 40, 41, 41, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    18, 19, 20, 0, 0, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
+    36, 37, 38, 40, 41, 39, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     // The number of tokens that have a right context.
 
@@ -46,7 +46,7 @@ public class NanoGrammarScannerTable extends ScannerTable
     private static final int[] gen_contextNumber = 
     {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
     3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 1, 2, 3, 3};
+    3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 1, 2, 3, 3};
 
     // The number of start conditions for the forward DFA.
 
@@ -163,19 +163,17 @@ public class NanoGrammarScannerTable extends ScannerTable
     private static final int[] gen_fwdTokenListLength = 
     {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     0, 1, 0, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1,
-    2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+    2, 2, 2, 2, 2, 2, 1, 2, 3, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2};
 
     private static final int[][] gen_fwdTokenList = 
     {
         {},
         {0},
-        {47},
-        {49},
-        {33},
-        {32},
-        {41},
-        {23},
-        {24},
+        {48},
+        {50},
+        {35},
+        {34},
+        {45},
         {25},
         {26},
         {27},
@@ -183,50 +181,52 @@ public class NanoGrammarScannerTable extends ScannerTable
         {29},
         {30},
         {31},
-        {35},
+        {32},
+        {33},
         {37},
         {39},
-        {42},
+        {41},
+        {43},
         {},
-        {49},
+        {50},
         {},
         {1},
         {2},
-        {22, 41},
-        {16, 41},
-        {12, 41},
-        {17, 41},
-        {34},
-        {38},
+        {22, 45},
+        {16, 45},
+        {12, 45},
+        {17, 45},
         {36},
         {40},
-        {45},
-        {54},
-        {48, 54},
-        {49, 52},
-        {52},
-        {51},
-        {53},
-        {50, 54},
-        {20, 41},
-        {4, 41},
-        {21, 41},
-        {6, 41},
-        {15, 41},
+        {38},
+        {42},
         {46},
-        {19, 41},
-        {41, 43},
-        {13, 41},
-        {11, 41},
-        {14, 41},
-        {3, 41},
-        {5, 41},
-        {10, 41},
-        {41, 44},
-        {18, 41},
-        {8, 41},
-        {7, 41},
-        {9, 41}
+        {55},
+        {49, 55},
+        {50, 53},
+        {53},
+        {52},
+        {54},
+        {51, 55},
+        {20, 45},
+        {4, 45},
+        {21, 45},
+        {6, 45},
+        {15, 45},
+        {47},
+        {19, 45},
+        {23, 44, 45},
+        {13, 45},
+        {11, 45},
+        {14, 45},
+        {3, 45},
+        {5, 45},
+        {10, 45},
+        {24, 44, 45},
+        {18, 45},
+        {8, 45},
+        {7, 45},
+        {9, 45}
     };
 
     // Forward DFA context split table.
@@ -306,6 +306,8 @@ public class NanoGrammarScannerTable extends ScannerTable
         "not",
         "and",
         "or",
+        "true",
+        "false",
         "comma",
         "semicolon",
         "colon",
@@ -324,10 +326,9 @@ public class NanoGrammarScannerTable extends ScannerTable
         "lessThanEquals",
         "greaterThan",
         "greaterThanEquals",
-        "id",
         "intConst",
         "boolConst",
-        "boolConst",
+        "id",
         "stringConst",
         "stringConstRunOn",
         "lineCommentContents",
@@ -387,8 +388,9 @@ public class NanoGrammarScannerTable extends ScannerTable
         "",
         "",
         "",
-        "true",
-        "false",
+        "",
+        "",
+        "",
         "",
         "",
         "",
