@@ -427,11 +427,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			Integer value = (Integer) parser.rhsValue(3);
+			Object value = (Object) parser.rhsValue(3);
 			if (showReductions) 	
-				System.out.println("\nReduced by rule: ConstantDeclaration -> const IdList equals intConst semicolon");
-			if (value==null) 
+				System.out.println("\nReduced by rule: ConstantDeclaration -> const IdList equals Factor semicolon");
+			if (value==null) {
 				return null; //discard error insertions
+			}
 			if (showReductions) 
 				System.out.println("intConst value: "+value+"\n");
 			
@@ -1416,7 +1417,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			Integer value = (Integer)parser.rhsValue(1);
+			Integer value = Integer.parseInt((String) "-" + parser.rhsValue(1));
 			System.out.print(parser.token().line + ": ");
 			System.out.println("factor {negative} -> minus prim\n");
 			
@@ -1428,10 +1429,16 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			String value = (String) parser.rhsValue(1);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("factor {not} -> not prim\n");
 			
-			return null;
+			if(value == "true")
+				return "false";
+			else if(value == "false")
+				return "true";
+			else
+				return null;
 			}
 	}
 	
@@ -1455,13 +1462,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			String value = (String) parser.rhsValue(0);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("prim {boolConst} -> boolConst");
 			String boolString = (String) parser.rhsValue (0);
-			System.out.println("identifier lexeme: " + boolString + "\n");
+			System.out.println("boolean value: " + boolString + "\n");
 			
-			return value;
+			return boolString;
 			}
 	}
 	final class primValueNT extends NonterminalFactory
