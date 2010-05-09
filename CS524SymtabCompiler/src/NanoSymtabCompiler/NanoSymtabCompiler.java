@@ -1441,12 +1441,13 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			String value = (String) parser.rhsValue(0);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("prim {const} -> intConst");
 			String intString = (String) parser.rhsValue (0);
 			System.out.println("intConst lexeme: " + intString + "\n");
 			
-			return null;
+			return value;
 			}
 	}
 	final class primBoolConstNT extends NonterminalFactory
@@ -1454,12 +1455,13 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			String value = (String) parser.rhsValue(0);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("prim {boolConst} -> boolConst");
 			String boolString = (String) parser.rhsValue (0);
 			System.out.println("identifier lexeme: " + boolString + "\n");
 			
-			return null;
+			return value;
 			}
 	}
 	final class primValueNT extends NonterminalFactory
@@ -1467,10 +1469,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			int value = ((Integer) parser.rhsValue(0)).intValue();
 			System.out.print(parser.token().line + ": ");
 			System.out.println("prim {value} -> value\n");
 			
-			return null;
+			return value;
 			}
 	}
 	final class primExprNT extends NonterminalFactory
