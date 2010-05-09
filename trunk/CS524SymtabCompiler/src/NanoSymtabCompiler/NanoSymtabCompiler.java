@@ -441,10 +441,8 @@ public class NanoSymtabCompiler extends CompilerModel
 			while (tempIdListIterator.hasNext())
 			{			
 				nameToDefine = (String)tempIdListIterator.next();
-				System.out.println("Name for idList is " + nameToDefine);
 				if (symtab.addConstIntToCurrentBlock(nameToDefine) == null){
 					notAlreadyDefined = false;
-					System.out.println("Added idList to symbol table");
 				}
 				else
 					notAlreadyDefined = true;
@@ -1406,10 +1404,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			Integer value = (Integer)parser.rhsValue(0);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("factor {positive} -> prim\n");
 			
-			return null;
+			return value;
 			}
 	}
 	final class factorNegativeNT extends NonterminalFactory
@@ -1417,10 +1416,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			Integer value = (Integer)parser.rhsValue(1);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("factor {negative} -> minus prim\n");
 			
-			return null;
+			return value;
 			}
 	}
 	final class factorNotNT extends NonterminalFactory
@@ -1441,7 +1441,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			String value = (String) parser.rhsValue(0);
+			Integer value = Integer.parseInt((String)parser.rhsValue(0));
 			System.out.print(parser.token().line + ": ");
 			System.out.println("prim {const} -> intConst");
 			String intString = (String) parser.rhsValue (0);
@@ -1469,7 +1469,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			int value = ((Integer) parser.rhsValue(0)).intValue();
+			String value = (String) parser.rhsValue(0);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("prim {value} -> value\n");
 			
