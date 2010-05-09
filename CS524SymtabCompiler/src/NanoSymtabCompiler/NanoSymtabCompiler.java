@@ -71,7 +71,9 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("statementList", 	"empty", 		new statementListEmptyNT());
 		
 		//Rich: I think this is a duplicate with below
-		_parserTable.linkFactory("constDec", 		"idList", 		new constDecNonemptyNT());
+	//	_parserTable.linkFactory("constDec", 		"idList", 		new constDecNonemptyNT());
+		
+		_parserTable.linkFactory("constDec", 		"idList",		new constDecIdListNT());
 		
 		_parserTable.linkFactory("constDecList", 	"nonempty",		new constDecListNonemptyNT());
 		_parserTable.linkFactory("constDecList", 	"empty", 		new constDecListEmptyNT());
@@ -124,9 +126,6 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("endCurrentBlock", "", 			new endCurrentBlockNT());
 		
 		_parserTable.linkFactory("showSymbolTable", "",				new showSymbolTableNT());
-		
-		//Rich: I think this is a duplicate with above
-		_parserTable.linkFactory("constDec", 		"idList",		new constDecIdListNT());
 		
 		_parserTable.linkFactory("printStmnt", 		"", 			new printStmntNT());
 
@@ -428,14 +427,25 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			Integer value = (Integer) parser.rhsValue(3);
+			if (showReductions) 	
+				System.out.println("\nReduced by rule: ConstantDeclaration -> const IdList equals intConst semicolon");
+			if (value==null) 
+				return null; //discard error insertions
+			if (showReductions) 
+				System.out.println("intConst value: "+value+"\n");
+			
 			Iterator tempIdListIterator = symtab.getTempIdListIterator();
 			boolean notAlreadyDefined = true;
 			String nameToDefine = "";
 			while (tempIdListIterator.hasNext())
 			{			
 				nameToDefine = (String)tempIdListIterator.next();
-				if (symtab.addConstIntToCurrentBlock(nameToDefine) == null)
+				System.out.println("Name for idList is " + nameToDefine);
+				if (symtab.addConstIntToCurrentBlock(nameToDefine) == null){
 					notAlreadyDefined = false;
+					System.out.println("Added idList to symbol table");
+				}
 				else
 					notAlreadyDefined = true;
 				if (!notAlreadyDefined)
