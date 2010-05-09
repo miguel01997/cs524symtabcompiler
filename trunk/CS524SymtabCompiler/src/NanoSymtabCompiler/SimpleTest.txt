@@ -1,4 +1,5 @@
-    const con1 = 5;
+    const con1 = -5;
+    const mybool = true;
     
     var v1: integer;
     var b1[2] : boolean;
