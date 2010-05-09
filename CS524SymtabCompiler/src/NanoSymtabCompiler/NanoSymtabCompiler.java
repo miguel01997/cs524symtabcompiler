@@ -44,6 +44,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		_scannerTable.linkFactory ("id",			"", new idT());
 		_scannerTable.linkFactory ("intConst", 		"", new intConstT());
 		_scannerTable.linkFactory ("boolConst", 	"", new boolConstT());
+		//_scannerTable.linkFactory ("boolConst",    "false", new boolConstFalseT());
 		_scannerTable.linkFactory ("stringConst", 	"", new stringConstT());
 		
 		// Handling of comments
@@ -255,6 +256,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	{
 		public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
 		{
+		   System.out.print("making boolean terminal");
 			String idString = scanner.tokenToString ();
 			token.value = idString;
 		
