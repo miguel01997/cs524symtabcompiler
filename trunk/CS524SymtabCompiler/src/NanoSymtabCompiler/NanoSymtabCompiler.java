@@ -425,9 +425,24 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("constDec {idList} -> const idList equals factor semicolon\n");
+			Iterator tempIdListIterator = symtab.getTempIdListIterator();
+			boolean notAlreadyDefined = true;
+			String nameToDefine = "";
+			while (tempIdListIterator.hasNext())
+			{			
+				nameToDefine = (String)tempIdListIterator.next();
+				if (symtab.addConstIntToCurrentBlock(nameToDefine) == null)
+					notAlreadyDefined = false;
+				else
+					notAlreadyDefined = true;
+				if (!notAlreadyDefined)
+				{
+				reportError("","Duplicate declaration in this block of"+nameToDefine);
+				}
+			}
+			symtab.tempIdListClear();
 			
+			// Return null value
 			return null;
 			}
 	}
@@ -645,16 +660,13 @@ public class NanoSymtabCompiler extends CompilerModel
 					notAlreadyDefined = true;
 				if (!notAlreadyDefined)
 				{
-				reportError("",
-				"Duplicate declaration in this block of"
-				+nameToDefine);
+				reportError("","Duplicate declaration in this block of"+nameToDefine);
 				}
 			}
 			symtab.tempIdListClear();
 			
 			// Return null value
 			return null;
-
 			}
 	}
 	final class varDecArrayIdListNT extends NonterminalFactory
@@ -678,9 +690,7 @@ public class NanoSymtabCompiler extends CompilerModel
 					notAlreadyDefined = true;
 				if (!notAlreadyDefined)
 				{
-				reportError("",
-				"Duplicate declaration in this block of"
-				+nameToDefine);
+				reportError("","Duplicate declaration in this block of"+nameToDefine);
 				}
 			}
 			symtab.tempIdListClear();
