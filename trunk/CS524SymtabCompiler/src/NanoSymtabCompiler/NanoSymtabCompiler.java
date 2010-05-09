@@ -70,6 +70,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("statementList", 	"nonempty",		new statementListNonemptyNT());
 		_parserTable.linkFactory("statementList", 	"empty", 		new statementListEmptyNT());
 		
+		_parserTable.linkFactory("constDec", 		"idList", 		new constDecNonemptyNT());
+		
 		_parserTable.linkFactory("constDecList", 	"nonempty",		new constDecListNonemptyNT());
 		_parserTable.linkFactory("constDecList", 	"empty", 		new constDecListEmptyNT());
 		
@@ -81,8 +83,6 @@ public class NanoSymtabCompiler extends CompilerModel
 		
 		_parserTable.linkFactory("startMainBlock", 	"", 			new startMainBlockNT());
 		_parserTable.linkFactory("endMainBlock", 	"", 			new endMainBlockNT());
-		
-		_parserTable.linkFactory("constDec", 		"idList", 	new constDecNonemptyNT());
 		
 		_parserTable.linkFactory("idList", 			"list", 		new idListListNT());
 		_parserTable.linkFactory("idList", 			"single", 		new idListSingleNT());
@@ -123,6 +123,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("endCurrentBlock", "", 			new endCurrentBlockNT());
 		
 		_parserTable.linkFactory("showSymbolTable", "",				new showSymbolTableNT());
+		
+		_parserTable.linkFactory("constDec", 		"idList",		new constDecIdListNT());
 		
 		_parserTable.linkFactory("printStmnt", 		"", 			new printStmntNT());
 
@@ -416,6 +418,19 @@ public class NanoSymtabCompiler extends CompilerModel
 			return null;
 			}
 	}
+	
+	//constDec (idList)
+	final class constDecIdListNT extends NonterminalFactory
+	{
+		public Object makeNonterminal (Parser parser, int param) 
+			throws IOException, SyntaxException
+			{
+			System.out.print(parser.token().line + ": ");
+			System.out.println("constDec {idList} -> const idList equals factor semicolon\n");
+			
+			return null;
+			}
+	}
 
 	//constDecList (empty,list)
 	final class constDecListEmptyNT extends NonterminalFactory
@@ -535,7 +550,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				System.out.println("intConst value: "+value+"\n");
 
 	/*
-	 *	Eventually…
+	 *	Eventuallyï¿½
 	 * 	int constValue = 
 	 * 	 ((Integer)parser.rhsValue(3)).intValue();
 	 *  addQuad(store,@some_index,const_value)
