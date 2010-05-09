@@ -114,7 +114,7 @@ procDec ->  procedure id lparen formalList rparen semicolon blockStmnt;
 formalList {list} -> formal semicolon formalList;
 formalList {single} -> formal;
 formalList {empty} -> 	/* empty */; 
-
+//note: no arrays in procedure declarations
 formal -> idList colon scalarType;
 
 scalarType {integer} -> integer;

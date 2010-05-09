@@ -70,6 +70,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("statementList", 	"nonempty",		new statementListNonemptyNT());
 		_parserTable.linkFactory("statementList", 	"empty", 		new statementListEmptyNT());
 		
+		//Rich: I think this is a duplicate with below
 		_parserTable.linkFactory("constDec", 		"idList", 		new constDecNonemptyNT());
 		
 		_parserTable.linkFactory("constDecList", 	"nonempty",		new constDecListNonemptyNT());
@@ -124,6 +125,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		
 		_parserTable.linkFactory("showSymbolTable", "",				new showSymbolTableNT());
 		
+		//Rich: I think this is a duplicate with above
 		_parserTable.linkFactory("constDec", 		"idList",		new constDecIdListNT());
 		
 		_parserTable.linkFactory("printStmnt", 		"", 			new printStmntNT());
@@ -419,6 +421,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 	}
 	
+	//Rich: I think this is a duplicate with constDecNonempty
 	//constDec (idList)
 	final class constDecIdListNT extends NonterminalFactory
 	{
@@ -550,6 +553,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		}
 	}
 	
+	//Rich: I think this is the missing constDecIDList...we should remove duplicate...
 	//constDec (idList)
 	final class constDecNonemptyNT extends NonterminalFactory
 	{
@@ -598,6 +602,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			return null;
 		}
 	}
+	
 	
 	//idList (list, single)
 	final class idListListNT extends NonterminalFactory
@@ -743,22 +748,44 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 	}
 	
+	//Rich: I started this one...still need to figure out quads
 	//procDec
 	final class procDecNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+		   boolean notAlreadyDefined = true;
+         String nameToDefine = "";
+         int countNumberOfIds = ((Integer) parser.rhsValue(3)).intValue();
+		   nameToDefine = (String)parser.rhsValue(2);
+		   
+		   //we need to figure out how to get these numbers
+		   int startQuadNumber=0;
+		   int endQuadNumber=0;
+         
+		   if (symtab.addProcedureToCurrentBlock(nameToDefine,countNumberOfIds,startQuadNumber,endQuadNumber) == null)
+            notAlreadyDefined = false;
+         else
+            notAlreadyDefined = true;
+         if (!notAlreadyDefined)
+         {
+         reportError("","Duplicate declaration in this block of"+nameToDefine);
+         }
+		   
+         if (showReductions) {
 			System.out.print(parser.token().line + ": ");
 			System.out.println("procDec ->  procedure id lparen formalList rparen semicolon blockStmnt");
 			String idString = (String) parser.rhsValue (1);
 			System.out.println("identifier lexeme: " + idString + "\n");
+			}
 			
 			return null;
 			}
 	}
 	
 	//formalList (empty, list, single)
+	//Rich: not sure what to do here for symtab
 	final class formalListEmptyNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
@@ -775,10 +802,13 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+		   int countNumberOfIds = ((Integer) parser.rhsValue(0)).intValue() + 
+		   ((Integer) parser.rhsValue(2)).intValue();
+		   
 			System.out.print(parser.token().line + ": ");
 			System.out.println("formalList {list} -> formal semicolon formalList\n");
 			
-			return null;
+			return countNumberOfIds;
 			}
 	}
 	final class formalListSingleNT extends NonterminalFactory
@@ -786,23 +816,47 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+		   int countNumberOfIds = ((Integer) parser.rhsValue(0)).intValue();
 			System.out.print(parser.token().line + ": ");
 			System.out.println("formalList {single} -> formal\n");
 			
-			return null;
+			return countNumberOfIds;
 			}
 	}
 	
+	//Rich: I added this like the one from var dec 
 	//formal
 	final class formalNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+		   int NanoSymbolTableTypeFlag = ((Integer) parser.rhsValue(2)).intValue();
+         Iterator tempIdListIterator = symtab.getTempIdListIterator();
+         boolean notAlreadyDefined = true;
+         String nameToDefine = "";
+         int countNumberOfIds = 0;
+         while (tempIdListIterator.hasNext())
+         {  
+            countNumberOfIds++;
+            nameToDefine = (String)tempIdListIterator.next();
+            if (symtab.addScalarToCurrentBlock(nameToDefine,NanoSymbolTableTypeFlag) == null)
+               notAlreadyDefined = false;
+            else
+               notAlreadyDefined = true;
+            if (!notAlreadyDefined)
+            {
+            reportError("","Duplicate declaration in this procedure of"+nameToDefine);
+            }
+         }
+         symtab.tempIdListClear();
+         
+         if (showReductions) {
 			System.out.print(parser.token().line + ": ");
 			System.out.println("formal -> idList colon scalarType\n");
+			}
 			
-			return null;
+			return countNumberOfIds;
 			}
 	}
 	//scalarType (integer, boolean)
