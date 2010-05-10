@@ -66,7 +66,7 @@ public class NanoSymtabCompiler extends CompilerModel
 
 		// Link the nonterminal factories to the parser table
 		_parserTable.linkFactory("boolConst",        "true",         new boolConstTrueNT());
-		_parserTable.linkFactory("boolConst",        "true",         new boolConstFalseNT());
+		_parserTable.linkFactory("boolConst",        "false",         new boolConstFalseNT());
 		
 		_parserTable.linkFactory("Goal", 			"", 			new GoalNT());
 		_parserTable.linkFactory("program", 		"", 			new programNT());
@@ -375,7 +375,7 @@ public class NanoSymtabCompiler extends CompilerModel
          System.out.print(parser.token().line + ": ");
          System.out.println("bool const true\n");
          
-         return null;
+         return "true";
          }
    }
 	
@@ -387,7 +387,7 @@ public class NanoSymtabCompiler extends CompilerModel
          System.out.print(parser.token().line + ": ");
          System.out.println("bool const false\n");
          
-         return null;
+         return "false";
          }
    }
 
@@ -1328,10 +1328,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+		   String value = (String)parser.rhsValue(0);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("exprList {single} -> expr\n");
 			
-			return null;
+			return value;
 			}
 	}
 	
@@ -1374,10 +1375,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+		   String value = (String)parser.rhsValue(0);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("expr {term} -> term\n");
 			
-			return null;
+			return value;
 			}
 	}
 	
@@ -1420,10 +1422,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
+		   String value = (String)parser.rhsValue(0);
+		   System.out.print(parser.token().line + ": ");
 			System.out.println("term {factor} -> factor\n");
 			
-			return null;
+			return value;
 			}
 	}
 	
@@ -1433,7 +1436,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			Integer value = (Integer)parser.rhsValue(0);
+			String value = (String)parser.rhsValue(0);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("factor {positive} -> prim\n");
 			
@@ -1476,7 +1479,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			Integer value = Integer.parseInt((String)parser.rhsValue(0));
+			String value = (String)parser.rhsValue(0);
 			System.out.print(parser.token().line + ": ");
 			System.out.println("prim {const} -> intConst");
 			String intString = (String) parser.rhsValue (0);
