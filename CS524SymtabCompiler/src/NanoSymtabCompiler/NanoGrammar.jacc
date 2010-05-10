@@ -31,6 +31,8 @@ call;
 not;
 and;
 or;
+true;
+false;
 
 //Operators and Punctuators
 comma;
@@ -55,7 +57,7 @@ greaterThanEquals;
 //Terminals with Values
 id;
 intConst;
-boolConst;
+//boolConst;
 stringConst;
 
 
@@ -206,6 +208,9 @@ relop{lessThanEquals} -> lessThanEquals;
 relop{greaterThanEquals} -> greaterThanEquals;
 relop{notEquals} -> notEquals;
 
+boolConst {true} -> true;
+boolConst {false} -> false;
+
 
 // ----- Character categories -----
 
@@ -330,7 +335,7 @@ greaterThanEquals = greaterThanCtg equalsCtg;
 
 //Tokens with Values
 intConst = digitCtg+;
-boolConst = (t r u e|f a l s e);  
+//boolConst = (true|false);  
 //boolConst {false} = falseCtg; 
 id = letterCtg+ (letterCtg|digitCtg|underCtg)*;
 
