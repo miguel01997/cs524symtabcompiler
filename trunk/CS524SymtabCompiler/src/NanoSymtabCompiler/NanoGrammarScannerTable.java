@@ -28,14 +28,14 @@ public class NanoGrammarScannerTable extends ScannerTable
 
     // The number of tokens.
 
-    private static final int gen_tokenCount = 56;
+    private static final int gen_tokenCount = 55;
 
     // The token parameters.
 
     private static final int[] gen_tokenParam = 
     {0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-    18, 19, 20, 0, 0, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
-    36, 37, 38, 40, 41, 39, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+    38, 39, 40, 42, 41, 43, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     // The number of tokens that have a right context.
 
@@ -46,7 +46,7 @@ public class NanoGrammarScannerTable extends ScannerTable
     private static final int[] gen_contextNumber = 
     {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
     3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 1, 2, 3, 3};
+    3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 1, 2, 3, 3};
 
     // The number of start conditions for the forward DFA.
 
@@ -163,17 +163,17 @@ public class NanoGrammarScannerTable extends ScannerTable
     private static final int[] gen_fwdTokenListLength = 
     {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     0, 1, 0, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1,
-    2, 2, 2, 2, 2, 2, 1, 2, 3, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2};
+    2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
 
     private static final int[][] gen_fwdTokenList = 
     {
         {},
         {0},
-        {48},
-        {50},
+        {47},
+        {49},
         {35},
         {34},
-        {45},
+        {44},
         {25},
         {26},
         {27},
@@ -188,45 +188,45 @@ public class NanoGrammarScannerTable extends ScannerTable
         {41},
         {43},
         {},
-        {50},
+        {49},
         {},
         {1},
         {2},
-        {22, 45},
-        {16, 45},
-        {12, 45},
-        {17, 45},
+        {22, 44},
+        {16, 44},
+        {12, 44},
+        {17, 44},
         {36},
         {40},
         {38},
         {42},
-        {46},
-        {55},
-        {49, 55},
-        {50, 53},
-        {53},
-        {52},
+        {45},
         {54},
-        {51, 55},
-        {20, 45},
-        {4, 45},
-        {21, 45},
-        {6, 45},
-        {15, 45},
-        {47},
-        {19, 45},
-        {23, 44, 45},
-        {13, 45},
-        {11, 45},
-        {14, 45},
-        {3, 45},
-        {5, 45},
-        {10, 45},
-        {24, 44, 45},
-        {18, 45},
-        {8, 45},
-        {7, 45},
-        {9, 45}
+        {48, 54},
+        {49, 52},
+        {52},
+        {51},
+        {53},
+        {50, 54},
+        {20, 44},
+        {4, 44},
+        {21, 44},
+        {6, 44},
+        {15, 44},
+        {46},
+        {19, 44},
+        {23, 44},
+        {13, 44},
+        {11, 44},
+        {14, 44},
+        {3, 44},
+        {5, 44},
+        {10, 44},
+        {24, 44},
+        {18, 44},
+        {8, 44},
+        {7, 44},
+        {9, 44}
     };
 
     // Forward DFA context split table.
@@ -327,7 +327,6 @@ public class NanoGrammarScannerTable extends ScannerTable
         "greaterThan",
         "greaterThanEquals",
         "intConst",
-        "boolConst",
         "id",
         "stringConst",
         "stringConstRunOn",
@@ -345,7 +344,6 @@ public class NanoGrammarScannerTable extends ScannerTable
 
     private static final String[] gen_tokenLink = 
     {
-        "",
         "",
         "",
         "",

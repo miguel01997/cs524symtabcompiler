@@ -43,7 +43,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		// Link the token factories to the scanner table
 		_scannerTable.linkFactory ("id",			"", new idT());
 		_scannerTable.linkFactory ("intConst", 		"", new intConstT());
-		_scannerTable.linkFactory ("boolConst", 	"", new boolConstT());
+		//_scannerTable.linkFactory ("boolConst", 	"", new boolConstT());
 		//_scannerTable.linkFactory ("boolConst",    "false", new boolConstFalseT());
 		_scannerTable.linkFactory ("stringConst", 	"", new stringConstT());
 		
@@ -65,6 +65,9 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable = new NanoGrammarParserTable ();
 
 		// Link the nonterminal factories to the parser table
+		_parserTable.linkFactory("boolConst",        "true",         new boolConstTrueNT());
+		_parserTable.linkFactory("boolConst",        "true",         new boolConstFalseNT());
+		
 		_parserTable.linkFactory("Goal", 			"", 			new GoalNT());
 		_parserTable.linkFactory("program", 		"", 			new programNT());
 		
@@ -364,6 +367,29 @@ public class NanoSymtabCompiler extends CompilerModel
 	 * ****************************************************************************
 	 */
 
+	final class boolConstTrueNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         System.out.print(parser.token().line + ": ");
+         System.out.println("bool const true\n");
+         
+         return null;
+         }
+   }
+	
+   final class boolConstFalseNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         System.out.print(parser.token().line + ": ");
+         System.out.println("bool const false\n");
+         
+         return null;
+         }
+   }
 
 	//Goal
 	final class GoalNT extends NonterminalFactory
