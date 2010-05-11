@@ -707,6 +707,11 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 			symtab.tempIdListClear();
 			
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("varDecList {nonempty} -> varDecIdList varDec\n");
+         }
+			
 			// Return null value
 			return null;
 			}
@@ -717,15 +722,16 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			int NanoSymbolTableTypeFlag = ((Integer) parser.rhsValue(3)).intValue();
-			int ArraySize = Integer.parseInt((String) parser.rhsValue(1));
+			//int ArraySize = Integer.parseInt((String) parser.rhsValue(1));
 			
 			Iterator tempArrayIdListIterator = symtab.getTempIdListIterator();
 			boolean notAlreadyDefined = true;
 			String nameToDefine = "";
+			int ArraySize = 0;
 			while (tempArrayIdListIterator.hasNext())
 			{			
 				nameToDefine = (String)tempArrayIdListIterator.next();
-				
+				ArraySize = Integer.parseInt((String)tempArrayIdListIterator.next());
 				if (symtab.addArrayToCurrentBlock(nameToDefine,NanoSymbolTableTypeFlag,ArraySize) == null)
 					notAlreadyDefined = false;
 				else
@@ -737,6 +743,11 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 			symtab.tempIdListClear();
 			
+			if (showReductions) {
+			   System.out.print(parser.token().line + ": ");
+			   System.out.println("VarDec {arrayIdList} -> var arrayIdList colon scalarType semicolon\n");
+			}
+         
 			// Return null value
 			return null;
 			}
@@ -750,6 +761,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 				String idLexeme = (String) parser.rhsValue(2);
+				String intConstLexeme = (String)parser.rhsValue(2);
 				if (showReductions) 									
 					System.out.println("\nReduced by rule: ArrayIdList {recurring} -> id lbracket intConst rbracket comma ArrayIdList");
 				if (idLexeme==null) 
@@ -758,6 +770,8 @@ public class NanoSymtabCompiler extends CompilerModel
 					System.out.println("identifier lexeme: "+idLexeme+"\n");
 
 				symtab.tempIdListAdd(idLexeme);
+				//using alternating method...how icky can it be
+            symtab.tempIdListAdd(intConstLexeme);
 				
 				// Return null value
 				return null;
@@ -779,8 +793,9 @@ public class NanoSymtabCompiler extends CompilerModel
 				System.out.println("identifier lexeme: "+idLexeme+"\n");
 				symtab.tempIdListClear();
 				symtab.tempIdListAdd(idLexeme);
+				//using alternating method...how icky can it be
+				symtab.tempIdListAdd(intConstLexeme);
 	
-			// Return null value
 			return intConstLexeme;
 			}
 	}
