@@ -1,13 +1,24 @@
-    const con1 = -5;
-    const mybool = true;
-    
-    var v1: integer;
-    var b1[2] : boolean;
-    var c : boolean;
+const c1 = 47;
+var v1 : integer;
+var b1 : boolean;
 
-	begin
-	  v1 := 4;
-	  c := true;
-	  b1[1] := false;
-	  b1[2] := not b1[1];
-	end;
+begin
+
+if (v1<8) then
+ begin
+   const DIM = 3;
+   var x,y,z : integer;
+   
+   c1:=4;
+   
+   begin
+      var a[4], b[5], c[6] : integer;
+      var k[10] : boolean;
+   /* DIAGRAM ON NEXT PG EFFECTIVE HERE */
+      for v1 := 1 to 10 do k[10] := true;
+   end;
+ end;
+ 
+b1:=false;
+
+end;
