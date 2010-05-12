@@ -19,7 +19,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	static final boolean _debug = false;
 	
 	private boolean symbolTableVerbose = false;
-	private boolean showReductions = true;
+	private boolean showReductions = false;
 	private boolean showSymbolTable = true;
 	
 	int _conditionNotInComment;
@@ -259,7 +259,6 @@ public class NanoSymtabCompiler extends CompilerModel
 	{
 		public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
 		{
-		   System.out.print("making boolean terminal");
 			String idString = scanner.tokenToString ();
 			token.value = idString;
 		
@@ -285,9 +284,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
 		{
 			scanner.setCondition(_conditionInLineComment);
-			System.out.print(token.line + ": ");
-			System.out.print("Beginning line comment... ");
-		
+			
+			if (showReductions) {
+			   System.out.print(token.line + ": ");
+			   System.out.print("Beginning line comment... ");
+			}
+			
 			// Assembled token
 			return discard;
 		}
@@ -298,9 +300,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
 		{
 			scanner.setCondition(_conditionInBracketedComment);
-			System.out.print(token.line + ": ");
-			System.out.print("Beginning bracketed comment... ");
-	
+			if (showReductions) {
+			   System.out.print(token.line + ": ");
+			   System.out.print("Beginning bracketed comment... ");
+			}
 			// Assembled token
 			return discard;
 		}
@@ -311,7 +314,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
 		{
 			scanner.setCondition(_conditionNotInComment);
-			System.out.println("...End of line comment\n");
+			if (showReductions)
+			   System.out.println("...End of line comment\n");
 			
 			// Bump the line number
 			scanner.countLine ();
@@ -327,8 +331,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
 		{
 			scanner.setCondition(_conditionNotInComment);
-			System.out.print(token.line + ": ");
-			System.out.println("...End of bracketed comment\n");
+			
+			if (showReductions) {
+			   System.out.print(token.line + ": ");
+			   System.out.println("...End of bracketed comment\n");
+			}
 			
 			// Assembled token
 			return discard;
@@ -372,9 +379,10 @@ public class NanoSymtabCompiler extends CompilerModel
       public Object makeNonterminal (Parser parser, int param) 
          throws IOException, SyntaxException
          {
-         System.out.print(parser.token().line + ": ");
-         System.out.println("bool const true\n");
-         
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("bool const true\n");
+         }
          return "true";
          }
    }
@@ -384,9 +392,10 @@ public class NanoSymtabCompiler extends CompilerModel
       public Object makeNonterminal (Parser parser, int param) 
          throws IOException, SyntaxException
          {
-         System.out.print(parser.token().line + ": ");
-         System.out.println("bool const false\n");
-         
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("bool const false\n");
+         }
          return "false";
          }
    }
@@ -409,17 +418,19 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("Program -> StartMainBlock");
-			System.out.println("           constDecList");
-			System.out.println("           varDecList");
-			System.out.println("           procDecList");
-			System.out.println("           begin");
-			System.out.println("           Statement");
-			System.out.println("           StatementList");
-			System.out.println("           end");
-			System.out.println("           EndMainBlock");
-			System.out.println("           semicolon\n");
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("Program -> StartMainBlock");
+   			System.out.println("           constDecList");
+   			System.out.println("           varDecList");
+   			System.out.println("           procDecList");
+   			System.out.println("           begin");
+   			System.out.println("           Statement");
+   			System.out.println("           StatementList");
+   			System.out.println("           end");
+   			System.out.println("           EndMainBlock");
+   			System.out.println("           semicolon\n");
+		   }
 			return null;
 			}
 	}
@@ -430,9 +441,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statementList {empty} -> /* empty */\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statementList {empty} -> /* empty */\n");
+		   }
 			return null;
 			}
 	}
@@ -441,9 +453,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statementList {nonempty} -> statementList statement\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statementList {nonempty} -> statementList statement\n");
+		   }
 			return null;
 			}
 	}
@@ -493,9 +506,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("constDecList {empty} -> /* empty */\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("constDecList {empty} -> /* empty */\n");
+		   }
 			return null;
 			}
 	}
@@ -504,9 +518,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("constDecList {nonempty} -> constDecList constDec\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("constDecList {nonempty} -> constDecList constDec\n");
+		   }
 			return null;
 			}
 	}	
@@ -517,9 +532,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("varDecList {empty} -> /* empty */\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("varDecList {empty} -> /* empty */\n");
+		   }
 			return null;
 			}
 	}
@@ -528,9 +544,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("varDecList {nonempty} -> varDecList varDec\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("varDecList {nonempty} -> varDecList varDec\n");
+		   }
 			return null;
 			}
 	}	
@@ -542,9 +559,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("procDecList {empty} -> /* empty */\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("procDecList {empty} -> /* empty */\n");
+		   }
 			return null;
 			}
 	}
@@ -553,9 +571,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("procDecList {nonempty} -> procDecList procDec\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("procDecList {nonempty} -> procDecList procDec\n");
+		   }
 			return null;
 			}
 	}	
@@ -760,7 +779,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-				String idLexeme = (String) parser.rhsValue(2);
+				String idLexeme = (String) parser.rhsValue(0);
 				String intConstLexeme = (String)parser.rhsValue(2);
 				if (showReductions) 									
 					System.out.println("\nReduced by rule: ArrayIdList {recurring} -> id lbracket intConst rbracket comma ArrayIdList");
@@ -810,7 +829,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		   boolean notAlreadyDefined = true;
          String nameToDefine = "";
          int countNumberOfIds = ((Integer) parser.rhsValue(3)).intValue();
-		   nameToDefine = (String)parser.rhsValue(2);
+		   nameToDefine = (String)parser.rhsValue(1);
 		   
 		   //we need to figure out how to get these numbers
 		   int startQuadNumber=0;
@@ -826,10 +845,10 @@ public class NanoSymtabCompiler extends CompilerModel
          }
 		   
          if (showReductions) {
-			System.out.print(parser.token().line + ": ");
-			System.out.println("procDec ->  procedure id lparen formalList rparen semicolon blockStmnt");
-			String idString = (String) parser.rhsValue (1);
-			System.out.println("identifier lexeme: " + idString + "\n");
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("procDec ->  procedure id lparen formalList rparen semicolon blockStmnt");
+   			String idString = (String) parser.rhsValue (1);
+   			System.out.println("identifier lexeme: " + idString + "\n");
 			}
 			
 			return null;
@@ -843,9 +862,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("formalList {empty} -> /* empty */\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("formalList {empty} -> /* empty */\n");
+		   }
 			return null;
 			}
 	}
@@ -857,9 +877,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		   int countNumberOfIds = ((Integer) parser.rhsValue(0)).intValue() + 
 		   ((Integer) parser.rhsValue(2)).intValue();
 		   
-			System.out.print(parser.token().line + ": ");
-			System.out.println("formalList {list} -> formal semicolon formalList\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("formalList {list} -> formal semicolon formalList\n");
+		   }
 			return countNumberOfIds;
 			}
 	}
@@ -869,9 +890,10 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 		   int countNumberOfIds = ((Integer) parser.rhsValue(0)).intValue();
-			System.out.print(parser.token().line + ": ");
-			System.out.println("formalList {single} -> formal\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("formalList {single} -> formal\n");
+		   }
 			return countNumberOfIds;
 			}
 	}
@@ -904,8 +926,8 @@ public class NanoSymtabCompiler extends CompilerModel
          symtab.tempIdListClear();
          
          if (showReductions) {
-			System.out.print(parser.token().line + ": ");
-			System.out.println("formal -> idList colon scalarType\n");
+            System.out.print(parser.token().line + ": ");
+            System.out.println("formal -> idList colon scalarType\n");
 			}
 			
 			return countNumberOfIds;
@@ -970,9 +992,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statement {blockStmnt} -> blockStmnt\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statement {blockStmnt} -> blockStmnt\n");
+		   }
 			return null;
 			}
 	}
@@ -981,9 +1004,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statement {printStmnt} -> printStmnt\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statement {printStmnt} -> printStmnt\n");
+		   }
 			return null;
 			}
 	}
@@ -992,9 +1016,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statement {readStmnt} -> readStmnt\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statement {readStmnt} -> readStmnt\n");
+		   }
 			return null;
 			}
 	}
@@ -1003,9 +1028,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statement {asgnStmnt} -> asgnStmnt\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statement {asgnStmnt} -> asgnStmnt\n");
+		   }
 			return null;
 			}
 	}
@@ -1014,9 +1040,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statement {condStmnt} -> condStmnt\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statement {condStmnt} -> condStmnt\n");
+		   }
 			return null;
 			}
 	}
@@ -1025,9 +1052,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statement {forStmnt} -> forStmnt\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statement {forStmnt} -> forStmnt\n");
+		   }
 			return null;
 			}
 	}
@@ -1036,9 +1064,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statement {returnStmnt} -> returnStmnt\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statement {returnStmnt} -> returnStmnt\n");
+		   }
 			return null;
 			}
 	}
@@ -1047,9 +1076,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("statement {callStmnt} -> callStmnt\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("statement {callStmnt} -> callStmnt\n");
+		   }
 			return null;
 			}
 	}
@@ -1060,15 +1090,17 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("blockStmnt -> begin");
-			System.out.println("              startNewBlock");
-			System.out.println("              constDecList");
-			System.out.println("              varDecList");
-			System.out.println("              StatementList");
-			System.out.println("              end");
-			System.out.println("              endCurrentBlock");
-			System.out.println("              semicolon\n");
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("blockStmnt -> begin");
+   			System.out.println("              startNewBlock");
+   			System.out.println("              constDecList");
+   			System.out.println("              varDecList");
+   			System.out.println("              StatementList");
+   			System.out.println("              end");
+   			System.out.println("              endCurrentBlock");
+   			System.out.println("              semicolon\n");
+		   }
 			return null;
 			}
 	}
@@ -1079,8 +1111,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("startNewBlock ->  /* empty */\n");
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("startNewBlock ->  /* empty */\n");
+		   }
+			symtab.startNewBlock();
 			
 			return null;
 			}
@@ -1092,8 +1127,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("endCurrentBlock ->   /* empty */\n");
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("endCurrentBlock ->   /* empty */\n");
+		   }
+			symtab.endCurrentBlock();
 			
 			return null;
 			}
@@ -1120,11 +1158,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("printStmnt -> print lparen stringConst printExprList rparen semicolon\n");
-			String stringString = (String) parser.rhsValue (2);
-			System.out.println("string lexeme: " + stringString + "\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("printStmnt -> print lparen stringConst printExprList rparen semicolon\n");
+   			String stringString = (String) parser.rhsValue (2);
+   			System.out.println("string lexeme: " + stringString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1135,9 +1174,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("printExprList {nonempty} -> printExprList comma expr\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("printExprList {nonempty} -> printExprList comma expr\n");
+		   }
 			return null;
 			}
 	}
@@ -1146,9 +1186,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("printExprList {empty} -> /* empty */\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("printExprList {empty} -> /* empty */\n");
+		   }
 			return null;
 			}
 	}	
@@ -1159,11 +1200,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("readStmnt -> read lparen stringConst inputTargetList rparen semicolon;");
-			String stringString = (String) parser.rhsValue (2);
-			System.out.println("string lexeme: " + stringString + "\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("readStmnt -> read lparen stringConst inputTargetList rparen semicolon;");
+   			String stringString = (String) parser.rhsValue (2);
+   			System.out.println("string lexeme: " + stringString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1174,9 +1216,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("inputTargetList {nonempty} -> inputTargetList comma expr\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("inputTargetList {nonempty} -> inputTargetList comma expr\n");
+		   }
 			return null;
 			}
 	}
@@ -1185,9 +1228,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("inputTargetList {empty} -> /* empty */\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("inputTargetList {empty} -> /* empty */\n");
+		   }
 			return null;
 			}
 	}
@@ -1198,11 +1242,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("inputTarget {id} -> id");
-			String idString = (String) parser.rhsValue (0);
-			System.out.println("identifier lexeme: " + idString + "\n");
-	
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("inputTarget {id} -> id");
+   			String idString = (String) parser.rhsValue (0);
+   			System.out.println("identifier lexeme: " + idString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1211,9 +1256,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("inputTarget {idArray} -> id lbracket expr rbracket\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("inputTarget {idArray} -> id lbracket expr rbracket\n");
+		   }
 			return null;
 			}
 	}
@@ -1224,11 +1270,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("asgnStmnt {int} -> id assign expr semicolon");
-			String idString = (String) parser.rhsValue (0);
-			System.out.println("identifier lexeme: " + idString + "\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("asgnStmnt {int} -> id assign expr semicolon");
+   			String idString = (String) parser.rhsValue (0);
+   			System.out.println("identifier lexeme: " + idString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1237,11 +1284,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("asgnStmnt {intArray} -> id lbracket expr rbracket assign expr semicolon");
-			String idString = (String) parser.rhsValue (0);
-			System.out.println("identifier lexeme: " + idString + "\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("asgnStmnt {intArray} -> id lbracket expr rbracket assign expr semicolon");
+   			String idString = (String) parser.rhsValue (0);
+   			System.out.println("identifier lexeme: " + idString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1252,9 +1300,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("condStmnt {ifThen} -> if expr then statement %shift else\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("condStmnt {ifThen} -> if expr then statement %shift else\n");
+		   }
 			return null;
 			}
 	}
@@ -1263,9 +1312,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("condStmnt {ifThenElse} -> if expr then statement else statement\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("condStmnt {ifThenElse} -> if expr then statement else statement\n");
+		   }
 			return null;
 			}
 	}
@@ -1276,11 +1326,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("forStmnt -> for id assign expr to expr do statement");
-			String idString = (String) parser.rhsValue (1);
-			System.out.println("identifier lexeme: " + idString + "\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("forStmnt -> for id assign expr to expr do statement");
+   			String idString = (String) parser.rhsValue (1);
+   			System.out.println("identifier lexeme: " + idString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1291,9 +1342,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("returnStmnt -> return semicolon\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("returnStmnt -> return semicolon\n");
+		   }
 			return null;
 			}
 	}
@@ -1304,11 +1356,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("callStmnt {nothing} -> call id lparen rparen semicolon");
-			String idString = (String) parser.rhsValue (1);
-			System.out.println("identifier lexeme: " + idString + "\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("callStmnt {nothing} -> call id lparen rparen semicolon");
+   			String idString = (String) parser.rhsValue (1);
+   			System.out.println("identifier lexeme: " + idString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1317,11 +1370,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("callStmnt {exprList} -> call id lparen exprList rparen semicolon");
-			String idString = (String) parser.rhsValue (1);
-			System.out.println("identifier lexeme: " + idString + "\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("callStmnt {exprList} -> call id lparen exprList rparen semicolon");
+   			String idString = (String) parser.rhsValue (1);
+   			System.out.println("identifier lexeme: " + idString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1332,9 +1386,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("exprList {list} -> expr comma exprList\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("exprList {list} -> expr comma exprList\n");
+		   }
 			return null;
 			}
 	}
@@ -1343,10 +1398,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+		   
 		   String value = (String)parser.rhsValue(0);
-			System.out.print(parser.token().line + ": ");
-			System.out.println("exprList {single} -> expr\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("exprList {single} -> expr\n");
+		   }
 			return value;
 			}
 	}
@@ -1357,9 +1414,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("expr {plus} -> expr plus term\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("expr {plus} -> expr plus term\n");
+		   }
 			return null;
 			}
 	}
@@ -1368,9 +1426,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("expr {minus} -> expr minus term\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("expr {minus} -> expr minus term\n");
+		   }
 			return null;
 			}
 	}
@@ -1379,9 +1438,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("expr {or} -> expr or term\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("expr {or} -> expr or term\n");
+		   }
 			return null;
 			}
 	}
@@ -1391,9 +1451,10 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 		   String value = (String)parser.rhsValue(0);
-			System.out.print(parser.token().line + ": ");
-			System.out.println("expr {term} -> term\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("expr {term} -> term\n");
+		   }
 			return value;
 			}
 	}
@@ -1404,9 +1465,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("term {star} -> term star factor\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("term {star} -> term star factor\n");
+		   }
 			return null;
 			}
 	}
@@ -1415,9 +1477,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("term {slash} -> term slash factor\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("term {slash} -> term slash factor\n");
+		   }
 			return null;
 			}
 	}
@@ -1426,9 +1489,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("term {and} -> term and factor\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("term {and} -> term and factor\n");
+		   }
 			return null;
 			}
 	}
@@ -1438,9 +1502,10 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 		   String value = (String)parser.rhsValue(0);
-		   System.out.print(parser.token().line + ": ");
-			System.out.println("term {factor} -> factor\n");
-			
+		   if (showReductions) {
+   		   System.out.print(parser.token().line + ": ");
+   			System.out.println("term {factor} -> factor\n");
+		   }
 			return value;
 			}
 	}
@@ -1452,9 +1517,10 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			String value = (String)parser.rhsValue(0);
-			System.out.print(parser.token().line + ": ");
-			System.out.println("factor {positive} -> prim\n");
-			
+			if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("factor {positive} -> prim\n");
+			}
 			return value;
 			}
 	}
@@ -1464,9 +1530,10 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			Integer value = Integer.parseInt((String) "-" + parser.rhsValue(1));
-			System.out.print(parser.token().line + ": ");
-			System.out.println("factor {negative} -> minus prim\n");
-			
+			if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("factor {negative} -> minus prim\n");
+			}
 			return value;
 			}
 	}
@@ -1476,8 +1543,10 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			String value = (String) parser.rhsValue(1);
-			System.out.print(parser.token().line + ": ");
-			System.out.println("factor {not} -> not prim\n");
+			if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("factor {not} -> not prim\n");
+			}
 			
 			if(value == "true")
 				return "false";
@@ -1495,11 +1564,12 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			String value = (String)parser.rhsValue(0);
-			System.out.print(parser.token().line + ": ");
-			System.out.println("prim {const} -> intConst");
-			String intString = (String) parser.rhsValue (0);
-			System.out.println("intConst lexeme: " + intString + "\n");
-			
+			if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("prim {const} -> intConst");
+   			String intString = (String) parser.rhsValue (0);
+   			System.out.println("intConst lexeme: " + intString + "\n");
+			}
 			return value;
 			}
 	}
@@ -1508,11 +1578,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("prim {boolConst} -> boolConst");
-			String boolString = (String) parser.rhsValue (0);
-			System.out.println("boolean value: " + boolString + "\n");
-			
+		   String boolString = (String) parser.rhsValue (0);
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("prim {boolConst} -> boolConst");
+   			System.out.println("boolean value: " + boolString + "\n");
+		   }
 			return boolString;
 			}
 	}
@@ -1522,9 +1593,10 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			String value = (String) parser.rhsValue(0);
-			System.out.print(parser.token().line + ": ");
-			System.out.println("prim {value} -> value\n");
-			
+			if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("prim {value} -> value\n");
+			}
 			return value;
 			}
 	}
@@ -1533,9 +1605,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("prim {expr} -> lparen expr rparen\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("prim {expr} -> lparen expr rparen\n");
+		   }
 			return null;
 			}
 	}
@@ -1544,9 +1617,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("prim {relop} -> lparen expr relop expr rparen\n");
-			
+		   if (showReductions) {
+		      System.out.print(parser.token().line + ": ");
+		      System.out.println("prim {relop} -> lparen expr relop expr rparen\n");
+		   }
 			return null;
 			}
 	}
@@ -1557,11 +1631,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param)
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("value {id} -> id");
-			String idString = (String) parser.rhsValue (0);
-			System.out.println("identifier lexeme: " + idString + "\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("value {id} -> id");
+   			String idString = (String) parser.rhsValue (0);
+   			System.out.println("identifier lexeme: " + idString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1570,11 +1645,12 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("value {expr} -> id lbracket expr rbracket");
-			String idString = (String) parser.rhsValue (0);
-			System.out.println("identifier lexeme: " + idString + "\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("value {expr} -> id lbracket expr rbracket");
+   			String idString = (String) parser.rhsValue (0);
+   			System.out.println("identifier lexeme: " + idString + "\n");
+		   }
 			return null;
 			}
 	}
@@ -1585,9 +1661,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("relop{equals} -> equals\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("relop{equals} -> equals\n");
+		   }
 			return null;
 			}
 	}
@@ -1596,9 +1673,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("relop{lessThan} -> lessThan\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("relop{lessThan} -> lessThan\n");
+		   }
 			return null;
 			}
 	}
@@ -1607,9 +1685,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("relop{greaterThan} -> greaterThan\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("relop{greaterThan} -> greaterThan\n");
+		   }
 			return null;
 			}
 	}
@@ -1618,9 +1697,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("relop{lessThanEquals} -> lessThanEquals\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("relop{lessThanEquals} -> lessThanEquals\n");
+		   }
 			return null;
 			}
 	}
@@ -1629,9 +1709,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("relop{greaterThanEquals} -> greaterThanEquals\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("relop{greaterThanEquals} -> greaterThanEquals\n");
+		   }
 			return null;
 			}
 	}
@@ -1640,9 +1721,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			System.out.print(parser.token().line + ": ");
-			System.out.println("relop{notEquals} -> notEquals\n");
-			
+		   if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("relop{notEquals} -> notEquals\n");
+		   }
 			return null;
 			}
 	}
