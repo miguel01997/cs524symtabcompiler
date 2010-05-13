@@ -129,7 +129,7 @@ statement {blockStmnt} -> blockStmnt;
 statement {printStmnt} -> printStmnt;
 statement {readStmnt} -> readStmnt;
 statement {asgnStmnt} -> asgnStmnt;
-statement {condStmnt} -> condStmnt;
+statement {condStmnt} -> Cond;
 statement {forStmnt} -> forStmnt;
 statement {returnStmnt} -> returnStmnt;
 statement {callStmnt} -> callStmnt;
@@ -165,8 +165,14 @@ inputTarget {idArray} -> id lbracket expr rbracket;
 asgnStmnt {int} -> id assign expr semicolon;
 asgnStmnt {intArray} -> id lbracket expr rbracket assign expr semicolon;
 
-condStmnt {ifThen} -> if expr then statement %shift else;  //attach the “dangling else” to the nearest enclosing ‘if’, as in Java
-condStmnt {ifThenElse} -> if expr then statement else statement;  
+//*************************************Supplied by Lewis******************
+Cond {unmatched}	-> CondIfPart CondThenPartUM;
+Cond {matched}		-> CondIfPart CondThenPartM;
+CondIfPart			-> if expr;
+CondThenPartUM		-> then statement %shift else;
+CondThenPartM		-> then statement else CondElseJump statement;
+CondElseJump		-> %reduce /* empty */;
+//************************************************************************
 
 forStmnt -> for id assign expr to expr do statement;
 
