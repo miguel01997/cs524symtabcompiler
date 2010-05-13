@@ -3,6 +3,9 @@ package NanoSymtabCompiler;
 import java.io.IOException;
 import java.util.Iterator;
 
+import NanoSymtabCompiler.NQG.*;
+import NanoSymtabCompiler.NanoSymbolTable.*;
+
 import invisible.jacc.parse.CompilerModel;
 import invisible.jacc.parse.NonterminalFactory;
 import invisible.jacc.parse.Parser;
@@ -10,6 +13,8 @@ import invisible.jacc.parse.Scanner;
 import invisible.jacc.parse.SyntaxException;
 import invisible.jacc.parse.Token;
 import invisible.jacc.parse.TokenFactory;
+
+
 
 public class NanoSymtabCompiler extends CompilerModel 
 {
@@ -27,6 +32,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	int _conditionInBracketedComment;
 	
 	private NanoSymbolTable symtab;
+	private NQG quadGen;
 
 	// Constructor must create the scanner and parser tables.
 
@@ -36,6 +42,8 @@ public class NanoSymtabCompiler extends CompilerModel
 
 		//Instantiate the NanoSymbolTable
 		symtab = new NanoSymbolTable(symbolTableVerbose);
+		quadGen = new NQG(10000);
+		
 		
 		// Get our scanner table
 		_scannerTable = new NanoGrammarScannerTable ();
