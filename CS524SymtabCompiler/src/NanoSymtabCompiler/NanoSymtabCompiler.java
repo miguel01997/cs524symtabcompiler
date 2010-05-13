@@ -1244,8 +1244,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		   String idLexeme = (String) parser.rhsValue(0);
 	      if (idLexeme==null) return null;
 	      
-	      NSTIndEntry e = (NSTIndEntry) 
-	                           parser.rhsValue(2);
+	      NSTIndEntry e = (NSTIndEntry)parser.rhsValue(2);
 	      NSTIndScalarEntry i = (NSTIndScalarEntry) symtab.get(idLexeme);
 	      if (i==null) {return null; }
 	      else if (e.getActualType()!=i.getActualType())
@@ -1314,7 +1313,109 @@ public class NanoSymtabCompiler extends CompilerModel
    			String idString = (String) parser.rhsValue (0);
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
-			return null;
+		   String idLexeme = (String) parser.rhsValue(0);
+	      if (idLexeme==null) return null; //discard error insertions
+	      if (showReductions) System.out.println("identifier lexeme: "+idLexeme+"\n");
+	      int typeFlag = NanoSymbolTable.UNK_TYPE;
+	      NSTIndEntry indexExpr = (NSTIndEntry) 
+	                           parser.rhsValue(2);
+	      NSTIndArrayEntry array = (NSTIndArrayEntry) symtab.get(idLexeme);
+	      NSTIndEntry e2 = (NSTIndEntry) parser.rhsValue(5);
+	      NSTIndScalarEntry valToAssign = null; 
+	      NSTIndImmediateEntry immToAssign = null;
+	      MemModQuad indexCalcQuad = null;
+	      boolean isImmediateValToAssign = false;
+	      if (e2==null) return null;
+	      if (e2.isScalar() && !e2.isImmediate()) 
+	      {
+	         valToAssign = (NSTIndScalarEntry) e2;
+	         isImmediateValToAssign = false;
+	      }
+	      else if (e2.isScalar()&& e2.isImmediate()) 
+	      {
+	         immToAssign = (NSTIndImmediateEntry) e2;
+	         isImmediateValToAssign = true;
+	      }
+	      if (array==null) 
+	      {
+	         reportError("","Array identifier not found in scope");
+	         return null; 
+	      }
+	      else if (!array.isIntArray())
+	      {
+	         reportError("","Attempt to use scalar identifier as array base address");
+	         return null;
+	      }
+	      else if (!indexExpr.isInteger())
+	      {
+	         reportError("","Non-integer index in array element assignment");
+	         return null;
+	      }
+	      if ( !isImmediateValToAssign && array.isBooleanArray() && valToAssign.isBoolean() )
+	      {
+	         typeFlag = NanoSymbolTable.BOOL_TYPE;
+	      }
+	      else if ( !isImmediateValToAssign && array.isIntArray() && valToAssign.isInteger() )
+	      {
+	         typeFlag = NanoSymbolTable.INT_TYPE;
+	      }
+	      else if ( isImmediateValToAssign && array.isIntArray() && immToAssign.isInteger() )
+	      {
+	         typeFlag = NanoSymbolTable.INT_TYPE;
+	      }
+	      else if ( isImmediateValToAssign && array.isBooleanArray() && immToAssign.isBoolean() )
+	      {
+	         typeFlag = NanoSymbolTable.BOOL_TYPE;
+	      }
+	      //Calculate the memory location to modify
+	      if (indexExpr.isImmediate())
+	      {
+	         NSTIndImmediateEntry immIndex = (NSTIndImmediateEntry) indexExpr;
+	         NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry) 
+	                           symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+	         indexCalcQuad = quadGen.makeRTOffsetImmediate(tmpIndex.getAddress(),          
+	                              array.getAddress(), immIndex.getIntValue()); 
+	      }
+	      else if (indexExpr.isScalar())
+	      {
+	         NSTIndScalarEntry calculatedIndex = (NSTIndScalarEntry) indexExpr;
+	         NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry) 
+	                           symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+	         indexCalcQuad = quadGen.makeRTOffsetRegular(tmpIndex.getAddress(), 
+	                        array.getAddress(), calculatedIndex.getAddress());
+	      }
+	      quadGen.addQuad(indexCalcQuad);
+	      if (isImmediateValToAssign)
+	      {
+	         if (typeFlag==NanoSymbolTable.INT_TYPE)
+	         {
+	            MemModQuad immassgnIntQuad = quadGen.makeAssignImmediateInteger(
+	                     indexCalcQuad.getResultAddress(),immToAssign.getIntValue() );
+	            quadGen.addQuad(immassgnIntQuad);
+	            return new Integer(immassgnIntQuad.getQuadId());
+	         }
+	         else if (typeFlag==NanoSymbolTable.BOOL_TYPE)
+	         {
+	            MemModQuad immassgnBoolQuad = quadGen.makeAssignImmediateBoolean(
+	                     indexCalcQuad.getResultAddress(),immToAssign.getBoolValue() );
+	            quadGen.addQuad(immassgnBoolQuad);
+	            return new Integer(immassgnBoolQuad.getQuadId());
+	         }
+	         else
+	         {
+	            reportError("","Some unknown use of type in array elt assignment");
+	            return null;
+	         }
+	      }
+	      else //value is not immediate; use regular assignment, types already checked
+	      {
+	         MemModQuad aq = quadGen.makeAssignRegular
+	                     (indexCalcQuad.getResultAddress(),
+	                                 valToAssign.getAddress());
+	         quadGen.addQuad(aq);
+	         return new Integer(aq.getQuadId());
+	      }
+
 			}
 	}
 	
@@ -1742,16 +1843,22 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			String value = (String)parser.rhsValue(0);
 			if (showReductions) {
    			System.out.print(parser.token().line + ": ");
    			System.out.println("prim {const} -> intConst");
    			String intString = (String) parser.rhsValue (0);
    			System.out.println("intConst lexeme: " + intString + "\n");
 			}
-			return value;
+			
+			Integer intValue = (Integer) parser.rhsValue(0);	
+			if (intValue==null) {
+			   reportError("","Not valid integer value.");
+			   return null;
 			}
+			return symtab.new NSTIndImmediateEntry(NanoSymbolTable.INT_TYPE, intValue);
 	}
+	}
+		
 	final class primBoolConstNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
@@ -1763,7 +1870,12 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.println("prim {boolConst} -> boolConst");
    			System.out.println("boolean value: " + boolString + "\n");
 		   }
-			return boolString;
+		
+         Boolean boolValue = (Boolean) parser.rhsValue(0);  
+         if (boolValue==null) {
+            return null;
+         }
+         return symtab.new NSTIndImmediateEntry(NanoSymbolTable.BOOL_TYPE, boolValue);
 			}
 	}
 	final class primValueNT extends NonterminalFactory
@@ -1816,8 +1928,17 @@ public class NanoSymtabCompiler extends CompilerModel
    			String idString = (String) parser.rhsValue (0);
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
-			return null;
-			}
+		   
+		   NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(0));
+         if (i==null)
+         {
+            reportError("","Identifier not recognized");
+            return null; //Or something better?
+         }
+         else
+            //No quad to generate, just want to pass up the value
+            return i;
+         }
 	}
 	final class valueExprNT extends NonterminalFactory
 	{
@@ -1830,7 +1951,15 @@ public class NanoSymtabCompiler extends CompilerModel
    			String idString = (String) parser.rhsValue (0);
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
-			return null;
+		   NSTIndArrayEntry i = (NSTIndArrayEntry)symtab.get((String)parser.rhsValue(0));
+         if (i==null)
+         {
+            reportError("","Identifier not recognized");
+            return null; //Or something better?
+         }
+         else
+            //No quad to generate, just want to pass up the value
+            return i;
 			}
 	}
 	
