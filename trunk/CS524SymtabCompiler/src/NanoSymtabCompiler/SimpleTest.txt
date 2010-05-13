@@ -1,19 +1,6 @@
 const c1 = 47;
-var v1, v2 : integer;
+var v1, v2, t : integer;
 var b1 : boolean;
-
-procedure comp(a, c: integer; b: boolean);
-begin
-  var n : integer;
-   for n := 10 to 1 do   
-      begin
-             
-             c := v1+a;
-             b := (c>v1);   
-      end;
-  if b then c := v2+2;
-      else b := false;
-end;
 
 
 begin

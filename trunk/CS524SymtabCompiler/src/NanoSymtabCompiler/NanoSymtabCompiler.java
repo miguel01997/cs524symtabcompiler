@@ -254,6 +254,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		{
 			String idString = scanner.tokenToString ();
 			token.value = idString;
+			symtab.tempIdListAdd(idString);
 		
 			// Assembled token
 			return assemble;
@@ -659,8 +660,6 @@ public class NanoSymtabCompiler extends CompilerModel
 				return null; //discard error insertions
 			if (showReductions) 									
 				System.out.println("identifier lexeme: "+idLexeme+"\n");
-				symtab.tempIdListClear();
-				symtab.tempIdListAdd(idLexeme);
 
 			// Return null value
 			return null;
