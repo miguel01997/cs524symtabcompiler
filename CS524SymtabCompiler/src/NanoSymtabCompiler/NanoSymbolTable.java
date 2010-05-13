@@ -1,11 +1,9 @@
 package NanoSymtabCompiler;
-
 import java.util.Hashtable;
 import java.util.Stack;
 import java.util.Set;
 import java.util.Iterator;
 import java.util.ArrayList;
-
 //
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 //				NANO SYMBOL TABLE MAIN CLASS
@@ -21,8 +19,6 @@ public class NanoSymbolTable
 	public static final int INT_ARRAY_TYPE = 2;
 	public static final int BOOL_ARRAY_TYPE = 3;
 	public static final int PROC_TYPE = 4;
-		 
-	
 	//Utility class included here for proximity to original constant names
 	//Used in verbose output for tracing contents of symbol table
 	public static final String getTypeName(int type)
@@ -36,7 +32,6 @@ public class NanoSymbolTable
 		else if (type==UNK_TYPE) result = "unknown type (error)";
 		return result;
 	}
-	
 	//For narrating symbol table behavior
 	private boolean verbose;
 	private int verbosityBlockCount = 0; //just for making it easy to narrate the verbose symtab
@@ -53,11 +48,7 @@ public class NanoSymbolTable
 	//Utility support for IdLists
 	private int currTempNum;
 	private ArrayList tempIdList;
-	
-	//Constructors
-	//Default
-	public NanoSymbolTable()
-	{  new NanoSymbolTable(false); } //In case someone wants to call it with no params
+
 	
 	//Primary constructor
 	public NanoSymbolTable(boolean verbose)
@@ -85,7 +76,6 @@ public class NanoSymbolTable
 			System.out.println("-->Has empty blockEntryStack, currentBlock = null, stackTopOffset = 0\n\n");
 		}
 	}
-
 	/*
 	 * Method to provide access to current stackTopOffset for use in PARM quads
 	 */
@@ -108,7 +98,6 @@ public class NanoSymbolTable
 			System.out.println("	   Current stackTopOffset: "+stackTopOffset+"\n");
 		}
 	}
-
 	/*
 	 * Method to call to remove a current block in the chain corresponding to a lexical scope
 	 * that is ending. Should always be paired with a prior call to startCurrentBlock for the same scope lexical scope
@@ -126,11 +115,9 @@ public class NanoSymbolTable
 			System.out.println("	   Current stackTopOffset: "+stackTopOffset+"\n");
 		}
 	}
-	
 	/*
 	 * Method to add a declared scalar to the curent block; applicable for integers and booleans
 	 */
-	
 	public NSTIndScalarEntry
 	addScalarToCurrentBlock(String name, int type)
 	{
@@ -155,10 +142,8 @@ public class NanoSymbolTable
 			return null;
 		}	
 	}
-
-
 	/*
-	 * Method to add a declared constant variable (no arrays or booleans) to the current block
+	 * Method to add a declared constant variable (no arrays or booleans) to the curent block
 	 * Recall that constants get runtime memory assignments just like variables but have
 	 * a special flag set so that the compiler can ensure that no instructions modify those values
 	 */
@@ -188,7 +173,6 @@ public class NanoSymbolTable
 			return null;
 		}	
 	}
-
 	/*
 	 * Method to add a declared array variable to the curent block; applicable for integers and booleans
 	 */
@@ -216,8 +200,6 @@ public class NanoSymbolTable
 			return null;
 		}
 	}
-			
-	
 	/*
 	 * Truthfully in Nano all procedures are declared before the first block but all variables 
 	 * declared there are considered visible inside that main block so we do the same here
@@ -249,8 +231,7 @@ public class NanoSymbolTable
 		{
 			return null;
 		}
-	}
-			
+	}		
 	public NSTIndScalarEntry addNewTempToCurrentBlock(int type)
 	{
 		String name = getNewTempName();
@@ -258,7 +239,18 @@ public class NanoSymbolTable
 		tempIdListAdd(name);
 		return e;
 	}
-				
+	/*
+	 * For creating temporary structures for immediate values
+	 */
+	public NSTIndImmediateEntry createImmediate(int type, Object intOrBool)
+	{
+		NSTIndImmediateEntry imm =
+			new NSTIndImmediateEntry(type,intOrBool);
+		//Strangely enough we don't have to put these in the symbol table
+		//We just need the data structure that contains the information
+		//to be instantiated and passed to the compiler
+		return imm;
+	}
 	/*
 	 *  Method to lookup an identifier at the main symbol table level,
 	 *  which triggers the local hash table checks and the walks up the chain.
@@ -279,7 +271,6 @@ public class NanoSymbolTable
 		}
 		return entry;
 	}
-	
 	/*
 	 * Workhorse of the tracing of the symbol table. 
 	 * Keep in mind that all this machinery is mostly for the compiler developer,
@@ -296,14 +287,11 @@ public class NanoSymbolTable
 			}
 			System.out.println("=======================================\n\n\n");
 
-	}
-			
+	}		
 	public void tempIdListClear()
 	{
 		tempIdList = new ArrayList();
 	}
-
-	
 	/*
 	 * Once one or more temps have been generated for some subtree of the parse
 	 * it is helpful to have this iterator to spit them back out for use in quads.
@@ -314,18 +302,16 @@ public class NanoSymbolTable
 	{
 		return tempIdList.iterator();
 	}
-
 	/*Private service method triggered by "addNewTempToCurrentBlock".
 	 *At end of a block the list of temporary variables and 
 	 *their names must be reset by another method.
 	 */
 	private String getNewTempName()
 	{
-		String name = "T"+(new Integer(currTempNum)).toString();
+		String name = "$T"+(new Integer(currTempNum)).toString();
 		currTempNum++;
 		return name;
 	}
-
 	/*
 	 * Service method triggered by "addNewTempToCurrentBlock" or as described above in iterator.
 	 * When in need of a temporary variable the symbol table keeps them for the 
@@ -343,7 +329,6 @@ public class NanoSymbolTable
 //			 (final inner support class for the above)
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 //
-	
 public final class NSTBlockEntry 
 {
 	//Main instance variables	
@@ -352,7 +337,6 @@ public final class NSTBlockEntry
 	private Hashtable entries;	 //The actual hashtable of entries
 	private NSTBlockEntry beneath; //The pointer to the one "under it" in the stack
 	private int verbosityBlockCount;
-	
 	/*
 	 * Constructor for making a new BLOCK
 	 * Must know the address where the block will start and a pointer to the block beneath it
@@ -365,8 +349,7 @@ public final class NSTBlockEntry
 		this.entryOffset = 0;
 		this.entries = new Hashtable();		//Typically so small the default should be fine
 		this.verbosityBlockCount = vbc;			//For tracking for the user...
-	}
-	
+	}	
 	/*
 	 * The block level version of "get" by name an entry--gets passed to the get on the hashtable
 	 * Again, returns null if not found
@@ -375,7 +358,6 @@ public final class NSTBlockEntry
 	{
 		return (NSTIndEntry) entries.get(name);
 	}
-
 	/*
 	 * For scalars the compiler need only give the name and type and constant status
 	 * The address is calculated by the symbol table 
@@ -389,8 +371,6 @@ public final class NSTBlockEntry
 		entryOffset++;
 		return e;
 	}	
-	
-
 	/*
 	 * For arrays of either integer or boolean the compiler need give name, type and size
 	 * The rest of the addressing information is done by the symbol table
@@ -398,23 +378,21 @@ public final class NSTBlockEntry
 	public NSTIndArrayEntry put(String name, int type, int size)
 	{
 		NSTIndArrayEntry e =
-			new NSTIndArrayEntry(name,type,false,blockOffset+entryOffset,size);
+			new NSTIndArrayEntry(name,type,blockOffset+entryOffset,size);
 		entries.put(name, e);
 		entryOffset+=size;
 		return e;
 	}
-	
 	/*
 	 * For procedures the compiler need give name, number of parameters and start and end quads
 	 */
 	public NSTIndProcEntry put(String name, int numParams, int startQuad, int endQuad)
 	{
 		NSTIndProcEntry e =
-			new NSTIndProcEntry(name,NanoSymbolTable.PROC_TYPE,true,numParams,startQuad,endQuad);
+			new NSTIndProcEntry(name,NanoSymbolTable.PROC_TYPE,numParams,startQuad,endQuad);
 		entries.put(name, e);
 		return e;
 	}
-	
 	/*
 	 * Used to subtract off free space from the runtime stack
 	 */
@@ -422,13 +400,11 @@ public final class NSTBlockEntry
 	{
 		return entryOffset;
 	}
-
 	/*
 	 * Easy way to get block contents in printable form
 	 */
 	public String toString() 
 	{
-
 			String result = "			---------SymTab Block Entry----------\n" +
 							"			This is block number " + verbosityBlockCount + "\n" +
 							"			BlockOffset: " + blockOffset + "\n\n";
@@ -441,9 +417,7 @@ public final class NSTBlockEntry
 			result += "			-----------end of SymTab Block Entry-------------";
 			return result;
 	}
-
 }
-
 
 //
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -455,28 +429,28 @@ public final class NSTBlockEntry
 public class NSTIndEntry
 {
 	//All the things we want to know about an identifier in the symbol table
-	private String name;
-	private int actualType;		//Must be one of INT_TYPE, BOOL_TYPE, 
-								//INT_ARRAY_TYPE, BOOL_ARRAY_TYPE, or PROC_TYPE
-	private boolean isConstant = false;	//Again to be overridden if otherwise
-
+	protected String name;
+	protected int actualType;		//Must be one of types declared at class beginning
+	protected boolean isConstant = false;	//Again to be overridden if otherwise
+	protected boolean isImmediate = false; //Same
 	public NSTIndEntry
-	(String name, int type, boolean isConstant)
+	(String name, int type, boolean isConstant, boolean isImmediate)
 	{
 		this.name = name;
 		this.actualType = type;
 		this.isConstant =  isConstant;
+		this.isImmediate = isImmediate;
 	}
-
 	public boolean isInteger() { return actualType == INT_TYPE; }
 	public boolean isBoolean() { return actualType == BOOL_TYPE; }
+	public boolean isScalar() { return (actualType==INT_TYPE)||(actualType==BOOL_TYPE); }
 	public boolean isConstant() { return isConstant; }
+	public boolean isImmediate() { return isImmediate; }	
 	public boolean isBooleanArray() { return actualType == BOOL_ARRAY_TYPE; }
 	public boolean isIntArray() { return actualType == INT_ARRAY_TYPE; }
 	public boolean isProcedure() { return actualType == PROC_TYPE; }
 	public int getActualType() { return actualType; }
 	public String getName() { return name; }
-
 	public String toString()
 	{
 			String actType =(actualType==INT_TYPE)?"integer":
@@ -489,24 +463,45 @@ public class NSTIndEntry
 				"\n			Symbol table individual entry: \n" +
 				"  			Name: " + name + "\n" +
 				"  			IsConstant?: " + isConstant + "\n" +
+				"			IsImmediate?: " + isImmediate + "\n" +
 				"			Type: " + actType + "\n";
 	}
 }	
+
+public final class NSTIndImmediateEntry
+extends NSTIndEntry
+{	//Operates like a union from C
+	private int intValue;
+	private boolean boolValue;
+	public NSTIndImmediateEntry(int type, Object intOrBool)
+	{
+		super("",type,true,true);
+		if (type==NanoSymbolTable.INT_TYPE) intValue = ((Integer) intOrBool).intValue();
+		if (type==NanoSymbolTable.BOOL_TYPE) boolValue = ((Boolean) intOrBool).booleanValue();
+	}
+	public int getIntValue() { return intValue; }
+	public boolean getBoolValue() { return boolValue; }
+	public String toString() 
+	{
+			return
+			super.toString() + " " + (  (actualType==NanoSymbolTable.INT_TYPE)?
+										(new Integer(intValue)).toString():
+										(new Boolean(boolValue)).toString() 
+									  ) + "\n\n";
+	}
+}
 
 public final class NSTIndScalarEntry 
 extends NSTIndEntry
 {
 	private int address;
-	
 	public NSTIndScalarEntry
 	(String name, int type, boolean isConstant, int address)
 	{
-		super(name,type,isConstant);
+		super(name,type,isConstant,false);
 		this.address = address;
 	}
-	
 	public int getAddress() { return address; }
-	
 	public String toString() 
 	{
 			return
@@ -520,18 +515,15 @@ extends NSTIndEntry
 {
 	private int address;
 	private int size;
-	
 	public NSTIndArrayEntry
-	(String name, int type, boolean isConstant, int address, int size)
+	(String name, int type, int address, int size)
 	{
-		super(name,type,isConstant);
+		super(name,type,false,false);
 		this.address = address;
 		this.size = size;
 	}
-	
 	public int getAddress() { return address; }
-	public int getSize() {return size; }
-	
+	public int getSize() { return size; }
 	public String toString() 
 	{
 			return
@@ -547,21 +539,18 @@ extends NSTIndEntry
 	private int numberInputParamSlots;
 	private int startQuadNumber;
 	private int endQuadNumber;
-
 	public NSTIndProcEntry
-	(String name, int type, boolean isConstant, int numberInputParamSlots, 
+	(String name, int type, int numberInputParamSlots, 
 			int startQuadNumber, int endQuadNumber)
 	{
-		super(name,type,isConstant);
+		super(name,type,false,false);
 		this.numberInputParamSlots = numberInputParamSlots;
 		this.startQuadNumber = startQuadNumber;	
 		this.endQuadNumber = endQuadNumber;
 	}
-
 	public int getNumInputs() { return numberInputParamSlots; }
 	public int getStartQuadNumber() { return startQuadNumber; }
 	public int getEndQuadNumber() { return endQuadNumber; }
-	
 	public String toString() 
 	{
 			return
@@ -570,8 +559,6 @@ extends NSTIndEntry
 			"	    Start Quad Number: " + startQuadNumber + 
 			"         End Quad Number: " + endQuadNumber + "\n\n";
 	}
-	
-
 }
 
 
@@ -665,3 +652,4 @@ program
  * Needs to be public because use of the temp list is tied to formal lists, not necessarily
  * cleared by calls to endCurrentBlock
  */
+
