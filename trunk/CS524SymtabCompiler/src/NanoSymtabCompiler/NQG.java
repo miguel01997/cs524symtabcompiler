@@ -1,9 +1,7 @@
 package NanoSymtabCompiler;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
-
 public class NQG //Nano Quad Generator
 {
 	//This class is a factory for quads, handling immediate as well as addressed
@@ -21,13 +19,9 @@ public class NQG //Nano Quad Generator
 	private int currentQuadNum;
 	private int nextBackpatchLabelNum;
 	private ArrayList quads;
-	private Hashtable quadsToBackpatch;
+	private Hashtable quadsToBackpatch;	
 	
-	//Default constructor chosen with size sufficient for our examples (as stated below)
-	//This is not managed as an instance variabel and has no safety checks!
-	public NQG()
-	{ new NQG(10000); }
-	
+
 	public NQG(int size)	//For our purposes a standard safe choice is 10000
 	{
 		currentQuadNum = 0;
@@ -35,7 +29,6 @@ public class NQG //Nano Quad Generator
 		quads = new ArrayList(size);
 		quadsToBackpatch = new Hashtable(size);
 	}
-	
 	//A base abstract class for quads in general handles common features
 	//Two other derived abstract classes that cover the common behavior of all quads are 
 	//then defined.	Following the von Neumann convention a quad either produces a result, 
@@ -50,7 +43,7 @@ public class NQG //Nano Quad Generator
 	//Many of the public interface methods on these classes may not be of much use
 	//in the compiler, other than during the development stage, but accessor (at
 	//least "getters") are generally always provided
-	
+		
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 
 	public final class BackpatchEntry
@@ -93,7 +86,7 @@ public class NQG //Nano Quad Generator
 		public int getQuadType() { return quadType; }
 		public String getQuadTypeName() { return quadTypeNameMap(quadType); }
 		public String toString() { return "< " + quadId + " | " +
-										  getQuadTypeName() + " | "; }
+										  getQuadTypeName(); }
 	}
 
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
@@ -110,7 +103,7 @@ public class NQG //Nano Quad Generator
 			this.resultAddress = resultAddress;
 		}
 		public int getResultAddress() { return resultAddress; }
-		public String toString() { return (super.toString() + resultAddress + " | "); }
+		public String toString() { return (super.toString() + " | " + resultAddress); }
 	}
 	
 	//public InstrModQuad(..., int targetQuadIndex)
@@ -124,13 +117,16 @@ public class NQG //Nano Quad Generator
 		{
 			super(quadId,quadType);
 			this.targetQuadIndex = targetQuadIndex;
-			if (this.targetQuadIndex==-1) backpatchQuadLabel = getNewQuadLabel();
-			quadsToBackpatch.put(backpatchQuadLabel, new BackpatchEntry(quadId,-1));
+			if (this.targetQuadIndex==-1) 
+			{
+				backpatchQuadLabel = getNewQuadLabel();
+				quadsToBackpatch.put(backpatchQuadLabel, new BackpatchEntry(quadId,-1));
+			}
 		}
 		public int getTargetQuadIndex() { return targetQuadIndex; }
 		public String getBackpatchQuadLabel() { return backpatchQuadLabel; }
 		public void setTargetQuadIndex(int index) { targetQuadIndex = index; }
-		public String toString() { return (super.toString() + targetQuadIndex + " | "); }
+		public String toString() { return (super.toString() + targetQuadIndex); }
 	}
 
 	public final class Start extends Quad
@@ -144,14 +140,25 @@ public class NQG //Nano Quad Generator
 		}
 		public int getTargetQuadIndex() { return targetQuadIndex; }
 		public String toString() { return (super.toString() + targetQuadIndex + 
-											" | - | - | - >"); }
+											"| - | - >"); }
+	}
+	
+	public final class End extends Quad
+	{
+		//Just instructs the emulator to stop execution
+		public End(int quadId)
+		{
+			super(quadId,NQG.END);
+		}
+		public String toString() { return (super.toString() +  
+											" - | - >"); }
 	}
 	
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public MulBothImmediate
 	//	(..., int valueA, int valueB) 
-	final class MulBothImmediate extends MemModQuad
+	public final class MulBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -165,12 +172,12 @@ public class NQG //Nano Quad Generator
 		public int getActualValueA() { return valueA; }
 		public int getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | #" + valueB + " >"); }
 	}
 
 	//public  MulLeftImmediate
 	//		(..., int valueA, int addressB) 
-	final class MulLeftImmediate extends MemModQuad
+	public final class MulLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -184,12 +191,12 @@ public class NQG //Nano Quad Generator
 		public int getActualValueA() { return valueA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | " + addressB + " >"); }
 	}
 
 	//public MulRightImmediate
 	//		(..., int addressA, int valueB) 
-	final class MulRightImmediate extends MemModQuad
+	public final class MulRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -203,12 +210,12 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | #" + valueB + " >"); }
 	}
 
 	//public MulRegular
 	//		(..., int addressA, int addressB) 
-	final class MulRegular extends MemModQuad
+	public final class MulRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -222,14 +229,14 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | " + addressB + " >"); }
 	}
 
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public DivBothImmediate
 	//		(..., int valueA, int valueB) 
-	final class DivBothImmediate extends MemModQuad
+	public final class DivBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -243,12 +250,12 @@ public class NQG //Nano Quad Generator
 		public int getActualValueA() { return valueA; }
 		public int getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | #" + valueB + " >"); }
 	}
 
 	//public  DivLeftImmediate
 	//		(..., int valueA, int addressB) 
-	final class DivLeftImmediate extends MemModQuad
+	public final class DivLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -262,12 +269,12 @@ public class NQG //Nano Quad Generator
 		public int getActualValueA() { return valueA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | " + addressB + " >"); }
 	}
 
 	//public DivRightImmediate
 	//		(..., int addressA, int valueB) 
-	final class DivRightImmediate extends MemModQuad
+	public final class DivRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -281,12 +288,12 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | #" + valueB + " >"); }
 	}
 
 	//public DivRegular
 	//		(..., int addressA, int addressB) 
-	final class DivRegular extends MemModQuad
+	public final class DivRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -300,14 +307,14 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | " + addressB + " >"); }
 	}
 
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public AndBothImmediate
 	//		(..., boolean valueA, boolean valueB) 
-	final class AndBothImmediate extends MemModQuad
+	public final class AndBothImmediate extends MemModQuad
 	{
 		private boolean valueA = false;
 		private boolean valueB = false;
@@ -321,12 +328,12 @@ public class NQG //Nano Quad Generator
 		public boolean getActualValueA() { return valueA; }
 		public boolean getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | #" + valueB + " >"); }
 	}
 
 	//public AndLeftImmediate
 	//		(..., boolean valueA, int addressB) 
-	final class AndLeftImmediate extends MemModQuad
+	public final class AndLeftImmediate extends MemModQuad
 	{
 		private boolean valueA = false;
 		private int addressB = -1;
@@ -340,12 +347,12 @@ public class NQG //Nano Quad Generator
 		public boolean getActualValueA() { return valueA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | " + addressB + " >"); }
+		{ return (super.toString() + "| #" + valueA + " | " + addressB + " >"); }
 	}
 
 	//public AndRightImmediate
 	//		(..., int addressA, boolean valueB) 
-	final class AndRightImmediate extends MemModQuad
+	public final class AndRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private boolean valueB = false;
@@ -359,12 +366,12 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public boolean getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | #" + valueB + " >"); }
 	}
 
 	//public AndRegular
 	//		(..., int addressA, int addressB) 
-	final class AndRegular extends MemModQuad
+	public final class AndRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -378,14 +385,14 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | " + addressB + " >"); }
 	}
 
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public AddBothImmediate
 	//		(..., int valueA, int valueB) 
-	final class AddBothImmediate extends MemModQuad
+	public final class AddBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -399,12 +406,12 @@ public class NQG //Nano Quad Generator
 		public int getActualValueA() { return valueA; }
 		public int getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | #" + valueB + " >"); }
 	}
 
 	//public AddLeftImmediate
 	//		(..., int valueA, int addressB) 
-	final class AddLeftImmediate extends MemModQuad
+	public final class AddLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -418,12 +425,12 @@ public class NQG //Nano Quad Generator
 		public int getActualValueA() { return valueA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | " + addressB + " >"); }
 	}
 	
 	//public AddRightImmediate
 	//		(..., int addressA, int valueB) 
-	final class AddRightImmediate extends MemModQuad
+	public final class AddRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -437,12 +444,12 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | #" + valueB + " >"); }
 	}
 
 	//public AddRegular
 	//		(..., int addressA, int addressB) 
-	final class AddRegular extends MemModQuad
+	public final class AddRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -456,14 +463,14 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | " + addressB + " >"); }
 	}
 	
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public SubBothImmediate
 	//		(..., int valueA, int valueB) 
-	final class SubBothImmediate extends MemModQuad
+	public final class SubBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -477,12 +484,12 @@ public class NQG //Nano Quad Generator
 		public int getActualValueA() { return valueA; }
 		public int getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | #" + valueB + " >"); }
 	}
 	
 	//public SubLeftImmediate
 	//		(..., int valueA, int addressB) 
-	final class SubLeftImmediate extends MemModQuad
+	public final class SubLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -496,12 +503,12 @@ public class NQG //Nano Quad Generator
 		public int getActualValueA() { return valueA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | " + addressB + " >"); }
 	}
 
 	//public SubRightImmediate
 	//		(..., int addressA, int valueB) 
-	final class SubRightImmediate extends MemModQuad
+	public final class SubRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -515,12 +522,12 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | #" + valueB + " >"); }
 	}
 
 	//public SubRegular
 	//		(..., int addressA, int addressB)
-	final class SubRegular extends MemModQuad
+	public final class SubRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -534,14 +541,14 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | " + addressB + " >"); }
 	}
 	
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public OrBothImmediate
 	//		(..., boolean valueA, boolean valueB)
-	final class OrBothImmediate extends MemModQuad
+	public final class OrBothImmediate extends MemModQuad
 	{
 		private boolean valueA = false;
 		private boolean valueB = false;
@@ -555,12 +562,12 @@ public class NQG //Nano Quad Generator
 		public boolean getActualValueA() { return valueA; }
 		public boolean getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | #" + valueB + " >"); }
 	}
 
 	//public OrLeftImmediate
 	//		(..., boolean valueA, int addressB) 
-	final class OrLeftImmediate extends MemModQuad
+	public final class OrLeftImmediate extends MemModQuad
 	{
 		private boolean valueA = false;
 		private int addressB = -1;
@@ -574,12 +581,12 @@ public class NQG //Nano Quad Generator
 		public boolean getActualValueA() { return valueA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " #" + valueA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | #" + valueA + " | " + addressB + " >"); }
 	}
 
 	//public OrRightImmediate
 	//		(..., int addressA, boolean valueB) 
-	final class OrRightImmediate extends MemModQuad
+	public final class OrRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private boolean valueB = false;
@@ -593,12 +600,12 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public boolean getActualValueB() { return valueB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | #" + valueB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | #" + valueB + " >"); }
 	}
 
 	//public OrRegular
 	//		(..., int addressA, int addressB) 
-	final class OrRegular extends MemModQuad
+	public final class OrRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -612,14 +619,14 @@ public class NQG //Nano Quad Generator
 		public int getActualAddressA() { return addressA; }
 		public int getActualAddressB() { return addressB; }
 		public String toString()
-		{ return (super.toString() + " " + addressA + " | " + addressB + " >"); }
+		{ return (super.toString() + " | " + addressA + " | " + addressB + " >"); }
 	}
 
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public NegImmediate
 	//	(..., int value)
-	final class NegImmediate extends MemModQuad
+	public final class NegImmediate extends MemModQuad
 	{
 		private int value = -1;
 		public NegImmediate
@@ -635,7 +642,7 @@ public class NQG //Nano Quad Generator
 
 	//public NegRegular
 	//		(..., int address)
-	final class NegRegular extends MemModQuad
+	public final class NegRegular extends MemModQuad
 	{
 		private int address = -1;
 		public NegRegular
@@ -653,7 +660,7 @@ public class NQG //Nano Quad Generator
 	
 	//public NotImmediate
 	//		(..., boolean value)
-	final class NotImmediate extends MemModQuad
+	public final class NotImmediate extends MemModQuad
 	{
 		private boolean value = false;
 		public NotImmediate
@@ -669,7 +676,7 @@ public class NQG //Nano Quad Generator
 
 	//public NotRegular
 	//		(..., int address)
-	final class NotRegular extends MemModQuad
+	public final class NotRegular extends MemModQuad
 	{
 		private int address = -1;
 		public NotRegular
@@ -687,7 +694,7 @@ public class NQG //Nano Quad Generator
 	
 	//public RelopEqualsBothImmediate
 	//		(..., int valueA, int valueB) 
-	final class RelopEqualsBothImmediate extends MemModQuad
+	public final class RelopEqualsBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -706,7 +713,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopEqualsLeftImmediate
 	//		(..., int valueA, int addressB) 
-	final class RelopEqualsLeftImmediate extends MemModQuad
+	public final class RelopEqualsLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -725,7 +732,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopEqualsRightImmediate
 	//		(..., int addressA, int valueB) 
-	final class RelopEqualsRightImmediate extends MemModQuad
+	public final class RelopEqualsRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -744,7 +751,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopEqualsRegular
 	//		(..., int addressA, int addressB) 
-	final class RelopEqualsRegular extends MemModQuad
+	public final class RelopEqualsRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -765,7 +772,7 @@ public class NQG //Nano Quad Generator
 	
 	//public RelopNotEqualsBothImmediate
 	//		(..., int valueA, int valueB) 
-	final class RelopNotEqualsBothImmediate extends MemModQuad
+	public final class RelopNotEqualsBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -784,7 +791,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopNotEqualsLeftImmediate
 	//		(..., int valueA, int addressB)
-	final class RelopNotEqualsLeftImmediate extends MemModQuad
+	public final class RelopNotEqualsLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -803,7 +810,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopNotEqualsRightImmediate
 	//		(..., int addressA, int valueB)
-	final class RelopNotEqualsRightImmediate extends MemModQuad
+	public final class RelopNotEqualsRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -822,7 +829,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopNotEqualsRegular
 	//		(..., int addressA, int addressB) 
-	final class RelopNotEqualsRegular extends MemModQuad
+	public final class RelopNotEqualsRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -843,7 +850,7 @@ public class NQG //Nano Quad Generator
 	
 	//public RelopLessThanBothImmediate
 	//	(..., int valueA, int valueB) 
-	final class RelopLessThanBothImmediate extends MemModQuad
+	public final class RelopLessThanBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -862,7 +869,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopLessThanLeftImmediate
 	//		(..., int valueA, int addressB) 
-	final class RelopLessThanLeftImmediate extends MemModQuad
+	public final class RelopLessThanLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -881,7 +888,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopLessThanRightImmediate
 	//		(..., int addressA, int valueB) 
-	final class RelopLessThanRightImmediate extends MemModQuad
+	public final class RelopLessThanRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -900,7 +907,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopLessThanRegular
 	//		(..., int addressA, int addressB) 
-	final class RelopLessThanRegular extends MemModQuad
+	public final class RelopLessThanRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -921,7 +928,7 @@ public class NQG //Nano Quad Generator
 	
 	//public RelopLessThanEqualsBothImmediate
 	//		(..., int valueA, int valueB) 
-	final class RelopLessThanEqualsBothImmediate extends MemModQuad
+	public final class RelopLessThanEqualsBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -940,7 +947,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopLessThanEqualsLeftImmediate
 	//		(..., int valueA, int addressB) 
-	final class RelopLessThanEqualsLeftImmediate extends MemModQuad
+	public final class RelopLessThanEqualsLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -959,7 +966,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopLessThanEqualsRightImmediate
 	//		(..., int addressA, int valueB) 
-	final class RelopLessThanEqualsRightImmediate extends MemModQuad
+	public final class RelopLessThanEqualsRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -978,7 +985,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopLessThanEqualsRegular
 	//		(..., int addressA, int addressB) 
-	final class RelopLessThanEqualsRegular extends MemModQuad
+	public final class RelopLessThanEqualsRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -999,7 +1006,7 @@ public class NQG //Nano Quad Generator
 	
 	//public RelopGreaterThanBothImmediate
 	//		(..., int valueA, int valueB) 
-	final class RelopGreaterThanBothImmediate extends MemModQuad
+	public final class RelopGreaterThanBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -1018,7 +1025,7 @@ public class NQG //Nano Quad Generator
 	
 	//public RelopGreaterThanLeftImmediate
 	//		(..., int valueA, int addressB) 
-	final class RelopGreaterThanLeftImmediate extends MemModQuad
+	public final class RelopGreaterThanLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -1037,7 +1044,7 @@ public class NQG //Nano Quad Generator
 
 	//public RelopGreaterThanRightImmediate
 	//		(..., int addressA, int valueB) 
-	final class RelopGreaterThanRightImmediate extends MemModQuad
+	public final class RelopGreaterThanRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -1056,7 +1063,7 @@ public class NQG //Nano Quad Generator
 	
 	//		public RelopGreaterThanRegular
 	//			(..., int addressA, int addressB)
-	final class RelopGreaterThanRegular extends MemModQuad
+	public final class RelopGreaterThanRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -1077,7 +1084,7 @@ public class NQG //Nano Quad Generator
 	
 	//	public RelopGreaterThanEqualsBothImmediate
 	//		(..., int valueA, int valueB)	
-	final class RelopGreaterThanEqualsBothImmediate extends MemModQuad
+	public final class RelopGreaterThanEqualsBothImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int valueB = -1;
@@ -1096,7 +1103,7 @@ public class NQG //Nano Quad Generator
 
 	//		public RelopGreaterThanEqualsLeftImmediate
 	//			(..., int valueA, int addressB)
-	final class RelopGreaterThanEqualsLeftImmediate extends MemModQuad
+	public final class RelopGreaterThanEqualsLeftImmediate extends MemModQuad
 	{
 		private int valueA = -1;
 		private int addressB = -1;
@@ -1115,7 +1122,7 @@ public class NQG //Nano Quad Generator
 
 	//		public RelopGreaterThanEqualsRightImmediate
 	//			(..., int addressA, int valueB) 
-	final class RelopGreaterThanEqualsRightImmediate extends MemModQuad
+	public final class RelopGreaterThanEqualsRightImmediate extends MemModQuad
 	{
 		private int addressA = -1;
 		private int valueB = -1;
@@ -1134,7 +1141,7 @@ public class NQG //Nano Quad Generator
 	
 	//		public RelopGreaterThanEqualsRegular
 	//				(..., int addressA, int addressB)
-	final class RelopGreaterThanEqualsRegular extends MemModQuad
+	public final class RelopGreaterThanEqualsRegular extends MemModQuad
 	{
 		private int addressA = -1;
 		private int addressB = -1;
@@ -1153,8 +1160,8 @@ public class NQG //Nano Quad Generator
 
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
-	//public AssignImmediate (..., int value)
-	final class AssignImmediateInteger extends MemModQuad
+	//public AssignImmediateInteger (..., int value)
+	public final class AssignImmediateInteger extends MemModQuad
 	{
 		private int value = -1;
 		public AssignImmediateInteger(int quadId, int resultAddress, int value)
@@ -1162,13 +1169,13 @@ public class NQG //Nano Quad Generator
 			super(quadId,NQG.ASGN,resultAddress);
 			this.value = value;
 		}
-		public int getValue() { return value; }
+		public int getIntValue() { return value; }
 		public String toString()
-		{ return (super.toString() + " |  -  | " + value + " >"); }
+		{ return (super.toString() + " |  -  | #" + value + " >"); }
 	}
 
-	//public AssignImmediate (..., boolean value)
-	final class AssignImmediateBoolean extends MemModQuad
+	//public AssignImmediateBoolean (..., boolean value)
+	public final class AssignImmediateBoolean extends MemModQuad
 	{
 		private boolean value = false;
 		public AssignImmediateBoolean (int quadId, int resultAddress, boolean value)
@@ -1176,13 +1183,13 @@ public class NQG //Nano Quad Generator
 			super(quadId,NQG.ASGN,resultAddress);
 			this.value = value;
 		}
-		public boolean getValue() { return value; }
+		public boolean getBoolValue() { return value; }
 		public String toString()
 		{ return (super.toString() + " |  -  | " + value + " >"); }
 	}
 		
 	//public AssignRegular (..., int address)
-	final class AssignRegular extends MemModQuad
+	public final class AssignRegular extends MemModQuad
 	{
 		private int address = -1;
 		public AssignRegular (int quadId, int resultAddress, int address)
@@ -1194,11 +1201,26 @@ public class NQG //Nano Quad Generator
 		public String toString()
 		{ return (super.toString() + " |  -  | " + address + " >"); }
 	}
-		
+
+	//public AssignIndirectRegular(..., int address)
+	public final class AssignIndirectRegular extends MemModQuad
+	{
+		private int address = -1;
+		public AssignIndirectRegular (int quadId, int resultAddress, int address)
+		{
+			super(quadId,NQG.ASNDRT,resultAddress);
+			this.address = address;
+		}
+		public int getAddressToDereference() { return address; }
+		public String toString()
+		{ return (super.toString() + "@ |  -  | " + address + " >"); }
+	}
+	
+	
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public UnconditionalJump(...)
-	final class UnconditionalJump extends InstrModQuad
+	public final class UnconditionalJump extends InstrModQuad
 	{
 		//This class adds no behavior to InstrModQuad
 		//since all that's required for an unconditional jump is
@@ -1216,7 +1238,7 @@ public class NQG //Nano Quad Generator
 	}
 
 	//public IfTrueImmediate(..., boolean value)
-	final class IfTrueImmediate extends InstrModQuad
+	public final class IfTrueImmediate extends InstrModQuad
 	{
 		private boolean value = false;
 		public IfTrueImmediate(int quadId, int targetQuadIndex, boolean value)
@@ -1230,7 +1252,7 @@ public class NQG //Nano Quad Generator
 	}
 	
 	//public IfTrueRegular(..., int address)
-	final class IfTrueRegular extends InstrModQuad
+	public final class IfTrueRegular extends InstrModQuad
 	{
 		private int address = -1;
 		public IfTrueRegular(int quadId, int targetQuadIndex, int address)
@@ -1244,7 +1266,7 @@ public class NQG //Nano Quad Generator
 	}
 	
 	//public IfFalseImmediate(..., boolean value)
-	final class IfFalseImmediate extends InstrModQuad
+	public final class IfFalseImmediate extends InstrModQuad
 	{
 		private boolean value = false;
 		public IfFalseImmediate(int quadId, int targetQuadIndex, boolean value)
@@ -1258,7 +1280,7 @@ public class NQG //Nano Quad Generator
 	}
 
 	//public IfFalseRegular(..., int address)
-	final class IfFalseRegular extends InstrModQuad
+	public final class IfFalseRegular extends InstrModQuad
 	{
 		private int address = -1;
 		public IfFalseRegular(int quadId, int targetQuadIndex, int address)
@@ -1274,7 +1296,7 @@ public class NQG //Nano Quad Generator
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public Call(..., int numEltsToPopAtEnd)
-	final class Call extends InstrModQuad
+	public final class Call extends InstrModQuad
 	{
 		private int numEltsToPopAtEnd = -1;
 		public Call(int quadId, int targetQuadIndex, int numEltsToPopAtEnd)
@@ -1288,7 +1310,7 @@ public class NQG //Nano Quad Generator
 	}
 	
 	//public Param(..., int parameterAddress)
-	final class Param extends MemModQuad //Notice this inheritance (NOT InstrModQuad)
+	public final class Param extends MemModQuad //Notice this inheritance (NOT InstrModQuad)
 	{
 		private int parameterAddress = -1;
 		//Note resultAddress is top of the stack, determined between
@@ -1307,7 +1329,7 @@ public class NQG //Nano Quad Generator
 	}
 	
 	//public Prelude(..., int newStackTopOffset)
-	final class Prelude extends MemModQuad //Again notice this inheritance (NOT InstrModQuad)
+	public final class Prelude extends MemModQuad //Again notice this inheritance (NOT InstrModQuad)
 	{
 		private int newStackTopOffset = -1;
 		//Note "resultAddress" is ignored; pass in -1 (the alternative
@@ -1325,7 +1347,7 @@ public class NQG //Nano Quad Generator
 	}
 	
 	//public Return(..., int newStackTopOffset)
-	final class Return extends InstrModQuad 
+	public final class Return extends InstrModQuad 
 	{
 		private int newStackTopOffset = -1;
 		//Note targetQuadIndex is used to move control back to the call location
@@ -1345,7 +1367,7 @@ public class NQG //Nano Quad Generator
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	//public Print(..., String formatString)
-	final class Print extends MemModQuad
+	public final class Print extends MemModQuad
 	{
 		//Only the READ quad actually modifies memory but it does READ from that address
 		//for symmetry the PRINT quad extends the MemModQuad as well
@@ -1361,7 +1383,7 @@ public class NQG //Nano Quad Generator
 	}
 	
 	//public Read(..., String formatString)
-	final class Read extends MemModQuad
+	public final class Read extends MemModQuad
 	{
 		private String formatString = ""; //Preinitialized as a boundary condition
 		public Read(int quadId, int resultAddress, String formatString)
@@ -1377,7 +1399,47 @@ public class NQG //Nano Quad Generator
 		public String toString()
 		{ return (super.toString() + " | " + formatString + " | - >"); }
 	}
+	
+	public final class RTOffsetImmediate extends MemModQuad
+	{
+		private int immediateAddressToEvaluateAndUseAsOffset;
+		private int baseAddress;
+		public RTOffsetImmediate(int quadId, int resultAddress, 
+						int baseAddress, int immediateEvaluationAddress)
+		{
+			super(quadId,NQG.RTOFST,resultAddress);
+			this.baseAddress= baseAddress;
+			this.immediateAddressToEvaluateAndUseAsOffset = immediateEvaluationAddress;
+		}
+		public int getImmediateAddressToEvaluateAndUseAsOffset() 
+		{ return immediateAddressToEvaluateAndUseAsOffset; }
+		public int getBaseAddress() { return baseAddress; }
+		public String toString()
+		{ return (super.toString()) + " | " + baseAddress +  " | #" + 
+								immediateAddressToEvaluateAndUseAsOffset + " >"; 
+		}
+	}
 
+	public final class RTOffsetRegular extends MemModQuad
+	{
+		private int addressToEvaluateAndUseAsOffset;
+		private int baseAddress;
+		public RTOffsetRegular(int quadId, int resultAddress, 
+						int baseAddress, int evaluationAddress)
+		{
+			super(quadId,NQG.RTOFST,resultAddress);
+			this.baseAddress= baseAddress;
+			this.addressToEvaluateAndUseAsOffset = evaluationAddress;
+		}
+		public int getAddressToEvaluateAndUseAsOffset() 
+		{ return addressToEvaluateAndUseAsOffset; }
+		public int getBaseAddress() { return baseAddress; }
+		public String toString()
+		{ return (super.toString()) + " | " + baseAddress +  " | " + 
+								addressToEvaluateAndUseAsOffset + " >"; 
+		}
+	}	
+	
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
 	/*
@@ -1466,6 +1528,18 @@ public class NQG //Nano Quad Generator
 	public MemModQuad makeOrRegular(int resultAddress, int address1, int address2)
 	{ return new OrRegular(currentQuadNum,resultAddress,address1,address2); }
 
+	public MemModQuad makeNegImmediate(int resultAddress, int value)
+	{ return new NegImmediate(currentQuadNum,resultAddress,value); }
+
+	public MemModQuad makeNegRegular(int resultAddress, int address)
+	{ return new NegRegular(currentQuadNum,resultAddress,address); }
+	
+	public MemModQuad makeNotImmediate(int resultAddress, boolean value)
+	{ return new NotImmediate(currentQuadNum,resultAddress,value); }
+
+	public MemModQuad makeNotRegular(int resultAddress, int address)
+	{ return new NotRegular(currentQuadNum,resultAddress,address); }
+	
 	public MemModQuad makeRelopEqualsBothImmediate(int resultAddress, int value1, int value2)
 	{ return new RelopEqualsBothImmediate(currentQuadNum,resultAddress,value1,value2); }
 
@@ -1524,7 +1598,7 @@ public class NQG //Nano Quad Generator
 	{ return new RelopLessThanRegular
 			(currentQuadNum,resultAddress,address1,address2); }
 
-	public MemModQuad makeRelopLessEqualsThanBothImmediate
+	public MemModQuad makeRelopLessThanEqualsBothImmediate
 		(int resultAddress, int value1, int value2)
 	{ return new RelopLessThanEqualsBothImmediate
 		(currentQuadNum,resultAddress,value1,value2); }
@@ -1564,7 +1638,7 @@ public class NQG //Nano Quad Generator
 	{ return new RelopGreaterThanRegular
 			(currentQuadNum,resultAddress,address1,address2); }
 
-	public MemModQuad makeRelopGreaterEqualsThanBothImmediate
+	public MemModQuad makeRelopGreaterThanEqualsBothImmediate
 		(int resultAddress, int value1, int value2)
 	{ return new RelopGreaterThanEqualsBothImmediate
 			(currentQuadNum,resultAddress,value1,value2); }
@@ -1592,7 +1666,10 @@ public class NQG //Nano Quad Generator
 	
 	public MemModQuad makeAssignRegular(int resultAddress, int address)
 	{ return new AssignRegular(currentQuadNum,resultAddress,address); }
-	
+
+	public MemModQuad makeAssignIndirectRegular(int dereferenceAddress, int value)
+	{ return new AssignIndirectRegular(currentQuadNum,dereferenceAddress,value); }
+
 	public InstrModQuad makeUnconditionalJump(int targetQuadIndex)
 	{ return new UnconditionalJump(currentQuadNum,targetQuadIndex); }
 	
@@ -1628,6 +1705,20 @@ public class NQG //Nano Quad Generator
 	
 	public Quad makeStart(int targetQuadIndex)
 	{ return new Start(currentQuadNum,targetQuadIndex); }
+
+	public Quad makeEnd()
+	{ return new End(currentQuadNum); }
+	
+	public MemModQuad makeRTOffsetImmediate(int resultAddress, int baseAddressImmediate, 
+												int evaluationAddress)
+	{ return new RTOffsetImmediate(currentQuadNum,resultAddress,
+									baseAddressImmediate,evaluationAddress); }
+
+	public MemModQuad makeRTOffsetRegular(int resultAddress, int baseAddress, 
+												int evaluationAddress)
+	{ return new RTOffsetImmediate(currentQuadNum,resultAddress,
+									baseAddress,evaluationAddress); }
+	
 	
 	//\\///\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
 	
@@ -1691,7 +1782,9 @@ public class NQG //Nano Quad Generator
 	public static final int PREL = 	22;		//1 integer to move the runtime stack top
 	public static final int RET = 	23;		//1 arg indicating how many to pop on return
 	public static final int START =	24;		//indicates targetQuadIndex where emulator begins
-
+	public static final int RTOFST=	25;		//Used in calculating array indices
+	public static final int END =	26;		//Used to indicate to the emulator to stop 
+	public static final int ASNDRT=	27;		//Assign indirect regular
 
 	//Used in verbose output for tracing contents of symbol table
 	public static final String quadTypeNameMap(int type)
@@ -1723,6 +1816,9 @@ public class NQG //Nano Quad Generator
 		else if (type==PREL) 	result = "PRELUDE";
 		else if (type==RET) 	result = "RETURN ";
 		else if (type==START)	result = "START  ";
+		else if (type==RTOFST)	result = "RTOFSET";
+		else if (type==END)		result = "END";
+		else if (type==ASNDRT)	result = "ASN DRT";
 		return result;
 	}	
 	
@@ -1762,9 +1858,10 @@ public class NQG //Nano Quad Generator
 	 */
 	private String getNewQuadLabel()
 	{
-		String name = "Q"+(new Integer(nextBackpatchLabelNum++)).toString();
+		String name = "%Q"+(new Integer(nextBackpatchLabelNum++)).toString();
 		return name;
 	}
 
 	
 }
+
