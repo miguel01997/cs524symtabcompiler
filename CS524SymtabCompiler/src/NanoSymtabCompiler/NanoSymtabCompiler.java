@@ -147,8 +147,17 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("asgnStmnt", 		"int", 			new asgnStmntIntNT());
 		_parserTable.linkFactory("asgnStmnt", 		"intArray", 	new asgnStmntIntArrayNT());
 		
+		/*
 		_parserTable.linkFactory("condStmnt", 		"ifThen", 		new condStmntIfThenNT());
 		_parserTable.linkFactory("condStmnt", 		"ifThenElse", 	new condStmntIfThenElseNT());
+		*/
+		_parserTable.linkFactory("Cond",          "unmatched",      new NanoCondUnmatched());
+		_parserTable.linkFactory("Cond",          "matched",      new NanoCondMatched());
+		_parserTable.linkFactory("CondIfPart",      "",      new NanoCondIfPart());
+		_parserTable.linkFactory("CondThenPartUM",      "",      new NanoCondThenPartUM());
+		_parserTable.linkFactory("CondThenPartM",      "",      new NanoCondThenPartM());
+		_parserTable.linkFactory("CondElseJump",      "",      new NanoCondElseJump());
+		
 		
 		_parserTable.linkFactory("forStmnt", 		"", 			new forStmntNT());
 		
@@ -1294,6 +1303,159 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 	}
 	
+	public final class NanoCondUnmatched extends NonterminalFactory
+	{
+	   public Object makeNonterminal (Parser parser, int param)
+	   throws IOException, SyntaxException
+	   {
+	      if (showReductions) System.out.println(
+	         "\nReduced by rule: Cond {unmatched} -> CondIfPart CondThenPartUM");
+	      InstrModQuad imq = (InstrModQuad) parser.rhsValue(0);
+	      if (imq==null)
+	      {
+	         return null;
+	      }
+	      else
+	      {
+	         String jumpQuadLabel = imq.getBackpatchQuadLabel();
+	         //A statement, whether single or block, should return the index of the
+	         //last quad produced for it (single--the index, block--the last index)
+	         Integer lastQuadIndex = (Integer) parser.rhsValue(1);
+	         quadGen.updateBackpatching(jumpQuadLabel, lastQuadIndex.intValue()+1);
+	         return lastQuadIndex;
+	      }
+	   }
+	}
+
+	public final class NanoCondMatched extends NonterminalFactory
+	{
+	   public Object makeNonterminal (Parser parser, int param)
+	   throws IOException, SyntaxException
+	   {
+	      if (showReductions) System.out.println(
+	         "\nReduced by rule: Cond {matched} -> CondIfPart CondThenPartM");
+	      InstrModQuad imq = (InstrModQuad) parser.rhsValue(0);
+	      if (imq==null)
+	      {
+	         return null;
+	      }
+	      else
+	      {
+	         String jumpQuadLabel = imq.getBackpatchQuadLabel();
+	         //A statement, whether single or block, should return the index of the
+	         //last quad produced for it (single--the index, block--the last index)
+	         Integer lastQuadIndex = (Integer) parser.rhsValue(1);
+	         quadGen.updateBackpatching(jumpQuadLabel, lastQuadIndex.intValue()+2);
+	         return lastQuadIndex;
+	      }
+	   }
+	}
+
+	public final class NanoCondIfPart extends NonterminalFactory
+	{
+	   public Object makeNonterminal (Parser parser, int param)
+	      throws IOException, SyntaxException
+	   {
+	      if (showReductions) System.out.println(
+	            "\nReduced by rule: CondIfPart -> if Expr");
+	      NSTIndEntry e = (NSTIndEntry) parser.rhsValue(1);
+	      if (e==null)
+	      {
+	         return null;
+	      }
+	      else if (!e.isBoolean())
+	      {
+	         reportError("","Conditional expression in if/then not boolean");
+	         return null;
+	      }
+	      else
+	      {
+	         if (e.isImmediate())
+	         {
+	            NSTIndImmediateEntry imm = (NSTIndImmediateEntry) e;
+	            InstrModQuad iqi = quadGen.makeIfFalseImmediate(-1, imm.getBoolValue());
+	            quadGen.addQuad(iqi);
+	            return iqi;
+	         }
+	         else if (!e.isImmediate()) //Should perhaps actually be checking for other mistakes
+	         {
+	            NSTIndScalarEntry es = (NSTIndScalarEntry) e;
+	            InstrModQuad iqs = quadGen.makeIfFalseRegular(-1, es.getAddress());
+	            quadGen.addQuad(iqs);
+	            return iqs;
+	         }
+	         else return null;
+	      }
+	   }
+	}
+
+	public final class NanoCondThenPartUM extends NonterminalFactory
+	{
+	   public Object makeNonterminal (Parser parser, int param)
+	      throws IOException, SyntaxException
+	   {
+	      if (showReductions) System.out.println(
+	      "\nReduced by rule: CondThenPartUM -> then Statement");
+	      Integer lastQuadIndex = (Integer) parser.rhsValue(1);
+	      if (lastQuadIndex==null)
+	      {
+	         reportError("","Compiler developer: Statement not passing up last index");
+	         return null;
+	      }
+	      else return lastQuadIndex;
+	   }
+	}
+
+	public final class NanoCondThenPartM extends NonterminalFactory
+	{
+	   public Object makeNonterminal (Parser parser, int param)
+	      throws IOException, SyntaxException
+	   {
+	      if (showReductions) System.out.println(
+	      "\nReduced by rule: CondThenPartM -> then Statement else CondElseJump Statement");
+	      Integer lastStmtQuadIndex = (Integer) parser.rhsValue(1);
+	      if (lastStmtQuadIndex==null)
+	      {
+	         reportError("","Compiler developer: Statement not passing up last index");
+	         return null;
+	      }
+	      else 
+	      {
+	         InstrModQuad imq = (InstrModQuad) parser.rhsValue(3);
+	         if (imq==null)
+	         {
+	            reportError("","Compiler developer: no quad passed up from CondElseJump");
+	            return null;
+	         }
+	         else
+	         {
+	            String jumpQuadLabel = imq.getBackpatchQuadLabel();
+	            //A statement, whether single or block, should return the index of the
+	            //last quad produced for it (single--the index, block--the last index)
+	            Integer lastElseQuadIndex = (Integer) parser.rhsValue(4);
+	            quadGen.updateBackpatching(jumpQuadLabel, lastElseQuadIndex.intValue()+1);
+	            return lastStmtQuadIndex; //To be used for the previous backpatching
+	         }
+	      }
+	   }
+	}
+
+	public final class NanoCondElseJump extends NonterminalFactory
+	{
+	   public Object makeNonterminal (Parser parser, int param)
+	      throws IOException, SyntaxException
+	   {
+	      if (showReductions) System.out.println(
+	      "\nReduced by rule: CondElseJump -> /* empty */");
+	      InstrModQuad gotoq = quadGen.makeUnconditionalJump(-1);
+	      quadGen.addQuad(gotoq);
+	      return gotoq;
+	   }
+	}
+
+
+	
+	/*
 	//condStmnt (ifThen, ifThenElse)
 	final class condStmntIfThenNT extends NonterminalFactory
 	{
@@ -1319,6 +1481,8 @@ public class NanoSymtabCompiler extends CompilerModel
 			return null;
 			}
 	}
+	*/
+	
 	
 	//forStmnt
 	final class forStmntNT extends NonterminalFactory
