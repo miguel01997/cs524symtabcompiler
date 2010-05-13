@@ -626,57 +626,6 @@ public class NanoSymtabCompiler extends CompilerModel
 		}
 	}
 	
-	//Rich: I think this is the missing constDecIDList...we should remove duplicate...
-	//constDec (idList)
-	final class constDecNonemptyNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-			Integer value = (Integer) parser.rhsValue(3);
-			if (showReductions) 	
-				System.out.println("\nReduced by rule: ConstantDeclaration -> const IdList equals intConst semicolon");
-			if (value==null) 
-				return null; //discard error insertions
-			if (showReductions) 
-				System.out.println("intConst value: "+value+"\n");
-
-	/*
-	 *	Eventually�
-	 * 	int constValue = 
-	 * 	 ((Integer)parser.rhsValue(3)).intValue();
-	 *  addQuad(store,@some_index,const_value)
-	 * 
-	 */
-	//This value cannot be stored in the symbol table without 
-	//requiring that structure to be memory resident during 
-	//execution of Nano programs.
-	//While that may actually be the case we don't want to be 
-	//restricted to this.
-	//So we store the constant in memory like any other 
-	//variable (later we will add this quad).
-	//So the fact that it is const during compilation prevents 
-	//the issuance of 
-	//any instructions that can change that memory location's 
-	//value.  Here we just print out what the symbol table saw 
-	//but did not store (keeping with the idea that the symbol //table stores meta-data from compile-time
-	//not data from execution time.
-
-	// HERE IS THE CORE CODE::
-			
-		Iterator tempIdListIterator = symtab.getTempIdListIterator();
-			while (tempIdListIterator.hasNext())
-			{			
-				symtab.addConstIntToCurrentBlock(((String)tempIdListIterator.next()));
-			}
-			symtab.tempIdListClear();
-
-			// Return null value
-			return null;
-		}
-	}
-	
-	
 	//idList (list, single)
 	final class idListListNT extends NonterminalFactory
 	{
@@ -1293,7 +1242,66 @@ public class NanoSymtabCompiler extends CompilerModel
    			String idString = (String) parser.rhsValue (0);
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
-			return null;
+		   String idLexeme = (String) parser.rhsValue(0);
+	      if (idLexeme==null) return null;
+	      
+	      NSTIndEntry e = (NSTIndEntry) 
+	                           parser.rhsValue(2);
+	      NSTIndScalarEntry i = (NSTIndScalarEntry) symtab.get(idLexeme);
+	      if (i==null) {return null; }
+	      else if (e.getActualType()!=i.getActualType())
+	      {
+	         reportError("","Type mismatch in assignment statement");
+	         return null;
+	      }
+	      else if (i.isConstant())
+	      {
+	         reportError("","Attempt to assign to a constant identifier");
+	         return null;
+	      }
+	      else
+	      {
+	         if (e.isImmediate())
+	         {
+	            NSTIndImmediateEntry imm = (NSTIndImmediateEntry) e;
+	            if (imm.isBoolean())
+	            {
+	               MemModQuad aqb = quadGen.makeAssignImmediateBoolean 
+	                              (i.getAddress(),imm.getBoolValue());
+	               quadGen.addQuad(aqb);
+	               return new Integer(aqb.getQuadId());
+	            }
+	            else if (imm.isInteger())
+	            {
+	               MemModQuad aqi = quadGen.makeAssignImmediateInteger
+	                              (i.getAddress(),imm.getIntValue());
+	               quadGen.addQuad(aqi);
+	               return new Integer(aqi.getQuadId());
+	            }
+	            else
+	            {
+	               reportError("",
+	                     "Compiler developer: invalid type of immediate assignment");
+	               return null;
+	            }
+	         }
+	         else if (!e.isScalar())
+	         {
+	            reportError("",
+	                  "Attempt to assign non-scalar memory to scalar identifier");
+	            return null;
+	         }
+	         else // it is a scalar, everything is easy
+	         {
+	            NSTIndScalarEntry es = (NSTIndScalarEntry) e;
+	            MemModQuad aqr = quadGen.makeAssignRegular
+	                           (i.getAddress(),es.getAddress());
+	            quadGen.addQuad(aqr);
+	            return new Integer(aqr.getQuadId());
+	         }
+	      }
+
+
 			}
 	}
 	final class asgnStmntIntArrayNT extends NonterminalFactory
