@@ -1315,10 +1315,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		   }
 		   String idLexeme = (String) parser.rhsValue(0);
 	      if (idLexeme==null) return null; //discard error insertions
-	      if (showReductions) System.out.println("identifier lexeme: "+idLexeme+"\n");
 	      int typeFlag = NanoSymbolTable.UNK_TYPE;
-	      NSTIndEntry indexExpr = (NSTIndEntry) 
-	                           parser.rhsValue(2);
+	      NSTIndEntry indexExpr = (NSTIndEntry)parser.rhsValue(2);
 	      NSTIndArrayEntry array = (NSTIndArrayEntry) symtab.get(idLexeme);
 	      NSTIndEntry e2 = (NSTIndEntry) parser.rhsValue(5);
 	      NSTIndScalarEntry valToAssign = null; 
