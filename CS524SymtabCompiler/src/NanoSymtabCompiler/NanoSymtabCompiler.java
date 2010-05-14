@@ -1235,186 +1235,227 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			//Get the id name and check for null
+			String idLexeme = (String) parser.rhsValue(0);
+		    if (idLexeme==null) 
+		    	return null;
+			
+		    //Show the reductions
 		   if (showReductions) {
    			System.out.print(parser.token().line + ": ");
    			System.out.println("asgnStmnt {int} -> id assign expr semicolon");
    			String idString = (String) parser.rhsValue (0);
-   			System.out.println("identifier lexeme: " + idString + "\n");
+   			System.out.println("identifier lexeme: " + idLexeme + "\n");
 		   }
-		   String idLexeme = (String) parser.rhsValue(0);
-	      if (idLexeme==null) return null;
 	      
+		  //Get the expression entry from the parsr
 	      NSTIndEntry e = (NSTIndEntry)parser.rhsValue(2);
+	      
+	      //Get the symbol table entry for the identifier
 	      NSTIndScalarEntry i = (NSTIndScalarEntry) symtab.get(idLexeme);
-	      if (i==null) {return null; }
-	      else if (e.getActualType()!=i.getActualType())
-	      {
+	      
+	      //If the symbol table doesn't contain an entry for id
+	      if (i==null){
+	    	  reportError("","Id not defined in this scope.");
+	    	  return null;
+	      //If the id and expression types don't match
+	      }else if (e.getActualType()!=i.getActualType()){
 	         reportError("","Type mismatch in assignment statement");
 	         return null;
-	      }
-	      else if (i.isConstant())
-	      {
+	      //If the value we're trying to assign to is constant, a no-no
+	      }else if (i.isConstant()){
 	         reportError("","Attempt to assign to a constant identifier");
 	         return null;
-	      }
-	      else
-	      {
+	      
+	         
+	      //Otherwise we passed the tests, so let's move on
+	      }else{
+	    	 //If our value to assign is immediate
 	         if (e.isImmediate())
 	         {
 	            NSTIndImmediateEntry imm = (NSTIndImmediateEntry) e;
+	            //If the assignment value is a boolean
 	            if (imm.isBoolean())
 	            {
-	               MemModQuad aqb = quadGen.makeAssignImmediateBoolean 
-	                              (i.getAddress(),imm.getBoolValue());
+	               MemModQuad aqb = quadGen.makeAssignImmediateBoolean(i.getAddress(),imm.getBoolValue());
 	               quadGen.addQuad(aqb);
 	               return new Integer(aqb.getQuadId());
 	            }
+	            //If the assignment value is an integer
 	            else if (imm.isInteger())
 	            {
-	               MemModQuad aqi = quadGen.makeAssignImmediateInteger
-	                              (i.getAddress(),imm.getIntValue());
+	               MemModQuad aqi = quadGen.makeAssignImmediateInteger(i.getAddress(),imm.getIntValue());
 	               quadGen.addQuad(aqi);
 	               return new Integer(aqi.getQuadId());
+	            //Otherwise we messed up
+	            }else{
+	            	reportError("","Compiler developer: invalid type of immediate assignment");
+	            	return null;
 	            }
-	            else
-	            {
-	               reportError("",
-	                     "Compiler developer: invalid type of immediate assignment");
-	               return null;
-	            }
-	         }
-	         else if (!e.isScalar())
-	         {
-	            reportError("",
-	                  "Attempt to assign non-scalar memory to scalar identifier");
-	            return null;
-	         }
-	         else // it is a scalar, everything is easy
-	         {
+	            //We messed up but in a different way
+	         	}else if (!e.isScalar()){
+	         		reportError("","Attempt to assign non-scalar memory to scalar identifier");
+	         		return null;
+	         	//Value is a scalar, so everything's cool
+	         	}else{
 	            NSTIndScalarEntry es = (NSTIndScalarEntry) e;
-	            MemModQuad aqr = quadGen.makeAssignRegular
-	                           (i.getAddress(),es.getAddress());
+	            MemModQuad aqr = quadGen.makeAssignRegular(i.getAddress(),es.getAddress());
 	            quadGen.addQuad(aqr);
 	            return new Integer(aqr.getQuadId());
-	         }
-	      }
-
-
-			}
+	         	}
+	      	}
+		}
 	}
 	final class asgnStmntIntArrayNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			//Get the id name and check for null
+			String idLexeme = (String) parser.rhsValue(0);
+		    if (idLexeme==null) 
+		    	return null;
+		    
+			//Show the reductions
 		   if (showReductions) {
    			System.out.print(parser.token().line + ": ");
    			System.out.println("asgnStmnt {intArray} -> id lbracket expr rbracket assign expr semicolon");
-   			String idString = (String) parser.rhsValue (0);
-   			System.out.println("identifier lexeme: " + idString + "\n");
+   			System.out.println("identifier lexeme: " + idLexeme + "\n");
 		   }
-		   String idLexeme = (String) parser.rhsValue(0);
-	      if (idLexeme==null) return null; //discard error insertions
+		   
+		  //Set the type flag
 	      int typeFlag = NanoSymbolTable.UNK_TYPE;
+	      
+	      //Get the expression for the array index
 	      NSTIndEntry indexExpr = (NSTIndEntry)parser.rhsValue(2);
+	      
+	      //Lookup the identifier in the symbol table
 	      NSTIndArrayEntry array = (NSTIndArrayEntry) symtab.get(idLexeme);
+	      
+	      //Get the value expression
 	      NSTIndEntry e2 = (NSTIndEntry) parser.rhsValue(5);
+	      
+	      //Create some temporary storage for values
 	      NSTIndScalarEntry valToAssign = null; 
 	      NSTIndImmediateEntry immToAssign = null;
 	      MemModQuad indexCalcQuad = null;
+	      
+	      //Flag for immedate value in value expression
 	      boolean isImmediateValToAssign = false;
-	      if (e2==null) return null;
+	      
+	      //If the value expression doesn't exist
+	      if (e2==null) 
+	    	  return null;
+	      
+	      //If the value is scalar and not immediate
 	      if (e2.isScalar() && !e2.isImmediate()) 
 	      {
 	         valToAssign = (NSTIndScalarEntry) e2;
 	         isImmediateValToAssign = false;
 	      }
+	      
+	      //If the value is a scalar and is immediate
 	      else if (e2.isScalar()&& e2.isImmediate()) 
 	      {
 	         immToAssign = (NSTIndImmediateEntry) e2;
 	         isImmediateValToAssign = true;
 	      }
+	      
+	      //If the array identifier does not exist in the symbol table
 	      if (array==null) 
 	      {
 	         reportError("","Array identifier not found in scope");
 	         return null; 
 	      }
+	      
+	      //If the array identifier is not actually an integer array
 	      else if (!array.isIntArray())
 	      {
 	         reportError("","Attempt to use scalar identifier as array base address");
 	         return null;
 	      }
+	      
+	      //If the array index expression doesn't contain a value
 	      else if (!indexExpr.isInteger())
 	      {
 	         reportError("","Non-integer index in array element assignment");
 	         return null;
 	      }
+	      
+	      //If the value to assign is not immedate , the array is a boolean array, and the value is a boolean
 	      if ( !isImmediateValToAssign && array.isBooleanArray() && valToAssign.isBoolean() )
 	      {
 	         typeFlag = NanoSymbolTable.BOOL_TYPE;
 	      }
+	      
+	      //If the balue to assign is not imediate, the array is an integer array, and the value is an integer
 	      else if ( !isImmediateValToAssign && array.isIntArray() && valToAssign.isInteger() )
 	      {
 	         typeFlag = NanoSymbolTable.INT_TYPE;
 	      }
+	      
+	      //If the value to assign is an immediate integer, and the array is an int array
 	      else if ( isImmediateValToAssign && array.isIntArray() && immToAssign.isInteger() )
 	      {
 	         typeFlag = NanoSymbolTable.INT_TYPE;
 	      }
+	      //If the value to assign is an immediate boolean, and the array is a boolean array
 	      else if ( isImmediateValToAssign && array.isBooleanArray() && immToAssign.isBoolean() )
 	      {
 	         typeFlag = NanoSymbolTable.BOOL_TYPE;
 	      }
+	      
 	      //Calculate the memory location to modify
 	      if (indexExpr.isImmediate())
 	      {
 	         NSTIndImmediateEntry immIndex = (NSTIndImmediateEntry) indexExpr;
-	         NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry) 
-	                           symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
-	         indexCalcQuad = quadGen.makeRTOffsetImmediate(tmpIndex.getAddress(),          
-	                              array.getAddress(), immIndex.getIntValue()); 
+	         NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry) symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+	         indexCalcQuad = quadGen.makeRTOffsetImmediate(tmpIndex.getAddress(), array.getAddress(), immIndex.getIntValue()); 
 	      }
+	      //Calculate the address of the index we're using
 	      else if (indexExpr.isScalar())
 	      {
 	         NSTIndScalarEntry calculatedIndex = (NSTIndScalarEntry) indexExpr;
-	         NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry) 
-	                           symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
-	         indexCalcQuad = quadGen.makeRTOffsetRegular(tmpIndex.getAddress(), 
-	                        array.getAddress(), calculatedIndex.getAddress());
+	         NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry) symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+	         indexCalcQuad = quadGen.makeRTOffsetRegular(tmpIndex.getAddress(), array.getAddress(), calculatedIndex.getAddress());
 	      }
+	      
+	      //Add the index quad
 	      quadGen.addQuad(indexCalcQuad);
+	      
+	      //Use the immediate value flag
 	      if (isImmediateValToAssign)
 	      {
+	    	 //If it's an integer type, make an integer assignment quad
 	         if (typeFlag==NanoSymbolTable.INT_TYPE)
 	         {
-	            MemModQuad immassgnIntQuad = quadGen.makeAssignImmediateInteger(
-	                     indexCalcQuad.getResultAddress(),immToAssign.getIntValue() );
+	            MemModQuad immassgnIntQuad = quadGen.makeAssignImmediateInteger(indexCalcQuad.getResultAddress(),immToAssign.getIntValue() );
 	            quadGen.addQuad(immassgnIntQuad);
 	            return new Integer(immassgnIntQuad.getQuadId());
 	         }
+	         //If it's a boolean type, make a boolean assignment quad
 	         else if (typeFlag==NanoSymbolTable.BOOL_TYPE)
 	         {
-	            MemModQuad immassgnBoolQuad = quadGen.makeAssignImmediateBoolean(
-	                     indexCalcQuad.getResultAddress(),immToAssign.getBoolValue() );
+	            MemModQuad immassgnBoolQuad = quadGen.makeAssignImmediateBoolean(indexCalcQuad.getResultAddress(),immToAssign.getBoolValue() );
 	            quadGen.addQuad(immassgnBoolQuad);
 	            return new Integer(immassgnBoolQuad.getQuadId());
 	         }
+	         //Otherwise we screwed up royally
 	         else
 	         {
 	            reportError("","Some unknown use of type in array elt assignment");
 	            return null;
 	         }
 	      }
-	      else //value is not immediate; use regular assignment, types already checked
+	      //value is not immediate; use regular assignment, types already checked
+	      else
 	      {
-	         MemModQuad aq = quadGen.makeAssignRegular
-	                     (indexCalcQuad.getResultAddress(),
-	                                 valToAssign.getAddress());
+	         MemModQuad aq = quadGen.makeAssignRegular(indexCalcQuad.getResultAddress(), valToAssign.getAddress());
 	         quadGen.addQuad(aq);
 	         return new Integer(aq.getQuadId());
 	      }
 
-			}
+		}
 	}
 	
 	public final class NanoCondUnmatched extends NonterminalFactory
