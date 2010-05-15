@@ -1129,11 +1129,12 @@ public class NanoSymtabCompiler extends CompilerModel
 			{
 				//Get the output string constant
 				String outputString = (String) parser.rhsValue(2);
+				
+				//Make sure the output string exists
 				if(outputString == null){
 					reportError("","No output string for print statement.");
 					return null;
 				}
-			
 			
 			   if (showReductions) {
 	   			System.out.print(parser.token().line + ": ");
@@ -1141,9 +1142,11 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.println("string lexeme: " + outputString + "\n");
 			   }
 			   
+			   //Generate us a print quad just for the string 
+			   MemModQuad printQuad = quadGen.makePrint(-1,outputString);
 			   
-			   
-				return null;
+			   //Return the quad id because it's something to do
+			   return printQuad.getQuadId();
 			}
 	}
 
@@ -1153,10 +1156,42 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+			   //Get the single expression
+			   NSTIndEntry expr = (NSTIndEntry)parser.rhsValue(2);
+			
+			   //Make sure the expression isn't null
+			   if(expr == null){
+				   reportError("","Trying to print invalid expression.");
+				   return null;
+			   }
+			   
+			   //Show the reductions
 			   if (showReductions) {
 	   			System.out.print(parser.token().line + ": ");
 	   			System.out.println("printExprList {nonempty} -> printExprList comma expr\n");
 			   }
+			   
+			   //Immediates shouldn't be in the expression of the print statement
+			   if(expr.isImmediate()){
+				   reportError("","Cannot have immediate in print statement.");
+			   	   return null;
+			   }
+			   
+			   //We know the entry isn't immediate, so it's probably a scalar
+			   NSTIndScalarEntry exprEntry = (NSTIndScalarEntry) expr;
+			   
+			   //For the boolean print quad
+			   if (exprEntry.isBoolean()){
+				  MemModQuad quad = quadGen.makePrint(exprEntry.getAddress(), "B");
+				  return quad.getQuadId();
+			   }
+			   //For the integer print quad
+			   if (exprEntry.isInteger()){
+				  MemModQuad quad = quadGen.makePrint(exprEntry.getAddress(), "I");
+				  return quad.getQuadId();
+			   }
+			   
+			   //Something went wrong, you didn't get the expression you expected, so fail
 				return null;
 			}
 	}
@@ -1179,13 +1214,25 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("readStmnt -> read lparen stringConst inputTargetList rparen semicolon;");
-   			String stringString = (String) parser.rhsValue (2);
-   			System.out.println("string lexeme: " + stringString + "\n");
-		   }
-			return null;
+				//Get the string constant
+				String stringConst = (String) parser.rhsValue(2);
+				
+				//Check to make sure there's a stringConst
+				if(stringConst == null){
+					reportError("","Read has no string constant.");
+					return null;	
+				}
+				
+				//Print the reductions
+				if (showReductions) {
+		   			System.out.print(parser.token().line + ": ");
+		   			System.out.println("readStmnt -> read lparen stringConst inputTargetList rparen semicolon;");
+		   			System.out.println("string lexeme: " + stringConst + "\n");
+				}
+				
+				
+				
+				return null;
 			}
 	}
 	
@@ -1195,23 +1242,25 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("inputTargetList {nonempty} -> inputTargetList comma expr\n");
-		   }
-			return null;
+				if (showReductions) {
+		   			System.out.print(parser.token().line + ": ");
+		   			System.out.println("inputTargetList {nonempty} -> inputTargetList comma inputTarget\n");
+				}
+				return null;
 			}
 	}
+	
 	final class inputTargetListEmptyNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("inputTargetList {empty} -> /* empty */\n");
-		   }
-			return null;
+			   if (showReductions) {
+	   			System.out.print(parser.token().line + ": ");
+	   			System.out.println("inputTargetList {empty} -> /* empty */\n");
+			   }
+			   
+			   return null;
 			}
 	}
 	
@@ -1221,13 +1270,59 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("inputTarget {id} -> id");
-   			String idString = (String) parser.rhsValue (0);
-   			System.out.println("identifier lexeme: " + idString + "\n");
-		   }
-			return null;
+				//Get the id string
+				String idString = (String) parser.rhsValue (0);
+				
+				//Check to make sure string isn't null
+				if(idString == null){
+					reportError("","Invalid id for inputTarget.");
+					return null;
+				}
+			
+				//Show the reductions
+			    if (showReductions) {
+		   			System.out.print(parser.token().line + ": ");
+		   			System.out.println("inputTarget {id} -> id");
+		   			System.out.println("identifier lexeme: " + idString + "\n");
+			    }
+			   
+			    //Find the id in the symbol table
+			    NSTIndEntry idEntry = (NSTIndEntry) symtab.get(idString);
+			    
+			    //If it isn't in the symbol table
+			    if(idEntry == null){
+			    	reportError("","Identifier not declared in scope.");
+			    	return null;
+			    }
+			    
+			    //Can't assign to a constant variable
+			    if(idEntry.isConstant()){
+			    	reportError("","Can't assign to constant variable");
+			    	return null;
+			    }
+			    
+			    //Can't have an immediate entry here
+			    if(idEntry.isImmediate()){
+			    	reportError("","Cannot read to immediate entry.");
+			    	return null;
+			    }
+			    
+			    //Cast to NSTIndScalarEntry
+			    NSTIndScalarEntry entry = (NSTIndScalarEntry) idEntry;
+			    
+			    //Check for boolean
+			    if(entry.isBoolean()){
+			    	MemModQuad quad = quadGen.makeRead(entry.getAddress(), "B");
+			    	return quad.getQuadId();
+			    }
+			    //Check for integer
+			    if(entry.isIntArray()){
+			    	MemModQuad quad = quadGen.makeRead(entry.getAddress(), "I");
+			    	return quad.getQuadId();
+			    }
+			    
+			    //Something's wrong, so return null
+			    return null;
 			}
 	}
 	final class inputTargetIdArrayNT extends NonterminalFactory
@@ -1235,11 +1330,80 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("inputTarget {idArray} -> id lbracket expr rbracket\n");
-		   }
-			return null;
+			
+				//Get the id string
+				String idString = (String) parser.rhsValue (0);
+				
+				//Check to make sure idString is valid
+				if(idString == null){
+					reportError("","Id not declared in this scope.");
+					return null;
+					
+				}
+				
+				//Show the reductions
+			    if (showReductions) {
+		   			System.out.print(parser.token().line + ": ");
+		   			System.out.println("inputTarget {idArray} -> id lbracket expr rbracket\n");
+			    }
+			    
+			    //Get the expression for the index
+			    NSTIndEntry exprEntry = (NSTIndEntry) parser.rhsValue(2);
+			    
+			    //Check to make sure expression exists
+			    if(exprEntry == null){
+			    	reportError("","Array index expression is invalid.");
+			    	return null;
+			    }
+			    
+			    //Something is wrong, expressions can't be immediates as they are temp variables in the block
+			    if(exprEntry.isImmediate()){
+			    	 NSTIndImmediateEntry expr = (NSTIndImmediateEntry) exprEntry;
+			    }
+			    if(exprEntry.isScalar()){
+			    	 NSTIndScalarEntry expr = (NSTIndScalarEntry) exprEntry;
+			    }
+			    
+			    //Cast the expression to a more specific NSTIndScalarEntry type
+			    NSTIndScalarEntry expr = (NSTIndScalarEntry) exprEntry;
+			   
+			    //Find the id in the symbol table
+			    NSTIndEntry idEntry = (NSTIndEntry) symtab.get(idString);
+			    
+			    //If it isn't in the symbol table
+			    if(idEntry == null){
+			    	reportError("","Identifier not declared in scope.");
+			    	return null;
+			    }
+			    
+			    //Can't have an immediate entry here
+			    if(idEntry.isImmediate()){
+			    	reportError("","Cannot read to immediate entry.");
+			    	return null;
+			    }
+			    
+			  //Can't assign to a constant variable
+			    if(idEntry.isConstant()){
+			    	reportError("","Can't assign to constant variable");
+			    	return null;
+			    }
+			    
+			    //Cast to NSTIndScalarEntry
+			    NSTIndScalarEntry entry = (NSTIndScalarEntry) idEntry;
+			    
+			    //Check for boolean
+			    if(entry.isBoolean()){
+			    	MemModQuad quad = quadGen.makeRead(entry.getAddress(), "B");
+			    	return quad.getQuadId();
+			    }
+			    //Check for integer
+			    if(entry.isIntArray()){
+			    	MemModQuad quad = quadGen.makeRead(entry.getAddress(), "I");
+			    	return quad.getQuadId();
+			    }
+			    
+			    //Something's wrong, so return null
+			    return null;
 			}
 	}
 	
