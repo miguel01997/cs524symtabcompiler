@@ -2013,12 +2013,14 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			String value = (String)parser.rhsValue(0);
+			
 			if (showReductions) {
    			System.out.print(parser.token().line + ": ");
    			System.out.println("factor {positive} -> prim\n");
 			}
-			return value;
+			NSTIndEntry prim = (NSTIndEntry)parser.rhsValue(0);
+			if (prim==null) {return null; }
+			return prim;
 			}
 	}
 	final class factorNegativeNT extends NonterminalFactory
@@ -2026,12 +2028,38 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			Integer value = Integer.parseInt((String) "-" + parser.rhsValue(1));
+			
 			if (showReductions) {
    			System.out.print(parser.token().line + ": ");
    			System.out.println("factor {negative} -> minus prim\n");
 			}
-			return value;
+			NSTIndEntry prim = (NSTIndEntry)parser.rhsValue(1);
+			MemModQuad negativeQuad;
+         if (prim==null) {return null; }
+         if (!prim.isInteger())
+         {
+            reportError("","Can not make non-integer negative");
+            return null;
+         }
+         if (prim.isImmediate())
+         {
+            NSTIndImmediateEntry immPrim = (NSTIndImmediateEntry) prim;
+            NSTIndScalarEntry tmpPrim = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+            negativeQuad = quadGen.makeNegImmediate(tmpPrim.getAddress(),          
+                  immPrim.getIntValue()); 
+            quadGen.addQuad(negativeQuad);
+            return immPrim;
+            
+         }
+         else
+         {
+            NSTIndScalarEntry scalarPrim = (NSTIndScalarEntry) prim;
+            NSTIndScalarEntry tmpPrim = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+            negativeQuad = quadGen.makeNegRegular(tmpPrim.getAddress(),          
+                  scalarPrim.getAddress());
+            quadGen.addQuad(negativeQuad);
+            return scalarPrim;
+         }
 			}
 	}
 	final class factorNotNT extends NonterminalFactory
@@ -2044,141 +2072,187 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("factor {not} -> not prim\n");
 			}
-			
-			if(value == "true")
-				return "false";
-			else if(value == "false")
-				return "true";
-			else
-				return null;
+			NSTIndEntry prim = (NSTIndEntry)parser.rhsValue(1);
+         MemModQuad notQuad;
+         if (prim==null) {return null; }
+         if (!prim.isBoolean())
+         {
+            reportError("","Can not make non-boolean a not");
+            return null;
+         }
+         if (prim.isImmediate())
+         {
+            NSTIndImmediateEntry immPrim = (NSTIndImmediateEntry) prim;
+            NSTIndScalarEntry tmpPrim = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
+            notQuad = quadGen.makeNotImmediate(tmpPrim.getAddress(),          
+                  immPrim.getBoolValue()); 
+            quadGen.addQuad(notQuad);
+            return immPrim;
+         }
+         else
+         {
+            NSTIndScalarEntry scalarPrim = (NSTIndScalarEntry) prim;
+            NSTIndScalarEntry tmpPrim = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
+            notQuad = quadGen.makeNotRegular(tmpPrim.getAddress(),          
+                  scalarPrim.getAddress());
+            quadGen.addQuad(notQuad);
+            return scalarPrim;
+         }
 			}
 	}
 	
 	//prim (const, boolConst, value, expr, relop)
-	final class primConstNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-			if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("prim {const} -> intConst");
-   			String intString = (String) parser.rhsValue (0);
-   			System.out.println("intConst lexeme: " + intString + "\n");
-			}
-			
-			Integer intValue = (Integer) parser.rhsValue(0);	
-			if (intValue==null) {
-			   reportError("","Not valid integer value.");
-			   return null;
-			}
-			return symtab.new NSTIndImmediateEntry(NanoSymbolTable.INT_TYPE, intValue);
-	}
-	}
-		
-	final class primBoolConstNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-		   String boolString = (String) parser.rhsValue (0);
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("prim {boolConst} -> boolConst");
-   			System.out.println("boolean value: " + boolString + "\n");
-		   }
-		
+   final class primConstNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("prim {const} -> intConst");
+            String intString = (String) parser.rhsValue (0);
+            System.out.println("intConst lexeme: " + intString + "\n");
+         }
+         
+         Integer intValue = (Integer) parser.rhsValue(0);   
+         if (intValue==null) {
+            reportError("","Not valid integer value.");
+            return null;
+         }
+         return symtab.new NSTIndImmediateEntry(NanoSymbolTable.INT_TYPE, intValue);
+   }
+   }
+      
+   final class primBoolConstNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         String boolString = (String) parser.rhsValue (0);
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("prim {boolConst} -> boolConst");
+            System.out.println("boolean value: " + boolString + "\n");
+         }
+      
          Boolean boolValue = (Boolean) parser.rhsValue(0);  
          if (boolValue==null) {
             return null;
          }
          return symtab.new NSTIndImmediateEntry(NanoSymbolTable.BOOL_TYPE, boolValue);
-			}
-	}
-	final class primValueNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-			String value = (String) parser.rhsValue(0);
-			if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("prim {value} -> value\n");
-			}
-			return value;
-			}
-	}
-	final class primExprNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("prim {expr} -> lparen expr rparen\n");
-		   }
-			return null;
-			}
-	}
-	final class primRelopNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-		   if (showReductions) {
-		      System.out.print(parser.token().line + ": ");
-		      System.out.println("prim {relop} -> lparen expr relop expr rparen\n");
-		   }
-			return null;
-			}
-	}
-	
-	//value (id, expr)
-	final class valueIdNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param)
-			throws IOException, SyntaxException
-			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("value {id} -> id");
-   			String idString = (String) parser.rhsValue (0);
-   			System.out.println("identifier lexeme: " + idString + "\n");
-		   }
-		   
-		   NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(0));
+         }
+   }
+   final class primValueNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         String address = (String) parser.rhsValue(0);
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("prim {value} -> value\n");
+         }
+         return address;
+         }
+   }
+   final class primExprNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("prim {expr} -> lparen expr rparen\n");
+         }
+         return null;
+         }
+   }
+   final class primRelopNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("prim {relop} -> lparen expr relop expr rparen\n");
+         }
+         return null;
+         }
+   }
+   
+   //value (id, expr)
+   final class valueIdNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param)
+         throws IOException, SyntaxException
+         {
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("value {id} -> id");
+            String idString = (String) parser.rhsValue (0);
+            System.out.println("identifier lexeme: " + idString + "\n");
+         }
+         
+         NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(0));
          if (i==null)
          {
             reportError("","Identifier not recognized");
             return null; //Or something better?
          }
          else
-            //No quad to generate, just want to pass up the value
+            //No quad to generate, just want to pass up the nst 
             return i;
          }
-	}
-	final class valueExprNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("value {expr} -> id lbracket expr rbracket");
-   			String idString = (String) parser.rhsValue (0);
-   			System.out.println("identifier lexeme: " + idString + "\n");
-		   }
-		   NSTIndArrayEntry i = (NSTIndArrayEntry)symtab.get((String)parser.rhsValue(0));
-         if (i==null)
+   }
+   final class valueExprNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
          {
-            reportError("","Identifier not recognized");
-            return null; //Or something better?
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("value {expr} -> id lbracket expr rbracket");
+            String idString = (String) parser.rhsValue (0);
+            System.out.println("identifier lexeme: " + idString + "\n");
          }
-         else
-            //No quad to generate, just want to pass up the value
-            return i;
-			}
-	}
+         NSTIndArrayEntry array = (NSTIndArrayEntry)symtab.get((String)parser.rhsValue(0));
+         NSTIndEntry indexExpr = (NSTIndEntry)parser.rhsValue(2);
+         MemModQuad indexCalcQuad = null;
+         
+         if (array==null) 
+         {
+            reportError("","Array identifier not found in scope");
+            return null; 
+         }
+         else if (!array.isIntArray())
+         {
+            reportError("","Attempt to use scalar identifier as array base address");
+            return null;
+         }
+         else if (!indexExpr.isInteger())
+         {
+            reportError("","Non-integer index in array element assignment");
+            return null;
+         }
+         if (indexExpr.isImmediate())
+         {
+            NSTIndImmediateEntry immIndex = (NSTIndImmediateEntry) indexExpr;
+            NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+            indexCalcQuad = quadGen.makeRTOffsetImmediate(tmpIndex.getAddress(),          
+                                 array.getAddress(), immIndex.getIntValue()); 
+         }
+         else if (indexExpr.isScalar())
+         {
+            NSTIndScalarEntry calculatedIndex = (NSTIndScalarEntry) indexExpr;
+            NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+            indexCalcQuad = quadGen.makeRTOffsetRegular(tmpIndex.getAddress(), 
+                           array.getAddress(), calculatedIndex.getAddress());
+         }
+         quadGen.addQuad(indexCalcQuad);
+         return symtab.new NSTIndScalarEntry(array.getName(), array.getActualType(), false, indexCalcQuad.getResultAddress()); 
+         }
+   }
+
 	
 	//relop (equals, lessThan, greaterThan, lessThanEquals, greaterThanEquals, notEquals)
 	final class relopEqualsNT extends NonterminalFactory
