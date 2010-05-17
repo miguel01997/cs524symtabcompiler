@@ -661,7 +661,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			if (showReductions) 									
 				System.out.println("identifier lexeme: "+idLexeme+"\n");
 
-			// Return null value
+			// Rich said ???? Does this make sense
 			return null;
 		}
 	}
@@ -1786,37 +1786,6 @@ public class NanoSymtabCompiler extends CompilerModel
 	   }
 	}
 
-
-	
-	/*
-	//condStmnt (ifThen, ifThenElse)
-	final class condStmntIfThenNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("condStmnt {ifThen} -> if expr then statement %shift else\n");
-		   }
-			return null;
-			}
-	}
-	final class condStmntIfThenElseNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("condStmnt {ifThenElse} -> if expr then statement else statement\n");
-		   }
-			return null;
-			}
-	}
-	*/
-	
-	
 	//forStmnt
 	final class forStmntNT extends NonterminalFactory
 	{
@@ -1887,7 +1856,45 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("exprList {list} -> expr comma exprList\n");
 		   }
-			return null;
+		   
+		   NSTIndEntry expr = (NSTIndEntry)parser.rhsValue(0);
+         if (expr==null) {return null; }
+         
+         MemModQuad paramQuad;
+         MemModQuad immedTransferQuad;
+         
+         int topStack = symtab.getStackTopOffset();
+         
+         if (expr.isImmediate() && expr.isBoolean())
+         {
+            NSTIndImmediateEntry immExpr = (NSTIndImmediateEntry) expr;
+            NSTIndScalarEntry tmpExpr = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
+            immedTransferQuad = quadGen.makeAssignImmediateBoolean(tmpExpr.getAddress(), immExpr.getBoolValue());
+            paramQuad = quadGen.makeParam(topStack, tmpExpr.getAddress());
+            quadGen.addQuad(immedTransferQuad);
+         }
+         else if (expr.isImmediate() && expr.isInteger())
+         {
+            NSTIndImmediateEntry immExpr = (NSTIndImmediateEntry) expr;
+            NSTIndScalarEntry tmpExpr = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+            immedTransferQuad = quadGen.makeAssignImmediateInteger(tmpExpr.getAddress(), immExpr.getIntValue());
+            paramQuad = quadGen.makeParam(topStack, tmpExpr.getAddress());
+            quadGen.addQuad(immedTransferQuad);
+         }
+         else if (expr.isScalar())
+         {
+            NSTIndScalarEntry scalarExpr = (NSTIndScalarEntry) expr;
+            paramQuad = quadGen.makeParam(topStack, scalarExpr.getAddress());
+         }
+         else
+         {
+            reportError("","Invalid procedure call.");
+            return null;
+         }
+         
+         quadGen.addQuad(paramQuad);
+         //not sure if this is the right thing to return
+         return new Integer(paramQuad.getQuadId());
 			}
 	}
 	final class exprListSingleNT extends NonterminalFactory
@@ -1895,13 +1902,50 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-		   
-		   String value = (String)parser.rhsValue(0);
+		  
 		   if (showReductions) {
    			System.out.print(parser.token().line + ": ");
    			System.out.println("exprList {single} -> expr\n");
 		   }
-			return value;
+		   
+		   NSTIndEntry expr = (NSTIndEntry)parser.rhsValue(0);
+         if (expr==null) {return null; }
+         
+         MemModQuad paramQuad;
+         MemModQuad immedTransferQuad;
+         
+         int topStack = symtab.getStackTopOffset();
+         
+         if (expr.isImmediate() && expr.isBoolean())
+         {
+            NSTIndImmediateEntry immExpr = (NSTIndImmediateEntry) expr;
+            NSTIndScalarEntry tmpExpr = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
+            immedTransferQuad = quadGen.makeAssignImmediateBoolean(tmpExpr.getAddress(), immExpr.getBoolValue());
+            paramQuad = quadGen.makeParam(topStack, tmpExpr.getAddress());
+            quadGen.addQuad(immedTransferQuad);
+         }
+         else if (expr.isImmediate() && expr.isInteger())
+         {
+            NSTIndImmediateEntry immExpr = (NSTIndImmediateEntry) expr;
+            NSTIndScalarEntry tmpExpr = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+            immedTransferQuad = quadGen.makeAssignImmediateInteger(tmpExpr.getAddress(), immExpr.getIntValue());
+            paramQuad = quadGen.makeParam(topStack, tmpExpr.getAddress());
+            quadGen.addQuad(immedTransferQuad);
+         }
+         else if (expr.isScalar())
+         {
+            NSTIndScalarEntry scalarExpr = (NSTIndScalarEntry) expr;
+            paramQuad = quadGen.makeParam(topStack, scalarExpr.getAddress());
+         }
+         else
+         {
+            reportError("","Invalid procedure call.");
+            return null;
+         }
+         
+         quadGen.addQuad(paramQuad);
+         //not sure if this is the right thing to return
+         return new Integer(paramQuad.getQuadId());
 			}
 	}
 	
