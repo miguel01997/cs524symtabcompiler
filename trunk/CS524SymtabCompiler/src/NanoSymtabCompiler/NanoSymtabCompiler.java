@@ -656,7 +656,6 @@ public class NanoSymtabCompiler extends CompilerModel
 				System.out.println("identifier lexeme: "+idLexeme+"\n");
 
 			symtab.tempIdListAdd(idLexeme);
-			// Return null value
 			return idLexeme;
 
 			}
@@ -676,7 +675,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			
 			symtab.tempIdListClear();
 			symtab.tempIdListAdd(idLexeme);
-			// Rich said ???? Does this make sense
+			
 			return idLexeme;
 		}
 	}
@@ -846,7 +845,8 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("formalList {empty} -> /* empty */\n");
 		   }
-			return null;
+		   //I think we need to return 0 so we have count of param being 0
+			return 0;
 			}
 	}
 	final class formalListListNT extends NonterminalFactory
@@ -1924,7 +1924,35 @@ public class NanoSymtabCompiler extends CompilerModel
    			String idString = (String) parser.rhsValue (1);
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
-			return null;
+NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
+         
+         if (idToCall==null || !idToCall.isProcedure())
+         {
+            reportError("","Invalid procedure identifier call.");
+            return null;
+         }
+         
+         int actualParamCount = 0;
+         
+         NSTIndProcEntry procToCall = (NSTIndProcEntry)idToCall;
+         int numParam = procToCall.getNumInputs();
+         int startQuadNum = procToCall.getStartQuadNumber();
+         
+         if (actualParamCount!=numParam)
+         {
+            reportError("","Invalid number of parameters for procedure call.");
+            return null;
+         }
+         
+         //*&*&**&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
+         //We still need to check the param types against what expected
+         //*&*&**&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
+         
+         InstrModQuad callQuad = quadGen.makeCall(startQuadNum, numParam);
+         
+         quadGen.addQuad(callQuad);
+         //not sure if this is the right thing to return
+         return new Integer(callQuad.getQuadId());
 			}
 	}
 	final class callStmntExprListNT extends NonterminalFactory
@@ -1939,9 +1967,36 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
 		   
-		   MemModQuad callQuad;
+		   NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
 		   
-			return null;
+		   if (idToCall==null || !idToCall.isProcedure())
+         {
+            reportError("","Invalid procedure identifier call.");
+            return null;
+         }
+		   
+		   String stringNumParam = (String) parser.rhsValue (3);
+         int actualParamCount = Integer.parseInt(stringNumParam);
+		   
+		   NSTIndProcEntry procToCall = (NSTIndProcEntry)idToCall;
+		   int numParam = procToCall.getNumInputs();
+		   int startQuadNum = procToCall.getStartQuadNumber();
+		   
+		   if (actualParamCount!=numParam)
+         {
+            reportError("","Invalid number of parameters for procedure call.");
+            return null;
+         }
+		   
+		   //*&*&**&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
+		   //We still need to check the param types against what expected
+		   //*&*&**&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*&
+		   
+		   InstrModQuad callQuad = quadGen.makeCall(startQuadNum, numParam);
+		   
+		   quadGen.addQuad(callQuad);
+         //not sure if this is the right thing to return
+         return new Integer(callQuad.getQuadId());
 			}
 	}
 	
