@@ -1915,7 +1915,60 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("expr {plus} -> expr plus term\n");
 		   }
-			return null;
+		   
+		   //get expr plus term left and right hand sides
+         NSTIndEntry leftExpr = (NSTIndEntry) parser.rhsValue(0);
+         NSTIndEntry rightTerm = (NSTIndEntry) parser.rhsValue(2);
+         
+         //check if null
+         if (leftExpr == null || rightTerm==null) return null;     
+         
+         //check if not integers
+         if (!leftExpr.isInteger() || !rightTerm.isInteger()) {
+            reportError("","Invalid addition operation arguements - must be integer.");
+            return null;
+         }
+         
+         //declare the quad and get temp symtab address
+         MemModQuad exprPlusQuad;
+         NSTIndScalarEntry tmpExprPlusResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
+         
+         //make quads depending on immediate values
+         if (leftExpr.isImmediate() && rightTerm.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftExpr;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightTerm;
+            exprPlusQuad = quadGen.makeAddBothImmediate(tmpExprPlusResult.getAddress(),          
+                  eLeftImm.getIntValue(), eRightImm.getIntValue());
+         }
+         else if (leftExpr.isImmediate() && !rightTerm.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftExpr;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightTerm;
+            exprPlusQuad = quadGen.makeAddLeftImmediate(tmpExprPlusResult.getAddress(),          
+                  eLeftImm.getIntValue(), eRightImm.getAddress());
+         }
+         else if (!leftExpr.isImmediate() && rightTerm.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftExpr;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightTerm;
+            exprPlusQuad = quadGen.makeAddRightImmediate(tmpExprPlusResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getIntValue());
+         }
+         else if (!leftExpr.isImmediate() && !rightTerm.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftExpr;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightTerm;
+            exprPlusQuad = quadGen.makeAddRegular(tmpExprPlusResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getAddress());
+         }
+         else {
+            reportError("","Invalid addition operation arguements.");
+            return null;
+         }
+         
+         quadGen.addQuad(exprPlusQuad);
+         return tmpExprPlusResult;
 			}
 	}
 	final class exprMinusNT extends NonterminalFactory
@@ -1927,7 +1980,60 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("expr {minus} -> expr minus term\n");
 		   }
-			return null;
+
+         //get expr minus term left and right hand sides
+         NSTIndEntry leftExpr = (NSTIndEntry) parser.rhsValue(0);
+         NSTIndEntry rightTerm = (NSTIndEntry) parser.rhsValue(2);
+         
+         //check if null
+         if (leftExpr == null || rightTerm==null) return null;     
+         
+         //check if not integers
+         if (!leftExpr.isInteger() || !rightTerm.isInteger()) {
+            reportError("","Invalid subtraction operation arguements - must be integer.");
+            return null;
+         }
+         
+         //declare the quad and get temp symtab address
+         MemModQuad exprMinusQuad;
+         NSTIndScalarEntry tmpExprMinusResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
+         
+         //make quads depending on immediate values
+         if (leftExpr.isImmediate() && rightTerm.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftExpr;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightTerm;
+            exprMinusQuad = quadGen.makeSubBothImmediate(tmpExprMinusResult.getAddress(),          
+                  eLeftImm.getIntValue(), eRightImm.getIntValue());
+         }
+         else if (leftExpr.isImmediate() && !rightTerm.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftExpr;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightTerm;
+            exprMinusQuad = quadGen.makeSubLeftImmediate(tmpExprMinusResult.getAddress(),          
+                  eLeftImm.getIntValue(), eRightImm.getAddress());
+         }
+         else if (!leftExpr.isImmediate() && rightTerm.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftExpr;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightTerm;
+            exprMinusQuad = quadGen.makeSubRightImmediate(tmpExprMinusResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getIntValue());
+         }
+         else if (!leftExpr.isImmediate() && !rightTerm.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftExpr;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightTerm;
+            exprMinusQuad = quadGen.makeSubRegular(tmpExprMinusResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getAddress());
+         }
+         else {
+            reportError("","Invalid subtraction operation arguements.");
+            return null;
+         }
+         
+         quadGen.addQuad(exprMinusQuad);
+         return tmpExprMinusResult;
 			}
 	}
 	final class exprOrNT extends NonterminalFactory
@@ -1939,7 +2045,60 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("expr {or} -> expr or term\n");
 		   }
-			return null;
+		   
+		   //get expr or term left and right hand sides
+         NSTIndEntry leftExpr = (NSTIndEntry) parser.rhsValue(0);
+         NSTIndEntry rightTerm = (NSTIndEntry) parser.rhsValue(2);
+         
+         //check if null
+         if (leftExpr == null || rightTerm==null) return null;     
+         
+         //check if not booleans
+         if (!leftExpr.isBoolean() || !rightTerm.isBoolean()) {
+            reportError("","Invalid OR operation arguements - must be boolean.");
+            return null;
+         }
+         
+         //declare the quad and get temp symtab address
+         MemModQuad exprOrQuad;
+         NSTIndScalarEntry tmpExprOrResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
+         
+         //make quads depending on immediate values
+         if (leftExpr.isImmediate() && rightTerm.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftExpr;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightTerm;
+            exprOrQuad = quadGen.makeOrBothImmediate(tmpExprOrResult.getAddress(),          
+                  eLeftImm.getBoolValue(), eRightImm.getBoolValue());
+         }
+         else if (leftExpr.isImmediate() && !rightTerm.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftExpr;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightTerm;
+            exprOrQuad = quadGen.makeOrLeftImmediate(tmpExprOrResult.getAddress(),          
+                  eLeftImm.getBoolValue(), eRightImm.getAddress());
+         }
+         else if (!leftExpr.isImmediate() && rightTerm.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftExpr;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightTerm;
+            exprOrQuad = quadGen.makeOrRightImmediate(tmpExprOrResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getBoolValue());
+         }
+         else if (!leftExpr.isImmediate() && !rightTerm.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftExpr;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightTerm;
+            exprOrQuad = quadGen.makeOrRegular(tmpExprOrResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getAddress());
+         }
+         else {
+            reportError("","Invalid AND operation arguements.");
+            return null;
+         }
+         
+         quadGen.addQuad(exprOrQuad);
+         return tmpExprOrResult;
 			}
 	}
 	final class exprTermNT extends NonterminalFactory
@@ -1952,7 +2111,9 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("expr {term} -> term\n");
 		   }
-			return value;
+		   NSTIndEntry term = (NSTIndEntry)parser.rhsValue(0);
+         if (term==null) {return null; }
+         return term;
 			}
 	}
 	
@@ -1967,7 +2128,7 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.println("term {star} -> term star factor\n");
 		   }
 		   
-		   //get term and factor left and right hand sides
+		   //get term star factor left and right hand sides
          NSTIndEntry leftTerm = (NSTIndEntry) parser.rhsValue(0);
          NSTIndEntry rightFactor = (NSTIndEntry) parser.rhsValue(2);
          
@@ -1980,7 +2141,7 @@ public class NanoSymtabCompiler extends CompilerModel
             return null;
          }
          
-         //declare the termAnd quad and get temp symtab address
+         //declare the quad and get temp symtab address
          MemModQuad termStarQuad;
          NSTIndScalarEntry tmpTermStarResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
          
@@ -2032,7 +2193,7 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.println("term {slash} -> term slash factor\n");
 		   }
 		   
-		   //get term and factor left and right hand sides
+		   //get term slash factor left and right hand sides
          NSTIndEntry leftTerm = (NSTIndEntry) parser.rhsValue(0);
          NSTIndEntry rightFactor = (NSTIndEntry) parser.rhsValue(2);
          
@@ -2045,7 +2206,7 @@ public class NanoSymtabCompiler extends CompilerModel
             return null;
          }
          
-         //declare the termAnd quad and get temp symtab address
+         //declare the quad and get temp symtab address
          MemModQuad termSlashQuad;
          NSTIndScalarEntry tmpTermSlashResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
          
@@ -2110,7 +2271,7 @@ public class NanoSymtabCompiler extends CompilerModel
             return null;
          }
          
-         //declare the termAnd quad and get temp symtab address
+         //declare the quad and get temp symtab address
          MemModQuad termAndQuad;
          NSTIndScalarEntry tmpTermAndResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
          
