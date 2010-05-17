@@ -142,11 +142,13 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("printStmnt", 		"", 			new printStmntNT());
 
 		_parserTable.linkFactory("printExprList", 	"nonempty",		new printExprListNonemptyNT());
+		_parserTable.linkFactory("printExprList", 	"single",		new printExprListSingleNT());
 		_parserTable.linkFactory("printExprList", 	"empty", 		new printExprListEmptyNT());		
 		
 		_parserTable.linkFactory("readStmnt", 		"", 			new readStmntNT());
 
 		_parserTable.linkFactory("inputTargetList",	"nonempty",		new inputTargetListNonemptyNT());
+		_parserTable.linkFactory("inputTargetList", "single", 		new inputTargetListSingleNT());
 		_parserTable.linkFactory("inputTargetList",	"empty", 		new inputTargetListEmptyNT());		
 		
 		_parserTable.linkFactory("inputTarget", 	"id", 			new inputTargetIdNT());
@@ -1192,21 +1194,27 @@ public class NanoSymtabCompiler extends CompilerModel
 			   //We know the entry isn't immediate, so it's probably a scalar
 			   NSTIndScalarEntry exprEntry = (NSTIndScalarEntry) expr;
 			   
-			   //For the boolean print quad
-			   if (exprEntry.isBoolean()){
-				  MemModQuad quad = quadGen.makePrint(exprEntry.getAddress(), "B");
-				  return quad.getQuadId();
-			   }
-			   //For the integer print quad
-			   if (exprEntry.isInteger()){
-				  MemModQuad quad = quadGen.makePrint(exprEntry.getAddress(), "I");
-				  return quad.getQuadId();
-			   }
+			   symtab.tempIdListClear();
+			   symtab.tempIdListAdd(exprEntry.getName());
 			   
 			   //Something went wrong, you didn't get the expression you expected, so fail
 				return null;
 			}
 	}
+	
+	final class printExprListSingleNT extends NonterminalFactory
+	{
+		public Object makeNonterminal (Parser parser, int param) 
+			throws IOException, SyntaxException
+			{
+			   if (showReductions) {
+	   			System.out.print(parser.token().line + ": ");
+	   			System.out.println("printExprList {single} -> expr\n");
+			   }
+				return null;
+			}
+	}	
+	
 	final class printExprListEmptyNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
@@ -1257,6 +1265,19 @@ public class NanoSymtabCompiler extends CompilerModel
 				if (showReductions) {
 		   			System.out.print(parser.token().line + ": ");
 		   			System.out.println("inputTargetList {nonempty} -> inputTarget comma inputTargetList\n");
+				}
+				return null;
+			}
+	}
+	
+	final class inputTargetListSingleNT extends NonterminalFactory
+	{
+		public Object makeNonterminal (Parser parser, int param) 
+			throws IOException, SyntaxException
+			{
+				if (showReductions) {
+		   			System.out.print(parser.token().line + ": ");
+		   			System.out.println("inputTargetList {single} -> inputTarget\n");
 				}
 				return null;
 			}
