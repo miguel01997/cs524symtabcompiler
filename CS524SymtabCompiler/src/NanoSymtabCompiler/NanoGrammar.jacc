@@ -152,11 +152,13 @@ endCurrentBlock -> %reduce /* empty */;
 printStmnt -> print lparen stringConst printExprList rparen semicolon;
 
 printExprList {empty} -> /* empty */;
+printExprList {single} -> expr;
 printExprList {nonempty} -> expr comma printExprList;
 
 readStmnt -> read lparen stringConst inputTargetList rparen semicolon;
 
 inputTargetList {empty} -> /* empty */;
+inputTargetList {single} -> inputTarget;
 inputTargetList {nonempty} -> inputTarget comma inputTargetList;
 
 inputTarget {id} -> id;
