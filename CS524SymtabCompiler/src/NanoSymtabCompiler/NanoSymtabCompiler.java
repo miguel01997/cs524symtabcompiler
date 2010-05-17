@@ -1860,6 +1860,9 @@ public class NanoSymtabCompiler extends CompilerModel
 		   NSTIndEntry expr = (NSTIndEntry)parser.rhsValue(0);
          if (expr==null) {return null; }
          
+         int countNumberofParams = ((Integer) parser.rhsValue(2)).intValue() + 1;
+         
+         
          MemModQuad paramQuad;
          MemModQuad immedTransferQuad;
          
@@ -1894,7 +1897,7 @@ public class NanoSymtabCompiler extends CompilerModel
          
          quadGen.addQuad(paramQuad);
          //not sure if this is the right thing to return
-         return new Integer(paramQuad.getQuadId());
+         return countNumberofParams;
 			}
 	}
 	final class exprListSingleNT extends NonterminalFactory
@@ -1945,7 +1948,7 @@ public class NanoSymtabCompiler extends CompilerModel
          
          quadGen.addQuad(paramQuad);
          //not sure if this is the right thing to return
-         return new Integer(paramQuad.getQuadId());
+         return 1;
 			}
 	}
 	
