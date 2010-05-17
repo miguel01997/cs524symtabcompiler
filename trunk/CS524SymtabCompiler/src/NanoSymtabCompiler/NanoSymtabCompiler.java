@@ -1168,7 +1168,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			   //Get the single expression
-			   NSTIndEntry expr = (NSTIndEntry)parser.rhsValue(2);
+			   NSTIndEntry expr = (NSTIndEntry)parser.rhsValue(0);
 			
 			   //Make sure the expression isn't null
 			   if(expr == null){
@@ -1179,7 +1179,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			   //Show the reductions
 			   if (showReductions) {
 	   			System.out.print(parser.token().line + ": ");
-	   			System.out.println("printExprList {nonempty} -> printExprList comma expr\n");
+	   			System.out.println("printExprList {nonempty} -> expr comma printExprList\n");
 			   }
 			   
 			   //Immediates shouldn't be in the expression of the print statement
@@ -1255,7 +1255,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			{
 				if (showReductions) {
 		   			System.out.print(parser.token().line + ": ");
-		   			System.out.println("inputTargetList {nonempty} -> inputTargetList comma inputTarget\n");
+		   			System.out.println("inputTargetList {nonempty} -> inputTarget comma inputTargetList\n");
 				}
 				return null;
 			}
