@@ -646,9 +646,9 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			String idLexeme = (String) parser.rhsValue(2);
+			String idLexeme = (String) parser.rhsValue(0);
 			if (showReductions) 									
-				System.out.println("\nReduced by rule: IdList {recurring} -> IdList comma identifier");
+				System.out.println("\nReduced by rule: IdList {recurring} -> identifier comma IdList");
 			if (idLexeme==null) 
 				return null; //discard error insertions
 			if (showReductions) 									
@@ -657,7 +657,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			symtab.tempIdListAdd(idLexeme);
 			
 			// Return null value
-			return null;
+			return idLexeme;
 
 			}
 	}
@@ -673,10 +673,11 @@ public class NanoSymtabCompiler extends CompilerModel
 				return null; //discard error insertions
 			if (showReductions) 									
 				System.out.println("identifier lexeme: "+idLexeme+"\n");
-
+			
+			symtab.tempIdListClear();
 			symtab.tempIdListAdd(idLexeme);
 			// Rich said ???? Does this make sense
-			return null;
+			return idLexeme;
 		}
 	}
 	
@@ -1876,7 +1877,6 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
 		   
-		   
 		   MemModQuad callQuad;
 		   
 			return null;
@@ -2520,12 +2520,14 @@ public class NanoSymtabCompiler extends CompilerModel
             System.out.println("intConst lexeme: " + intString + "\n");
          }
          
-         Integer intValue = (Integer) parser.rhsValue(0);   
-         if (intValue==null) {
+         String stringValue = (String) parser.rhsValue (0);
+         int integerValue = Integer.parseInt(stringValue);
+         
+         if (stringValue==null) {
             reportError("","Not valid integer value.");
             return null;
          }
-         return symtab.new NSTIndImmediateEntry(NanoSymbolTable.INT_TYPE, intValue);
+         return symtab.new NSTIndImmediateEntry(NanoSymbolTable.INT_TYPE, integerValue);
    }
    }
       

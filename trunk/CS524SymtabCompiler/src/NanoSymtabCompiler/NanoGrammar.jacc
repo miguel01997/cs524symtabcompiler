@@ -102,7 +102,7 @@ showSymbolTable -> %reduce /* empty */;
 
 constDec {idList} -> const idList equals factor semicolon; 
 
-idList {list} -> id comma idList;
+idList {list} -> idList comma id;
 idList {single} -> id;
 
 varDec {idList} -> var idList colon scalarType semicolon;
