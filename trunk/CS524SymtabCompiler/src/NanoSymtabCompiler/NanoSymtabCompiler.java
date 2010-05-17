@@ -254,7 +254,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		{
 			String idString = scanner.tokenToString ();
 			token.value = idString;
-			symtab.tempIdListAdd(idString);
+			//symtab.tempIdListAdd(idString);
 		
 			// Assembled token
 			return assemble;
@@ -672,6 +672,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			if (showReductions) 									
 				System.out.println("identifier lexeme: "+idLexeme+"\n");
 
+			symtab.tempIdListAdd(idLexeme);
 			// Rich said ???? Does this make sense
 			return null;
 		}
@@ -1853,6 +1854,10 @@ public class NanoSymtabCompiler extends CompilerModel
    			String idString = (String) parser.rhsValue (1);
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
+		   
+		   
+		   MemModQuad callQuad;
+		   
 			return null;
 			}
 	}
