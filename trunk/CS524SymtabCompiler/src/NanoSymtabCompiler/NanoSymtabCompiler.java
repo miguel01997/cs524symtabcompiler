@@ -1,6 +1,7 @@
 package NanoSymtabCompiler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import NanoSymtabCompiler.NQG.*;
@@ -655,7 +656,6 @@ public class NanoSymtabCompiler extends CompilerModel
 				System.out.println("identifier lexeme: "+idLexeme+"\n");
 
 			symtab.tempIdListAdd(idLexeme);
-			
 			// Return null value
 			return idLexeme;
 
@@ -1137,6 +1137,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	}
 	
 	//printStmnt
+	private ArrayList<NSTIndScalarEntry> tempPrintStmnt;
 	final class printStmntNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
@@ -1150,18 +1151,65 @@ public class NanoSymtabCompiler extends CompilerModel
 					reportError("","No output string for print statement.");
 					return null;
 				}
-			
-			   if (showReductions) {
-	   			System.out.print(parser.token().line + ": ");
-	   			System.out.println("printStmnt -> print lparen stringConst printExprList rparen semicolon\n");
-	   			System.out.println("string lexeme: " + outputString + "\n");
-			   }
-			   
-			   //Generate us a print quad just for the string 
-			   MemModQuad printQuad = quadGen.makePrint(-1,outputString);
-			   
-			   //Return the quad id because it's something to do
-			   return printQuad.getQuadId();
+				
+				//Show the reductions
+				if (showReductions) {
+		   			System.out.print(parser.token().line + ": ");
+		   			System.out.println("printStmnt -> print lparen stringConst printExprList rparen semicolon\n");
+		   			System.out.println("string lexeme: " + outputString + "\n");
+				}
+				
+				//Check to make sure the expression list isn't empty
+				NSTIndEntry exprList = (NSTIndEntry) parser.rhsValue(3);
+				
+				//If the expression list does not exist (is empty)
+				if(exprList == null){
+					MemModQuad quad = quadGen.makePrint(-1, outputString);
+					quadGen.addQuad(quad);
+					return quad;
+				}
+				
+				//Flags for if boolean or integer type
+				boolean isInteger = false;
+				boolean isBoolean = false;
+				
+			    //Check the output string for either integer or boolean type
+				if(outputString.trim().toUpperCase() == "B"){
+					isBoolean = true;
+				} 
+				if(outputString.trim().toUpperCase() == "I"){
+					isInteger = true;
+				}
+				
+				//If the string is both boolean and integer
+				if(isInteger && isBoolean){
+					reportError("","Problem in print statement. String cannot be both boolean and integer.");
+					return null;
+				}
+				
+				//Iterate through the entries in the temp table for the print statement
+				for(NSTIndScalarEntry entry : tempPrintStmnt){
+					//If the entry is a boolean or boolean array type
+					if((entry.isBoolean() || entry.isBooleanArray()) && isBoolean){
+						MemModQuad quad = quadGen.makePrint(entry.getAddress(),"B");
+						quadGen.addQuad(quad);
+						return quad;
+					}
+					//If the entry is an integer or integer array type
+					if((entry.isInteger() || entry.isIntArray()) && isInteger){
+						MemModQuad quad = quadGen.makePrint(entry.getAddress(),"I");
+						quadGen.addQuad(quad);
+						return quad;
+					}
+					//The expression type and the string type do not match
+					else{
+						reportError("","Expression and output string type do not match.");
+						return null;
+					}
+				}
+				
+				return null;
+				
 			}
 	}
 
@@ -1172,10 +1220,10 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			   //Get the single expression
-			   NSTIndEntry expr = (NSTIndEntry)parser.rhsValue(0);
+			   NSTIndEntry exprEntry = (NSTIndEntry)parser.rhsValue(0);
 			
 			   //Make sure the expression isn't null
-			   if(expr == null){
+			   if(exprEntry == null){
 				   reportError("","Trying to print invalid expression.");
 				   return null;
 			   }
@@ -1186,20 +1234,15 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.println("printExprList {nonempty} -> expr comma printExprList\n");
 			   }
 			   
-			   //Immediates shouldn't be in the expression of the print statement
-			   if(expr.isImmediate()){
-				   reportError("","Cannot have immediate in print statement.");
-			   	   return null;
+			   //Check for immediate expression
+			   if(exprEntry.isImmediate()){
+				   reportError("","Cannot have immediate in print statement");
 			   }
 			   
-			   //We know the entry isn't immediate, so it's probably a scalar
-			   NSTIndScalarEntry exprEntry = (NSTIndScalarEntry) expr;
+			   //Add expression id name to temporary id list
+			   tempPrintStmnt.add((NSTIndScalarEntry)exprEntry);
 			   
-			   symtab.tempIdListClear();
-			   symtab.tempIdListAdd(exprEntry.getName());
-			   
-			   //Something went wrong, you didn't get the expression you expected, so fail
-				return null;
+			   return exprEntry;
 			}
 	}
 	
@@ -1212,7 +1255,26 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.print(parser.token().line + ": ");
 	   			System.out.println("printExprList {single} -> expr\n");
 			   }
-				return null;
+			   
+			   //Get the expression
+			   NSTIndEntry exprEntry = (NSTIndEntry) parser.rhsValue(0);
+			   
+			   //Check for null expression
+			   if(exprEntry == null)
+			   {
+				   reportError("","Cannot have null expression in print statement");
+				   return null;
+			   }
+			   
+			   //Check for immediate expression
+			   if(exprEntry.isImmediate()){
+				   reportError("","Cannot have immediate in print statement");
+			   }
+			   
+			   tempPrintStmnt = new ArrayList<NSTIndScalarEntry>();
+			   tempPrintStmnt.add((NSTIndScalarEntry)exprEntry);
+			   
+			   return exprEntry;
 			}
 	}	
 	
