@@ -2660,11 +2660,11 @@ NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
             System.out.println("boolean value: " + boolString + "\n");
          }
       
-         Boolean boolValue = (Boolean) parser.rhsValue(0);  
-         if (boolValue==null) {
+         Boolean boolObj = Boolean.valueOf((String)parser.rhsValue(0));  
+         if (boolObj==null) {
             return null;
          }
-         return symtab.new NSTIndImmediateEntry(NanoSymbolTable.BOOL_TYPE, boolValue);
+         return symtab.new NSTIndImmediateEntry(NanoSymbolTable.BOOL_TYPE, boolObj.booleanValue());
          }
    }
    final class primValueNT extends NonterminalFactory
@@ -2717,20 +2717,13 @@ NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
          NSTIndEntry eLeft = (NSTIndEntry) parser.rhsValue(1);
          NSTIndEntry eRight = (NSTIndEntry) parser.rhsValue(3);
          
-         if (eLeft == null || eRight==null) return null;
+         String relopString = (String)parser.rhsValue(2);
+         if (relopString==null) {
+            reportError("","Invalid relational operator");
+            return null;
+         }
          
-         //This would be the check if the quad genrator allowed booleans for equals and not equals
-         /*
-         String relopString = (String) parser.rhsValue (2);
-         if (eLeft.isBoolean() && !relopString.equals("equals") && !relopString.equals("notEquals")) {
-            reportError("","Invalid relational operator arguements - must be integer.");
-            return null;
-         }
-         if (eRight.isBoolean() && !relopString.equals("equals") && !relopString.equals("notEquals")) {
-            reportError("","Invalid relational operator arguements - must be integer.");
-            return null;
-         }
-         */
+         if (eLeft == null || eRight==null) return null;
          
          //quad generator does not allow boolean arguments in relops
          if (eLeft.isBoolean() || eRight.isBoolean()) {
