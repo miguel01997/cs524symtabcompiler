@@ -1966,7 +1966,60 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("term {star} -> term star factor\n");
 		   }
-			return null;
+		   
+		   //get term and factor left and right hand sides
+         NSTIndEntry leftTerm = (NSTIndEntry) parser.rhsValue(0);
+         NSTIndEntry rightFactor = (NSTIndEntry) parser.rhsValue(2);
+         
+         //check if null
+         if (leftTerm == null || rightFactor==null) return null;     
+         
+         //check if not integers
+         if (!leftTerm.isInteger() || !rightFactor.isInteger()) {
+            reportError("","Invalid multiplication operation arguements - must be integer.");
+            return null;
+         }
+         
+         //declare the termAnd quad and get temp symtab address
+         MemModQuad termStarQuad;
+         NSTIndScalarEntry tmpTermStarResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+         
+         //make quads depending on immediate values
+         if (leftTerm.isImmediate() && rightFactor.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftTerm;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightFactor;
+            termStarQuad = quadGen.makeMulBothImmediate(tmpTermStarResult.getAddress(),          
+                  eLeftImm.getIntValue(), eRightImm.getIntValue());
+         }
+         else if (leftTerm.isImmediate() && !rightFactor.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftTerm;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightFactor;
+            termStarQuad = quadGen.makeMulLeftImmediate(tmpTermStarResult.getAddress(),          
+                  eLeftImm.getIntValue(), eRightImm.getAddress());
+         }
+         else if (!leftTerm.isImmediate() && rightFactor.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftTerm;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightFactor;
+            termStarQuad = quadGen.makeMulRightImmediate(tmpTermStarResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getIntValue());
+         }
+         else if (!leftTerm.isImmediate() && !rightFactor.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftTerm;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightFactor;
+            termStarQuad = quadGen.makeMulRegular(tmpTermStarResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getAddress());
+         }
+         else {
+            reportError("","Invalid multiplication operation arguements.");
+            return null;
+         }
+         
+         quadGen.addQuad(termStarQuad);
+         return tmpTermStarResult;
 			}
 	}
 	final class termSlashNT extends NonterminalFactory
@@ -1978,7 +2031,60 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("term {slash} -> term slash factor\n");
 		   }
-			return null;
+		   
+		   //get term and factor left and right hand sides
+         NSTIndEntry leftTerm = (NSTIndEntry) parser.rhsValue(0);
+         NSTIndEntry rightFactor = (NSTIndEntry) parser.rhsValue(2);
+         
+         //check if null
+         if (leftTerm == null || rightFactor==null) return null;     
+         
+         //check if not integers
+         if (!leftTerm.isInteger() || !rightFactor.isInteger()) {
+            reportError("","Invalid division operation arguements - must be integer.");
+            return null;
+         }
+         
+         //declare the termAnd quad and get temp symtab address
+         MemModQuad termSlashQuad;
+         NSTIndScalarEntry tmpTermSlashResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+         
+         //make quads depending on immediate values
+         if (leftTerm.isImmediate() && rightFactor.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftTerm;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightFactor;
+            termSlashQuad = quadGen.makeDivBothImmediate(tmpTermSlashResult.getAddress(),          
+                  eLeftImm.getIntValue(), eRightImm.getIntValue());
+         }
+         else if (leftTerm.isImmediate() && !rightFactor.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftTerm;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightFactor;
+            termSlashQuad = quadGen.makeDivLeftImmediate(tmpTermSlashResult.getAddress(),          
+                  eLeftImm.getIntValue(), eRightImm.getAddress());
+         }
+         else if (!leftTerm.isImmediate() && rightFactor.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftTerm;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightFactor;
+            termSlashQuad = quadGen.makeDivRightImmediate(tmpTermSlashResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getIntValue());
+         }
+         else if (!leftTerm.isImmediate() && !rightFactor.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftTerm;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightFactor;
+            termSlashQuad = quadGen.makeDivRegular(tmpTermSlashResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getAddress());
+         }
+         else {
+            reportError("","Invalid division operation arguements.");
+            return null;
+         }
+         
+         quadGen.addQuad(termSlashQuad);
+         return tmpTermSlashResult;
 			}
 	}
 	final class termAndNT extends NonterminalFactory
@@ -1990,7 +2096,60 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("term {and} -> term and factor\n");
 		   }
-			return null;
+		   
+		   //get term and factor left and right hand sides
+		   NSTIndEntry leftTerm = (NSTIndEntry) parser.rhsValue(0);
+         NSTIndEntry rightFactor = (NSTIndEntry) parser.rhsValue(2);
+         
+         //check if null
+         if (leftTerm == null || rightFactor==null) return null;		
+		   
+		   //check if not booleans
+         if (!leftTerm.isBoolean() || !rightFactor.isBoolean()) {
+            reportError("","Invalid AND operation arguements - must be boolean.");
+            return null;
+         }
+         
+         //declare the termAnd quad and get temp symtab address
+         MemModQuad termAndQuad;
+         NSTIndScalarEntry tmpTermAndResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
+         
+		   //make quads depending on immediate values
+         if (leftTerm.isImmediate() && rightFactor.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftTerm;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightFactor;
+            termAndQuad = quadGen.makeAndBothImmediate(tmpTermAndResult.getAddress(),          
+                  eLeftImm.getBoolValue(), eRightImm.getBoolValue());
+         }
+         else if (leftTerm.isImmediate() && !rightFactor.isImmediate())
+         {
+            NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) leftTerm;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightFactor;
+            termAndQuad = quadGen.makeAndLeftImmediate(tmpTermAndResult.getAddress(),          
+                  eLeftImm.getBoolValue(), eRightImm.getAddress());
+         }
+         else if (!leftTerm.isImmediate() && rightFactor.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftTerm;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) rightFactor;
+            termAndQuad = quadGen.makeAndRightImmediate(tmpTermAndResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getBoolValue());
+         }
+         else if (!leftTerm.isImmediate() && !rightFactor.isImmediate())
+         {
+            NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) leftTerm;
+            NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) rightFactor;
+            termAndQuad = quadGen.makeAndRegular(tmpTermAndResult.getAddress(),          
+                  eLeftImm.getAddress(), eRightImm.getAddress());
+         }
+         else {
+            reportError("","Invalid AND operation arguements.");
+            return null;
+         }
+		   
+         quadGen.addQuad(termAndQuad);
+         return tmpTermAndResult;
 			}
 	}
 	final class termFactorNT extends NonterminalFactory
@@ -2003,7 +2162,9 @@ public class NanoSymtabCompiler extends CompilerModel
    		   System.out.print(parser.token().line + ": ");
    			System.out.println("term {factor} -> factor\n");
 		   }
-			return value;
+		   NSTIndEntry factor = (NSTIndEntry)parser.rhsValue(0);
+         if (factor==null) {return null; }
+         return factor;
 			}
 	}
 	
@@ -2147,7 +2308,7 @@ public class NanoSymtabCompiler extends CompilerModel
       public Object makeNonterminal (Parser parser, int param) 
          throws IOException, SyntaxException
          {
-         String address = (String) parser.rhsValue(0);
+
          if (showReductions) {
             System.out.print(parser.token().line + ": ");
             System.out.println("prim {value} -> value\n");
@@ -2173,6 +2334,7 @@ public class NanoSymtabCompiler extends CompilerModel
          }
    }
    
+   //Enumeration so that we can use it in case switch statement below in prim -> relop
    public enum relopName {
       EQUALS,NOTEQUALS,LESSTHAN,LESSTHANEQUALS,GREATERTHAN,GREATERTHANEQUALS 
    }
