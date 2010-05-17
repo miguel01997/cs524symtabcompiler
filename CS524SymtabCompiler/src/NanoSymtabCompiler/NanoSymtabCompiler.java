@@ -2307,7 +2307,7 @@ NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-		   String value = (String)parser.rhsValue(0);
+		   
 		   if (showReductions) {
    			System.out.print(parser.token().line + ": ");
    			System.out.println("expr {term} -> term\n");
@@ -2519,7 +2519,7 @@ NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-		   String value = (String)parser.rhsValue(0);
+		   
 		   if (showReductions) {
    		   System.out.print(parser.token().line + ": ");
    			System.out.println("term {factor} -> factor\n");
@@ -2590,7 +2590,7 @@ NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			String value = (String) parser.rhsValue(1);
+			
 			if (showReductions) {
    			System.out.print(parser.token().line + ": ");
    			System.out.println("factor {not} -> not prim\n");
