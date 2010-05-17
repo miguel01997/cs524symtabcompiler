@@ -603,10 +603,15 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param)
 		throws IOException, SyntaxException
 		{
+			//Show the reductions
 			if (showReductions) 									
 				System.out.println("\nReduced by rule: StartMainBlock -> /* empty */\n");
 			symtab.startNewBlock();
 		
+			//We need to generate a start quad for the code
+			//Initial start seems to be -1 from Lewis' example
+			Quad quad = quadGen.makeStart(-1);
+			
 			//Return null value
 			return null;
 		}
