@@ -1,0 +1,24 @@
+//TEST2
+var v1,v2 : integer;
+var b1 : boolean;
+ 
+ 
+begin
+ 
+  read ( "I", v1, v2);
+  read ( "B", b1 );
+  print ( "I", v1, v2);
+  print ("B", b1);
+  print ("Hello");
+end;
+
+//RESULTS
+//< I-0     | START  |    I-1  |    -    |    -    >
+//< I-1     | READ   |    0    |    -    |    I    >
+//< I-2     | READ   |    1    |    -    |    I    >
+//< I-3     | READ   |    2    |    -    |    B    >
+//< I-4     | PRINT  |    0    |    -    |    I    >
+//< I-5     | PRINT  |    1    |    -    |    I    >
+//< I-6     | PRINT  |    2    |    -    |    B    >
+//< I-7     | PRINT  |    -1   |    -    |    Hello     >
+//< I-8     | END     | >
