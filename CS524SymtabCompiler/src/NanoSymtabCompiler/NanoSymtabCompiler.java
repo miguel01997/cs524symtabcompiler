@@ -25,9 +25,9 @@ public class NanoSymtabCompiler extends CompilerModel
 	static final boolean _debug = false;
 	
 	private boolean symbolTableVerbose = false;
-	private boolean showReductions = false;
+	private boolean showReductions = true;
 	private boolean showSymbolTable = true;
-	private boolean showQuads = false;
+	private boolean showQuads = true;
 	
 	int _conditionNotInComment;
 	int _conditionInLineComment;
