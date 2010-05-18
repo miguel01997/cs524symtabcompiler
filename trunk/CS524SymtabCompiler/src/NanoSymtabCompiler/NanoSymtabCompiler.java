@@ -27,6 +27,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	private boolean symbolTableVerbose = false;
 	private boolean showReductions = false;
 	private boolean showSymbolTable = true;
+	private boolean showQuads = false;
 	
 	int _conditionNotInComment;
 	int _conditionInLineComment;
@@ -635,6 +636,9 @@ public class NanoSymtabCompiler extends CompilerModel
 			//We need to generate an end quad for the program
 			Quad quad = quadGen.makeEnd();
 			quadGen.addQuad(quad);
+			
+			if(showQuads)
+				quadGen.showQuads();
 			
 			//Return null value
 			return null;
@@ -1316,6 +1320,33 @@ public class NanoSymtabCompiler extends CompilerModel
 		   			System.out.println("string lexeme: " + stringConst + "\n");
 				}
 				
+				//flags for input type
+				boolean isBoolean = false;
+				boolean isInteger = false;
+				
+				//Check for string type
+				if(stringConst.trim().toUpperCase() == "B"){
+					isBoolean = true;
+				}
+				else if(stringConst.trim().toUpperCase() == "T"){
+					isInteger = true;
+				}else{
+					reportError("","readStmntNT() - Invalid string for read statement.");
+					return null;
+				}
+				
+				if(isBoolean && isInteger){
+					reportError("","readStmntNT() - String cannot be both boolean and integer type.");
+					return null;
+				}
+				
+				Iterator ids = symtab.getTempIdListIterator();
+
+				NSTIndEntry entry;
+				while(ids.hasNext()){
+					
+					
+				}
 				
 				
 				return null;
@@ -1345,6 +1376,9 @@ public class NanoSymtabCompiler extends CompilerModel
 		   			System.out.print(parser.token().line + ": ");
 		   			System.out.println("inputTargetList {single} -> inputTarget\n");
 				}
+				
+				
+				
 				return null;
 			}
 	}
@@ -1374,7 +1408,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				
 				//Check to make sure string isn't null
 				if(idString == null){
-					reportError("","Invalid id for inputTarget.");
+					reportError("","inputTargetIdNT() - Invalid id for inputTarget.");
 					return null;
 				}
 			
@@ -1390,38 +1424,31 @@ public class NanoSymtabCompiler extends CompilerModel
 			    
 			    //If it isn't in the symbol table
 			    if(idEntry == null){
-			    	reportError("","Identifier not declared in scope.");
+			    	reportError("","inputTargetIdNT() - Identifier not declared in scope.");
 			    	return null;
 			    }
 			    
 			    //Can't assign to a constant variable
 			    if(idEntry.isConstant()){
-			    	reportError("","Can't assign to constant variable");
+			    	reportError("","inputTargetIdNT() - Can't assign to constant variable");
 			    	return null;
 			    }
 			    
 			    //Can't have an immediate entry here
 			    if(idEntry.isImmediate()){
-			    	reportError("","Cannot read to immediate entry.");
+			    	reportError("","inputTargetIdNT() - Cannot read to immediate entry.");
 			    	return null;
 			    }
 			    
 			    //Cast to NSTIndScalarEntry
 			    NSTIndScalarEntry entry = (NSTIndScalarEntry) idEntry;
 			    
-			    //Check for boolean
-			    if(entry.isBoolean()){
-			    	MemModQuad quad = quadGen.makeRead(entry.getAddress(), "B");
-			    	return quad.getQuadId();
-			    }
-			    //Check for integer
-			    if(entry.isIntArray()){
-			    	MemModQuad quad = quadGen.makeRead(entry.getAddress(), "I");
-			    	return quad.getQuadId();
+			    if(entry == null){
+			    	reportError("","inputTargetIdNT() - Entry in symbol table was not of correct type");
+			    	return null;
 			    }
 			    
-			    //Something's wrong, so return null
-			    return null;
+			    return entry;
 			}
 	}
 	final class inputTargetIdArrayNT extends NonterminalFactory
@@ -1435,7 +1462,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				
 				//Check to make sure idString is valid
 				if(idString == null){
-					reportError("","Id not declared in this scope.");
+					reportError("","inputTargetIdArrayNT() - Id not declared in this scope.");
 					return null;
 					
 				}
@@ -1451,7 +1478,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			    
 			    //Check to make sure expression exists
 			    if(exprEntry == null){
-			    	reportError("","Array index expression is invalid.");
+			    	reportError("","inputTargetIdArrayNT() - Array index expression is invalid.");
 			    	return null;
 			    }
 			    
@@ -1471,38 +1498,31 @@ public class NanoSymtabCompiler extends CompilerModel
 			    
 			    //If it isn't in the symbol table
 			    if(idEntry == null){
-			    	reportError("","Identifier not declared in scope.");
+			    	reportError("","inputTargetIdArrayNT() - Identifier not declared in scope.");
 			    	return null;
 			    }
 			    
 			    //Can't have an immediate entry here
 			    if(idEntry.isImmediate()){
-			    	reportError("","Cannot read to immediate entry.");
+			    	reportError("","inputTargetIdArrayNT() - Cannot read to immediate entry.");
 			    	return null;
 			    }
 			    
 			  //Can't assign to a constant variable
 			    if(idEntry.isConstant()){
-			    	reportError("","Can't assign to constant variable");
+			    	reportError("","inputTargetIdArrayNT() - Can't assign to constant variable");
 			    	return null;
 			    }
 			    
 			    //Cast to NSTIndScalarEntry
 			    NSTIndScalarEntry entry = (NSTIndScalarEntry) idEntry;
 			    
-			    //Check for boolean
-			    if(entry.isBoolean()){
-			    	MemModQuad quad = quadGen.makeRead(entry.getAddress(), "B");
-			    	return quad.getQuadId();
-			    }
-			    //Check for integer
-			    if(entry.isIntArray()){
-			    	MemModQuad quad = quadGen.makeRead(entry.getAddress(), "I");
-			    	return quad.getQuadId();
+			    if(entry == null){
+			    	reportError("","inputTargetIdArrayNT() - Entry in symbol table was not of the correct type.");
+			    	return null;
 			    }
 			    
-			    //Something's wrong, so return null
-			    return null;
+			    return entry;
 			}
 	}
 	
