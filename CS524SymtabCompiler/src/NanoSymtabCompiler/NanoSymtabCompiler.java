@@ -1169,7 +1169,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				NSTIndEntry exprList = (NSTIndEntry) parser.rhsValue(3);
 				
 				//If the expression list does not exist (is empty)
-				if(exprList == null){
+				if(false){
 					MemModQuad quad = quadGen.makePrint(-1, outputString);
 					quadGen.addQuad(quad);
 					return quad;
@@ -1193,19 +1193,19 @@ public class NanoSymtabCompiler extends CompilerModel
 					return null;
 				}
 				
+				MemModQuad quad = null;
+				
+				
 				//Iterate through the entries in the temp table for the print statement
 				for(NSTIndScalarEntry entry : tempPrintStmnt){
 					//If the entry is a boolean or boolean array type
+					System.out.println("NAME: " + entry.getName() + " ADDRESS: " + entry.getAddress());
 					if((entry.isBoolean() || entry.isBooleanArray()) && isBoolean){
-						MemModQuad quad = quadGen.makePrint(entry.getAddress(),"B");
-						quadGen.addQuad(quad);
-						return quad;
+						quad = quadGen.makePrint(entry.getAddress(),"B");
 					}
 					//If the entry is an integer or integer array type
 					if((entry.isInteger() || entry.isIntArray()) && isInteger){
-						MemModQuad quad = quadGen.makePrint(entry.getAddress(),"I");
-						quadGen.addQuad(quad);
-						return quad;
+						quad = quadGen.makePrint(entry.getAddress(),"I");
 					}
 					//The expression type and the string type do not match
 					else{
@@ -1213,7 +1213,7 @@ public class NanoSymtabCompiler extends CompilerModel
 						return null;
 					}
 				}
-				
+				quadGen.addQuad(quad);
 				return null;
 				
 			}
@@ -1225,14 +1225,13 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			   //Get the single expression
-			   NSTIndEntry exprEntry = (NSTIndEntry)parser.rhsValue(0);
-			
-			   //Make sure the expression isn't null
-			   if(exprEntry == null){
-				   reportError("","printExprListNonemptyNT() - Trying to print invalid expression.");
-				   return null;
-			   }
+			   
+				NSTIndEntry expr = (NSTIndEntry) parser.rhsValue(0);
+				
+				if(expr == null){
+					reportError("","printExprListNonemptyNT() - Expression cannot be empty.");
+					return null;
+				}
 			   
 			   //Show the reductions
 			   if (showReductions) {
@@ -1240,23 +1239,24 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.println("printExprList {nonempty} -> expr comma printExprList\n");
 			   }
 			   
-			   //Check for immediate expression
-			   if(exprEntry.isImmediate()){
-				   reportError("","printExprListNonemptyNT() - Cannot have immediate in print statement");
+			   if(expr.isImmediate()){
+				   reportError("","printExprListNonemptyNT() - Cannot print immediate value.");   
 				   return null;
 			   }
 			   
-			   NSTIndScalarEntry expr = (NSTIndScalarEntry)exprEntry;
-			   
-			   if(expr == null){
-				   reportError("","printExprListNonemptyNT() - Expression is not of correct type.");
+			   if(!expr.isScalar()){
+				   reportError("","printExprListNonemptyNT() - Expression is not a scalar. Expected a scalar.");
 				   return null;
 			   }
-			   tempPrintStmnt = new ArrayList<NSTIndScalarEntry>();
-			   //Add expression id name to temporary id list
-			   tempPrintStmnt.add(expr);
 			   
-			   return expr;
+			   NSTIndScalarEntry castExpr = (NSTIndScalarEntry) expr;
+			   if(castExpr == null){
+				   reportError("","printExprListNonemptyNT() - Problem casting expression.");
+				   return null;
+			   }
+			   
+			   tempPrintStmnt.add(castExpr);
+			   return castExpr;
 			}
 	}
 	
@@ -1271,23 +1271,30 @@ public class NanoSymtabCompiler extends CompilerModel
 			   }
 			   
 			   //Get the expression
-			   NSTIndEntry exprEntry = (NSTIndEntry) parser.rhsValue(0);
+			   NSTIndEntry expr = (NSTIndEntry) parser.rhsValue(0);
 			   
 			   //Check for null expression
-			   if(exprEntry == null)
+			   if(expr == null)
 			   {
 				   reportError("","printExprListSingleNT() - Cannot have null expression in print statement");
 				   return null;
 			   }
 			   
 			   //Check for immediate expression
-			   if(exprEntry.isImmediate()){
-				   reportError("","Cannot have immediate in print statement");
+			   if(expr.isImmediate()){
+				   reportError("","printExprListSingleNT() - Cannot have immediate in print statement");
+				   return null;
 			   }
 			   
-			   tempPrintStmnt.add((NSTIndScalarEntry)exprEntry);
+			   if(!expr.isScalar()){
+				   reportError("","printExprListSingleNT() - Expression is not of type scalar. Expecting scalar.");
+				   return null;
+			   }
 			   
-			   return exprEntry;
+			   if(tempPrintStmnt == null)
+				   tempPrintStmnt = new ArrayList<NSTIndScalarEntry>();
+				   
+			   return expr;
 			}
 	}	
 	
