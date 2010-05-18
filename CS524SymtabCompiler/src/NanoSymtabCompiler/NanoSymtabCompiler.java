@@ -1237,10 +1237,13 @@ public class NanoSymtabCompiler extends CompilerModel
 			   //Check for immediate expression
 			   if(exprEntry.isImmediate()){
 				   reportError("","Cannot have immediate in print statement");
+				   return null;
 			   }
 			   
+			   NSTIndScalarEntry expr = (NSTIndScalarEntry)exprEntry;
+			   
 			   //Add expression id name to temporary id list
-			   tempPrintStmnt.add((NSTIndScalarEntry)exprEntry);
+			   tempPrintStmnt.add(expr);
 			   
 			   return exprEntry;
 			}
