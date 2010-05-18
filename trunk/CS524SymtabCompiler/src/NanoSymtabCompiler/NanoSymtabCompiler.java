@@ -1148,7 +1148,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				
 				//Make sure the output string exists
 				if(outputString == null){
-					reportError("","No output string for print statement.");
+					reportError("","printStmnt() - No output string for print statement.");
 					return null;
 				}
 				
@@ -1183,7 +1183,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				
 				//If the string is both boolean and integer
 				if(isInteger && isBoolean){
-					reportError("","Problem in print statement. String cannot be both boolean and integer.");
+					reportError("","printStmnt() - Problem in print statement. String cannot be both boolean and integer.");
 					return null;
 				}
 				
@@ -1203,7 +1203,7 @@ public class NanoSymtabCompiler extends CompilerModel
 					}
 					//The expression type and the string type do not match
 					else{
-						reportError("","Expression and output string type do not match.");
+						reportError("","printStmnt() - Expression and output string type do not match.");
 						return null;
 					}
 				}
@@ -1224,7 +1224,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			
 			   //Make sure the expression isn't null
 			   if(exprEntry == null){
-				   reportError("","Trying to print invalid expression.");
+				   reportError("","printExprListNonemptyNT() - Trying to print invalid expression.");
 				   return null;
 			   }
 			   
@@ -1236,7 +1236,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			   
 			   //Check for immediate expression
 			   if(exprEntry.isImmediate()){
-				   reportError("","Cannot have immediate in print statement");
+				   reportError("","printExprListNonemptyNT() - Cannot have immediate in print statement");
 				   return null;
 			   }
 			   
@@ -1265,7 +1265,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			   //Check for null expression
 			   if(exprEntry == null)
 			   {
-				   reportError("","Cannot have null expression in print statement");
+				   reportError("","printExprListSingleNT() - Cannot have null expression in print statement");
 				   return null;
 			   }
 			   
@@ -1305,7 +1305,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				
 				//Check to make sure there's a stringConst
 				if(stringConst == null){
-					reportError("","Read has no string constant.");
+					reportError("","readStmntNT() - Read has no string constant.");
 					return null;	
 				}
 				
