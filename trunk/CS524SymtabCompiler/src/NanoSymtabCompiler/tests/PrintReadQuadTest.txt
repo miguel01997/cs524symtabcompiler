@@ -1,5 +1,4 @@
-//TEST2
-var v1,v2 : integer;
+var v1,v2 : integer; 
 var b1 : boolean;
 
 begin
