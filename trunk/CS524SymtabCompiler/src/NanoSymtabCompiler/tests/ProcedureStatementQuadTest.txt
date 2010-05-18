@@ -1,0 +1,15 @@
+var i : integer;
+
+procedure myProc(num : integer);
+	begin
+		print("I",num);
+		return;
+	end;
+	
+	//Main program
+	begin
+		i := 2;
+		call(i);
+	end;
+	
+//Expected Quads

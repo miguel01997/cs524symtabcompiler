@@ -1248,10 +1248,15 @@ public class NanoSymtabCompiler extends CompilerModel
 			   
 			   NSTIndScalarEntry expr = (NSTIndScalarEntry)exprEntry;
 			   
+			   if(expr == null){
+				   reportError("","printExprListNonemptyNT() - Expression is not of correct type.");
+				   return null;
+			   }
+			   tempPrintStmnt = new ArrayList<NSTIndScalarEntry>();
 			   //Add expression id name to temporary id list
 			   tempPrintStmnt.add(expr);
 			   
-			   return exprEntry;
+			   return expr;
 			}
 	}
 	
@@ -1280,7 +1285,6 @@ public class NanoSymtabCompiler extends CompilerModel
 				   reportError("","Cannot have immediate in print statement");
 			   }
 			   
-			   tempPrintStmnt = new ArrayList<NSTIndScalarEntry>();
 			   tempPrintStmnt.add((NSTIndScalarEntry)exprEntry);
 			   
 			   return exprEntry;
@@ -1296,6 +1300,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.print(parser.token().line + ": ");
 	   			System.out.println("printExprList {empty} -> /* empty */\n");
 			   }
+			   
 				return null;
 			}
 	}	

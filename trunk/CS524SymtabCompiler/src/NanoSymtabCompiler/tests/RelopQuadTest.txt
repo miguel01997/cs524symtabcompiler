@@ -1,0 +1,49 @@
+var i,j,k : integer;
+var b1,b2 : boolean;
+
+begin
+	i := 3;
+	j := 5;
+	k := 7;
+	b1 := true;
+	b2 := false;
+	
+	//Equal - true
+	if (j == j)
+		print("Is true.");
+	//Equal - false
+	if (j == k)
+		print("Is false.");
+	//Less - true
+	if (j < k)
+		print("Is true.");
+	//Less - false
+	if (k < j)
+		print("Is false.");
+	//Greater - true
+	if (k > i)
+		print("Is true.");
+	//Greater - false
+	if (i > k)
+		print("Is false.");
+	//Greater/Equal - true/equal
+	if (k >= k)
+		print("Is true.");
+	//Greater/Equal - true/greater
+	if (k >= i)
+		print("Is true.");
+	//Greater/Equal - false
+	if (i >= k)
+		print("Is false.");
+	//Less/Equal - true/equal
+	if (j <= j)
+		print("Is true.");
+	//Less/Equal - true/less
+	if (j <= k)
+		print("Is true.");
+	//Less/Equal - false
+	if (j <= i)
+		print("Is false.");
+end;
+
+//Expected quads
