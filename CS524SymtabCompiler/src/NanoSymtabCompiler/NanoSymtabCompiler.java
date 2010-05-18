@@ -651,14 +651,15 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			String idLexeme = (String) parser.rhsValue(0);
+			String idLexeme = (String) parser.rhsValue(2);
 			if (showReductions) 									
-				System.out.println("\nReduced by rule: IdList {recurring} -> identifier comma IdList");
+				System.out.println("\nReduced by rule: IdList {recurring} -> IdList comma identifier");
 			if (idLexeme==null) 
 				return null; //discard error insertions
 			if (showReductions) 									
 				System.out.println("identifier lexeme: "+idLexeme+"\n");
-
+			
+			System.out.println("IdList {recurring} ->identifier lexeme: "+idLexeme+"\n");
 			symtab.tempIdListAdd(idLexeme);
 			return idLexeme;
 
@@ -677,6 +678,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			if (showReductions) 									
 				System.out.println("identifier lexeme: "+idLexeme+"\n");
 			
+			System.out.println("IdList {single} ->identifier lexeme: "+idLexeme+"\n");
 			symtab.tempIdListClear();
 			symtab.tempIdListAdd(idLexeme);
 			
@@ -704,14 +706,14 @@ public class NanoSymtabCompiler extends CompilerModel
 					notAlreadyDefined = true;
 				if (!notAlreadyDefined)
 				{
-				reportError("","Duplicate declaration in this block of"+nameToDefine);
+				reportError("","Duplicate declaration in this block of "+nameToDefine);
 				}
 			}
 			symtab.tempIdListClear();
 			
          if (showReductions) {
             System.out.print(parser.token().line + ": ");
-            System.out.println("varDecList {nonempty} -> varDecIdList varDec\n");
+            System.out.println("varDec {idList} -> var idList colon scalarType semicolon\n");
          }
 			
 			// Return null value
@@ -1917,7 +1919,53 @@ public class NanoSymtabCompiler extends CompilerModel
    			String idString = (String) parser.rhsValue (1);
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
-			return null;
+		   NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(1));
+         if (i==null)
+         {
+            reportError("","For statement Identifier not recognized.");
+            return null; 
+         }
+         
+         //Get the left and right expressions
+         NSTIndEntry eLeft = (NSTIndEntry) parser.rhsValue(3);
+         NSTIndEntry eRight = (NSTIndEntry) parser.rhsValue(5);
+         
+         String stringStatement = (String) parser.rhsValue (0);
+         int integerStatement = Integer.parseInt(stringStatement);
+         if (stringStatement==null) {
+            reportError("","Invalid for statement.");
+            return null;
+         }
+         
+         if (eLeft == null || eRight==null) return null;
+         
+         //quad generator does not allow boolean arguments in for statements
+         if (eLeft.isBoolean() || eRight.isBoolean()) {
+            reportError("","Invalid for statement ranges - must be integers.");
+            return null;
+         }
+         
+         int eLeftValue = 0;
+         int eLeftRight = 0;
+         
+         if (eLeft.isImmediate())
+         {
+            NSTIndImmediateEntry immExprLeft = (NSTIndImmediateEntry) eLeft;
+            eLeftValue = immExprLeft.getIntValue();
+         }
+         else if (eLeft.isScalar())
+         {
+            NSTIndScalarEntry immExprLeft = (NSTIndScalarEntry) eLeft;
+            eLeftValue = immExprLeft.getAddress();
+         }
+         
+         //determine if for loop grows or decreases
+         int forChange = 0;
+         //if (eLeft>eRight) {
+         //   forChange = -1;
+         //}
+         
+         return null;
 			}
 	}
 	
@@ -1947,7 +1995,7 @@ public class NanoSymtabCompiler extends CompilerModel
    			String idString = (String) parser.rhsValue (1);
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
-NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
+		   NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
          
          if (idToCall==null || !idToCall.isProcedure())
          {
@@ -1999,6 +2047,12 @@ NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
          }
 		   
 		   String stringNumParam = (String) parser.rhsValue (3);
+		   
+		   if (stringNumParam==null) {
+		      reportError("","Invalid parameter expression.");
+            return null;
+		   }
+		   
          int actualParamCount = Integer.parseInt(stringNumParam);
 		   
 		   NSTIndProcEntry procToCall = (NSTIndProcEntry)idToCall;
