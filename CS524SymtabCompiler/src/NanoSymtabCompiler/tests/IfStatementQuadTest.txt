@@ -1,0 +1,13 @@
+const i := 10;
+var b : boolean;
+
+begin
+	read("B",b);
+	if(b) then
+		i := 5;
+	else
+		i := 15;
+	print("I",i);
+end;
+
+//Expected Quads
