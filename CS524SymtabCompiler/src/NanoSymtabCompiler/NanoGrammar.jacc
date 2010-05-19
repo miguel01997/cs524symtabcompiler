@@ -47,7 +47,8 @@ minus;
 star;
 slash;
 assign;
-equals;
+constEquals;
+isEquals;
 notEquals;
 lessThan;
 lessThanEquals;
@@ -75,7 +76,8 @@ program -> startMainBlock
 		   procDecList
 		   showSymbolTable
 		   begin
-		   statement  //Must have one statement in a program
+		   StartMarker
+		   statement
 		   statementList
 		   end
 		   endMainBlock
@@ -100,7 +102,9 @@ endMainBlock -> %reduce /* empty */;
 
 showSymbolTable -> %reduce /* empty */;
 
-constDec {idList} -> const idList equals factor semicolon; 
+StartMarker -> %reduce /* empty */;
+
+constDec {idList} -> const idList constEquals factor semicolon; 
 
 idList {list} -> idList comma id;
 idList {single} -> id;
@@ -111,7 +115,10 @@ varDec {arrayIdList} -> var arrayIdList colon arrayType semicolon;
 arrayIdList {list} -> id lbracket intConst rbracket comma arrayIdList;
 arrayIdList {single} -> id lbracket intConst rbracket;
 
-procDec ->  procedure id lparen formalList rparen semicolon blockStmnt;
+//procDec ->  procedure id lparen formalList rparen semicolon blockStmnt;
+procDec ->  procHeader procBody;
+procHeader ->  procedure id lparen formalList rparen semicolon;
+procBody ->  blockStmnt;
  
 formalList {list} -> formal semicolon formalList;
 formalList {single} -> formal;
@@ -136,9 +143,10 @@ statement {callStmnt} -> callStmnt;
 
 blockStmnt  -> 	begin
 				startNewBlock 
-		   		constDecList
-		   		varDecList
-		   		showSymbolTable
+		   	constDecList
+		   	varDecList
+		   	AddConstQuads
+		   	showSymbolTable
 				statementList
 				end 
 				endCurrentBlock
@@ -148,6 +156,8 @@ blockStmnt  -> 	begin
 startNewBlock -> %reduce /* empty */;
 
 endCurrentBlock -> %reduce /* empty */;
+
+AddConstQuads -> %reduce /* empty */; 
 
 printStmnt -> print lparen stringConst printExprList rparen semicolon;
 
@@ -209,7 +219,7 @@ prim {relop} -> lparen expr relop expr rparen;
 value {id} -> id;
 value {expr} -> id lbracket expr rbracket;
 
-relop{equals} -> equals;
+relop{isEquals} -> isEquals;
 relop{lessThan} -> lessThan;
 relop{greaterThan} -> greaterThan;
 relop{lessThanEquals} -> lessThanEquals;
@@ -334,7 +344,8 @@ minus = minusCtg;
 star = starCtg;
 slash = slashCtg;
 assign = colonCtg equalsCtg;
-equals = equalsCtg;
+constEquals = equalsCtg;
+isEquals =  equalsCtg equalsCtg;
 notEquals = lessThanCtg greaterThanCtg;
 lessThan = lessThanCtg;
 lessThanEquals = lessThanCtg equalsCtg;

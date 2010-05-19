@@ -3,6 +3,7 @@ package NanoSymtabCompiler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Hashtable;
 
 import NanoSymtabCompiler.NQG.*;
 import NanoSymtabCompiler.NanoSymbolTable.*;
@@ -43,7 +44,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		super();
 
 		//Instantiate the NanoSymbolTable
-		symtab = new NanoSymbolTable(symbolTableVerbose);
+		symtab = new NanoSymbolTable();
 		quadGen = new NQG(10000);
 		
 		
@@ -111,6 +112,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("arrayIdList", 	"single", 		new arrayIdListSingleNT());
 		
 		_parserTable.linkFactory("procDec", 		"", 			new procDecNT());
+		_parserTable.linkFactory("procHeader",     "",         new procHeaderNT());
+		_parserTable.linkFactory("procBody",     "",         new procBodyNT());
 	
 		_parserTable.linkFactory("formalList", 		"list", 		new formalListListNT());
 		_parserTable.linkFactory("formalList", 		"single", 		new formalListSingleNT());
@@ -139,7 +142,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		
 		_parserTable.linkFactory("endCurrentBlock", "", 			new endCurrentBlockNT());
 		
+		_parserTable.linkFactory("AddConstQuads", "",            new addConstQuadsNT());
+		
 		_parserTable.linkFactory("showSymbolTable", "",				new showSymbolTableNT());
+		
+		_parserTable.linkFactory("StartMarker", "",              new StartMarkerNT());
 		
 		_parserTable.linkFactory("printStmnt", 		"", 			new printStmntNT());
 
@@ -204,7 +211,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("value", 			"id", 			new valueIdNT());
 		_parserTable.linkFactory("value", 			"expr", 		new valueExprNT());
 		
-		_parserTable.linkFactory("relop", 			"equals", 		new relopEqualsNT());
+		_parserTable.linkFactory("relop", 			"isEquals", 		new relopIsEqualsNT());
 		_parserTable.linkFactory("relop", 			"lessThan", 	new relopLessThanNT());
 		_parserTable.linkFactory("relop", 			"greaterThan", 	new relopGreaterThanNT());
 		_parserTable.linkFactory("relop", 			"lessThanEquals", new relopLessThanEqualsNT());
@@ -492,7 +499,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			{
 			Object value = (Object) parser.rhsValue(3);
 			if (showReductions) 	
-				System.out.println("\nReduced by rule: ConstantDeclaration -> const IdList equals Factor semicolon");
+				System.out.println("\nReduced by rule: ConstantDeclaration -> const IdList constEquals Factor semicolon");
 			if (value==null) {
 				return null; //discard error insertions
 			}
@@ -804,41 +811,70 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 	}
 	
-	//Rich: I started this one...still need to figure out quads
+	//Add the three part proc stuff procDec, procHeader, procBody
 	//procDec
 	final class procDecNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-		   boolean notAlreadyDefined = true;
+		   
+         if (showReductions) {
+   			System.out.print(parser.token().line + ": ");
+   			System.out.println("procDec -> procHeader procBody");
+			}
+			
+         //not sure what to return
+			return parser.rhsValue(0);
+			}
+	}
+	final class procHeaderNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         boolean notAlreadyDefined = true;
          String nameToDefine = "";
          int countNumberOfIds = ((Integer) parser.rhsValue(3)).intValue();
-		   nameToDefine = (String)parser.rhsValue(1);
-		   
-		   //we need to figure out how to get these numbers
-		   int startQuadNumber=0;
-		   int endQuadNumber=0;
+         nameToDefine = (String)parser.rhsValue(1);
          
-		   if (symtab.addProcedureToCurrentBlock(nameToDefine,countNumberOfIds,startQuadNumber,endQuadNumber) == null)
+         //need to get hashtable of formals
+         Hashtable formalHashtable = new Hashtable();
+         
+         if (symtab.addProcedureToSymbolTable(nameToDefine,countNumberOfIds,formalHashtable) == null)
             notAlreadyDefined = false;
          else
             notAlreadyDefined = true;
          if (!notAlreadyDefined)
          {
-         reportError("","Duplicate declaration in this block of"+nameToDefine);
+         reportError("","Duplicate declaration in this block of "+nameToDefine);
          }
-		   
+         
          if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("procDec ->  procedure id lparen formalList rparen semicolon blockStmnt");
-   			String idString = (String) parser.rhsValue (1);
-   			System.out.println("identifier lexeme: " + idString + "\n");
-			}
-			
-			return null;
-			}
-	}
+            System.out.print(parser.token().line + ": ");
+            System.out.println("procHeader ->  procedure id lparen formalList rparen semicolon");
+            String idString = (String) parser.rhsValue (1);
+            System.out.println("proc id lexeme: " + idString + "\n");
+         }
+         
+         return null;
+         }
+   }
+	final class procBodyNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("procBody ->  blockStmnt");
+         }
+         
+         //this should be the last quad index for the statement
+         return parser.rhsValue(0);
+         }
+   }
 	
 	//formalList (empty, list, single)
 	//Rich: not sure what to do here for symtab
@@ -982,7 +1018,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {blockStmnt} -> blockStmnt\n");
 		   }
-			return null;
+		   //this should be the last quad index for the statement
+         return parser.rhsValue(0);
 			}
 	}
 	final class statementPrintStmntNT extends NonterminalFactory
@@ -994,7 +1031,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {printStmnt} -> printStmnt\n");
 		   }
-			return null;
+         //this should be the last quad index for the statement
+         return parser.rhsValue(0);
 			}
 	}
 	final class statementReadStmntNT extends NonterminalFactory
@@ -1006,7 +1044,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {readStmnt} -> readStmnt\n");
 		   }
-			return null;
+         //this should be the last quad index for the statement
+         return parser.rhsValue(0);
 			}
 	}
 	final class statementAsgnStmntNT extends NonterminalFactory
@@ -1018,7 +1057,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {asgnStmnt} -> asgnStmnt\n");
 		   }
-			return null;
+         //this should be the last quad index for the statement
+         return parser.rhsValue(0);
 			}
 	}
 	final class statementCondStmntNT extends NonterminalFactory
@@ -1030,7 +1070,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {condStmnt} -> condStmnt\n");
 		   }
-			return null;
+         //this should be the last quad index for the statement
+         return parser.rhsValue(0);
 			}
 	}
 	final class statementForStmntNT extends NonterminalFactory
@@ -1042,7 +1083,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {forStmnt} -> forStmnt\n");
 		   }
-			return null;
+         //this should be the last quad index for the statement
+         return parser.rhsValue(0);
 			}
 	}
 	final class statementReturnStmntNT extends NonterminalFactory
@@ -1054,7 +1096,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {returnStmnt} -> returnStmnt\n");
 		   }
-			return null;
+         //this should be the last quad index for the statement
+         return parser.rhsValue(0);
 			}
 	}
 	final class statementCallStmntNT extends NonterminalFactory
@@ -1066,7 +1109,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {callStmnt} -> callStmnt\n");
 		   }
-			return null;
+         //this should be the last quad index for the statement
+         return parser.rhsValue(0);
 			}
 	}
 	
@@ -1085,9 +1129,11 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.println("              StatementList");
 	   			System.out.println("              end");
 	   			System.out.println("              endCurrentBlock");
+	   			System.out.println("              showSymbolTable");
 	   			System.out.println("              semicolon\n");
 			   	}
-				return null;
+		      //this should be the last quad index for the statments in statement list
+	         return parser.rhsValue(4);
 			}
 	}
 	
@@ -1127,6 +1173,21 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 	}
 	
+	//addConstQuads  -not sure what to do with this yet
+   final class addConstQuadsNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+            if (showReductions) {
+               System.out.print(parser.token().line + ": ");
+               System.out.println("addConstQuads ->   /* empty */\n");
+            }
+            
+            return null;
+         }
+   }
+	
 	final class showSymbolTableNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param)
@@ -1141,6 +1202,24 @@ public class NanoSymtabCompiler extends CompilerModel
 			return null;
 		}
 	}
+	
+	final class StartMarkerNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param)
+      throws IOException, SyntaxException
+      {
+         if (showReductions)
+            System.out.println("\nReduced by rule: StartMarker -> /* empty */\n");
+         
+         //Not sure what to do with this yet
+         
+         //if (showSymbolTable) 
+         //   symtab.showContents();
+      
+         //Return null value
+         return null;
+      }
+   }
 	
 	//printStmnt
 	private ArrayList<NSTIndScalarEntry> tempPrintStmnt;
@@ -1213,8 +1292,13 @@ public class NanoSymtabCompiler extends CompilerModel
 						return null;
 					}
 				}
+				//***************************************************8
+				//************************************************8
+				//*******************I think this quadGen.addQuad(quad) needs to be in the loop
 				quadGen.addQuad(quad);
-				return null;
+				
+				//need to return the last quad's ID
+				return new Integer(quad.getQuadId());
 				
 			}
 	}
@@ -1363,7 +1447,8 @@ public class NanoSymtabCompiler extends CompilerModel
 				}
 				
 				
-				return null;
+				//need to return the last quad's ID
+				return new Integer(quad.getQuadId());
 			}
 	}
 	
@@ -1721,14 +1806,14 @@ public class NanoSymtabCompiler extends CompilerModel
 	      {
 	         NSTIndImmediateEntry immIndex = (NSTIndImmediateEntry) indexExpr;
 	         NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry) symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
-	         indexCalcQuad = quadGen.makeRTOffsetImmediate(tmpIndex.getAddress(), array.getAddress(), immIndex.getIntValue()); 
+	         indexCalcQuad = quadGen.makeOffsetImmediate(tmpIndex.getAddress(), array.getAddress(), immIndex.getIntValue()); 
 	      }
 	      //Calculate the address of the index we're using
 	      else if (indexExpr.isScalar())
 	      {
 	         NSTIndScalarEntry calculatedIndex = (NSTIndScalarEntry) indexExpr;
 	         NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry) symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
-	         indexCalcQuad = quadGen.makeRTOffsetRegular(tmpIndex.getAddress(), array.getAddress(), calculatedIndex.getAddress());
+	         indexCalcQuad = quadGen.makeOffsetRegular(tmpIndex.getAddress(), array.getAddress(), calculatedIndex.getAddress());
 	      }
 	      
 	      //Add the index quad
@@ -2019,7 +2104,7 @@ public class NanoSymtabCompiler extends CompilerModel
          
          //**********************************
          //I do not think this is the right quad address to return
-         return incrementForCounterQuad.getQuadId();
+         return new Integer(incrementForCounterQuad.getQuadId());
 			}
 	}
 	
@@ -2033,7 +2118,8 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("returnStmnt -> return semicolon\n");
 		   }
-			return null;
+		   
+		   return new Integer(returnQuad.getQuadId());
 			}
 	}
 	
@@ -2076,7 +2162,7 @@ public class NanoSymtabCompiler extends CompilerModel
          InstrModQuad callQuad = quadGen.makeCall(startQuadNum, numParam);
          
          quadGen.addQuad(callQuad);
-         //not sure if this is the right thing to return
+         
          return new Integer(callQuad.getQuadId());
 			}
 	}
@@ -2126,7 +2212,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		   InstrModQuad callQuad = quadGen.makeCall(startQuadNum, numParam);
 		   
 		   quadGen.addQuad(callQuad);
-         //not sure if this is the right thing to return
+         
          return new Integer(callQuad.getQuadId());
 			}
 	}
@@ -3140,14 +3226,14 @@ public class NanoSymtabCompiler extends CompilerModel
          {
             NSTIndImmediateEntry immIndex = (NSTIndImmediateEntry) indexExpr;
             NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
-            indexCalcQuad = quadGen.makeRTOffsetImmediate(tmpIndex.getAddress(),          
+            indexCalcQuad = quadGen.makeOffsetImmediate(tmpIndex.getAddress(),          
                                  array.getAddress(), immIndex.getIntValue()); 
          }
          else if (indexExpr.isScalar())
          {
             NSTIndScalarEntry calculatedIndex = (NSTIndScalarEntry) indexExpr;
             NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
-            indexCalcQuad = quadGen.makeRTOffsetRegular(tmpIndex.getAddress(), 
+            indexCalcQuad = quadGen.makeOffsetRegular(tmpIndex.getAddress(), 
                            array.getAddress(), calculatedIndex.getAddress());
          }
          quadGen.addQuad(indexCalcQuad);
@@ -3157,14 +3243,14 @@ public class NanoSymtabCompiler extends CompilerModel
 
 	
 	//relop (equals, lessThan, greaterThan, lessThanEquals, greaterThanEquals, notEquals)
-	final class relopEqualsNT extends NonterminalFactory
+	final class relopIsEqualsNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
 		   if (showReductions) {
    			System.out.print(parser.token().line + ": ");
-   			System.out.println("relop{equals} -> equals\n");
+   			System.out.println("relop{isEquals} -> isEquals\n");
 		   }
 		   return (String) parser.rhsValue (0);
 			}

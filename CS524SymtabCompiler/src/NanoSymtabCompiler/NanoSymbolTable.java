@@ -10,7 +10,7 @@ import java.util.ArrayList;
 //			(final inner support classes below)
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 //
-public class NanoSymbolTable 
+public class NanoSymbolTable
 {
 	//Some constants that are useful
 	public static final int UNK_TYPE = -1;
@@ -33,8 +33,7 @@ public class NanoSymbolTable
 		return result;
 	}
 	//For narrating symbol table behavior
-	private boolean verbose;
-	private int verbosityBlockCount = 0; //just for making it easy to narrate the verbose symtab
+	private int blockCount = 0; //just for making it easy to narrate the symtab output
 	
 	//Main instance variables of the chained hash-block symbol table architecture
 	private Stack blockEntryStack; //this is the stack of entries collected together
@@ -48,34 +47,30 @@ public class NanoSymbolTable
 	//Utility support for IdLists
 	private int currTempNum;
 	private ArrayList tempIdList;
-
+	private ArrayList tempTargetList;
+	private ArrayList tempFormalList;
+	private ArrayList tempExprList;
 	
-	//Primary constructor
-	public NanoSymbolTable(boolean verbose)
+	private Hashtable procEntries; //These are kept separate from the block structure
+								   //because the procedure definitions cannot be nested or
+	 							   //have access to nested variables other than those in 
+								   //the scope of the call statement that invokes them
+
+	//Because past copies of the symbol table have provided ample access to verbosity
+	//it is not included in this release; however comments will be instructive where necessary
+	public NanoSymbolTable()
 	{
 		blockEntryStack = new Stack();
 		stackTopOffset = 0;
 		currentBlock = null;
 		currTempNum = 0;
 		tempIdList = new ArrayList();
-		this.verbose = verbose; 
-		if (this.verbose)
-		{
-			System.out.println("\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-			System.out.println("Nano Symbol Table (NST) Verbose Output...");
-			System.out.println("Every action of the symbol table will be narrated;\n"+
-							  "to change this rerun SymbolTable driver or Compiler with verbose variable set to false\n");
-			System.out.println("Most variables can be understood by the informed reader");
-			System.out.println("For questions refer to class discussions or mailing list or see instructor");
-			System.out.println("Despite the structural mechanisms (i.e. hash tables per lexical \"block\" of code, chained together,");
-			System.out.println("...the main variable of interest is the stackTopOffset which is the next address to be assigned to any");
-			System.out.println("variable, constant or array or internally generated temporary variable");
-			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n");
-			System.out.println("NST constructor executed...");
-			System.out.println("Created empty symbol table:");
-			System.out.println("-->Has empty blockEntryStack, currentBlock = null, stackTopOffset = 0\n\n");
-		}
+		tempTargetList = new ArrayList();
+		tempFormalList = new ArrayList();
+		tempExprList = new ArrayList();
+		procEntries = new Hashtable();
 	}
+
 	/*
 	 * Method to provide access to current stackTopOffset for use in PARM quads
 	 */
@@ -87,34 +82,23 @@ public class NanoSymbolTable
 	 */
 	public void startNewBlock()
 	{
-		verbosityBlockCount++;
-		currentBlock = new NSTBlockEntry(stackTopOffset,currentBlock,verbosityBlockCount);
+		blockCount++;
+		currentBlock = new NSTBlockEntry(stackTopOffset,currentBlock,blockCount);
 		blockEntryStack.push(currentBlock);
-		if (verbose)
-		{
-			System.out.println("	=> startNewBlock() called");
-			System.out.println("	   Starting new symbol table block:");
-			System.out.println("	   Block count now: "+verbosityBlockCount);
-			System.out.println("	   Current stackTopOffset: "+stackTopOffset+"\n");
-		}
 	}
+
 	/*
 	 * Method to call to remove a current block in the chain corresponding to a lexical scope
-	 * that is ending. Should always be paired with a prior call to startCurrentBlock for the same scope lexical scope
+	 * that is ending. Should always be paired with a prior call to 
+	 * startCurrentBlock for the same scope lexical scope
 	 */
 	public void endCurrentBlock()
 	{
-		verbosityBlockCount--;
+		blockCount--;
 		NSTBlockEntry be = (NSTBlockEntry) blockEntryStack.pop();
 		stackTopOffset -= be.lengthOfEntries();
-		if (verbose)
-		{
-			System.out.println("	=> endCurrentBlock() called");
-			System.out.println("	   Releasing a closed symbol table block (closed lexical context):");
-			System.out.println("	   Block count now: "+verbosityBlockCount);
-			System.out.println("	   Current stackTopOffset: "+stackTopOffset+"\n");
-		}
 	}
+
 	/*
 	 * Method to add a declared scalar to the curent block; applicable for integers and booleans
 	 */
@@ -126,15 +110,6 @@ public class NanoSymbolTable
 		{
 			e = currentBlock.put(name, type, false);
 			stackTopOffset++;
-			if (verbose)
-			{
-				System.out.println("	=> addScalarToCurrentBlock() called (as during a declaration)");
-				System.out.println("	   (This one is for scalars of either integer or boolean type");
-				System.out.println("	   Adding identifier to block "+verbosityBlockCount+":");
-				System.out.println("	   Name: "+name);
-				System.out.println("	   Type: "+getTypeName(type));
-				System.out.println("	   StackTopOffset (address+1): "+stackTopOffset+"\n");
-			}
 			return e;
 		}
 		else
@@ -142,6 +117,7 @@ public class NanoSymbolTable
 			return null;
 		}	
 	}
+
 	/*
 	 * Method to add a declared constant variable (no arrays or booleans) to the curent block
 	 * Recall that constants get runtime memory assignments just like variables but have
@@ -154,18 +130,6 @@ public class NanoSymbolTable
 		{
 			e = currentBlock.put(name, NanoSymbolTable.INT_TYPE, true);
 			stackTopOffset++;
-			if (verbose)
-			{
-				System.out.println("	=> addConstToCurrentBlock() called (as during a declaration)");
-				System.out.println("	   (This one is for integer constants only, since the lexemes \n" +
-								   "           true and false serve as their own constants");
-				System.out.println("	   (Recall the symbol table is generally not around at runtime \n" +
-						           "           so we must generate memory for these constants");
-				System.out.println("	   Adding identifier to block "+verbosityBlockCount+":");
-				System.out.println("	   Name: "+name);
-				System.out.println("	   Type: "+getTypeName(NanoSymbolTable.INT_TYPE));
-				System.out.println("	   StackTopOffset (address+1): "+stackTopOffset+"\n");
-			}
 			return e;
 		}
 		else
@@ -173,8 +137,10 @@ public class NanoSymbolTable
 			return null;
 		}	
 	}
+
 	/*
-	 * Method to add a declared array variable to the curent block; applicable for integers and booleans
+	 * Method to add a declared array variable to the curent block; 
+	 * applicable for integers and booleans
 	 */
 	public NSTIndArrayEntry addArrayToCurrentBlock(String name, int type, int size)
 	{
@@ -183,16 +149,6 @@ public class NanoSymbolTable
 		{
 			e = currentBlock.put(name, type, size);
 			stackTopOffset += size;
-			if (verbose)
-			{
-				System.out.println("	=> addArrayToCurrentBlock() called (as during an array declaration)");
-				System.out.println("	   (This one is for array variables of either integer or boolean type");
-				System.out.println("	   Adding array identifier to block "+verbosityBlockCount+":");
-				System.out.println("	   Name: "+name);
-				System.out.println("	   Type: "+getTypeName(type));
-				System.out.println("	   Size: "+size);
-				System.out.println("	   StackTopOffset (starting address + size + 1): "+stackTopOffset+"\n");
-			}
 			return e;
 		}
 		else
@@ -200,38 +156,12 @@ public class NanoSymbolTable
 			return null;
 		}
 	}
+
+
 	/*
-	 * Truthfully in Nano all procedures are declared before the first block but all variables 
-	 * declared there are considered visible inside that main block so we do the same here
-	 * with all the procedures. This has the side-effect of being easy to modify, should Nano
-	 * ever evolve toward having procedures declared inside inner blocks.
+	 * For temps created by compiler writer or automatically otherwise
+	 * This is why there is no tempIdListAdd method below with the others
 	 */
-	public NSTIndProcEntry addProcedureToCurrentBlock
-		(String name, int numParams, int startQuad, int endQuad)
-	{
-		NSTIndProcEntry e;
-		if (!currentBlock.entries.containsKey(name))
-		{
-			e = currentBlock.put(name, numParams, startQuad, endQuad);
-			//Procedures use space on the stack, but dynamically when they are called
-			//For now this information is just kept in the symbol table for ease of access
-			//in generating and referring to the quads that make up a procedure
-			if (verbose)
-			{
-				System.out.println("	=> addProcedureToCurrentBlock() called (as during a declaration)");
-				System.out.println("	   (This really doesn't take up stack space, since the space\n" +
-								   "        gets demanded on call, but is kept here for ease of reference to quads");
-				System.out.println("	   Adding identifier to block "+verbosityBlockCount+":");
-				System.out.println("	   Name: "+name);
-				System.out.println("	   Type: "+getTypeName(NanoSymbolTable.PROC_TYPE)+"\n");
-			}
-			return e;
-		}
-		else
-		{
-			return null;
-		}
-	}		
 	public NSTIndScalarEntry addNewTempToCurrentBlock(int type)
 	{
 		String name = getNewTempName();
@@ -239,6 +169,7 @@ public class NanoSymbolTable
 		tempIdListAdd(name);
 		return e;
 	}
+
 	/*
 	 * For creating temporary structures for immediate values
 	 */
@@ -251,6 +182,7 @@ public class NanoSymbolTable
 		//to be instantiated and passed to the compiler
 		return imm;
 	}
+
 	/*
 	 *  Method to lookup an identifier at the main symbol table level,
 	 *  which triggers the local hash table checks and the walks up the chain.
@@ -271,30 +203,31 @@ public class NanoSymbolTable
 		}
 		return entry;
 	}
-	/*
-	 * Workhorse of the tracing of the symbol table. 
-	 * Keep in mind that all this machinery is mostly for the compiler developer,
-	 * to aid in the process of constructing a correct compiler that uses the symtab appropriately.
-	 */
-	public void showContents()
-	{
-		//Not controlled by verbose so contents can be tracked without all the other
-			Iterator besi = blockEntryStack.iterator();
-			System.out.println("Nano Symbol Table =================>\n\n");
-			while (besi.hasNext())
-			{
-				System.out.println(besi.next());
-			}
-			System.out.println("=======================================\n\n\n");
+	
 
-	}		
+	/*
+	 * Clearing methods for the support tempLists
+	 */
 	public void tempIdListClear()
 	{
 		tempIdList = new ArrayList();
 	}
+	public void tempTargetListClear()
+	{
+		tempTargetList = new ArrayList();
+	}
+	public void tempFormalListClear()
+	{
+		tempFormalList = new ArrayList();
+	}
+	public void tempExprListClear()
+	{
+		tempExprList = new ArrayList();
+	}	
+
 	/*
 	 * Once one or more temps have been generated for some subtree of the parse
-	 * it is helpful to have this iterator to spit them back out for use in quads.
+	 * it is helpful to have these iterators to spit them back out for use in quads.
 	 * Also, this is used by the repeated reductions by a production that is grabbing
 	 * one in a sequence of definitions such as x,y,z : integer
 	 */
@@ -302,6 +235,44 @@ public class NanoSymbolTable
 	{
 		return tempIdList.iterator();
 	}
+	public Iterator getTempTargetListIterator()
+	{
+		return tempTargetList.iterator();
+	}
+	public Iterator getTempFormalListIterator()
+	{
+		return tempFormalList.iterator();
+	}
+	public Iterator getTempExprListIterator()
+	{
+		return tempExprList.iterator();
+	}
+
+	/*
+	 * Service method triggered by "addNewTempToCurrentBlock" or as described above in iterator.
+	 * When in need of a temporary variable the symbol table keeps them for the 
+	 * compiler writer in this array list and this method is the workhorse
+	 * for that task. Can also be leveraged "manually" for things like IdLists
+	 * It's easier to have symtab built-in methods to do this rather
+	 */
+	public void tempIdListAdd(String identifier)
+	{
+		tempIdList.add(identifier);
+	}
+	/* Plus some others....*/
+	public void tempTargetListAdd(NSTIndEntry e)
+	{
+		tempTargetList.add(e);
+	}
+	public void tempFormalListAdd(FormalContainer f)
+	{
+		tempFormalList.add(f);
+	}
+	public void tempExprListAdd(NSTIndEntry e)
+	{
+		tempExprList.add(e);
+	}
+	
 	/*Private service method triggered by "addNewTempToCurrentBlock".
 	 *At end of a block the list of temporary variables and 
 	 *their names must be reset by another method.
@@ -312,16 +283,60 @@ public class NanoSymbolTable
 		currTempNum++;
 		return name;
 	}
+
 	/*
-	 * Service method triggered by "addNewTempToCurrentBlock" or as described above in iterator.
-	 * When in need of a temporary variable the symbol table keeps them for the 
-	 * compiler write in this array list and this method is the workhorse
-	 * for that task.
+	 * In Nano all procedures are declared before the first block and all parameters passed in or
+	 * variables declared within are the only ones considered visible inside the procedure block so 
+	 * the procedures are added to a different storage mechanism, and lookups on "outside" variables
+	 * are not only not possible but are therefore an opportunity to provide efficiency. Should we 
+	 * need any of those values in the main scope blocks we would pass them in. 
 	 */
-	public void tempIdListAdd(String identifier)
+	public NSTIndProcEntry addProcedureToSymbolTable
+		(String name, int numParams, Hashtable formalContainerList)
 	{
-		tempIdList.add(identifier);
+		//Procedures are in their own hashtable separate from the block stack	
+		if (this.get(name)!=null)
+		{
+			System.out.println("SYMTAB ERROR: Nano defines procedures for use in any "+
+							   "block and this procedure name is already taken by a variable "+
+							   "somewhere in the Nano code being compiled\n\n");
+			System.exit(1); //OUCH!
+		}
+		NSTIndProcEntry e = new NSTIndProcEntry(name,NanoSymbolTable.PROC_TYPE,numParams,formalContainerList);		
+		procEntries.put(name, e);
+		return e;
 	}
+	
+
+	public NSTIndProcEntry getProcedure(String procName)
+	{ Object o = procEntries.get(procName); 
+	  return (NSTIndProcEntry) o; }
+	
+	/*
+	 * Workhorse of the tracing of the symbol table. 
+	 * Keep in mind that all this machinery is mostly for the compiler developer,
+	 * to aid in the process of constructing a correct compiler that uses the symtab appropriately.
+	 */
+	public void showContents()
+	{
+			Iterator besi = blockEntryStack.iterator();
+			System.out.println("Nano Symbol Table =================>\n\n");
+			while (besi.hasNext())
+			{
+				System.out.println(besi.next());
+			}
+			
+			String result = "			-----------beginning of Procedure Entries -------------\n\n";
+			Iterator procEntriesIterator = procEntries.values().iterator();
+			while (procEntriesIterator.hasNext())
+			{
+				result += procEntriesIterator.next().toString();
+			}
+			result += "			-----------end of Procedure Entries -------------\n\n";
+			System.out.println("=======================================\n\n\n");
+
+	}		
+
 	
 //
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -336,7 +351,7 @@ public final class NSTBlockEntry
 	private int entryOffset;	 //What is the offset within the block of the individual entry
 	private Hashtable entries;	 //The actual hashtable of entries
 	private NSTBlockEntry beneath; //The pointer to the one "under it" in the stack
-	private int verbosityBlockCount;
+	private int blockCount;
 	/*
 	 * Constructor for making a new BLOCK
 	 * Must know the address where the block will start and a pointer to the block beneath it
@@ -348,7 +363,7 @@ public final class NSTBlockEntry
 		this.beneath = beneath;				//Used for iterating top to bottom, since iterator doesn't
 		this.entryOffset = 0;
 		this.entries = new Hashtable();		//Typically so small the default should be fine
-		this.verbosityBlockCount = vbc;			//For tracking for the user...
+		this.blockCount = vbc;			//For tracking for the user...
 	}	
 	/*
 	 * The block level version of "get" by name an entry--gets passed to the get on the hashtable
@@ -384,16 +399,6 @@ public final class NSTBlockEntry
 		return e;
 	}
 	/*
-	 * For procedures the compiler need give name, number of parameters and start and end quads
-	 */
-	public NSTIndProcEntry put(String name, int numParams, int startQuad, int endQuad)
-	{
-		NSTIndProcEntry e =
-			new NSTIndProcEntry(name,NanoSymbolTable.PROC_TYPE,numParams,startQuad,endQuad);
-		entries.put(name, e);
-		return e;
-	}
-	/*
 	 * Used to subtract off free space from the runtime stack
 	 */
 	private int lengthOfEntries()
@@ -406,7 +411,7 @@ public final class NSTBlockEntry
 	public String toString() 
 	{
 			String result = "			---------SymTab Block Entry----------\n" +
-							"			This is block number " + verbosityBlockCount + "\n" +
+							"			This is block number " + blockCount + "\n" +
 							"			BlockOffset: " + blockOffset + "\n\n";
 			Set eks = entries.keySet();
 			Iterator eksi = eks.iterator();
@@ -414,7 +419,8 @@ public final class NSTBlockEntry
 			{
 				result += entries.get(eksi.next()).toString();
 			}
-			result += "			-----------end of SymTab Block Entry-------------";
+			result += "			-----------end of SymTab Block Entry-------------\n\n";
+
 			return result;
 	}
 }
@@ -450,6 +456,7 @@ public class NSTIndEntry
 	public boolean isIntArray() { return actualType == INT_ARRAY_TYPE; }
 	public boolean isProcedure() { return actualType == PROC_TYPE; }
 	public int getActualType() { return actualType; }
+	public void setActualType(int type) { actualType = type; } 
 	public String getName() { return name; }
 	public String toString()
 	{
@@ -533,123 +540,79 @@ extends NSTIndEntry
 	}
 }
 
+//
+///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+//				NANO SYMBOL TABLE PROCEDURE ENTRY CLASS
+//			 (final inner support class for the above)
+///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+//
+public final class FormalContainer
+{
+	private String idLexeme;
+	private int typeFlag;
+	private int negativeOffset;
+	
+	public FormalContainer(String idLexeme, int typeFlag, int negativeOffset)
+	{
+		this.idLexeme = idLexeme;
+		this.typeFlag = typeFlag;
+		this.negativeOffset = negativeOffset;
+	}
+	public String getName() { return idLexeme; }
+	public int getType() { return typeFlag; }
+	public int getNegOffset() { return negativeOffset; }
+	public String toString() 
+	{ return	"			FormalContainer entry:\n"+
+			 	"			lexeme: " + idLexeme +"\n" +
+				"			type: " + NanoSymbolTable.getTypeName(typeFlag) + "\n" +
+				"			negOffset: " + negativeOffset +"\n\n"; 
+	}
+}
+
 public final class NSTIndProcEntry 
 extends NSTIndEntry
 {
 	private int numberInputParamSlots;
 	private int startQuadNumber;
 	private int endQuadNumber;
+	private Hashtable formalContainerList;
+	private Stack callQuadIndex;
 	public NSTIndProcEntry
-	(String name, int type, int numberInputParamSlots, 
-			int startQuadNumber, int endQuadNumber)
+	(String name, int type, int numberInputParamSlots, Hashtable formalContainerList)
 	{
 		super(name,type,false,false);
 		this.numberInputParamSlots = numberInputParamSlots;
-		this.startQuadNumber = startQuadNumber;	
-		this.endQuadNumber = endQuadNumber;
+		this.formalContainerList = formalContainerList;
+		this.callQuadIndex = new Stack();
 	}
 	public int getNumInputs() { return numberInputParamSlots; }
 	public int getStartQuadNumber() { return startQuadNumber; }
 	public int getEndQuadNumber() { return endQuadNumber; }
+	public int getNumberQuads() { return endQuadNumber - startQuadNumber + 1; }
+	public void setStartQuadNumber(int sqn) { startQuadNumber = sqn; }
+	public void setEndQuadNumber(int eqn) { endQuadNumber = eqn; }
+	public void pushCallQuadIndex(int cqi) { callQuadIndex.push(new Integer(cqi)); }
+	public Integer popCallQuadIndex() {  Integer tmp;
+										tmp = (Integer) callQuadIndex.pop();
+										return tmp;}
+	public Hashtable getHashtable() { return formalContainerList; }
 	public String toString() 
 	{
-			return
+		String result
+			= 
 			super.toString()  +
-			" Number Input Parameters: " + numberInputParamSlots + "\n" +
-			"	    Start Quad Number: " + startQuadNumber + 
-			"         End Quad Number: " + endQuadNumber + "\n\n";
+			" 			Number Input Parameters: " + numberInputParamSlots + "\n" +
+			"	    			Start Quad Number: " + startQuadNumber + "\n" +
+			"         			End Quad Number: " + endQuadNumber + "\n\n";
+			Iterator i = formalContainerList.values().iterator();
+			while (i.hasNext())
+				result = result + ((FormalContainer) i.next()).toString();
+			result += "\t\t\t---end procedure: " + name + "----\n\n\n";
+			return result;		
 	}
 }
-
-
-
 	
-
-
-
-public static void main(String[] args)
-{
-	//The following sequence of interactions with the symbol table correspond 
-	//roughly to the Nano input below
-	NanoSymbolTable symtab = new NanoSymbolTable(true);
-	
-	symtab.startNewBlock();
-	symtab.addConstIntToCurrentBlock("const1");
-	symtab.addScalarToCurrentBlock("var1", NanoSymbolTable.INT_TYPE);
-	symtab.addScalarToCurrentBlock("var2", NanoSymbolTable.INT_TYPE);
-	
-	//symtab.lookup("var2");
-	
-	symtab.showContents();	
-	
-	
-	symtab.startNewBlock();
-	symtab.addConstIntToCurrentBlock("newconst1");
-	symtab.addScalarToCurrentBlock("newboolvar2", NanoSymbolTable.BOOL_TYPE);
-	symtab.addArrayToCurrentBlock("newarrayvarofint1",NanoSymbolTable.INT_ARRAY_TYPE,5);
-	symtab.addArrayToCurrentBlock("newarrayvarofbool1",NanoSymbolTable.BOOL_ARRAY_TYPE,10);
-	symtab.addScalarToCurrentBlock("var2", NanoSymbolTable.INT_TYPE);
-	
-	//symtab.lookup("var2");
-	
-	symtab.showContents();	
-	
-	
-	symtab.endCurrentBlock();
-	symtab.showContents();
-	
-	symtab.endCurrentBlock();
-	symtab.showContents();
-}
-
-/* A pretend Nano program whose lexical structure might result in the above calls.
- * 
-program
- const const1 = 417; ///Value doesn't matter in the above; a quad is generated to store this in mem
- var var1, var2 : integer;
- begin
-   //some use of var2, such as:
-     if (var2>5)
-     //-->This is where the first showContents is called on the whole symbol table
-     begin
-        const newconst1 = 147; //Doesn't matter; not kept in symtab anyway 
-        var newboolvar2 : boolean;
-        var newarrayvarofint1[5] : integer;
-        var newarrayvarofbool1[10] : boolean;
-        var var2 : integer;
-        //--> Point of first lookup finding the innermost var2
-        //--> Point of the second showContents called on the whole symbol table
-      end
-      //-->Point of the third showContents
- end
- //Point of the final (empty showContents call)
- * 
- * 
- * 
- */
-
 
 }
 
-/* in addTempto...
- * When a temporary variable is needed in a computation, its name will only be in scope
- * in the block where it is created. So we have a local list of temporary variables for each block.
- * This method allows us to add a new temporary variable, assigning memory and entering it into
- * the symbol table for quad generation and synthesized attributes (type-checking). The name
- * is automatically generated. When the block is exited so is the memory freed for these 
- * temporaries or declared memory usage. There are no temporary arrays or procedures or 
- * constants, so it only requires one of the two parameters NanoSymbolTable.INT_TYPE or 
- * NanoSymbolTable.BOOL_TYPE. The name is returned so the compiler can track it 
- * for correct placement in quad.
- * Temporary variables are used in expressions and are only of type integer or boolean.
- */
-
-/* in tempIdListClear
- * Once temps have been placed in quads, knowing their slots in runtime memory
- * will be cleared automatically when the block is exited, the list can be cleared
- * for future use. Technically the names could be reset, but this could lead to
- * confusion in the produced code so we allow the # after the T to increase "indefinitely"
- * Needs to be public because use of the temp list is tied to formal lists, not necessarily
- * cleared by calls to endCurrentBlock
- */
 
