@@ -3282,7 +3282,7 @@ public class NanoSymtabCompiler extends CompilerModel
             reportError("","Array identifier not found in scope");
             return null; 
          }
-         else if (!array.isIntArray() || !array.isBooleanArray())
+         else if (array.isScalar())
          {
             reportError("","Attempt to use scalar identifier as array base address");
             return null;
