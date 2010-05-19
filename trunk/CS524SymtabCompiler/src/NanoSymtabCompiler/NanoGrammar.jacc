@@ -163,13 +163,13 @@ printStmnt -> print lparen stringConst printExprList rparen semicolon;
 
 printExprList {empty} -> /* empty */;
 printExprList {single} -> expr;
-printExprList {nonempty} -> expr comma printExprList;
+printExprList {nonempty} -> printExprList comma expr;
 
 readStmnt -> read lparen stringConst inputTargetList rparen semicolon;
 
 inputTargetList {empty} -> /* empty */;
 inputTargetList {single} -> inputTarget;
-inputTargetList {nonempty} -> inputTarget comma inputTargetList;
+inputTargetList {nonempty} -> inputTargetList comma inputTarget;
 
 inputTarget {id} -> id;
 inputTarget {idArray} -> id lbracket expr rbracket;

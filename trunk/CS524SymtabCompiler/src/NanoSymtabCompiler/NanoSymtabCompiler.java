@@ -1336,7 +1336,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			   	//Get the expression
-				NSTIndEntry expr = (NSTIndEntry) parser.rhsValue(0);
+				NSTIndEntry expr = (NSTIndEntry) parser.rhsValue(2);
 				
 				//If the expression is null
 				if(expr == null){
@@ -1347,7 +1347,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			   //Show the reductions
 			   if (showReductions) {
 	   			System.out.print(parser.token().line + ": ");
-	   			System.out.println("printExprList {nonempty} -> expr comma printExprList\n");
+	   			System.out.println("printExprList {nonempty} -> printExprList comma expr\n");
 			   }
 			   
 			   
@@ -1516,7 +1516,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-				NSTIndEntry inputTarget = (NSTIndEntry) parser.rhsValue(0);
+				NSTIndEntry inputTarget = (NSTIndEntry) parser.rhsValue(2);
 				
 				if(inputTarget == null){
 					reportError("","inputTargetListNonempty() - input target cannot be null");
@@ -1525,7 +1525,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			
 				if (showReductions) {
 		   			System.out.print(parser.token().line + ": ");
-		   			System.out.println("inputTargetList {nonempty} -> inputTarget comma inputTargetList\n");
+		   			System.out.println("inputTargetList {nonempty} -> inputTargetList comma inputTarget\n");
 				}
 				
 				if(inputTarget.isConstant()){
