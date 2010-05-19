@@ -1249,7 +1249,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				
 				//If there is nothing in the expression list
 				//Generate a standard print quad
-				if(exprList == null){
+				if(parser.rhsValue(3) == null){
 					MemModQuad quad = quadGen.makePrint(-1, outputString);
 					quadGen.addQuad(quad);
 					return quad;
@@ -1261,10 +1261,10 @@ public class NanoSymtabCompiler extends CompilerModel
 				boolean isBoolean = false;
 				
 			    //Check the output string for either integer or boolean type
-				if(outputString.trim().toUpperCase() == "B"){
+				if(outputString.equals("\"B\"")){
 					isBoolean = true;
 				} 
-				if(outputString.trim().toUpperCase() == "I"){
+				if(outputString.equals("\"I\"")){
 					isInteger = true;
 				}
 				
@@ -1342,14 +1342,9 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.println("printExprList {nonempty} -> expr comma printExprList\n");
 			   }
 			   
-			   //can't have immediate expressions
-			   if(expr.isImmediate()){
-				   reportError("","printExprListNonemptyNT() - Cannot print immediate value.");   
-				   return null;
-			   }
 			   
 			   //if the expression is scalar like expected
-			   if(expr.isScalar()){
+			   if(expr.isScalar() && !expr.isImmediate()){
 				   symtab.tempExprListAdd(expr);
 			   }
 			   
@@ -1377,18 +1372,13 @@ public class NanoSymtabCompiler extends CompilerModel
 				   reportError("","printExprListSingleNT() - Cannot have null expression in print statement");
 				   return null;
 			   }
-			   
-			   //Check for immediate expression
-			   if(expr.isImmediate()){
-				   reportError("","printExprListSingleNT() - Cannot have immediate in print statement");
-				   return null;
-			   }
+			  
 			   
 			   //Clear the expression list
 			   symtab.tempExprListClear();
 			   
 			   //Check to make sure expression is a scalar and put it into the temporary expression list
-			   if(expr.isScalar()){
+			   if(expr.isScalar() && !expr.isImmediate()){
 				   symtab.tempExprListAdd(expr);
 			   }
 				   
@@ -1459,7 +1449,7 @@ public class NanoSymtabCompiler extends CompilerModel
 					
 					
 				}
-				
+				MemModQuad quad = null;
 				
 				//need to return the last quad's ID
 				return new Integer(quad.getQuadId());
@@ -2132,6 +2122,8 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.print(parser.token().line + ": ");
    			System.out.println("returnStmnt -> return semicolon\n");
 		   }
+		   
+		   MemModQuad returnQuad = null;
 		   
 		   return new Integer(returnQuad.getQuadId());
 			}

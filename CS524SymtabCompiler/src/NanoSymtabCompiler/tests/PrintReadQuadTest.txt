@@ -2,9 +2,10 @@ var v1,v2 : integer;
 var b1 : boolean;
 
 begin
-  read ( "I", v1, v2);
-  read ( "B", b1 );
-  print ( "I", v1, v2);
+  v1 := 3;
+  v2 := 5;
+  b1 := true;
+  print ("I", v1, v2);
   print ("B", b1);
   print ("Hello");
 end;
