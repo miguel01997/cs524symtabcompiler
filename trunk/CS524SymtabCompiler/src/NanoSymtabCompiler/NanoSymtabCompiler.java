@@ -1222,7 +1222,6 @@ public class NanoSymtabCompiler extends CompilerModel
    }
 	
 	//printStmnt
-	private ArrayList<NSTIndScalarEntry> tempPrintStmnt;
 	final class printStmntNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
@@ -1244,17 +1243,20 @@ public class NanoSymtabCompiler extends CompilerModel
 		   			System.out.println("string lexeme: " + outputString + "\n");
 				}
 				
-				//Check to make sure the expression list isn't empty
-				NSTIndEntry exprList = (NSTIndEntry) parser.rhsValue(3);
+				//Get the iterator for the expression list
+				//Iterator is of type NSTIndEntry
+				Iterator<NSTIndEntry> exprList = symtab.getTempExprListIterator();
 				
-				//If the expression list does not exist (is empty)
-				if(false){
+				//If there is nothing in the expression list
+				//Generate a standard print quad
+				if(exprList == null){
 					MemModQuad quad = quadGen.makePrint(-1, outputString);
 					quadGen.addQuad(quad);
 					return quad;
 				}
 				
-				//Flags for if boolean or integer type
+				//Determine if the stringConst is for a boolean or an integer or is invalid
+				//Flags for boolean or integer type
 				boolean isInteger = false;
 				boolean isBoolean = false;
 				
@@ -1272,30 +1274,46 @@ public class NanoSymtabCompiler extends CompilerModel
 					return null;
 				}
 				
+				//If the string is neither boolean nor integer
+				if(!(isInteger || isBoolean)){
+					reportError("","printStmnt() - Problem in print statement. String is of invalid type.");
+					return null;
+				}
+				
+				//Check the expression list for immediate entries
+				NSTIndEntry expr;
 				MemModQuad quad = null;
-				
-				
-				//Iterate through the entries in the temp table for the print statement
-				for(NSTIndScalarEntry entry : tempPrintStmnt){
-					//If the entry is a boolean or boolean array type
-					System.out.println("NAME: " + entry.getName() + " ADDRESS: " + entry.getAddress());
-					if((entry.isBoolean() || entry.isBooleanArray()) && isBoolean){
-						quad = quadGen.makePrint(entry.getAddress(),"B");
-					}
-					//If the entry is an integer or integer array type
-					if((entry.isInteger() || entry.isIntArray()) && isInteger){
-						quad = quadGen.makePrint(entry.getAddress(),"I");
-					}
-					//The expression type and the string type do not match
-					else{
-						reportError("","printStmnt() - Expression and output string type do not match.");
+				while(exprList.hasNext()){
+					expr = exprList.next();
+					//can't have immediate expressions
+					if (expr.isImmediate()){
+						reportError("","printStmnt() - Cannot print immediate value.");
 						return null;
 					}
+					//we'd expect a scalar for our expressions
+					if (expr.isScalar()){
+						NSTIndScalarEntry entry = (NSTIndScalarEntry) expr;
+						if (expr.isBoolean() && isBoolean){
+							quad = quadGen.makePrint(entry.getAddress(), "B");
+							quadGen.addQuad(quad);
+						}
+						else if (expr.isBooleanArray() && isBoolean){
+							quad = quadGen.makePrint(entry.getAddress(), "B");
+							quadGen.addQuad(quad);
+						}
+						else if (expr.isInteger() && isInteger){
+							quad = quadGen.makePrint(entry.getAddress(), "I");
+							quadGen.addQuad(quad);
+						}
+						else if (expr.isIntArray() && isInteger){
+							quad = quadGen.makePrint(entry.getAddress(), "I");
+							quadGen.addQuad(quad);
+						}
+						else{
+							reportError("","printStmnt() - String expression type and expression do not match.");
+						}
+					}
 				}
-				//***************************************************8
-				//************************************************8
-				//*******************I think this quadGen.addQuad(quad) needs to be in the loop
-				quadGen.addQuad(quad);
 				
 				//need to return the last quad's ID
 				return new Integer(quad.getQuadId());
@@ -1309,9 +1327,10 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			   
+			   	//Get the expression
 				NSTIndEntry expr = (NSTIndEntry) parser.rhsValue(0);
 				
+				//If the expression is null
 				if(expr == null){
 					reportError("","printExprListNonemptyNT() - Expression cannot be empty.");
 					return null;
@@ -1323,24 +1342,19 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.println("printExprList {nonempty} -> expr comma printExprList\n");
 			   }
 			   
+			   //can't have immediate expressions
 			   if(expr.isImmediate()){
 				   reportError("","printExprListNonemptyNT() - Cannot print immediate value.");   
 				   return null;
 			   }
 			   
-			   if(!expr.isScalar()){
-				   reportError("","printExprListNonemptyNT() - Expression is not a scalar. Expected a scalar.");
-				   return null;
+			   //if the expression is scalar like expected
+			   if(expr.isScalar()){
+				   symtab.tempExprListAdd(expr);
 			   }
 			   
-			   NSTIndScalarEntry castExpr = (NSTIndScalarEntry) expr;
-			   if(castExpr == null){
-				   reportError("","printExprListNonemptyNT() - Problem casting expression.");
-				   return null;
-			   }
 			   
-			   tempPrintStmnt.add(castExpr);
-			   return castExpr;
+			   return expr;
 			}
 	}
 	
@@ -1370,13 +1384,13 @@ public class NanoSymtabCompiler extends CompilerModel
 				   return null;
 			   }
 			   
-			   if(!expr.isScalar()){
-				   reportError("","printExprListSingleNT() - Expression is not of type scalar. Expecting scalar.");
-				   return null;
-			   }
+			   //Clear the expression list
+			   symtab.tempExprListClear();
 			   
-			   if(tempPrintStmnt == null)
-				   tempPrintStmnt = new ArrayList<NSTIndScalarEntry>();
+			   //Check to make sure expression is a scalar and put it into the temporary expression list
+			   if(expr.isScalar()){
+				   symtab.tempExprListAdd(expr);
+			   }
 				   
 			   return expr;
 			}
