@@ -1455,6 +1455,7 @@ public class NanoSymtabCompiler extends CompilerModel
 						}
 						else{
 							reportError("","printStmnt() - String expression type and expression do not match.");
+							return null;
 						}
 					}
 					//We're dealing with an array
@@ -1470,9 +1471,9 @@ public class NanoSymtabCompiler extends CompilerModel
 						}
 						else{
 							reportError("","printStmnt() - String expression type and expression do not match.");
+							return null;
 						}
-					}
-					
+					}	
 				}
 				
 				//need to return the last quad's ID
@@ -1597,7 +1598,6 @@ public class NanoSymtabCompiler extends CompilerModel
 				if(idString == null){
 					reportError("","inputTargetIdArrayNT() - Id not declared in this scope.");
 					return null;
-					
 				}
 				
 				//Show the reductions
@@ -2205,6 +2205,7 @@ public class NanoSymtabCompiler extends CompilerModel
    			String idString = (String) parser.rhsValue (1);
    			System.out.println("identifier lexeme: " + idString + "\n");
 		   }
+		   
 		   NSTIndEntry idToCall = symtab.get((String)parser.rhsValue(1));
          
          if (idToCall==null || !idToCall.isProcedure())
