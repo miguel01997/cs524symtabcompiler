@@ -151,13 +151,11 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("printStmnt", 		"", 			new printStmntNT());
 
 		_parserTable.linkFactory("printExprList", 	"nonempty",		new printExprListNonemptyNT());
-		_parserTable.linkFactory("printExprList", 	"single",		new printExprListSingleNT());
 		_parserTable.linkFactory("printExprList", 	"empty", 		new printExprListEmptyNT());		
 		
 		_parserTable.linkFactory("readStmnt", 		"", 			new readStmntNT());
 
 		_parserTable.linkFactory("inputTargetList",	"nonempty",		new inputTargetListNonemptyNT());
-		_parserTable.linkFactory("inputTargetList", "single", 		new inputTargetListSingleNT());
 		_parserTable.linkFactory("inputTargetList",	"empty", 		new inputTargetListEmptyNT());		
 		
 		_parserTable.linkFactory("inputTarget", 	"id", 			new inputTargetIdNT());
@@ -1351,48 +1349,17 @@ public class NanoSymtabCompiler extends CompilerModel
 			   }
 			   
 			   
-			   //if the expression is scalar like expected
-			   if(!expr.isImmediate()){
-				   symtab.tempExprListAdd(expr);
+			   //can't have an immediate expression in a print
+			   if(expr.isImmediate()){
+				   reportError("","printExprListNonemptyNT() - Cannot print an immediate expression");
+				   return null;
 			   }
 			   
+			   symtab.tempExprListAdd(expr);
 			   
 			   return expr;
 			}
 	}
-	
-	final class printExprListSingleNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-			   if (showReductions) {
-	   			System.out.print(parser.token().line + ": ");
-	   			System.out.println("printExprList {single} -> expr\n");
-			   }
-			   
-			   //Get the expression
-			   NSTIndEntry expr = (NSTIndEntry) parser.rhsValue(0);
-			   
-			   //Check for null expression
-			   if(expr == null)
-			   {
-				   reportError("","printExprListSingleNT() - Cannot have null expression in print statement");
-				   return null;
-			   }
-			  
-			   
-			   //Clear the expression list
-			   symtab.tempExprListClear();
-			   
-			   //Check to make sure expression is a scalar and put it into the temporary expression list
-			   if(!expr.isImmediate()){
-				   symtab.tempExprListAdd(expr);
-			   }
-				   
-			   return expr;
-			}
-	}	
 	
 	final class printExprListEmptyNT extends NonterminalFactory
 	{
@@ -1403,6 +1370,8 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.print(parser.token().line + ": ");
 	   			System.out.println("printExprList {empty} -> /* empty */\n");
 			   }
+			   
+			   symtab.tempExprListClear();
 			   
 				return null;
 			}
@@ -1535,41 +1504,9 @@ public class NanoSymtabCompiler extends CompilerModel
 				
 				if(inputTarget.isImmediate()){
 					reportError("","inputTargetListNonempty() - cannot assign to immediate value");
-				}
-				
-				symtab.tempTargetListAdd(inputTarget);
-				
-				return inputTarget;
-			}
-	}
-	
-	final class inputTargetListSingleNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-				NSTIndEntry inputTarget = (NSTIndEntry) parser.rhsValue(0);
-				
-				if(inputTarget == null){
-					reportError("","inputTargetListNonempty() - input target cannot be null");
-					return null;
-				}
-			
-				if (showReductions) {
-		   			System.out.print(parser.token().line + ": ");
-		   			System.out.println("inputTargetList {single} -> inputTarget\n");
-				}
-				
-				if(inputTarget.isConstant()){
-					reportError("","inputTargetListNonempty() - cannot assign to constant variable");
 					return null;
 				}
 				
-				if(inputTarget.isImmediate()){
-					reportError("","inputTargetListNonempty() - cannot assign to immediate value");
-				}
-				
-				symtab.tempTargetListClear();
 				symtab.tempTargetListAdd(inputTarget);
 				
 				return inputTarget;
@@ -1585,6 +1522,8 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.print(parser.token().line + ": ");
 	   			System.out.println("inputTargetList {empty} -> /* empty */\n");
 			   }
+			   
+			   symtab.tempTargetListClear();
 			   
 			   return null;
 			}
@@ -1707,8 +1646,8 @@ public class NanoSymtabCompiler extends CompilerModel
 			    	return null;
 			    }
 			    
-			    //Cast to NSTIndScalarEntry
-			    NSTIndScalarEntry entry = (NSTIndScalarEntry) idEntry;
+			    //Create an entry to return
+			    NSTIndArrayEntry entry = (NSTIndArrayEntry) idEntry;
 			    
 			    if(entry == null){
 			    	reportError("","inputTargetIdArrayNT() - Entry in symbol table was not of the correct type.");
