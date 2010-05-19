@@ -184,7 +184,9 @@ CondThenPartM		-> then statement else CondElseJump statement;
 CondElseJump		-> %reduce /* empty */;
 //************************************************************************
 
-forStmnt -> for id assign expr to expr do statement;
+forStmnt -> forHeader forBody;
+forHeader -> for id assign expr to expr do;
+forBody -> statement;
 
 returnStmnt -> return semicolon;
 
