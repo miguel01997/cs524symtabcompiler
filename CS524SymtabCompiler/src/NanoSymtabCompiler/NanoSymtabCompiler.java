@@ -177,8 +177,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		
 		
 		_parserTable.linkFactory("forStmnt", 		"", 			new forStmntNT());
-		_parserTable.linkFactory("forHeader",       "",         new forHeaderNT());
-		_parserTable.linkFactory("forBody",       "",         new forBodyNT());
+		_parserTable.linkFactory("forId",       "",         new forIdNT());
+		_parserTable.linkFactory("forAssignBody",       "",         new forAssignBodyNT());
 		
 		_parserTable.linkFactory("returnStmnt", 	"", 			new returnStmntNT());
 		
@@ -2047,23 +2047,41 @@ public class NanoSymtabCompiler extends CompilerModel
 			{
 		   if (showReductions) {
    			System.out.print(parser.token().line + ": ");
-   			System.out.println("forStmnt -> forHeader forBody");
+   			System.out.println("forStmnt -> forId forAssignBody");
 		   }
+		   
+		   return null;
 		   
 			}
 	}
 	
-	//for header
-   final class forHeaderNT extends NonterminalFactory
+	//for ID
+   final class forIdNT extends NonterminalFactory
    {
       public Object makeNonterminal (Parser parser, int param) 
          throws IOException, SyntaxException
          {
          if (showReductions) {
             System.out.print(parser.token().line + ": ");
-            System.out.println("forHeader -> for id assign expr to expr do");
+            System.out.println("forId -> for id");
             String idString = (String) parser.rhsValue (1);
             System.out.println("identifier lexeme: " + idString + "\n");
+         }
+         
+         return null;
+         
+         }
+   }
+   
+   //for assign and body
+   final class forAssignBodyNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("forAssignBody -> assign expr to expr do statement");
          }
          
          NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(1));
@@ -2155,21 +2173,6 @@ public class NanoSymtabCompiler extends CompilerModel
          //**********************************
          //I do not think this is the right quad address to return
          return new Integer(incrementForCounterQuad.getQuadId());
-         
-         }
-   }
-   
-   //for body
-   final class forBodyNT extends NonterminalFactory
-   {
-      public Object makeNonterminal (Parser parser, int param) 
-         throws IOException, SyntaxException
-         {
-         if (showReductions) {
-            System.out.print(parser.token().line + ": ");
-            System.out.println("forBody -> statement");
-         }
-         
          
          }
    }
