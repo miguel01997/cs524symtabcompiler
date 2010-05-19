@@ -177,6 +177,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		
 		
 		_parserTable.linkFactory("forStmnt", 		"", 			new forStmntNT());
+		_parserTable.linkFactory("forHeader",       "",         new forHeaderNT());
+		_parserTable.linkFactory("forBody",       "",         new forBodyNT());
 		
 		_parserTable.linkFactory("returnStmnt", 	"", 			new returnStmntNT());
 		
@@ -2045,11 +2047,26 @@ public class NanoSymtabCompiler extends CompilerModel
 			{
 		   if (showReductions) {
    			System.out.print(parser.token().line + ": ");
-   			System.out.println("forStmnt -> for id assign expr to expr do statement");
-   			String idString = (String) parser.rhsValue (1);
-   			System.out.println("identifier lexeme: " + idString + "\n");
+   			System.out.println("forStmnt -> forHeader forBody");
 		   }
-		   NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(1));
+		   
+			}
+	}
+	
+	//for header
+   final class forHeaderNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("forHeader -> for id assign expr to expr do");
+            String idString = (String) parser.rhsValue (1);
+            System.out.println("identifier lexeme: " + idString + "\n");
+         }
+         
+         NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(1));
          if (i==null)
          {
             reportError("","For statement Identifier not recognized.");
@@ -2138,9 +2155,25 @@ public class NanoSymtabCompiler extends CompilerModel
          //**********************************
          //I do not think this is the right quad address to return
          return new Integer(incrementForCounterQuad.getQuadId());
-			}
-	}
-	
+         
+         }
+   }
+   
+   //for body
+   final class forBodyNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("forBody -> statement");
+         }
+         
+         
+         }
+   }
+   
 	//returnStmnt
 	final class returnStmntNT extends NonterminalFactory
 	{
