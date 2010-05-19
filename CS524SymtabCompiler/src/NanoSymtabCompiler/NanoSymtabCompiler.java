@@ -178,7 +178,6 @@ public class NanoSymtabCompiler extends CompilerModel
 		
 		_parserTable.linkFactory("forStmnt", 		"", 			new forStmntNT());
 		_parserTable.linkFactory("forId",       "",         new forIdNT());
-		_parserTable.linkFactory("forAssignBody",       "",         new forAssignBodyNT());
 		
 		_parserTable.linkFactory("returnStmnt", 	"", 			new returnStmntNT());
 		
@@ -2038,50 +2037,16 @@ public class NanoSymtabCompiler extends CompilerModel
 	      return gotoq;
 	   }
 	}
-
-	//forStmnt
-	final class forStmntNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-		   if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("forStmnt -> forId forAssignBody");
-		   }
-		   
-		   return null;
-		   
-			}
-	}
-	
-	//for ID
-   final class forIdNT extends NonterminalFactory
-   {
-      public Object makeNonterminal (Parser parser, int param) 
-         throws IOException, SyntaxException
-         {
-         if (showReductions) {
-            System.out.print(parser.token().line + ": ");
-            System.out.println("forId -> for id");
-            String idString = (String) parser.rhsValue (1);
-            System.out.println("identifier lexeme: " + idString + "\n");
-         }
-         
-         return null;
-         
-         }
-   }
    
    //for assign and body
-   final class forAssignBodyNT extends NonterminalFactory
+   final class forStmntNT extends NonterminalFactory
    {
       public Object makeNonterminal (Parser parser, int param) 
          throws IOException, SyntaxException
          {
          if (showReductions) {
             System.out.print(parser.token().line + ": ");
-            System.out.println("forAssignBody -> assign expr to expr do statement");
+            System.out.println("forStmnt -> forId assign expr to expr do statement");
          }
          
          NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(1));
@@ -2157,22 +2122,56 @@ public class NanoSymtabCompiler extends CompilerModel
          quadGen.addQuad(testLoopEndQuad);
          
          
+         
+         //*************************************
+         //Need to figure out how to get the jump quad in the right place
+         
+         
+         
+         //**********************************
+         //I do not think this is the right quad address to return
+         return new Integer(incrementForCounterQuad.getQuadId());
+         
+         }
+   }
+   
+ //for ID
+   final class forIdNT extends NonterminalFactory
+   {
+      public Object makeNonterminal (Parser parser, int param) 
+         throws IOException, SyntaxException
+         {
+         if (showReductions) {
+            System.out.print(parser.token().line + ": ");
+            System.out.println("forId -> for id");
+            String idString = (String) parser.rhsValue (1);
+            System.out.println("identifier lexeme: " + idString + "\n");
+         }
+         
+         NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(1));
+         if (i==null)
+         {
+            reportError("","For statement Identifier not recognized.");
+            return null; 
+         }
+         
+         if (!i.isInteger()) {
+            reportError("","For statement Identifier not an integer.");
+            return null;
+         }
+         
+         InstrModQuad jumpToStartofFor;
+         jumpToStartofFor = quadGen.makeUnconditionalJump(-1);
+         quadGen.addQuad(jumpToStartofFor);
+         
          int amountToIncrement = 1;
          MemModQuad incrementForCounterQuad;
          
          incrementForCounterQuad = quadGen.makeAddRightImmediate(i.getAddress(), 
                i.getAddress(), amountToIncrement);
          quadGen.addQuad(incrementForCounterQuad);
-         //*************************************
-         //Need to figure out how to get the jump quad in the right place
          
-         InstrModQuad jumpToStartofFor;
-         jumpToStartofFor = quadGen.makeUnconditionalJump(relopForQuad.getQuadId());
-         quadGen.addQuad(jumpToStartofFor);
-         
-         //**********************************
-         //I do not think this is the right quad address to return
-         return new Integer(incrementForCounterQuad.getQuadId());
+         return i;
          
          }
    }
@@ -3283,7 +3282,7 @@ public class NanoSymtabCompiler extends CompilerModel
             reportError("","Array identifier not found in scope");
             return null; 
          }
-         else if (!array.isIntArray())
+         else if (!array.isIntArray() || !array.isBooleanArray())
          {
             reportError("","Attempt to use scalar identifier as array base address");
             return null;
