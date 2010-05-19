@@ -1290,19 +1290,26 @@ public class NanoSymtabCompiler extends CompilerModel
 						reportError("","printStmnt() - Cannot print immediate value.");
 						return null;
 					}
-					//we'd expect a scalar for our expressions
+					//We're not dealing with an array
 					if (expr.isScalar()){
 						NSTIndScalarEntry entry = (NSTIndScalarEntry) expr;
 						if (expr.isBoolean() && isBoolean){
 							quad = quadGen.makePrint(entry.getAddress(), "B");
 							quadGen.addQuad(quad);
 						}
-						else if (expr.isBooleanArray() && isBoolean){
-							quad = quadGen.makePrint(entry.getAddress(), "B");
-							quadGen.addQuad(quad);
-						}
 						else if (expr.isInteger() && isInteger){
 							quad = quadGen.makePrint(entry.getAddress(), "I");
+							quadGen.addQuad(quad);
+						}
+						else{
+							reportError("","printStmnt() - String expression type and expression do not match.");
+						}
+					}
+					//We're dealing with an array
+					else{
+						NSTIndArrayEntry entry = (NSTIndArrayEntry) expr;
+						if (expr.isBooleanArray() && isBoolean){
+							quad = quadGen.makePrint(entry.getAddress(), "B");
 							quadGen.addQuad(quad);
 						}
 						else if (expr.isIntArray() && isInteger){
@@ -1313,6 +1320,7 @@ public class NanoSymtabCompiler extends CompilerModel
 							reportError("","printStmnt() - String expression type and expression do not match.");
 						}
 					}
+					
 				}
 				
 				//need to return the last quad's ID
@@ -1344,7 +1352,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			   
 			   
 			   //if the expression is scalar like expected
-			   if(expr.isScalar() && !expr.isImmediate()){
+			   if(!expr.isImmediate()){
 				   symtab.tempExprListAdd(expr);
 			   }
 			   
@@ -1378,7 +1386,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			   symtab.tempExprListClear();
 			   
 			   //Check to make sure expression is a scalar and put it into the temporary expression list
-			   if(expr.isScalar() && !expr.isImmediate()){
+			   if(!expr.isImmediate()){
 				   symtab.tempExprListAdd(expr);
 			   }
 				   
@@ -1426,30 +1434,76 @@ public class NanoSymtabCompiler extends CompilerModel
 				boolean isBoolean = false;
 				boolean isInteger = false;
 				
-				//Check for string type
-				if(stringConst.trim().toUpperCase() == "B"){
+				//Check if boolean
+				if(stringConst.equals("\"B\"")){
 					isBoolean = true;
 				}
-				else if(stringConst.trim().toUpperCase() == "T"){
+				//Check if integer
+				else if(stringConst.equals("\"I\"")){
 					isInteger = true;
-				}else{
+				}
+				//If neither it is an error
+				else
+				{
 					reportError("","readStmntNT() - Invalid string for read statement.");
 					return null;
 				}
-				
+				//If both, it is an error
 				if(isBoolean && isInteger){
 					reportError("","readStmntNT() - String cannot be both boolean and integer type.");
 					return null;
 				}
 				
-				Iterator ids = symtab.getTempIdListIterator();
+				//Get the targetList to check against the string
+				Iterator<NSTIndEntry> targetList = symtab.getTempTargetListIterator();
 
-				NSTIndEntry entry;
-				while(ids.hasNext()){
-					
+				//Process the targetList
+				NSTIndEntry target;
+				MemModQuad quad = null;
+				while(targetList.hasNext()){
+					target = (NSTIndEntry) targetList.next();
+					//Can't assign to an immediate
+					if(target.isImmediate()){
+						reportError("","readStmnt() - Cannot read to immediate value");
+						return null;
+					}
+					//Can't assign to a constant
+					if(target.isConstant()){
+						reportError("","readStmnt() - Cannot read to constant variable");
+						return null;
+					}
+					//We're not dealing with an array
+					if (target.isScalar()){
+						NSTIndScalarEntry entry = (NSTIndScalarEntry) target;
+						if (target.isBoolean() && isBoolean){
+							quad = quadGen.makeRead(entry.getAddress(), "B");
+							quadGen.addQuad(quad);
+						}
+						else if (target.isInteger() && isInteger){
+							quad = quadGen.makeRead(entry.getAddress(), "I");
+							quadGen.addQuad(quad);
+						}
+						else{
+							reportError("","printStmnt() - String expression type and expression do not match.");
+						}
+					}
+					//We're dealing with an array
+					else{
+						NSTIndArrayEntry entry = (NSTIndArrayEntry) target;
+						if (target.isBooleanArray() && isBoolean){
+							quad = quadGen.makeRead(entry.getAddress(), "B");
+							quadGen.addQuad(quad);
+						}
+						else if (target.isIntArray() && isInteger){
+							quad = quadGen.makeRead(entry.getAddress(), "I");
+							quadGen.addQuad(quad);
+						}
+						else{
+							reportError("","printStmnt() - String expression type and expression do not match.");
+						}
+					}
 					
 				}
-				MemModQuad quad = null;
 				
 				//need to return the last quad's ID
 				return new Integer(quad.getQuadId());
@@ -1462,11 +1516,30 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+				NSTIndEntry inputTarget = (NSTIndEntry) parser.rhsValue(0);
+				
+				if(inputTarget == null){
+					reportError("","inputTargetListNonempty() - input target cannot be null");
+					return null;
+				}
+			
 				if (showReductions) {
 		   			System.out.print(parser.token().line + ": ");
 		   			System.out.println("inputTargetList {nonempty} -> inputTarget comma inputTargetList\n");
 				}
-				return null;
+				
+				if(inputTarget.isConstant()){
+					reportError("","inputTargetListNonempty() - cannot assign to constant variable");
+					return null;
+				}
+				
+				if(inputTarget.isImmediate()){
+					reportError("","inputTargetListNonempty() - cannot assign to immediate value");
+				}
+				
+				symtab.tempTargetListAdd(inputTarget);
+				
+				return inputTarget;
 			}
 	}
 	
@@ -1475,14 +1548,31 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
+				NSTIndEntry inputTarget = (NSTIndEntry) parser.rhsValue(0);
+				
+				if(inputTarget == null){
+					reportError("","inputTargetListNonempty() - input target cannot be null");
+					return null;
+				}
+			
 				if (showReductions) {
 		   			System.out.print(parser.token().line + ": ");
 		   			System.out.println("inputTargetList {single} -> inputTarget\n");
 				}
 				
+				if(inputTarget.isConstant()){
+					reportError("","inputTargetListNonempty() - cannot assign to constant variable");
+					return null;
+				}
 				
+				if(inputTarget.isImmediate()){
+					reportError("","inputTargetListNonempty() - cannot assign to immediate value");
+				}
 				
-				return null;
+				symtab.tempTargetListClear();
+				symtab.tempTargetListAdd(inputTarget);
+				
+				return inputTarget;
 			}
 	}
 	
