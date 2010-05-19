@@ -2052,12 +2052,10 @@ public class NanoSymtabCompiler extends CompilerModel
          NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(1));
          if (i==null)
          {
-            reportError("","For statement Identifier not recognized.");
             return null; 
          }
          
          if (!i.isInteger()) {
-            reportError("","For statement Identifier not an integer.");
             return null;
          }
          
@@ -2130,7 +2128,8 @@ public class NanoSymtabCompiler extends CompilerModel
          
          //**********************************
          //I do not think this is the right quad address to return
-         return new Integer(incrementForCounterQuad.getQuadId());
+         //return new Integer(incrementForCounterQuad.getQuadId());
+         return null;
          
          }
    }
