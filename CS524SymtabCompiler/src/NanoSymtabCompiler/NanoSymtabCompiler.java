@@ -2112,8 +2112,7 @@ public class NanoSymtabCompiler extends CompilerModel
          }
          quadGen.addQuad(assgForStart);
          
-         //return new Integer(incrementForCounterQuad.getQuadId());
-         return null;
+         return new Integer(assgForStart.getQuadId());
          }
    }
    
