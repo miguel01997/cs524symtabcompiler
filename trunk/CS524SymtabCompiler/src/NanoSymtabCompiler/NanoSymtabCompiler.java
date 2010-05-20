@@ -2049,26 +2049,13 @@ public class NanoSymtabCompiler extends CompilerModel
             System.out.println("forStmnt -> forId assign expr to expr do statement");
          }
          
-         NSTIndScalarEntry i = (NSTIndScalarEntry)symtab.get((String)parser.rhsValue(1));
-         if (i==null)
-         {
-            return null; 
-         }
-         
-         if (!i.isInteger()) {
-            return null;
-         }
+         //Use the passed up quad to get the address of the for loop id
+         MemModQuad incrementForCounterQuad = (MemModQuad) parser.rhsValue(0);
+         int forIdAddress = incrementForCounterQuad.getResultAddress();
          
          //Get the left and right expressions
-         NSTIndEntry eLeft = (NSTIndEntry) parser.rhsValue(3);
-         NSTIndEntry eRight = (NSTIndEntry) parser.rhsValue(5);
-         
-         String stringStatement = (String) parser.rhsValue (0);
-         int integerStatement = Integer.parseInt(stringStatement);
-         if (stringStatement==null) {
-            reportError("","Invalid for statement.");
-            return null;
-         }
+         NSTIndEntry eLeft = (NSTIndEntry) parser.rhsValue(2);
+         NSTIndEntry eRight = (NSTIndEntry) parser.rhsValue(4);
          
          if (eLeft == null || eRight==null) return null;
          
@@ -2078,16 +2065,46 @@ public class NanoSymtabCompiler extends CompilerModel
             return null;
          }
          
+         //make a quad to evaluate the current index count against the end of the loop counter
+         //Do not push it yet as it needs to be pushed after the if test quad
+         MemModQuad relopForQuad;
+         NSTIndScalarEntry tmpForCountRelop = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
+         if (eRight.isImmediate())
+         {
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eLeft;
+            relopForQuad = quadGen.makeRelopGreaterThanRightImmediate(
+                  tmpForCountRelop.getAddress(),forIdAddress, eRightImm.getIntValue());
+         }
+         else if (eRight.isScalar())
+         {
+            NSTIndScalarEntry eRightScalar = (NSTIndScalarEntry) eLeft;
+            relopForQuad = quadGen.makeRelopGreaterThanRegular(
+                  tmpForCountRelop.getAddress(),forIdAddress, eRightScalar.getAddress());
+         }
+         else {
+            reportError("","Invalid for statement ranges");
+            return null;
+         }
+         
+         //if for loop is done then goto past the return jump quad
+         InstrModQuad testLoopEndQuad;
+         testLoopEndQuad = quadGen.makeIfTrueRegular(incrementForCounterQuad.getQuadId()+2, tmpForCountRelop.getAddress());
+         quadGen.addQuad(testLoopEndQuad);
+         
+         //now can push the relop quad after the if test quad
+         quadGen.addQuad(relopForQuad);
+         
+         //push quad to assign the starting index to the for loop
          MemModQuad assgForStart;
          if (eLeft.isImmediate())
          {
             NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-            assgForStart = quadGen.makeAssignImmediateInteger(i.getAddress(), eLeftImm.getIntValue());
+            assgForStart = quadGen.makeAssignImmediateInteger(forIdAddress, eLeftImm.getIntValue());
          }
          else if (eLeft.isScalar())
          {
             NSTIndScalarEntry eLeftScalar = (NSTIndScalarEntry) eLeft;
-            assgForStart = quadGen.makeAssignRegular(i.getAddress(), eLeftScalar.getAddress());
+            assgForStart = quadGen.makeAssignRegular(forIdAddress, eLeftScalar.getAddress());
          }
          else {
             reportError("","Invalid for statement range");
@@ -2095,42 +2112,8 @@ public class NanoSymtabCompiler extends CompilerModel
          }
          quadGen.addQuad(assgForStart);
          
-         MemModQuad relopForQuad;
-         NSTIndScalarEntry tmpForCountRelop = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
-         if (eRight.isImmediate())
-         {
-            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eLeft;
-            relopForQuad = quadGen.makeRelopGreaterThanRightImmediate(
-                  tmpForCountRelop.getAddress(),i.getAddress(), eRightImm.getIntValue());
-         }
-         else if (eRight.isScalar())
-         {
-            NSTIndScalarEntry eRightScalar = (NSTIndScalarEntry) eLeft;
-            relopForQuad = quadGen.makeRelopGreaterThanRegular(
-                  tmpForCountRelop.getAddress(),i.getAddress(), eRightScalar.getAddress());
-         }
-         else {
-            reportError("","Invalid for statement ranges");
-            return null;
-         }
-         quadGen.addQuad(relopForQuad);
-         
-         InstrModQuad testLoopEndQuad;
-         testLoopEndQuad = quadGen.makeIfTrueRegular(integerStatement+2, tmpForCountRelop.getAddress());
-         quadGen.addQuad(testLoopEndQuad);
-         
-         
-         
-         //*************************************
-         //Need to figure out how to get the jump quad in the right place
-         
-         
-         
-         //**********************************
-         //I do not think this is the right quad address to return
          //return new Integer(incrementForCounterQuad.getQuadId());
          return null;
-         
          }
    }
    
@@ -2163,6 +2146,7 @@ public class NanoSymtabCompiler extends CompilerModel
          jumpToStartofFor = quadGen.makeUnconditionalJump(-1);
          quadGen.addQuad(jumpToStartofFor);
          
+                  
          int amountToIncrement = 1;
          MemModQuad incrementForCounterQuad;
          
@@ -2170,7 +2154,7 @@ public class NanoSymtabCompiler extends CompilerModel
                i.getAddress(), amountToIncrement);
          quadGen.addQuad(incrementForCounterQuad);
          
-         return i;
+         return incrementForCounterQuad;
          
          }
    }
