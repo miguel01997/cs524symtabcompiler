@@ -9,7 +9,7 @@ begin
  
  v1 := 10 + a[a[v1]*(v1 - 3)/2];
  
- if ( ((v1 <= 7) and (v1 < 8)) or (a[3] != 2) ) then
+ if ( ((v1 <= 7) and (v1 < 8)) or (a[3] == 2) ) then
      v1:=8;
  else
    begin

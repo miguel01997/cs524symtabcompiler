@@ -2591,7 +2591,8 @@ public class NanoSymtabCompiler extends CompilerModel
          if (leftExpr == null || rightTerm==null) return null;     
          
          //check if not booleans
-         if (!leftExpr.isBoolean() || !rightTerm.isBoolean()) {
+         if ((!leftExpr.isBoolean()&& !leftExpr.isBooleanArray())||
+               (!rightTerm.isBoolean()&& !rightTerm.isBooleanArray())) {
             reportError("","Invalid OR operation arguements - must be boolean.");
             return null;
          }
@@ -2805,7 +2806,8 @@ public class NanoSymtabCompiler extends CompilerModel
          if (leftTerm == null || rightFactor==null) return null;		
 		   
 		   //check if not booleans
-         if (!leftTerm.isBoolean() || !rightFactor.isBoolean()) {
+         if ((!leftTerm.isBoolean()&& !leftTerm.isBooleanArray())||
+               (!rightFactor.isBoolean()&& !rightFactor.isBooleanArray())) {
             reportError("","Invalid AND operation arguements - must be boolean.");
             return null;
          }
@@ -2936,7 +2938,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			NSTIndEntry prim = (NSTIndEntry)parser.rhsValue(1);
          MemModQuad notQuad;
          if (prim==null) {return null; }
-         if (!prim.isBoolean())
+         if (!prim.isBoolean()&&!prim.isBooleanArray())
          {
             reportError("","Can not make non-boolean a not");
             return null;
@@ -3038,7 +3040,7 @@ public class NanoSymtabCompiler extends CompilerModel
    
    //Enumeration so that we can use it in case switch statement below in prim -> relop
    public enum relopName {
-      EQUALS,NOTEQUALS,LESSTHAN,LESSTHANEQUALS,GREATERTHAN,GREATERTHANEQUALS 
+      ISEQUALS,NOTEQUALS,LESSTHAN,LESSTHANEQUALS,GREATERTHAN,GREATERTHANEQUALS 
    }
    
    final class primRelopNT extends NonterminalFactory
@@ -3076,7 +3078,7 @@ public class NanoSymtabCompiler extends CompilerModel
          //need to check to make sure this cast is delevering a enumeration
          relopName relopEnum = (relopName) parser.rhsValue (2);
          switch (relopEnum) {
-             case EQUALS: 
+             case ISEQUALS: 
                 if (eLeft.isImmediate() && eRight.isImmediate())
                 {
                    NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
