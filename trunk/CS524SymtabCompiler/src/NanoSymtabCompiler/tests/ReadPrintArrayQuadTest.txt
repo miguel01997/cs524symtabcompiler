@@ -1,0 +1,10 @@
+var v1[2] : integer; 
+var b1[2] : boolean;
+
+begin
+  read   ("I", v1[1], v1[2]);
+  read   ("B", b1[1], b1[2]);  
+  print ("I", v1[1], v1[2]);
+  print ("B", b1[1], b1[2]);
+  print ("Hello");
+end;
