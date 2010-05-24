@@ -570,7 +570,6 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 	}
 	
-	//Rich: I think this is a duplicate with constDecNonempty
 	//constDec (idList)
 	final class constDecIdListNT extends NonterminalFactory
 	{
@@ -595,8 +594,49 @@ public class NanoSymtabCompiler extends CompilerModel
 				if (symtab.addConstIntToCurrentBlock(nameToDefine) == null){
 					notAlreadyDefined = false;
 				}
-				else
+				else {
 					notAlreadyDefined = true;
+				
+					//Get the value
+               NSTIndImmediateEntry e = (NSTIndImmediateEntry)parser.rhsValue(3);
+               
+               //Get the symbol table entry for the identifier
+               NSTIndScalarEntry i = (NSTIndScalarEntry) symtab.get(nameToDefine);
+               
+               //If the symbol table doesn't contain an entry for id
+               if (i==null){
+                 reportError("","Constant not defined in this scope.");
+                 return null;
+               //If the id and expression types don't match
+               }
+               else if (e.getActualType()!=i.getActualType()){
+                  reportError("","Type mismatch in constant assignment statement");
+                  return null;
+               }
+               
+               NSTIndImmediateEntry imm = (NSTIndImmediateEntry) e;
+               //If the assignment value is a boolean
+               if (imm.isBoolean())
+               {
+                  MemModQuad aqb = quadGen.makeAssignImmediateBoolean(i.getAddress(),imm.getBoolValue());
+                  quadGen.addQuad(aqb);
+                  return new Integer(aqb.getQuadId());
+               }
+               //If the assignment value is an integer
+               else if (imm.isInteger())
+               {
+                  MemModQuad aqi = quadGen.makeAssignImmediateInteger(i.getAddress(),imm.getIntValue());
+                  quadGen.addQuad(aqi);
+                  return new Integer(aqi.getQuadId());
+               //Otherwise we messed up
+               }else{
+                  reportError("","Compiler developer: invalid type of immediate assignment");
+                  return null;
+               }
+				
+				}   
+				
+				
 				if (!notAlreadyDefined)
 				{
 				reportError("","Duplicate declaration in this block of"+nameToDefine);
@@ -1811,7 +1851,7 @@ public class NanoSymtabCompiler extends CompilerModel
    			System.out.println("identifier lexeme: " + idLexeme + "\n");
 		   }
 	      
-		  //Get the expression entry from the parsr
+		   //Get the expression entry from the parsr
 	      NSTIndEntry e = (NSTIndEntry)parser.rhsValue(2);
 	      
 	      //Get the symbol table entry for the identifier
@@ -2063,7 +2103,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	         //A statement, whether single or block, should return the index of the
 	         //last quad produced for it (single--the index, block--the last index)
 	         Integer lastQuadIndex = (Integer) parser.rhsValue(1);
-	         quadGen.updateBackpatching(jumpQuadLabel, lastQuadIndex.intValue()+2);
+	         //quadGen.updateBackpatching(jumpQuadLabel, lastQuadIndex.intValue()+2);
 	         return lastQuadIndex;
 	      }
 	   }
