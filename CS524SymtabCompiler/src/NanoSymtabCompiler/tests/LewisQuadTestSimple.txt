@@ -19,8 +19,8 @@ if (v1<8) then
       for v1 := 1 to 10 do 
       begin
          k[v1] := true;
-         read   ("I", c[v1]); 
-         print   ("B", k[v1]); 
+         read   ("I", v1); 
+         print   ("I", v1); 
       end;
    end;
  end;
