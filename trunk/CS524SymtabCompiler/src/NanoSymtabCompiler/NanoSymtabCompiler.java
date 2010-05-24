@@ -112,8 +112,6 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("arrayIdList", 	"list", 		new arrayIdListListNT());
 		_parserTable.linkFactory("arrayIdList", 	"single", 		new arrayIdListSingleNT());
 		
-		_parserTable.linkFactory("procDec", 		"", 			new procDecNT());
-		_parserTable.linkFactory("procHeader",     "",         new procHeaderNT());
 		_parserTable.linkFactory("procBody",     "",         new procBodyNT());
 	
 		_parserTable.linkFactory("formalList", 		"list", 		new formalListListNT());
