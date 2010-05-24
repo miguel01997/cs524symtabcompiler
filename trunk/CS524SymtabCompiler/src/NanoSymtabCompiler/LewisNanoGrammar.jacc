@@ -1,0 +1,426 @@
+//IJACC Grammar specification for Nano language for CS524 Spring 2010
+
+//--------------------------------
+// ------ Generator options ------
+%options:
+%java nano.NanoGrammar;		//Java package and class
+
+
+//---------------------------------------------
+// ----- Terminal symbols for the grammar -----
+%terminals:
+
+// Keywords
+const;
+var;
+begin;
+end;
+integer;
+boolean;
+procedure;
+print;
+read;
+if;
+then;
+else;
+for;
+to;
+do;
+return;
+call;
+not;
+and;
+or;
+
+// Operators and punctuators
+comma;
+semicolon;
+colon;
+lparen;
+rparen;
+lsqbracket;
+rsqbracket;
+plus;
+minus;
+star;
+slash;
+assign;
+constEquals;
+isEquals;
+notEquals;
+lessThan;
+lessThanEquals;
+greaterThan;
+greaterThanEquals;
+
+// Terminals that carry values
+identifier;
+intConst;
+boolConst;
+stringConst;
+
+
+//----------------------------------------
+// ----- Productions for the grammar -----
+%productions:
+
+Goal -> Program;
+
+Program 					-> 	StartMainBlock
+								ConstantDeclarations
+								VariableDeclarations
+								ProcedureDeclarations
+								ShowSymbolTable								
+								begin
+								StartMarker
+								Statement
+								StatementList
+								end
+								EndMainBlock
+								ShowSymbolTable
+								semicolon;
+
+StartMainBlock 				-> %reduce /* empty */;
+
+EndMainBlock 				-> %reduce /* empty */;
+
+ShowSymbolTable				-> %reduce /* empty */;
+
+StartMarker					-> %reduce /* empty */;
+
+ConstantDeclarations 
+{empty}						-> /* empty */;
+
+ConstantDeclarations
+{nonempty}					-> ConstantDeclarations ConstantDeclaration;
+
+ConstantDeclaration			-> const IdList constEquals intConst semicolon;
+
+VariableDeclarations 
+{empty}						-> /* empty */;
+
+VariableDeclarations
+{nonempty}					-> VariableDeclarations VariableDeclaration;
+
+VariableDeclaration
+{scalar}					-> var IdList colon ScalarType semicolon;
+
+VariableDeclaration
+{array}						-> var ArrayIdList colon ScalarType semicolon;
+
+ScalarType {integer}		-> integer;
+
+ScalarType {boolean}		-> boolean;
+
+IdList {single}				-> identifier;
+
+IdList {recurring}			-> IdList comma identifier;
+
+ArrayIdList {single}		-> identifier lsqbracket intConst rsqbracket;
+
+ArrayIdList {recurring}		-> ArrayIdList comma identifier lsqbracket intConst rsqbracket;
+
+ProcedureDeclarations
+{empty}						-> /* empty */;
+
+ProcedureDeclarations
+{nonempty}					-> ProcedureDeclarations ProcedureDeclaration;
+
+ProcedureDeclaration		-> ProcedureHeader ProcedureBody;
+
+ProcedureHeader				-> procedure identifier
+						   		lparen
+						   		FormalList
+						   		rparen
+						   		semicolon;
+						   		
+ProcedureBody				-> Block;	
+
+FormalList {empty}			-> /* empty */;
+						   
+FormalList {single}			-> Formal;
+
+FormalList {recurring}		-> FormalList semicolon Formal;						   
+						   
+Formal						-> IdList colon ScalarType;
+
+Block						-> begin
+						   		StartNewBlock
+						   		ConstantDeclarations
+						   		VariableDeclarations
+						   		AddConstQuads
+								ShowSymbolTable
+						   		StatementList
+						   		end
+						   		EndCurrentBlock
+						   		ShowSymbolTable
+						   		semicolon;
+						   		
+						   
+StartNewBlock				-> %reduce /* empty */;
+
+EndCurrentBlock				-> %reduce /* empty */;
+
+AddConstQuads				-> %reduce /* empty */;						   
+						   
+StatementList {empty}		-> /* empty */;
+
+StatementList {nonempty}	-> StatementList Statement;
+						   
+Statement {block}			-> Block;
+
+Statement {print}			-> Print;
+
+Statement {read}			-> Read;
+
+Statement {asgn}			-> Asgn;
+
+Statement {cond}			-> Cond;
+
+Statement {for}				-> For;
+
+Statement {call}			-> Call;
+
+Statement {return}			-> Return;
+
+Print						-> print lparen stringConst PrintExprList rparen semicolon;
+
+PrintExprList {empty}		-> /* empty */;
+
+PrintExprList {nonempty}	-> PrintExprList comma Expr;
+
+Read						-> read lparen stringConst ReadIdList rparen semicolon;
+
+ReadIdList {empty}			-> /* empty */;
+
+ReadIdList {nonempty}		-> ReadIdList comma InputTarget;
+
+InputTarget {scalar}		-> identifier;
+
+InputTarget {arrayElt}		-> identifier lsqbracket Expr rsqbracket;
+
+Asgn {scalar}				-> identifier assign Expr semicolon;
+
+Asgn {arrayElt}				-> identifier lsqbracket Expr rsqbracket assign Expr semicolon;
+
+Cond {unmatched}			-> CondIfPart CondThenPartUM;
+
+Cond {matched}				-> CondIfPart CondThenPartM;
+
+CondIfPart					-> if Expr;
+
+CondThenPartUM				-> then Statement %shift else;
+
+CondThenPartM				-> then Statement else CondElseJump Statement;
+
+CondElseJump				-> %reduce /* empty */;
+
+For							-> for identifier assign Expr to Expr do Statement;
+
+Return						-> return semicolon;
+
+Call 						-> call identifier lparen ActualList rparen semicolon;
+
+ActualList {empty}			-> /* empty */;
+						   
+ActualList {single}			-> Expr;
+
+ActualList {recurring}		-> ActualList comma Expr;
+
+Expr {binaryPlus}			-> Expr plus Term;
+
+Expr {binaryMinus}			-> Expr minus Term;
+
+Expr {binaryOr}				-> Expr or Term;
+
+Expr {passThru}				-> Term ;
+
+Term {binaryMul}			-> Term star Factor ;
+
+Term {binaryDiv}			-> Term slash Factor ;
+
+Term {binaryAnd}			-> Term and Factor ;
+
+Term {passThru}				-> Factor;
+
+Factor {unaryMinus}			-> minus Prim;
+
+Factor {unaryNot}			-> not Prim;
+
+Factor {passThru}			-> Prim;
+
+Prim {intConst}				-> intConst;
+
+Prim {boolConst}			-> boolConst;
+
+Prim {value}				-> Value;
+
+Prim {parens}				-> lparen Expr rparen;
+
+Prim {comparison}			-> lparen Expr Relop Expr rparen;
+
+Value {scalar}				-> identifier;
+
+Value {arrayElt}			-> identifier lsqbracket Expr rsqbracket;
+
+Relop {isEquals}			-> isEquals;
+
+Relop {notEquals}			-> notEquals;
+
+Relop {lessThan}			-> lessThan;
+
+Relop {lessThanEquals}		-> lessThanEquals;
+
+Relop {greaterThan}			-> greaterThan;
+
+Relop {greaterThanEquals}	-> greaterThanEquals;
+
+
+//---------------------------------		
+// ----- Character categories -----
+%categories:
+
+//Characters used to spell keywords
+a = 'a';
+b = 'b';
+c = 'c';
+d = 'd';
+e = 'e';
+f = 'f';
+g = 'g';
+h = 'h';
+i = 'i';
+j = 'j';
+k = 'k';
+l = 'l';
+m = 'm';
+n = 'n';
+o = 'o';
+p = 'p';
+q = 'q';
+r = 'r';
+s = 's';
+t = 't';
+u = 'u';
+v = 'v';
+x = 'x';
+y = 'y';
+z = 'z';
+
+//Characters used for operators and punctuators
+starCtg = '*';		//Get double-duty in comments and math
+slashCtg = '/';		//Same here
+underCtg = '_';		//Only embedded in names; not as leader
+quoteCtg = '"';		//Begins, ends and can be embedded in strings
+commaCtg = ',';
+semicolonCtg = ';';
+colonCtg = ':';
+lparenCtg = '(';
+rparenCtg = ')';
+lsqbracketCtg = '[';
+rsqbracketCtg = ']';
+plusCtg = '+';
+minusCtg = '-';
+equalsCtg = '=';
+lessThanCtg = '<'; 
+greaterThanCtg = '>';
+anyCtg = %any;		//Any character for broad matches in conditions
+
+//Characters used in value-carrying terminals
+letterCtg = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJLKMNOPQRSTUVWXYZ';
+digitCtg = '0123456789'; 
+  
+//Whitespace characters
+crCtg = 13;					//carriage return
+lfCtg = 10;					//line feed  
+spaceCtg = 9 | 12 | 32;		//tab, form feed and space
+
+
+//---------------------------------		
+// ----- Conditions 		-----
+%conditions:
+notInComment;				//Normal condition
+inBracketedComment;			//Inside a bracketed multi-line comment
+inLineComment;				//Inside a line comment (lasts until eol)
+
+
+//-------------------
+// ----- Tokens -----
+
+//Main tokens----------------------
+%tokens notInComment:
+
+//Tokens for consuming comments and whitespace----------------------
+whiteSpace = spaceCtg*; 						//Discard
+beginLineComment = slashCtg slashCtg;			//Trigger line comment
+beginBracketedComment = slashCtg starCtg;		//Trigger bracketed comment
+
+//Regular tokens----------------------
+//Tokens for keywords----------------------
+const = c o n s t;
+var = v a r;
+begin = b e g i n;
+end = e n d;
+integer = i n t e g e r;
+boolean = b o o l e a n;
+procedure = p r o c e d u r e;
+print = p r i n t;
+read = r e a d;
+if = i f;
+then = t h e n;
+else = e l s e;
+for = f o r;
+to = t o;
+do = d o;
+return = r e t u r n;
+call = c a l l;
+not = n o t;
+and = a n d;
+or = o r;
+
+//Tokens for operators and punctuators----------------------
+comma = commaCtg;
+semicolon = semicolonCtg;
+colon = colonCtg;
+lparen = lparenCtg;
+rparen = rparenCtg;
+lsqbracket = lsqbracketCtg;
+rsqbracket = rsqbracketCtg;
+plus = plusCtg;
+minus = minusCtg;
+star = starCtg;
+slash = slashCtg;
+assign = colonCtg equalsCtg;
+constEquals = equalsCtg;
+isEquals =  equalsCtg equalsCtg;
+notEquals = lessThanCtg greaterThanCtg;
+lessThan = lessThanCtg;
+lessThanEquals = lessThanCtg equalsCtg;
+greaterThan = greaterThanCtg;
+greaterThanEquals = greaterThanCtg equalsCtg;
+
+//Tokens that carry values----------------------
+boolConst = t r u e | f a l s e;
+identifier = letterCtg ( letterCtg | underCtg | digitCtg )*;	//Lexeme returned through identifier tokenFactory
+intConst =  (minusCtg)? digitCtg+;											//Lexeme returned through intConst tokenFactory
+
+//  Below is special handling for stringConst (see associated TokenFactory subclass)
+stringConst = quoteCtg ( (anyCtg ~ crCtg ~ quoteCtg)* | (quoteCtg quoteCtg) )* quoteCtg;
+stringConstRunOn = quoteCtg (anyCtg ~ quoteCtg)* /  crCtg lfCtg;
+
+//Line comment tokens----------------------
+%tokens inLineComment:
+lineCommentContents = (anyCtg  ~ crCtg)*;						//Match anything but the beginning of a newline (assumed to be cr lf)
+endLineComment = crCtg lfCtg;									//Match newline, count it, go back to normal condition
+
+//Bracketed comment tokens----------------------
+%tokens inBracketedComment:
+bracketedCommentContents = (anyCtg ~ starCtg  ~crCtg)*;			//Match anything but end-comment or newline (same assumption)
+bracketedCommentLineEnd = crCtg lfCtg;							//Match newline and count it, stay in condition
+embeddedStar = starCtg / (anyCtg ~ slashCtg);					//Must catch a star followed by non-/ and continue
+embeddedSlash = slashCtg / anyCtg;								//Must catch a slash (disallowed above) and continue
+endBracketedComment = starCtg slashCtg;							//Match end-comment, go back to normal condition
+
+//Always active tokens regardless of condition----------------------
+%tokens:												
+lineEnd = crCtg lfCtg;								//always active for line counting
