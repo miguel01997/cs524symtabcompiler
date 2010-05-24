@@ -620,7 +620,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		
 			//We need to generate a start quad for the code
 			//Initial start seems to be -1 from Lewis' example
-			Quad quad = quadGen.makeStart(-1);
+			Quad quad = quadGen.makeStart(1);
 			quadGen.addQuad(quad);
 			
 			//Return null value
@@ -642,6 +642,8 @@ public class NanoSymtabCompiler extends CompilerModel
 			//We need to generate an end quad for the program
 			Quad quad = quadGen.makeEnd();
 			quadGen.addQuad(quad);
+			
+			quadGen.performFinalBackpatching();
 			
 			if(showQuads)
 				quadGen.showQuads();
@@ -1304,7 +1306,7 @@ public class NanoSymtabCompiler extends CompilerModel
 							reportError("","printStmnt() - String expression type and expression do not match.");
 						}
 					}
-					//We're dealing with an array
+					//We're dealing with an array - this does not make a difference right now
 					else{
 						NSTIndArrayEntry entry = (NSTIndArrayEntry) expr;
 						if (expr.isBooleanArray() && isBoolean){
@@ -1591,20 +1593,24 @@ public class NanoSymtabCompiler extends CompilerModel
 			throws IOException, SyntaxException
 			{
 			
-				//Get the id string
-				String idString = (String) parser.rhsValue (0);
 				
-				//Check to make sure idString is valid
-				if(idString == null){
-					reportError("","inputTargetIdArrayNT() - Id not declared in this scope.");
-					return null;
-				}
 				
 				//Show the reductions
-			    if (showReductions) {
-		   			System.out.print(parser.token().line + ": ");
-		   			System.out.println("inputTarget {idArray} -> id lbracket expr rbracket\n");
-			    }
+   		   if (showReductions) {
+   	   		System.out.print(parser.token().line + ": ");
+   	   		System.out.println("inputTarget {idArray} -> id lbracket expr rbracket\n");
+   		   }
+			    
+			    /*
+			    
+			    //Get the id string
+            String idString = (String) parser.rhsValue (0);
+            
+            //Check to make sure idString is valid
+            if(idString == null){
+               reportError("","inputTargetIdArrayNT() - Id not declared in this scope.");
+               return null;
+            }
 			    
 			    //Get the expression for the index
 			    NSTIndEntry exprEntry = (NSTIndEntry) parser.rhsValue(2);
@@ -1656,6 +1662,52 @@ public class NanoSymtabCompiler extends CompilerModel
 			    }
 			    
 			    return entry;
+			    */
+			    
+   		   //get the array id and the index offset
+	         NSTIndArrayEntry array = (NSTIndArrayEntry)symtab.get((String)parser.rhsValue(0));
+	         NSTIndEntry indexExpr = (NSTIndEntry)parser.rhsValue(2);
+	         MemModQuad indexCalcQuad = null;
+	         
+	         //make sure array is valid id and is an array.  
+	         //Check that the index is an integer
+	         if (array==null) 
+	         {
+	            reportError("","Array identifier not found in scope");
+	            return null; 
+	         }
+	         else if (array.isScalar())
+	         {
+	            reportError("","Attempt to use scalar identifier as array base address");
+	            return null;
+	         }
+	         else if (!indexExpr.isInteger())
+	         {
+	            reportError("","Non-integer index in array element assignment");
+	            return null;
+	         }
+	         
+	         //make an indexCalcQuad to calc the index offset
+	         //store the result in a tmpIndex symbol table entry
+	         if (indexExpr.isImmediate())
+	         {
+	            NSTIndImmediateEntry immIndex = (NSTIndImmediateEntry) indexExpr;
+	            NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+	            indexCalcQuad = quadGen.makeOffsetImmediate(tmpIndex.getAddress(),          
+	                                 array.getAddress(), immIndex.getIntValue()); 
+	         }
+	         else if (indexExpr.isScalar())
+	         {
+	            NSTIndScalarEntry calculatedIndex = (NSTIndScalarEntry) indexExpr;
+	            NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
+	            indexCalcQuad = quadGen.makeOffsetRegular(tmpIndex.getAddress(), 
+	                           array.getAddress(), calculatedIndex.getAddress());
+	         }
+	         
+	         quadGen.addQuad(indexCalcQuad);
+	         //make a new symbol table entry for the array location with the offset
+	         return symtab.new NSTIndScalarEntry(array.getName(), array.getActualType(), false, indexCalcQuad.getResultAddress()); 
+	         
 			}
 	}
 	
@@ -2065,10 +2117,11 @@ public class NanoSymtabCompiler extends CompilerModel
          jumpToStartofFor = quadGen.makeUnconditionalJump(assgForStart.getQuadId()+1);
          quadGen.addQuad(jumpToStartofFor);
          
-         InstrModQuad imq = (InstrModQuad) parser.rhsValue(0);
-         String jumpQuadLabel = imq.getBackpatchQuadLabel();
+         int quadIndexforIfTrue = assgForStart.getQuadId() + 2;
+         InstrModQuad imq = (InstrModQuad)quadGen.getQuadList().get(quadIndexforIfTrue);
+         String ifTrueLabel = imq.getBackpatchQuadLabel();
          Integer lastQuadIndex = (Integer) parser.rhsValue(1);
-         quadGen.updateBackpatching(jumpQuadLabel, lastQuadIndex.intValue()+1);
+         quadGen.updateBackpatching(ifTrueLabel, lastQuadIndex.intValue()+3);
          
          return new Integer(jumpToStartofFor.getQuadId());
          }
@@ -3260,10 +3313,14 @@ public class NanoSymtabCompiler extends CompilerModel
             String idString = (String) parser.rhsValue (0);
             System.out.println("identifier lexeme: " + idString + "\n");
          }
+         
+         //get the array id and the index offset
          NSTIndArrayEntry array = (NSTIndArrayEntry)symtab.get((String)parser.rhsValue(0));
          NSTIndEntry indexExpr = (NSTIndEntry)parser.rhsValue(2);
          MemModQuad indexCalcQuad = null;
          
+         //make sure array is valid id and is an array.  
+         //Check that the index is an integer
          if (array==null) 
          {
             reportError("","Array identifier not found in scope");
@@ -3279,6 +3336,9 @@ public class NanoSymtabCompiler extends CompilerModel
             reportError("","Non-integer index in array element assignment");
             return null;
          }
+         
+         //make an indexCalcQuad to calc the index offset
+         //store the result in a tmpIndex symbol table entry
          if (indexExpr.isImmediate())
          {
             NSTIndImmediateEntry immIndex = (NSTIndImmediateEntry) indexExpr;
@@ -3293,7 +3353,9 @@ public class NanoSymtabCompiler extends CompilerModel
             indexCalcQuad = quadGen.makeOffsetRegular(tmpIndex.getAddress(), 
                            array.getAddress(), calculatedIndex.getAddress());
          }
+         
          quadGen.addQuad(indexCalcQuad);
+         //make a new symbol table entry for the array location with the offset
          return symtab.new NSTIndScalarEntry(array.getName(), array.getActualType(), false, indexCalcQuad.getResultAddress()); 
          }
    }
