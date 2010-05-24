@@ -54,9 +54,15 @@ public class NanoSymtabCompiler extends CompilerModel
 		// Link the token factories to the scanner table
 		_scannerTable.linkFactory ("id",			"", new idT());
 		_scannerTable.linkFactory ("intConst", 		"", new intConstT());
-		//_scannerTable.linkFactory ("boolConst", 	"", new boolConstT());
-		//_scannerTable.linkFactory ("boolConst",    "false", new boolConstFalseT());
 		_scannerTable.linkFactory ("stringConst", 	"", new stringConstT());
+		
+		//relop tokens
+		_scannerTable.linkFactory("isEquals",         "",        new isEqualsT());
+		_scannerTable.linkFactory("lessThan",         "",     new lessThanT());
+		_scannerTable.linkFactory("greaterThan",        "",     new greaterThanT());
+		_scannerTable.linkFactory("lessThanEquals",         "",  new lessThanEqualsT());
+		_scannerTable.linkFactory("greaterThanEquals",         "",  new greaterThanEqualsT());
+		_scannerTable.linkFactory("notEquals",        "",    new notEqualsT());
 		
 		// Handling of comments
 		_scannerTable.linkFactory("beginLineComment", 		"", new beginLineCommentT());
@@ -264,7 +270,6 @@ public class NanoSymtabCompiler extends CompilerModel
 		{
 			String idString = scanner.tokenToString ();
 			token.value = idString;
-			//symtab.tempIdListAdd(idString);
 		
 			// Assembled token
 			return assemble;
@@ -306,6 +311,82 @@ public class NanoSymtabCompiler extends CompilerModel
 			return assemble;
 		}
 	}
+	
+   final class isEqualsT extends TokenFactory
+   {
+      public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
+      {
+         String idString = scanner.tokenToString ();
+         token.value = idString;
+      
+         // Assembled token
+         return assemble;
+      }
+   }	
+	
+   final class lessThanT extends TokenFactory
+   {
+      public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
+      {
+         String idString = scanner.tokenToString ();
+         token.value = idString;
+      
+         // Assembled token
+         return assemble;
+      }
+   }   
+   
+   final class greaterThanT extends TokenFactory
+   {
+      public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
+      {
+         String idString = scanner.tokenToString ();
+         token.value = idString;
+      
+         // Assembled token
+         return assemble;
+      }
+   }
+   
+   final class lessThanEqualsT extends TokenFactory
+   {
+      public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
+      {
+         String idString = scanner.tokenToString ();
+         token.value = idString;
+      
+         // Assembled token
+         return assemble;
+      }
+   }
+   
+   final class greaterThanEqualsT extends TokenFactory
+   {
+      public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
+      {
+         String idString = scanner.tokenToString ();
+         token.value = idString;
+      
+         // Assembled token
+         return assemble;
+      }
+   }
+   
+   final class notEqualsT extends TokenFactory
+   {
+      public int makeToken (Scanner scanner, Token token) throws IOException, SyntaxException
+      {
+         String idString = scanner.tokenToString ();
+         token.value = idString;
+      
+         // Assembled token
+         return assemble;
+      }
+   }
+   
+
+   
+   
 	
 	final class beginLineCommentT extends TokenFactory
 	{
@@ -1253,7 +1334,7 @@ public class NanoSymtabCompiler extends CompilerModel
 				if(parser.rhsValue(3) == null){
 					MemModQuad quad = quadGen.makePrint(-1, outputString);
 					quadGen.addQuad(quad);
-					return quad;
+					return new Integer(quad.getQuadId());
 				}
 				
 				//Determine if the stringConst is for a boolean or an integer or is invalid
@@ -3038,11 +3119,6 @@ public class NanoSymtabCompiler extends CompilerModel
          }
    }
    
-   //Enumeration so that we can use it in case switch statement below in prim -> relop
-   public enum relopName {
-      ISEQUALS,NOTEQUALS,LESSTHAN,LESSTHANEQUALS,GREATERTHAN,GREATERTHANEQUALS 
-   }
-   
    final class primRelopNT extends NonterminalFactory
    {
       public Object makeNonterminal (Parser parser, int param) 
@@ -3075,220 +3151,220 @@ public class NanoSymtabCompiler extends CompilerModel
          MemModQuad relopQuad;
          NSTIndScalarEntry tmpRelopResult = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
          
-         //need to check to make sure this cast is delevering a enumeration
-         relopName relopEnum = (relopName) parser.rhsValue (2);
-         switch (relopEnum) {
-             case ISEQUALS: 
-                if (eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopEqualsBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getIntValue());
-                }
-                else if (eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopEqualsLeftImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getAddress());
-                }
-                else if (!eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopEqualsBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getIntValue());
-                }
-                else if (!eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopEqualsRegular(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getAddress());
-                }
-                else {
-                   reportError("","Invalid relational operator arguements.");
-                   return null;
-                }
-                break;
-             case NOTEQUALS:
-                if (eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopNotEqualsBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getIntValue());
-                }
-                else if (eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopNotEqualsLeftImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getAddress());
-                }
-                else if (!eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopNotEqualsBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getIntValue());
-                }
-                else if (!eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopNotEqualsRegular(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getAddress());
-                }
-                else {
-                   reportError("","Invalid relational operator arguements.");
-                   return null;
-                }
-                break;
-             case LESSTHAN:
-                if (eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopLessThanBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getIntValue());
-                }
-                else if (eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopLessThanLeftImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getAddress());
-                }
-                else if (!eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopLessThanBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getIntValue());
-                }
-                else if (!eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopLessThanRegular(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getAddress());
-                }
-                else {
-                   reportError("","Invalid relational operator arguements.");
-                   return null;
-                }
-                break;
-             case LESSTHANEQUALS:
-                if (eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopLessThanEqualsBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getIntValue());
-                }
-                else if (eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopLessThanEqualsLeftImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getAddress());
-                }
-                else if (!eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopLessThanEqualsBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getIntValue());
-                }
-                else if (!eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopLessThanEqualsRegular(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getAddress());
-                }
-                else {
-                   reportError("","Invalid relational operator arguements.");
-                   return null;
-                }
-                break;
-             case GREATERTHAN:
-                if (eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopGreaterThanBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getIntValue());
-                }
-                else if (eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopGreaterThanLeftImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getAddress());
-                }
-                else if (!eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopGreaterThanBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getIntValue());
-                }
-                else if (!eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopGreaterThanRegular(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getAddress());
-                }
-                else {
-                   reportError("","Invalid relational operator arguements.");
-                   return null;
-                }
-                break;
-             case GREATERTHANEQUALS:
-                if (eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopGreaterThanEqualsBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getIntValue());
-                }
-                else if (eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopGreaterThanEqualsLeftImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getIntValue(), eRightImm.getAddress());
-                }
-                else if (!eLeft.isImmediate() && eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
-                   relopQuad = quadGen.makeRelopGreaterThanEqualsBothImmediate(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getIntValue());
-                }
-                else if (!eLeft.isImmediate() && !eRight.isImmediate())
-                {
-                   NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
-                   NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
-                   relopQuad = quadGen.makeRelopGreaterThanEqualsRegular(tmpRelopResult.getAddress(),          
-                         eLeftImm.getAddress(), eRightImm.getAddress());
-                }
-                else {
-                   reportError("","Invalid relational operator arguements.");
-                   return null;
-                }
-                break;
-             default: 
-                reportError("","Invalid relational operator.");
+         String relopName = (String)parser.rhsValue (2);
+         
+         if (relopName.equals("==")) { 
+             if (eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopEqualsBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getIntValue());
+             }
+             else if (eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopEqualsLeftImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getAddress());
+             }
+             else if (!eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopEqualsBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getIntValue());
+             }
+             else if (!eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopEqualsRegular(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getAddress());
+             }
+             else {
+                reportError("","Invalid relational operator arguements.");
                 return null;
-         }
-         quadGen.addQuad(relopQuad);
-         return tmpRelopResult;  
-         }
+             }
+          }
+          else if (relopName.equals("<>")) {
+             if (eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopNotEqualsBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getIntValue());
+             }
+             else if (eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopNotEqualsLeftImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getAddress());
+             }
+             else if (!eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopNotEqualsBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getIntValue());
+             }
+             else if (!eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopNotEqualsRegular(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getAddress());
+             }
+             else {
+                reportError("","Invalid relational operator arguements.");
+                return null;
+             }
+          }
+          else if (relopName.equals("<")) {
+             if (eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopLessThanBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getIntValue());
+             }
+             else if (eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopLessThanLeftImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getAddress());
+             }
+             else if (!eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopLessThanBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getIntValue());
+             }
+             else if (!eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopLessThanRegular(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getAddress());
+             }
+             else {
+                reportError("","Invalid relational operator arguements.");
+                return null;
+             }
+          }
+          else if (relopName.equals("<=")) {
+             if (eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopLessThanEqualsBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getIntValue());
+             }
+             else if (eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopLessThanEqualsLeftImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getAddress());
+             }
+             else if (!eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopLessThanEqualsBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getIntValue());
+             }
+             else if (!eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopLessThanEqualsRegular(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getAddress());
+             }
+             else {
+                reportError("","Invalid relational operator arguements.");
+                return null;
+             }
+          }
+          else if (relopName.equals(">")) {
+             if (eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopGreaterThanBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getIntValue());
+             }
+             else if (eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopGreaterThanLeftImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getAddress());
+             }
+             else if (!eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopGreaterThanBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getIntValue());
+             }
+             else if (!eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopGreaterThanRegular(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getAddress());
+             }
+             else {
+                reportError("","Invalid relational operator arguements.");
+                return null;
+             }
+          }
+          else if (relopName.equals(">=")) {
+             if (eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopGreaterThanEqualsBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getIntValue());
+             }
+             else if (eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopGreaterThanEqualsLeftImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getIntValue(), eRightImm.getAddress());
+             }
+             else if (!eLeft.isImmediate() && eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
+                relopQuad = quadGen.makeRelopGreaterThanEqualsBothImmediate(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getIntValue());
+             }
+             else if (!eLeft.isImmediate() && !eRight.isImmediate())
+             {
+                NSTIndScalarEntry eLeftImm = (NSTIndScalarEntry) eLeft;
+                NSTIndScalarEntry eRightImm = (NSTIndScalarEntry) eRight;
+                relopQuad = quadGen.makeRelopGreaterThanEqualsRegular(tmpRelopResult.getAddress(),          
+                      eLeftImm.getAddress(), eRightImm.getAddress());
+             }
+             else {
+                reportError("","Invalid relational operator arguements.");
+                return null;
+             }
+          }
+          else {
+             reportError("","Unable to identify relational operator.");
+             return null;
+          }
+            
+            quadGen.addQuad(relopQuad);
+            return tmpRelopResult;  
+            }
    }
    
    //value (id, expr)
