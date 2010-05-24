@@ -6,11 +6,11 @@ import java.util.Iterator;
 import java.util.ArrayList;
 //
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-//				NANO SYMBOL TABLE MAIN CLASS
+//				PICO SYMBOL TABLE MAIN CLASS
 //			(final inner support classes below)
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 //
-public class NanoSymbolTable
+public class NanoSymbolTable //Pico Symbol Table
 {
 	//Some constants that are useful
 	public static final int UNK_TYPE = -1;
@@ -18,7 +18,7 @@ public class NanoSymbolTable
 	public static final int BOOL_TYPE = 1;
 	public static final int INT_ARRAY_TYPE = 2;
 	public static final int BOOL_ARRAY_TYPE = 3;
-	public static final int PROC_TYPE = 4;
+
 	//Utility class included here for proximity to original constant names
 	//Used in verbose output for tracing contents of symbol table
 	public static final String getTypeName(int type)
@@ -28,7 +28,6 @@ public class NanoSymbolTable
 		else if (type==BOOL_TYPE) result = "boolean";
 		else if (type==INT_ARRAY_TYPE) result = "integer array";
 		else if (type==BOOL_ARRAY_TYPE) result = "boolean array";
-		else if (type==PROC_TYPE) result = "procedure";
 		else if (type==UNK_TYPE) result = "unknown type (error)";
 		return result;
 	}
@@ -48,16 +47,8 @@ public class NanoSymbolTable
 	private int currTempNum;
 	private ArrayList tempIdList;
 	private ArrayList tempTargetList;
-	private ArrayList tempFormalList;
 	private ArrayList tempExprList;
 	
-	private Hashtable procEntries; //These are kept separate from the block structure
-								   //because the procedure definitions cannot be nested or
-	 							   //have access to nested variables other than those in 
-								   //the scope of the call statement that invokes them
-
-	//Because past copies of the symbol table have provided ample access to verbosity
-	//it is not included in this release; however comments will be instructive where necessary
 	public NanoSymbolTable()
 	{
 		blockEntryStack = new Stack();
@@ -66,15 +57,8 @@ public class NanoSymbolTable
 		currTempNum = 0;
 		tempIdList = new ArrayList();
 		tempTargetList = new ArrayList();
-		tempFormalList = new ArrayList();
 		tempExprList = new ArrayList();
-		procEntries = new Hashtable();
 	}
-
-	/*
-	 * Method to provide access to current stackTopOffset for use in PARM quads
-	 */
-	public int getStackTopOffset() { return stackTopOffset; }
 	
 	/*
 	 * Method to call to initialize a new block in the chain corresponding to a new lexical scope
@@ -96,6 +80,7 @@ public class NanoSymbolTable
 	{
 		blockCount--;
 		NSTBlockEntry be = (NSTBlockEntry) blockEntryStack.pop();
+		currentBlock = be.beneath;
 		stackTopOffset -= be.lengthOfEntries();
 	}
 
@@ -186,7 +171,7 @@ public class NanoSymbolTable
 	/*
 	 *  Method to lookup an identifier at the main symbol table level,
 	 *  which triggers the local hash table checks and the walks up the chain.
-	 *  Returns an instance of the NanoSymbolTableIndividualEntry, a final inner class 
+	 *  Returns an instance of the NSTIndEntry, a final inner class 
 	 *  defined below which has in it all necessary information for participating
 	 *  in synthesized attributes. 
 	 *  !!Returns null if entry is nowhere in the symbol table!!
@@ -216,10 +201,6 @@ public class NanoSymbolTable
 	{
 		tempTargetList = new ArrayList();
 	}
-	public void tempFormalListClear()
-	{
-		tempFormalList = new ArrayList();
-	}
 	public void tempExprListClear()
 	{
 		tempExprList = new ArrayList();
@@ -238,10 +219,6 @@ public class NanoSymbolTable
 	public Iterator getTempTargetListIterator()
 	{
 		return tempTargetList.iterator();
-	}
-	public Iterator getTempFormalListIterator()
-	{
-		return tempFormalList.iterator();
 	}
 	public Iterator getTempExprListIterator()
 	{
@@ -264,10 +241,6 @@ public class NanoSymbolTable
 	{
 		tempTargetList.add(e);
 	}
-	public void tempFormalListAdd(FormalContainer f)
-	{
-		tempFormalList.add(f);
-	}
 	public void tempExprListAdd(NSTIndEntry e)
 	{
 		tempExprList.add(e);
@@ -285,34 +258,6 @@ public class NanoSymbolTable
 	}
 
 	/*
-	 * In Nano all procedures are declared before the first block and all parameters passed in or
-	 * variables declared within are the only ones considered visible inside the procedure block so 
-	 * the procedures are added to a different storage mechanism, and lookups on "outside" variables
-	 * are not only not possible but are therefore an opportunity to provide efficiency. Should we 
-	 * need any of those values in the main scope blocks we would pass them in. 
-	 */
-	public NSTIndProcEntry addProcedureToSymbolTable
-		(String name, int numParams, Hashtable formalContainerList)
-	{
-		//Procedures are in their own hashtable separate from the block stack	
-		if (this.get(name)!=null)
-		{
-			System.out.println("SYMTAB ERROR: Nano defines procedures for use in any "+
-							   "block and this procedure name is already taken by a variable "+
-							   "somewhere in the Nano code being compiled\n\n");
-			System.exit(1); //OUCH!
-		}
-		NSTIndProcEntry e = new NSTIndProcEntry(name,NanoSymbolTable.PROC_TYPE,numParams,formalContainerList);		
-		procEntries.put(name, e);
-		return e;
-	}
-	
-
-	public NSTIndProcEntry getProcedure(String procName)
-	{ Object o = procEntries.get(procName); 
-	  return (NSTIndProcEntry) o; }
-	
-	/*
 	 * Workhorse of the tracing of the symbol table. 
 	 * Keep in mind that all this machinery is mostly for the compiler developer,
 	 * to aid in the process of constructing a correct compiler that uses the symtab appropriately.
@@ -320,19 +265,11 @@ public class NanoSymbolTable
 	public void showContents()
 	{
 			Iterator besi = blockEntryStack.iterator();
-			System.out.println("Nano Symbol Table =================>\n\n");
+			System.out.println("Pico Symbol Table =================>\n\n");
 			while (besi.hasNext())
 			{
 				System.out.println(besi.next());
 			}
-			
-			String result = "			-----------beginning of Procedure Entries -------------\n\n";
-			Iterator procEntriesIterator = procEntries.values().iterator();
-			while (procEntriesIterator.hasNext())
-			{
-				result += procEntriesIterator.next().toString();
-			}
-			result += "			-----------end of Procedure Entries -------------\n\n";
 			System.out.println("=======================================\n\n\n");
 
 	}		
@@ -340,7 +277,7 @@ public class NanoSymbolTable
 	
 //
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-//				NANO SYMBOL TABLE BLOCK ENTRY CLASS
+//				PICO SYMBOL TABLE BLOCK ENTRY CLASS
 //			 (final inner support class for the above)
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 //
@@ -420,14 +357,13 @@ public final class NSTBlockEntry
 				result += entries.get(eksi.next()).toString();
 			}
 			result += "			-----------end of SymTab Block Entry-------------\n\n";
-
 			return result;
 	}
 }
 
 //
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-//				NANO SYMBOL TABLE INDIVIDUAL ENTRY CLASS (and subclasses)
+//				PICO SYMBOL TABLE INDIVIDUAL ENTRY CLASS (and subclasses)
 //			         (final inner support classes for the above)
 ///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 //
@@ -454,7 +390,6 @@ public class NSTIndEntry
 	public boolean isImmediate() { return isImmediate; }	
 	public boolean isBooleanArray() { return actualType == BOOL_ARRAY_TYPE; }
 	public boolean isIntArray() { return actualType == INT_ARRAY_TYPE; }
-	public boolean isProcedure() { return actualType == PROC_TYPE; }
 	public int getActualType() { return actualType; }
 	public void setActualType(int type) { actualType = type; } 
 	public String getName() { return name; }
@@ -464,7 +399,7 @@ public class NSTIndEntry
 				( (actualType==BOOL_TYPE)?"boolean":
 					( (actualType==INT_ARRAY_TYPE)?"integer array":
 						( (actualType==BOOL_ARRAY_TYPE?"boolean array":
-							( (actualType==PROC_TYPE)?"procedure":"unknown")))));
+							"unknown"))));
 
 			return
 				"\n			Symbol table individual entry: \n" +
@@ -540,79 +475,4 @@ extends NSTIndEntry
 	}
 }
 
-//
-///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-//				NANO SYMBOL TABLE PROCEDURE ENTRY CLASS
-//			 (final inner support class for the above)
-///\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-//
-public final class FormalContainer
-{
-	private String idLexeme;
-	private int typeFlag;
-	private int negativeOffset;
-	
-	public FormalContainer(String idLexeme, int typeFlag, int negativeOffset)
-	{
-		this.idLexeme = idLexeme;
-		this.typeFlag = typeFlag;
-		this.negativeOffset = negativeOffset;
-	}
-	public String getName() { return idLexeme; }
-	public int getType() { return typeFlag; }
-	public int getNegOffset() { return negativeOffset; }
-	public String toString() 
-	{ return	"			FormalContainer entry:\n"+
-			 	"			lexeme: " + idLexeme +"\n" +
-				"			type: " + NanoSymbolTable.getTypeName(typeFlag) + "\n" +
-				"			negOffset: " + negativeOffset +"\n\n"; 
-	}
 }
-
-public final class NSTIndProcEntry 
-extends NSTIndEntry
-{
-	private int numberInputParamSlots;
-	private int startQuadNumber;
-	private int endQuadNumber;
-	private Hashtable formalContainerList;
-	private Stack callQuadIndex;
-	public NSTIndProcEntry
-	(String name, int type, int numberInputParamSlots, Hashtable formalContainerList)
-	{
-		super(name,type,false,false);
-		this.numberInputParamSlots = numberInputParamSlots;
-		this.formalContainerList = formalContainerList;
-		this.callQuadIndex = new Stack();
-	}
-	public int getNumInputs() { return numberInputParamSlots; }
-	public int getStartQuadNumber() { return startQuadNumber; }
-	public int getEndQuadNumber() { return endQuadNumber; }
-	public int getNumberQuads() { return endQuadNumber - startQuadNumber + 1; }
-	public void setStartQuadNumber(int sqn) { startQuadNumber = sqn; }
-	public void setEndQuadNumber(int eqn) { endQuadNumber = eqn; }
-	public void pushCallQuadIndex(int cqi) { callQuadIndex.push(new Integer(cqi)); }
-	public Integer popCallQuadIndex() {  Integer tmp;
-										tmp = (Integer) callQuadIndex.pop();
-										return tmp;}
-	public Hashtable getHashtable() { return formalContainerList; }
-	public String toString() 
-	{
-		String result
-			= 
-			super.toString()  +
-			" 			Number Input Parameters: " + numberInputParamSlots + "\n" +
-			"	    			Start Quad Number: " + startQuadNumber + "\n" +
-			"         			End Quad Number: " + endQuadNumber + "\n\n";
-			Iterator i = formalContainerList.values().iterator();
-			while (i.hasNext())
-				result = result + ((FormalContainer) i.next()).toString();
-			result += "\t\t\t---end procedure: " + name + "----\n\n\n";
-			return result;		
-	}
-}
-	
-
-}
-
-
