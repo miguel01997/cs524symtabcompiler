@@ -2261,13 +2261,13 @@ public class NanoSymtabCompiler extends CompilerModel
             NSTIndImmediateEntry eLeftImm = (NSTIndImmediateEntry) eLeft;
             assgForStart = quadGen.makeAssignImmediateInteger(i.getAddress(), eLeftImm.getIntValue());
          }
-         else if (eLeft.isScalar())
+         else if (eLeft.isScalar() || eLeft.isIntArray())
          {
             NSTIndScalarEntry eLeftScalar = (NSTIndScalarEntry) eLeft;
             assgForStart = quadGen.makeAssignRegular(i.getAddress(), eLeftScalar.getAddress());
          }
          else {
-            reportError("","Invalid for statement range");
+            reportError("","Invalid for left statement range");
             return null;
          }
          quadGen.addQuad(assgForStart);
@@ -2277,18 +2277,18 @@ public class NanoSymtabCompiler extends CompilerModel
          NSTIndScalarEntry tmpForCountRelop = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.BOOL_TYPE);
          if (eRight.isImmediate())
          {
-            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eLeft;
+            NSTIndImmediateEntry eRightImm = (NSTIndImmediateEntry) eRight;
             relopForQuad = quadGen.makeRelopGreaterThanRightImmediate(
                   tmpForCountRelop.getAddress(),i.getAddress(), eRightImm.getIntValue());
          }
-         else if (eRight.isScalar())
+         else if (eRight.isScalar()|| eRight.isIntArray())
          {
-            NSTIndScalarEntry eRightScalar = (NSTIndScalarEntry) eLeft;
+            NSTIndScalarEntry eRightScalar = (NSTIndScalarEntry) eRight;
             relopForQuad = quadGen.makeRelopGreaterThanRegular(
                   tmpForCountRelop.getAddress(),i.getAddress(), eRightScalar.getAddress());
          }
          else {
-            reportError("","Invalid for statement ranges");
+            reportError("","Invalid for right statement ranges");
             return null;
          }
          quadGen.addQuad(relopForQuad);
