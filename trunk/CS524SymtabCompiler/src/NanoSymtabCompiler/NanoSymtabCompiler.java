@@ -26,8 +26,8 @@ public class NanoSymtabCompiler extends CompilerModel
 	static final boolean _debug = false;
 	
 	private boolean symbolTableVerbose = false;
-	private boolean showReductions = true;
-	private boolean showSymbolTable = true;
+	private boolean showReductions = false;
+	private boolean showSymbolTable = false;
 	private boolean showQuads = true;
 	
 	int _conditionNotInComment;
@@ -1149,8 +1149,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {asgnStmnt} -> asgnStmnt\n");
 		   }
-         //this should be the last quad index for the statement
-         return parser.rhsValue(0);
+		   Integer lastQuadIndex = (Integer) parser.rhsValue(0);
+         return lastQuadIndex;
 			}
 	}
 	final class statementCondStmntNT extends NonterminalFactory
@@ -1162,8 +1162,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {condStmnt} -> condStmnt\n");
 		   }
-         //this should be the last quad index for the statement
-         return parser.rhsValue(0);
+		   Integer lastQuadIndex = (Integer) parser.rhsValue(0);
+         return lastQuadIndex;
 			}
 	}
 	final class statementForStmntNT extends NonterminalFactory
@@ -1949,7 +1949,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	      }
 	      
 	      //If the array index expression doesn't contain a value
-	      else if (!indexExpr.isInteger())
+	      else if (!indexExpr.isInteger()&&!indexExpr.isIntArray())
 	      {
 	         reportError("","Non-integer index in array element assignment");
 	         return null;
@@ -3337,8 +3337,9 @@ public class NanoSymtabCompiler extends CompilerModel
             reportError("","Attempt to use scalar identifier as array base address");
             return null;
          }
-         else if (!indexExpr.isInteger())
+         else if (!indexExpr.isInteger()&&!indexExpr.isIntArray())
          {
+            
             reportError("","Non-integer index in array element assignment");
             return null;
          }
