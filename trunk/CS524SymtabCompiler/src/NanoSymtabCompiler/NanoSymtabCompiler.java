@@ -1294,11 +1294,11 @@ public class NanoSymtabCompiler extends CompilerModel
 					//We're not dealing with an array
 					//if (expr.isScalar()){
 						NSTIndScalarEntry entry = (NSTIndScalarEntry) expr;
-						if (expr.isBoolean() && isBoolean){
+						if ((expr.isBoolean()||expr.isBooleanArray()) && isBoolean){
 							quad = quadGen.makePrint(entry.getAddress(), "B");
 							quadGen.addQuad(quad);
 						}
-						else if (expr.isInteger() && isInteger){
+						else if ((expr.isInteger()||expr.isIntArray()) && isInteger){
 							quad = quadGen.makePrint(entry.getAddress(), "I");
 							quadGen.addQuad(quad);
 						}
