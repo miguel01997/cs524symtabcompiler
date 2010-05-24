@@ -1861,7 +1861,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	               quadGen.addQuad(aqi);
 	               return new Integer(aqi.getQuadId());
 	            //Otherwise we messed up
-	            }else{
+	            }else {
 	            	reportError("","Compiler developer: invalid type of immediate assignment");
 	            	return null;
 	            }
@@ -1986,13 +1986,17 @@ public class NanoSymtabCompiler extends CompilerModel
 	         indexCalcQuad = quadGen.makeOffsetImmediate(tmpIndex.getAddress(), array.getAddress(), immIndex.getIntValue()); 
 	      }
 	      //Calculate the address of the index we're using
-	      else if (indexExpr.isScalar())
+	      else if (indexExpr.isScalar() || indexExpr.isIntArray())
 	      {
 	         NSTIndScalarEntry calculatedIndex = (NSTIndScalarEntry) indexExpr;
 	         NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry) symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
 	         indexCalcQuad = quadGen.makeOffsetRegular(tmpIndex.getAddress(), array.getAddress(), calculatedIndex.getAddress());
 	      }
-	      
+	      else {
+	         reportError("","Unknown address in array");
+            return null;
+	      }
+	     
 	      //Add the index quad
 	      quadGen.addQuad(indexCalcQuad);
 	      
@@ -3366,7 +3370,10 @@ public class NanoSymtabCompiler extends CompilerModel
          
          quadGen.addQuad(indexCalcQuad);
          //make a new symbol table entry for the array location with the offset
-         return symtab.new NSTIndScalarEntry(array.getName(), array.getActualType(), false, indexCalcQuad.getResultAddress()); 
+         if (array.isIntArray()) 
+            return symtab.new NSTIndScalarEntry(array.getName(), NanoSymbolTable.INT_TYPE, false, indexCalcQuad.getResultAddress());
+         else
+            return symtab.new NSTIndScalarEntry(array.getName(), NanoSymbolTable.BOOL_TYPE, false, indexCalcQuad.getResultAddress());
          }
    }
 
