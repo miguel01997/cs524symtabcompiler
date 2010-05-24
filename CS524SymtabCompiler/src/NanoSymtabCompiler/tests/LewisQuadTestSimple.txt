@@ -20,7 +20,7 @@ if (v1<8) then
       begin
          k[v1] := true;
          read   ("I", c[v1]); 
-         //print   ("B", k[v1]); 
+         print   ("B", k[v1]); 
       end;
    end;
  end;
