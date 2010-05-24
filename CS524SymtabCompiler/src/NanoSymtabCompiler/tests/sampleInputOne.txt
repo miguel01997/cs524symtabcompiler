@@ -3,7 +3,7 @@ var v1, v2 : integer;
 var arr[5] : integer;
 
 begin
- if ( arr[v2]>=arr[v1] )
+ if ( arr[v2]>=arr[v1] ) then
    for v1 := arr[2+v2] to 15 do
       begin
         arr[0] := 17;
