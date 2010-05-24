@@ -554,7 +554,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statementList {nonempty} -> statementList statement\n");
 		   }
-			return null;
+		   Integer lastQuadIndex = (Integer) parser.rhsValue(1);
+         return lastQuadIndex;
 			}
 	}
 	
@@ -1167,7 +1168,8 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.println("              showSymbolTable");
 	   			System.out.println("              semicolon\n");
 			   	}
-			   Integer lastQuadIndex = (Integer) parser.rhsValue(4);
+			   Integer lastQuadIndex = (Integer) parser.rhsValue(6);
+			   
 	         return lastQuadIndex;
 			}
 	}
