@@ -1382,36 +1382,19 @@ public class NanoSymtabCompiler extends CompilerModel
 						reportError("","printStmnt() - Cannot print immediate value.");
 						return null;
 					}
-					//We're not dealing with an array
-					//if (expr.isScalar()){
-						NSTIndScalarEntry entry = (NSTIndScalarEntry) expr;
-						if ((expr.isBoolean()||expr.isBooleanArray()) && isBoolean){
-							quad = quadGen.makePrint(entry.getAddress(), "B");
-							quadGen.addQuad(quad);
-						}
-						else if ((expr.isInteger()||expr.isIntArray()) && isInteger){
-							quad = quadGen.makePrint(entry.getAddress(), "I");
-							quadGen.addQuad(quad);
-						}
-						else{
-							reportError("","printStmnt() - String expression type and expression do not match.");
-						}
-					//}
-					//We're dealing with an array - this does not make a difference right now
-					/*else{
-						NSTIndArrayEntry entry = (NSTIndArrayEntry) expr;
-						if (expr.isBooleanArray() && isBoolean){
-							quad = quadGen.makePrint(entry.getAddress(), "B");
-							quadGen.addQuad(quad);
-						}
-						else if (expr.isIntArray() && isInteger){
-							quad = quadGen.makePrint(entry.getAddress(), "I");
-							quadGen.addQuad(quad);
-						}
-						else{
-							reportError("","printStmnt() - String expression type and expression do not match.");
-						}
-					}*/
+					
+					NSTIndScalarEntry entry = (NSTIndScalarEntry) expr;
+					if ((entry.isBoolean()||entry.isBooleanArray()) && isBoolean){
+						quad = quadGen.makePrint(entry.getAddress(), "B");
+						quadGen.addQuad(quad);
+					}
+					else if ((entry.isInteger()||entry.isIntArray()) && isInteger){
+						quad = quadGen.makePrint(entry.getAddress(), "I");
+						quadGen.addQuad(quad);
+					}
+					else{
+						reportError("","printStmnt() - String expression type and expression do not match.");
+					}
 					
 				}
 				
@@ -3370,10 +3353,8 @@ public class NanoSymtabCompiler extends CompilerModel
          
          quadGen.addQuad(indexCalcQuad);
          //make a new symbol table entry for the array location with the offset
-         if (array.isIntArray()) 
-            return symtab.new NSTIndScalarEntry(array.getName(), NanoSymbolTable.INT_TYPE, false, indexCalcQuad.getResultAddress());
-         else
-            return symtab.new NSTIndScalarEntry(array.getName(), NanoSymbolTable.BOOL_TYPE, false, indexCalcQuad.getResultAddress());
+         
+         return symtab.new NSTIndScalarEntry(array.getName(), array.getActualType(), false, indexCalcQuad.getResultAddress());
          }
    }
 
