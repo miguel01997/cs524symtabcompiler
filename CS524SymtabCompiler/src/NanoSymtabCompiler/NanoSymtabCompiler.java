@@ -3353,7 +3353,7 @@ public class NanoSymtabCompiler extends CompilerModel
             indexCalcQuad = quadGen.makeOffsetImmediate(tmpIndex.getAddress(),          
                                  array.getAddress(), immIndex.getIntValue()); 
          }
-         else if (indexExpr.isScalar())
+         else if (indexExpr.isScalar() || indexExpr.isIntArray())
          {
             NSTIndScalarEntry calculatedIndex = (NSTIndScalarEntry) indexExpr;
             NSTIndScalarEntry tmpIndex = (NSTIndScalarEntry)symtab.addNewTempToCurrentBlock(NanoSymbolTable.INT_TYPE);
