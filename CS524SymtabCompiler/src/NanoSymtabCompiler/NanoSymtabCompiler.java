@@ -2074,7 +2074,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	         //last quad produced for it (single--the index, block--the last index)
 	         Integer lastQuadIndex = (Integer) parser.rhsValue(1);
 	         
-	         quadGen.updateBackpatching(jumpQuadLabel, lastQuadIndex.intValue()+2);
+	         //quadGen.updateBackpatching(jumpQuadLabel, lastQuadIndex.intValue()+2);
 	         return lastQuadIndex;
 	      }
 	   }
