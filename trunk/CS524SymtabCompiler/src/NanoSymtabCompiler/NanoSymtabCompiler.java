@@ -3059,7 +3059,7 @@ public class NanoSymtabCompiler extends CompilerModel
          
          String relopString = (String)parser.rhsValue(2);
          if (relopString==null) {
-            reportError("","Invalid relational operator");
+            reportError("","Invalid relational operator in primative assignment");
             return null;
          }
          
