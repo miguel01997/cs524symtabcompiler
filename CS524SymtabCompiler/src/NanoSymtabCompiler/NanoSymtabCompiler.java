@@ -1384,8 +1384,7 @@ public class NanoSymtabCompiler extends CompilerModel
 					}
 					
 					NSTIndScalarEntry entry = (NSTIndScalarEntry) expr;
-					System.out.println("entry type: " + entry.getActualType() + isBoolean);
-					System.out.println("entry.isBooleanArray(): " + entry.isBooleanArray());
+
 					if ((entry.isBoolean()||entry.isBooleanArray()) && isBoolean){
 						quad = quadGen.makePrint(entry.getAddress(), "B");
 						quadGen.addQuad(quad);
@@ -1523,11 +1522,11 @@ public class NanoSymtabCompiler extends CompilerModel
 					//We're not dealing with an array
 					//if (target.isScalar()){
 						NSTIndScalarEntry entry = (NSTIndScalarEntry) target;
-						if (target.isBoolean() && isBoolean){
+						if ((entry.isBoolean()||entry.isBooleanArray()) && isBoolean){
 							quad = quadGen.makeRead(entry.getAddress(), "B");
 							quadGen.addQuad(quad);
 						}
-						else if (target.isInteger() && isInteger){
+						else if ((entry.isInteger()||entry.isIntArray()) && isInteger){
 							quad = quadGen.makeRead(entry.getAddress(), "I");
 							quadGen.addQuad(quad);
 						}
