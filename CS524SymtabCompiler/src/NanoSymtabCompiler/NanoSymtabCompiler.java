@@ -2459,7 +2459,8 @@ public class NanoSymtabCompiler extends CompilerModel
          if (leftExpr == null || rightTerm==null) return null;     
          
          //check if not integers
-         if (!leftExpr.isInteger() || !rightTerm.isInteger()) {
+         if ((!leftExpr.isInteger()&& !leftExpr.isIntArray())||
+               (!rightTerm.isInteger()&& !rightTerm.isIntArray())) {
             reportError("","Invalid addition operation arguements - must be integer.");
             return null;
          }
@@ -2524,7 +2525,8 @@ public class NanoSymtabCompiler extends CompilerModel
          if (leftExpr == null || rightTerm==null) return null;     
          
          //check if not integers
-         if (!leftExpr.isInteger() || !rightTerm.isInteger()) {
+         if ((!leftExpr.isInteger()&& !leftExpr.isIntArray())||
+               (!rightTerm.isInteger()&& !rightTerm.isIntArray())) {
             reportError("","Invalid subtraction operation arguements - must be integer.");
             return null;
          }
@@ -2671,7 +2673,8 @@ public class NanoSymtabCompiler extends CompilerModel
          if (leftTerm == null || rightFactor==null) return null;     
          
          //check if not integers
-         if (!leftTerm.isInteger() || !rightFactor.isInteger()) {
+         if ((!leftTerm.isInteger()&& !leftTerm.isIntArray())||
+               (!rightFactor.isInteger()&& !rightFactor.isIntArray())) {
             reportError("","Invalid multiplication operation arguements - must be integer.");
             return null;
          }
@@ -2736,7 +2739,8 @@ public class NanoSymtabCompiler extends CompilerModel
          if (leftTerm == null || rightFactor==null) return null;     
          
          //check if not integers
-         if (!leftTerm.isInteger() || !rightFactor.isInteger()) {
+         if ((!leftTerm.isInteger()&& !leftTerm.isIntArray())||
+               (!rightFactor.isInteger()&& !rightFactor.isIntArray())) {
             reportError("","Invalid division operation arguements - must be integer.");
             return null;
          }
@@ -2893,7 +2897,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			NSTIndEntry prim = (NSTIndEntry)parser.rhsValue(1);
 			MemModQuad negativeQuad;
          if (prim==null) {return null; }
-         if (!prim.isInteger())
+         if (!prim.isInteger()&&!prim.isIntArray())
          {
             reportError("","Can not make non-integer negative");
             return null;
