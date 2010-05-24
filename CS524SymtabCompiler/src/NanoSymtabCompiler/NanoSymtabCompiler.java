@@ -91,8 +91,6 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("statementList", 	"nonempty",		new statementListNonemptyNT());
 		_parserTable.linkFactory("statementList", 	"empty", 		new statementListEmptyNT());
 		
-		//Rich: I think this is a duplicate with below
-	//	_parserTable.linkFactory("constDec", 		"idList", 		new constDecNonemptyNT());
 		
 		_parserTable.linkFactory("constDec", 		"idList",		new constDecIdListNT());
 		
@@ -167,10 +165,7 @@ public class NanoSymtabCompiler extends CompilerModel
 		_parserTable.linkFactory("asgnStmnt", 		"int", 			new asgnStmntIntNT());
 		_parserTable.linkFactory("asgnStmnt", 		"intArray", 	new asgnStmntIntArrayNT());
 		
-		/*
-		_parserTable.linkFactory("condStmnt", 		"ifThen", 		new condStmntIfThenNT());
-		_parserTable.linkFactory("condStmnt", 		"ifThenElse", 	new condStmntIfThenElseNT());
-		*/
+		
 		_parserTable.linkFactory("Cond",          "unmatched",      new NanoCondUnmatched());
 		_parserTable.linkFactory("Cond",          "matched",      new NanoCondMatched());
 		_parserTable.linkFactory("CondIfPart",      "",      new NanoCondIfPart());
@@ -184,8 +179,6 @@ public class NanoSymtabCompiler extends CompilerModel
 		
 		_parserTable.linkFactory("returnStmnt", 	"", 			new returnStmntNT());
 		
-		//_parserTable.linkFactory("callStmnt", 		"nothing", 		new callStmntNothingNT());
-		//_parserTable.linkFactory("callStmnt", 		"exprList", 	new callStmntExprListNT());
 		
 		_parserTable.linkFactory("exprList", 		"list", 		new exprListListNT());
 		_parserTable.linkFactory("exprList", 		"single", 		new exprListSingleNT());
@@ -903,55 +896,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 	}
 	
-	//Add the three part proc stuff procDec, procHeader, procBody
-	//procDec
-	final class procDecNT extends NonterminalFactory
-	{
-		public Object makeNonterminal (Parser parser, int param) 
-			throws IOException, SyntaxException
-			{
-		   
-         if (showReductions) {
-   			System.out.print(parser.token().line + ": ");
-   			System.out.println("procDec -> procHeader procBody");
-			}
-			
-         //not sure what to return
-			return parser.rhsValue(0);
-			}
-	}
-	final class procHeaderNT extends NonterminalFactory
-   {
-      public Object makeNonterminal (Parser parser, int param) 
-         throws IOException, SyntaxException
-         {
-         boolean notAlreadyDefined = true;
-         String nameToDefine = "";
-         int countNumberOfIds = ((Integer) parser.rhsValue(3)).intValue();
-         nameToDefine = (String)parser.rhsValue(1);
-         
-         //need to get hashtable of formals
-         Hashtable formalHashtable = new Hashtable();
-         
-         //if (symtab.addProcedureToSymbolTable(nameToDefine,countNumberOfIds,formalHashtable) == null)
-         //   notAlreadyDefined = false;
-         //else
-            notAlreadyDefined = true;
-         if (!notAlreadyDefined)
-         {
-         reportError("","Duplicate declaration in this block of "+nameToDefine);
-         }
-         
-         if (showReductions) {
-            System.out.print(parser.token().line + ": ");
-            System.out.println("procHeader ->  procedure id lparen formalList rparen semicolon");
-            String idString = (String) parser.rhsValue (1);
-            System.out.println("proc id lexeme: " + idString + "\n");
-         }
-         
-         return null;
-         }
-   }
+	
 	final class procBodyNT extends NonterminalFactory
    {
       public Object makeNonterminal (Parser parser, int param) 
@@ -969,7 +914,7 @@ public class NanoSymtabCompiler extends CompilerModel
    }
 	
 	//formalList (empty, list, single)
-	//Rich: not sure what to do here for symtab
+	
 	final class formalListEmptyNT extends NonterminalFactory
 	{
 		public Object makeNonterminal (Parser parser, int param) 
@@ -1012,7 +957,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 	}
 	
-	//Rich: I added this like the one from var dec 
+	
 	//formal
 	final class formalNT extends NonterminalFactory
 	{
@@ -1110,8 +1055,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {blockStmnt} -> blockStmnt\n");
 		   }
-		   //this should be the last quad index for the statement
-         return parser.rhsValue(0);
+		   Integer lastQuadIndex = (Integer) parser.rhsValue(0);
+         return lastQuadIndex;
 			}
 	}
 	final class statementPrintStmntNT extends NonterminalFactory
@@ -1123,8 +1068,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {printStmnt} -> printStmnt\n");
 		   }
-         //this should be the last quad index for the statement
-         return parser.rhsValue(0);
+		   Integer lastQuadIndex = (Integer) parser.rhsValue(0);
+         return lastQuadIndex;
 			}
 	}
 	final class statementReadStmntNT extends NonterminalFactory
@@ -1136,8 +1081,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {readStmnt} -> readStmnt\n");
 		   }
-         //this should be the last quad index for the statement
-         return parser.rhsValue(0);
+		   Integer lastQuadIndex = (Integer) parser.rhsValue(0);
+         return lastQuadIndex;
 			}
 	}
 	final class statementAsgnStmntNT extends NonterminalFactory
@@ -1265,7 +1210,7 @@ public class NanoSymtabCompiler extends CompilerModel
 			}
 	}
 	
-	//addConstQuads  -not sure what to do with this yet
+	//addConstQuads 
    final class addConstQuadsNT extends NonterminalFactory
    {
       public Object makeNonterminal (Parser parser, int param) 
@@ -1303,12 +1248,7 @@ public class NanoSymtabCompiler extends CompilerModel
          if (showReductions)
             System.out.println("\nReduced by rule: StartMarker -> /* empty */\n");
          
-         //Not sure what to do with this yet
          
-         //if (showSymbolTable) 
-         //   symtab.showContents();
-      
-         //Return null value
          return null;
       }
    }
@@ -1519,8 +1459,7 @@ public class NanoSymtabCompiler extends CompilerModel
 						reportError("","readStmnt() - Cannot read to constant variable");
 						return null;
 					}
-					//We're not dealing with an array
-					//if (target.isScalar()){
+					
 						NSTIndScalarEntry entry = (NSTIndScalarEntry) target;
 						if ((entry.isBoolean()||entry.isBooleanArray()) && isBoolean){
 							quad = quadGen.makeRead(entry.getAddress(), "B");
@@ -1534,23 +1473,7 @@ public class NanoSymtabCompiler extends CompilerModel
 							reportError("","printStmnt() - String expression type and expression do not match.");
 							return null;
 						}
-					//}
-					//We're dealing with an array
-					/*else{
-						NSTIndArrayEntry entry = (NSTIndArrayEntry) target;
-						if (target.isBooleanArray() && isBoolean){
-							quad = quadGen.makeRead(entry.getAddress(), "B");
-							quadGen.addQuad(quad);
-						}
-						else if (target.isIntArray() && isInteger){
-							quad = quadGen.makeRead(entry.getAddress(), "I");
-							quadGen.addQuad(quad);
-						}
-						else{
-							reportError("","printStmnt() - String expression type and expression do not match.");
-							return null;
-						}
-					}*/	
+						
 				}
 				
 				//need to return the last quad's ID
@@ -1667,8 +1590,6 @@ public class NanoSymtabCompiler extends CompilerModel
 		public Object makeNonterminal (Parser parser, int param) 
 			throws IOException, SyntaxException
 			{
-			
-				
 				
 				//Show the reductions
    		   if (showReductions) {
@@ -1676,68 +1597,6 @@ public class NanoSymtabCompiler extends CompilerModel
    	   		System.out.println("inputTarget {idArray} -> id lbracket expr rbracket\n");
    		   }
 			    
-			    /*
-			    
-			    //Get the id string
-            String idString = (String) parser.rhsValue (0);
-            
-            //Check to make sure idString is valid
-            if(idString == null){
-               reportError("","inputTargetIdArrayNT() - Id not declared in this scope.");
-               return null;
-            }
-			    
-			    //Get the expression for the index
-			    NSTIndEntry exprEntry = (NSTIndEntry) parser.rhsValue(2);
-			    
-			    //Check to make sure expression exists
-			    if(exprEntry == null){
-			    	reportError("","inputTargetIdArrayNT() - Array index expression is invalid.");
-			    	return null;
-			    }
-			    
-			    //Something is wrong, expressions can't be immediates as they are temp variables in the block
-			    if(exprEntry.isImmediate()){
-			    	 NSTIndImmediateEntry expr = (NSTIndImmediateEntry) exprEntry;
-			    }
-			    if(exprEntry.isScalar()){
-			    	 NSTIndScalarEntry expr = (NSTIndScalarEntry) exprEntry;
-			    }
-			    
-			    //Cast the expression to a more specific NSTIndScalarEntry type
-			    NSTIndScalarEntry expr = (NSTIndScalarEntry) exprEntry;
-			   
-			    //Find the id in the symbol table
-			    NSTIndEntry idEntry = (NSTIndEntry) symtab.get(idString);
-			    
-			    //If it isn't in the symbol table
-			    if(idEntry == null){
-			    	reportError("","inputTargetIdArrayNT() - Identifier not declared in scope.");
-			    	return null;
-			    }
-			    
-			    //Can't have an immediate entry here
-			    if(idEntry.isImmediate()){
-			    	reportError("","inputTargetIdArrayNT() - Cannot read to immediate entry.");
-			    	return null;
-			    }
-			    
-			  //Can't assign to a constant variable
-			    if(idEntry.isConstant()){
-			    	reportError("","inputTargetIdArrayNT() - Can't assign to constant variable");
-			    	return null;
-			    }
-			    
-			    //Create an entry to return
-			    NSTIndArrayEntry entry = (NSTIndArrayEntry) idEntry;
-			    
-			    if(entry == null){
-			    	reportError("","inputTargetIdArrayNT() - Entry in symbol table was not of the correct type.");
-			    	return null;
-			    }
-			    
-			    return entry;
-			    */
 			    
    		   //get the array id and the index offset
 	         NSTIndArrayEntry array = (NSTIndArrayEntry)symtab.get((String)parser.rhsValue(0));
