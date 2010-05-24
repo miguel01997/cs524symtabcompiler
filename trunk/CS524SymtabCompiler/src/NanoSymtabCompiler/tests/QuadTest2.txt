@@ -7,6 +7,7 @@ var a[4] : integer;
  
 begin
  
+ v1:=3;
  v1 := 10 + a[a[v1]*(v1 - 3)/2];
  
  if ( ((v1 <= 7) and (v1 < 8)) or (a[3] == 2) ) then
@@ -15,7 +16,7 @@ begin
    begin
      const NEWCONST = 700;
      a[2]:=9;
-     if ( ( ( a[v1] - 14 ) >= a[C] ) or (not (a[D] == 20))  and (v1>NEWCONST) ) then
+     if ( ( ( a[v1] - 14 ) >= a[3] ) or (not (a[3] == 20))  and (v1>NEWCONST) ) then
      v1 := 1;
    end;  
  

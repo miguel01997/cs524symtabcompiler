@@ -9,40 +9,40 @@ begin
    b2 := false;
    
    //Equal - true
-   if (j == j)
+   if (j == j) then
       print("Is true.");
    //Equal - false
-   if (j == k)
+   if (j == k) then
       print("Is false.");
    //Less - true
-   if (j < k)
+   if (j < k) then
       print("Is true.");
    //Less - false
-   if (k < j)
+   if (k < j) then
       print("Is false.");
    //Greater - true
-   if (k > i)
+   if (k > i) then
       print("Is true.");
    //Greater - false
-   if (i > k)
+   if (i > k) then
       print("Is false.");
    //Greater/Equal - true/equal
-   if (k >= k)
+   if (k >= k) then
       print("Is true.");
    //Greater/Equal - true/greater
-   if (k >= i)
+   if (k >= i) then
       print("Is true.");
    //Greater/Equal - false
-   if (i >= k)
+   if (i >= k) then
       print("Is false.");
    //Less/Equal - true/equal
-   if (j <= j)
+   if (j <= j) then
       print("Is true.");
    //Less/Equal - true/less
-   if (j <= k)
+   if (j <= k) then
       print("Is true.");
    //Less/Equal - false
-   if (j <= i)
+   if (j <= i) then
       print("Is false.");
 end;
 
