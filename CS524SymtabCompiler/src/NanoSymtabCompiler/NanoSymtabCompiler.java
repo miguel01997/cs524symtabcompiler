@@ -1921,14 +1921,14 @@ public class NanoSymtabCompiler extends CompilerModel
 	    	  return null;
 	      
 	      //If the value is scalar and not immediate
-	      if (e2.isScalar() && !e2.isImmediate()) 
+	      if ((e2.isScalar() || e2.isIntArray())&& !e2.isImmediate()) 
 	      {
 	         valToAssign = (NSTIndScalarEntry) e2;
 	         isImmediateValToAssign = false;
 	      }
 	      
 	      //If the value is a scalar and is immediate
-	      else if (e2.isScalar()&& e2.isImmediate()) 
+	      else if ((e2.isScalar() || e2.isIntArray())&& e2.isImmediate()) 
 	      {
 	         immToAssign = (NSTIndImmediateEntry) e2;
 	         isImmediateValToAssign = true;
