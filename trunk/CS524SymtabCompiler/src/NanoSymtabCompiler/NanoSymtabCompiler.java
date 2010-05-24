@@ -1292,7 +1292,7 @@ public class NanoSymtabCompiler extends CompilerModel
 						return null;
 					}
 					//We're not dealing with an array
-					if (expr.isScalar()){
+					//if (expr.isScalar()){
 						NSTIndScalarEntry entry = (NSTIndScalarEntry) expr;
 						if (expr.isBoolean() && isBoolean){
 							quad = quadGen.makePrint(entry.getAddress(), "B");
@@ -1305,9 +1305,9 @@ public class NanoSymtabCompiler extends CompilerModel
 						else{
 							reportError("","printStmnt() - String expression type and expression do not match.");
 						}
-					}
+					//}
 					//We're dealing with an array - this does not make a difference right now
-					else{
+					/*else{
 						NSTIndArrayEntry entry = (NSTIndArrayEntry) expr;
 						if (expr.isBooleanArray() && isBoolean){
 							quad = quadGen.makePrint(entry.getAddress(), "B");
@@ -1320,7 +1320,7 @@ public class NanoSymtabCompiler extends CompilerModel
 						else{
 							reportError("","printStmnt() - String expression type and expression do not match.");
 						}
-					}
+					}*/
 					
 				}
 				
@@ -1445,7 +1445,7 @@ public class NanoSymtabCompiler extends CompilerModel
 						return null;
 					}
 					//We're not dealing with an array
-					if (target.isScalar()){
+					//if (target.isScalar()){
 						NSTIndScalarEntry entry = (NSTIndScalarEntry) target;
 						if (target.isBoolean() && isBoolean){
 							quad = quadGen.makeRead(entry.getAddress(), "B");
@@ -1459,9 +1459,9 @@ public class NanoSymtabCompiler extends CompilerModel
 							reportError("","printStmnt() - String expression type and expression do not match.");
 							return null;
 						}
-					}
+					//}
 					//We're dealing with an array
-					else{
+					/*else{
 						NSTIndArrayEntry entry = (NSTIndArrayEntry) target;
 						if (target.isBooleanArray() && isBoolean){
 							quad = quadGen.makeRead(entry.getAddress(), "B");
@@ -1475,7 +1475,7 @@ public class NanoSymtabCompiler extends CompilerModel
 							reportError("","printStmnt() - String expression type and expression do not match.");
 							return null;
 						}
-					}	
+					}*/	
 				}
 				
 				//need to return the last quad's ID
@@ -1851,7 +1851,7 @@ public class NanoSymtabCompiler extends CompilerModel
 	      }
 	      
 	      //If the array identifier is not actually an integer array
-	      else if (!array.isIntArray())
+	      else if (!array.isIntArray() && !array.isBooleanArray())
 	      {
 	         reportError("","Attempt to use scalar identifier as array base address");
 	         return null;
@@ -2121,9 +2121,16 @@ public class NanoSymtabCompiler extends CompilerModel
          InstrModQuad imq = (InstrModQuad)quadGen.getQuadList().get(quadIndexforIfTrue);
          String ifTrueLabel = imq.getBackpatchQuadLabel();
          Integer lastQuadIndex = (Integer) parser.rhsValue(1);
-         quadGen.updateBackpatching(ifTrueLabel, lastQuadIndex.intValue()+3);
-         
-         return new Integer(jumpToStartofFor.getQuadId());
+    
+         if (lastQuadIndex==null)
+         {
+            reportError("","Compiler developer: Statement not passing up last index");
+            return null;
+         }
+         else {
+            quadGen.updateBackpatching(ifTrueLabel, lastQuadIndex.intValue()+3);
+            return new Integer(jumpToStartofFor.getQuadId());
+         }
          }
    }
    
