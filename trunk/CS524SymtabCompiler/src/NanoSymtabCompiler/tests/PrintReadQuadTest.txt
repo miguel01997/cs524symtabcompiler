@@ -2,8 +2,8 @@ var v1,v2 : integer;
 var b1 : boolean;
 
 begin
-  read	("I", v1, v2);
-  read	("B", b1);  
+  read   ("I", v1, v2);
+  read   ("B", b1);  
   print ("I", v1, v2);
   print ("B", b1);
   print ("Hello");
