@@ -1175,8 +1175,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {forStmnt} -> forStmnt\n");
 		   }
-         //this should be the last quad index for the statement
-         return parser.rhsValue(0);
+		   Integer lastQuadIndex = (Integer) parser.rhsValue(0);
+         return lastQuadIndex;
 			}
 	}
 	final class statementReturnStmntNT extends NonterminalFactory
@@ -1188,8 +1188,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {returnStmnt} -> returnStmnt\n");
 		   }
-         //this should be the last quad index for the statement
-         return parser.rhsValue(0);
+		   Integer lastQuadIndex = (Integer) parser.rhsValue(0);
+         return lastQuadIndex;
 			}
 	}
 	final class statementCallStmntNT extends NonterminalFactory
@@ -1201,8 +1201,8 @@ public class NanoSymtabCompiler extends CompilerModel
 		      System.out.print(parser.token().line + ": ");
 		      System.out.println("statement {callStmnt} -> callStmnt\n");
 		   }
-         //this should be the last quad index for the statement
-         return parser.rhsValue(0);
+		   Integer lastQuadIndex = (Integer) parser.rhsValue(0);
+         return lastQuadIndex;
 			}
 	}
 	
@@ -1224,8 +1224,8 @@ public class NanoSymtabCompiler extends CompilerModel
 	   			System.out.println("              showSymbolTable");
 	   			System.out.println("              semicolon\n");
 			   	}
-		      //this should be the last quad index for the statments in statement list
-	         return parser.rhsValue(4);
+			   Integer lastQuadIndex = (Integer) parser.rhsValue(4);
+	         return lastQuadIndex;
 			}
 	}
 	
@@ -2073,7 +2073,8 @@ public class NanoSymtabCompiler extends CompilerModel
 	         //A statement, whether single or block, should return the index of the
 	         //last quad produced for it (single--the index, block--the last index)
 	         Integer lastQuadIndex = (Integer) parser.rhsValue(1);
-	         //quadGen.updateBackpatching(jumpQuadLabel, lastQuadIndex.intValue()+2);
+	         
+	         quadGen.updateBackpatching(jumpQuadLabel, lastQuadIndex.intValue()+2);
 	         return lastQuadIndex;
 	      }
 	   }
@@ -2124,10 +2125,11 @@ public class NanoSymtabCompiler extends CompilerModel
 	   {
 	      if (showReductions) System.out.println(
 	      "\nReduced by rule: CondThenPartUM -> then Statement");
+	      
 	      Integer lastQuadIndex = (Integer) parser.rhsValue(1);
 	      if (lastQuadIndex==null)
 	      {
-	         reportError("","Compiler developer: Statement not passing up last index");
+	         reportError("","Compiler developer (CondUM): Statement not passing up last index");
 	         return null;
 	      }
 	      else return lastQuadIndex;
@@ -2141,10 +2143,11 @@ public class NanoSymtabCompiler extends CompilerModel
 	   {
 	      if (showReductions) System.out.println(
 	      "\nReduced by rule: CondThenPartM -> then Statement else CondElseJump Statement");
+	      
 	      Integer lastStmtQuadIndex = (Integer) parser.rhsValue(1);
 	      if (lastStmtQuadIndex==null)
 	      {
-	         reportError("","Compiler developer: Statement not passing up last index");
+	         reportError("","Compiler developer (CondM): Statement not passing up last index");
 	         return null;
 	      }
 	      else 
@@ -2215,7 +2218,7 @@ public class NanoSymtabCompiler extends CompilerModel
     
          if (lastQuadIndex==null)
          {
-            reportError("","Compiler developer: Statement not passing up last index");
+            reportError("","Compiler developer(For Stmt): Statement not passing up last index");
             return null;
          }
          else {
